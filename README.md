@@ -17,7 +17,7 @@ A flexible pipeline for short read alignment to a reference.
 
 ## Quick start
 
-1. [Install Nextflow](https://nf-co.re/usage/installation)
+1. [Install Nextflow](https://www.nextflow.io/docs/latest/getstarted.html)
 2. [Install Docker](https://docs.docker.com/engine/install/)
 3. Download **sralign**:
     ```
