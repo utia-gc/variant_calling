@@ -8,6 +8,8 @@ sralign - A flexible pipeline for short read alignment to a reference.
 https://github.com/trev-f/sralign
 */
 
+nextflow.enable.dsl=2
+
 /*
 Help message
 */
@@ -34,4 +36,3 @@ if (params.help) {
     exit 0
 }
 
-nextflow.enable.dsl=2
