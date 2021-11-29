@@ -44,4 +44,28 @@ channel
     .fromPath(params.input)
     .splitCsv(header: false)
     .map { row -> ["${row[0]}_rep${row[1]}", [file(row[2]), file(row[3])]] }
-    .view()
+    .set { ch_fastqQC }
+
+/*
+fastQC
+*/
+
+process fastQC {
+    container 'biocontainers/fastqc:v0.11.9_cv8'
+
+    input:
+    tuple val(name), file(fastq_file)
+
+    output:
+    publishDir "${PWD}/fastQC", mode: 'copy'
+    path "*", emit: ch_fastQC
+
+    script:
+    """
+    fastqc ${fastq_file}
+    """
+}
+
+workflow {
+    fastQC(ch_fastqQC)
+}
