@@ -36,3 +36,12 @@ if (params.help) {
     exit 0
 }
 
+/*
+Handle input
+*/
+
+channel
+    .fromPath(params.input)
+    .splitCsv(header: false)
+    .map { row -> ["${row[0]}_rep${row[1]}", [file(row[2]), file(row[3])]] }
+    .view()
