@@ -66,6 +66,23 @@ process fastQC {
     """
 }
 
+process multiQC {
+    container 'ewels/multiqc:v1.11'
+
+    input:
+    path fastqc
+
+    output:
+    publishDir "${PWD}/fastQC", mode: 'copy'
+    path "*"
+
+    script:
+    """
+    multiqc ${fastqc}
+    """
+}
+
 workflow {
     fastQC(ch_fastqQC)
+    multiQC(fastQC.out.collect())
 }
