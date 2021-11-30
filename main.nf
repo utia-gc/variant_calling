@@ -57,7 +57,7 @@ process fastQC {
     tuple val(name), file(fastq_file)
 
     output:
-    publishDir "${PWD}/fastQC", mode: 'copy'
+    publishDir "${params.baseDirReport}/fastQC", mode: 'copy'
     path "*", emit: ch_fastQC
 
     script:
@@ -73,7 +73,7 @@ process multiQC {
     path fastqc
 
     output:
-    publishDir "${PWD}/fastQC", mode: 'copy'
+    publishDir "${params.baseDirReport}/fastQC", mode: 'copy'
     path "*"
 
     script:
