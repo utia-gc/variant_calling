@@ -5,7 +5,8 @@ process multiQC {
     path fastqc
 
     output:
-    publishDir "${params.baseDirReport}/fastQC", mode: 'copy'
+    publishDir "${params.baseDirReport}/readsQC", mode: 'copy', pattern: '*.html'
+    publishDir "${params.baseDirData}/readsQC", mode: 'copy', pattern: '*multiqc_data*'
     path "*"
 
     script:

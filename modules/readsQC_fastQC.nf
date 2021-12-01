@@ -5,7 +5,8 @@ process fastQC {
     tuple val(name), file(fastq_file)
 
     output:
-    publishDir "${params.baseDirReport}/fastQC", mode: 'copy'
+    publishDir "${params.baseDirReport}/readsQC", mode: 'copy', pattern: '*.html'
+    publishDir "${params.baseDirData}/readsQC", mode: 'copy', pattern: '*.zip'
     path "*", emit: ch_fastQC
 
     script:
