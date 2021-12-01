@@ -47,11 +47,12 @@ channel
     .set { ch_fastqQC }
 
 /*
-fastQC
+Main Workflow
 */
 
 include { fastQC } from './modules/readsQC_fastQC.nf'
 include { multiQC } from './modules/readsQC_multiQC.nf'
+
 
 workflow {
     fastQC(ch_fastqQC)
