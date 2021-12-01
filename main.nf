@@ -50,21 +50,7 @@ channel
 fastQC
 */
 
-process fastQC {
-    container 'biocontainers/fastqc:v0.11.9_cv8'
-
-    input:
-    tuple val(name), file(fastq_file)
-
-    output:
-    publishDir "${params.baseDirReport}/fastQC", mode: 'copy'
-    path "*", emit: ch_fastQC
-
-    script:
-    """
-    fastqc ${fastq_file}
-    """
-}
+include { fastQC } from './modules/reads_fastQC.nf'
 
 process multiQC {
     container 'ewels/multiqc:v1.11'
