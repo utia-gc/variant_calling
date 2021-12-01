@@ -50,7 +50,7 @@ channel
 fastQC
 */
 
-include { fastQC } from './modules/reads_fastQC.nf'
+include { fastQC } from './modules/readsQC_fastQC.nf'
 
 process multiQC {
     container 'ewels/multiqc:v1.11'
