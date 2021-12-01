@@ -51,22 +51,7 @@ fastQC
 */
 
 include { fastQC } from './modules/readsQC_fastQC.nf'
-
-process multiQC {
-    container 'ewels/multiqc:v1.11'
-
-    input:
-    path fastqc
-
-    output:
-    publishDir "${params.baseDirReport}/fastQC", mode: 'copy'
-    path "*"
-
-    script:
-    """
-    multiqc ${fastqc}
-    """
-}
+include { multiQC } from './modules/readsQC_multiQC.nf'
 
 workflow {
     fastQC(ch_fastqQC)
