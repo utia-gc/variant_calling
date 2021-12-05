@@ -44,4 +44,17 @@ channel
     .fromPath(params.input)
     .splitCsv(header: false)
     .map { row -> ["${row[0]}_rep${row[1]}", [file(row[2]), file(row[3])]] }
-    .view()
+    .set { ch_fastqQC }
+
+/*
+Main Workflow
+*/
+
+include { fastQC } from './modules/readsQC_fastQC.nf'
+include { multiQC } from './modules/readsQC_multiQC.nf'
+
+
+workflow {
+    fastQC(ch_fastqQC)
+    multiQC(fastQC.out.collect())
+}
