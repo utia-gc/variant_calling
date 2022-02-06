@@ -16,9 +16,9 @@ def get_args():
         description='Parse input design file for nextflow pipeline',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    parser.add_argument('positional',
-                        metavar='str',
-                        help='A positional argument')
+    parser.add_argument('design',
+                        metavar='DESIGN',
+                        help='Input csv design file')
 
 
     args = parser.parse_args()
