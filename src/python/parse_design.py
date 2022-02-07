@@ -6,6 +6,9 @@ Purpose: Parse input design file for nextflow pipeline
 """
 
 import argparse
+import pytest
+import sys
+import os
 
 
 # --------------------------------------------------
@@ -33,6 +36,28 @@ def main():
     args = get_args()
 
 
+# --------------------------------------------------
+def print_error(error, context):
+    """Print error message"""
+
+    error_msg = f"ERROR: Samplesheet -> {error}\n\tLINE: {context}"
+    sys.exit(error_msg)
+
+
+# --------------------------------------------------
+def test_print_error():
+    """Test print_error"""
+
+    error_str = f"ERROR: Samplesheet -> Invalid number of columns.\n\tLINE: wt_L1,HSL-1.fastq.gz"
+
+    with pytest.raises(SystemExit) as out:
+        print_error(error="Invalid number of columns.", context="wt_L1,HSL-1.fastq.gz")
+
+    assert out.type == SystemExit
+    assert out.value.code == error_str
+
+
+    
 # --------------------------------------------------
 if __name__ == '__main__':
     main()
