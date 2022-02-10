@@ -21,6 +21,8 @@ def get_args():
 
     parser.add_argument('design',
                         metavar='DESIGN',
+                        nargs=1,
+                        type=argparse.FileType('rt'),
                         help='Input csv design file')
 
 
