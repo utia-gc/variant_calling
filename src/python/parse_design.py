@@ -44,6 +44,16 @@ def print_error(error, context):
     sys.exit(error_msg)
 
 
+def check_header(design_file):
+    """
+    Check design file has proper header format:
+
+    lib_ID,sample_name,replicate,reads1,reads2
+
+    Note: reads2 column is optional for single end reads
+    """
+
+
 # --------------------------------------------------
 def test_print_error():
     """Test print_error"""
@@ -55,6 +65,13 @@ def test_print_error():
 
     assert out.type == SystemExit
     assert out.value.code == error_str
+
+
+def test_check_header(design_file):
+    """Test check_header"""
+
+    assert check_header('./test/test_PE_design.csv') == "lib_ID,sample_name,replicate,reads1,reads2"
+    assert check_header('./test/test_SE_design.csv') == "lib_ID,sample_name,replicate,reads1"
 
 
     
