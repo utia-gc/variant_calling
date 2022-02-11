@@ -31,7 +31,7 @@ def test_usage():
 def test_single_end():
     """single end"""
 
-    rv, out = getstatusoutput(f'{prg} test_SE_design.csv')
+    rv, out = getstatusoutput(f'{prg} SE_design_good.csv')
     assert rv == 0
     expected = ('lib_ID,sample_rep,fq1\n'
                 'HSL-1,wt_control_rep1,data/HSL-1_R1.fastq.gz\n'
@@ -45,7 +45,7 @@ def test_single_end():
 def test_paired_end():
     """paired end"""
 
-    rv, out = getstatusoutput(f'{prg} test_PE_design.csv')
+    rv, out = getstatusoutput(f'{prg} PE_design_good.csv')
     assert rv == 0
     expected = ('lib_ID,sample_rep,fq1,fq2\n'
                 'HSL-1,wt_control_rep1,data/HSL-1_R1.fastq.gz,data/HSL-1_R2.fastq.gz\n'
