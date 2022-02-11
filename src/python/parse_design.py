@@ -55,6 +55,8 @@ def check_header(design_file):
     Note: reads2 column is optional for single end reads
     """
 
+    pass
+
 
 # --------------------------------------------------
 def test_print_error():
@@ -72,8 +74,8 @@ def test_print_error():
 def test_check_header(design_file):
     """Test check_header"""
 
-    assert check_header('./test/test_PE_design.csv') == "lib_ID,sample_name,replicate,reads1,reads2"
-    assert check_header('./test/test_SE_design.csv') == "lib_ID,sample_name,replicate,reads1"
+    assert check_header('./test/PE_design_good.csv') == "lib_ID,sample_rep,fq1,fq2"
+    assert check_header('./test/SE_design_good.csv') == "lib_ID,sample_rep,fq1"
 
 
     
