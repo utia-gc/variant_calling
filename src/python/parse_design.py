@@ -86,24 +86,23 @@ def test_print_error():
     assert out.value.code == error_str
 
 
-def test_check_header(design_file):
+def test_check_header():
     """Test check_header"""
 
     # test no or incorrect header
-    error_str = f"ERROR: Samplesheet -> Missing or invalid header.\n\tLINE: HSL-1,wt_control,1,data/HSL-1_R1.fastq.gz,data/HSL-1_R2.fastq.gz"
+    error_str = f"ERROR: Samplesheet -> Missing or invalid header.\n\tLINE: HSL-1,wt_control,1,data/HSL-1_R1.fastq.gz"
     with pytest.raises(SystemExit) as out:
-        check_header('./test/PE_design_noHeader.csv')
+        check_header(['HSL-1', 'wt_control', '1', 'data/HSL-1_R1.fastq.gz'])
     
     assert out.type == SystemExit
     assert out.value.code == error_str
 
 
     # test correct header output
-    assert check_header('./test/PE_design_good.csv') == "lib_ID,sample_rep,fq1,fq2"
-    assert check_header('./test/SE_design_good.csv') == "lib_ID,sample_rep,fq1"
+    assert check_header(['lib_ID', 'sample_name', 'replicate', 'reads1']) == ("single_end", "lib_ID,sample_rep,fq1")
+    assert check_header(['lib_ID', 'sample_name', 'replicate', 'reads1', 'reads2']) == ("paired_end", "lib_ID,sample_rep,fq1,fq2")
 
 
-    
 # --------------------------------------------------
 if __name__ == '__main__':
     main()
