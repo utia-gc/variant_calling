@@ -40,9 +40,7 @@ def main():
     for in_fh in args.design:
 
         # read design file into a list of lists
-        dsgn_in = []
-        for line in in_fh:
-            dsgn_in.append(line.rstrip().split(','))
+        dsgn_in = [line.rstrip().split(',') for line in in_fh]
 
         # pull header into its own object
         header = dsgn_in.pop(0)
