@@ -54,6 +54,19 @@ def print_error(error, context):
     sys.exit(error_msg)
 
 
+def test_print_error():
+    """Test print_error"""
+
+    error_str = f"ERROR: Samplesheet -> Invalid number of columns.\n\tLINE: wt_L1,HSL-1.fastq.gz"
+
+    with pytest.raises(SystemExit) as out:
+        print_error(error="Invalid number of columns.", context="wt_L1,HSL-1.fastq.gz")
+
+    assert out.type == SystemExit
+    assert out.value.code == error_str
+
+
+# --------------------------------------------------
 def check_header(header):
     """
     Check design file has proper header format:
@@ -71,19 +84,6 @@ def check_header(header):
         return "single_end", "lib_ID,sample_rep,fq1"
     else:
         return "paired_end", "lib_ID,sample_rep,fq1,fq2"
-
-
-# --------------------------------------------------
-def test_print_error():
-    """Test print_error"""
-
-    error_str = f"ERROR: Samplesheet -> Invalid number of columns.\n\tLINE: wt_L1,HSL-1.fastq.gz"
-
-    with pytest.raises(SystemExit) as out:
-        print_error(error="Invalid number of columns.", context="wt_L1,HSL-1.fastq.gz")
-
-    assert out.type == SystemExit
-    assert out.value.code == error_str
 
 
 def test_check_header():
