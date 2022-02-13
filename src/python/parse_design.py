@@ -54,7 +54,7 @@ def print_error(error, context):
     sys.exit(error_msg)
 
 
-def check_header(design_file):
+def check_header(header):
     """
     Check design file has proper header format:
 
@@ -63,7 +63,14 @@ def check_header(design_file):
     Note: reads2 column is optional to handle single end reads
     """
 
-    pass
+    VALID_HEADERS = ['lib_ID,sample_name,replicate,reads1'.split(','), 'lib_ID,sample_name,replicate,reads1,reads2'.split(',')]
+
+    if header not in VALID_HEADERS:
+        print_error(error="Missing or invalid header.", context=','.join(header))
+    elif header == VALID_HEADERS[0]:
+        return "single_end", "lib_ID,sample_rep,fq1"
+    else:
+        return "paired_end", "lib_ID,sample_rep,fq1,fq2"
 
 
 # --------------------------------------------------
