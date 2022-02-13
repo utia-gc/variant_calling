@@ -98,15 +98,33 @@ def test_check_header():
     # test no or incorrect header
     error_str = f"ERROR: Samplesheet -> Missing or invalid header.\n\tLINE: HSL-1,wt_control,1,data/HSL-1_R1.fastq.gz"
     with pytest.raises(SystemExit) as out:
-        check_header(['HSL-1', 'wt_control', '1', 'data/HSL-1_R1.fastq.gz'])
-    
+        check_header(['HSL-1', 'wt_control', '1', 'data/HSL-1_R1.fastq.gz']) 
     assert out.type == SystemExit
     assert out.value.code == error_str
-
 
     # test correct header output
     assert check_header(['lib_ID', 'sample_name', 'replicate', 'reads1']) == "lib_ID,sample_rep,fq1"
     assert check_header(['lib_ID', 'sample_name', 'replicate', 'reads1', 'reads2']) == "lib_ID,sample_rep,fq1,fq2"
+
+
+# --------------------------------------------------
+def check_read_type(header: list, design: list):
+    """
+    Check that all read types are the same i.e. all single end or all paired end reads
+    """
+
+    pass
+
+
+def test_check_read_type():
+    """test check_read_type"""
+
+    # test mix of read types
+    error_str = f"ERROR: Samplesheet -> Mixed read types.\n\tLINE: HSL-3,wt_DMSO,1,data/HSL-3_R1.fastq.gz,data/HSL-3_R2.fastq.gz\n\tHSL-4,wt_DMSO,2,data/HSL-4_R1.fastq.gz,data/HSL-4_R2.fastq.gz"
+    with pytest.raises(SystemExit) as out:
+        check_read_type(header=['lib_ID', 'sample_name', 'replicate', 'reads1'], design=[['HSL-3', 'wt_DMSO', '1', 'data/HSL-3_R1.fastq.gz', 'data/HSL-3_R2.fastq.gz'], ['HSL-4', 'wt_DMSO', '2', 'data/HSL-4_R1.fastq.gz', 'data/HSL-4_R2.fastq.gz']])
+    assert out.type == SystemExit
+    assert out.value.code == error_str
 
 
 # --------------------------------------------------
