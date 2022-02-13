@@ -45,6 +45,12 @@ def main():
         # pull header into its own object
         header_in = dsgn_in.pop(0)
 
+        # check header and get output header
+        header_out = check_header(header_in)
+
+        print(header_out)
+
+
 
 # --------------------------------------------------
 def print_error(error, context):

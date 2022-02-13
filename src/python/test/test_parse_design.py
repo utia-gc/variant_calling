@@ -26,6 +26,16 @@ def test_usage():
         assert rv == 0
         assert re.match("usage", out, re.IGNORECASE)
 
+    
+# --------------------------------------------------
+def test_missing_header():
+    """"no header"""
+
+    rv, out = getstatusoutput(f'{prg} PE_design_noHeader.csv')
+    assert rv ==1
+    expected = f"ERROR: Samplesheet -> Missing or invalid header.\n\tLINE: HSL-1,wt_control,1,data/HSL-1_R1.fastq.gz,data/HSL-1_R2.fastq.gz"
+    assert out.strip() == expected
+
 
 # --------------------------------------------------
 def test_single_end():
