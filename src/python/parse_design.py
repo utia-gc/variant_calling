@@ -43,7 +43,7 @@ def main():
         dsgn_in = [line.rstrip().split(',') for line in in_fh]
 
         # pull header into its own object
-        header = dsgn_in.pop(0)
+        header_in = dsgn_in.pop(0)
 
 
 # --------------------------------------------------
