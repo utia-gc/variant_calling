@@ -37,6 +37,16 @@ def main():
 
     args = get_args()
 
+    for in_fh in args.design:
+
+        # read design file into a list of lists
+        dsgn_in = []
+        for line in in_fh:
+            dsgn_in.append(line.rstrip().split(','))
+
+        # pull header into its own object
+        header = dsgn_in.pop(0)
+
 
 # --------------------------------------------------
 def print_error(error, context):
@@ -52,7 +62,7 @@ def check_header(design_file):
 
     lib_ID,sample_name,replicate,reads1,reads2
 
-    Note: reads2 column is optional for single end reads
+    Note: reads2 column is optional to handle single end reads
     """
 
     pass
