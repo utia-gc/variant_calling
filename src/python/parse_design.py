@@ -48,8 +48,8 @@ def main():
         # check header and get output header
         header_out = check_header(header_in)
 
-        print(header_out)
-
+        # check read types are all the same
+        check_read_type(header=header_in, design=dsgn_in)
 
 
 # --------------------------------------------------
