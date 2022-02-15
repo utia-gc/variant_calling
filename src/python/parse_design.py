@@ -136,5 +136,28 @@ def test_check_read_type():
 
 
 # --------------------------------------------------
+def organize_samples(design: list):
+    """
+    Organize samples
+    """
+
+    pass
+
+
+def test_organize_samples():
+    """test organize_samples"""
+
+    SE_design = [['HSL-3', 'wt_DMSO', '1', 'data/HSL-3_R1.fastq.gz'], ['HSL-4', 'wt_DMSO', '2', 'data/HSL-4_R1.fastq.gz']]
+    SE_expected = ('HSL-3,wt_DMSO_rep1,data/HSL-3_R1.fastq.gz\n'
+                   'HSL-4,wt_DMSO_rep2,data/HSL-4_R1.fastq.gz')
+    PE_design = [['HSL-3', 'wt_DMSO', '1', 'data/HSL-3_R1.fastq.gz', 'data/HSL-3_R2.fastq.gz'], ['HSL-4', 'wt_DMSO', '2', 'data/HSL-4_R1.fastq.gz', 'data/HSL-4_R2.fastq.gz']]
+    PE_expected = ('HSL-3,wt_DMSO_rep1,data/HSL-3_R1.fastq.gz,data/HSL-3_R2.fastq.gz\n'
+                   'HSL-4,wt_DMSO_rep2,data/HSL-4_R1.fastq.gz,data/HSL-4_R2.fastq.gz')
+                   
+    assert organize_samples(design=SE_design) == SE_expected.strip()
+    assert organize_samples(design=PE_design) == PE_expected.strip()
+
+
+# --------------------------------------------------
 if __name__ == '__main__':
     main()
