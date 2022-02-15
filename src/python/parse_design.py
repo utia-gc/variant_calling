@@ -118,10 +118,9 @@ def check_read_type(header: list, design: list):
     design_lens = [len(line) for line in design]
 
     if all(design_len == header_len for design_len in design_lens):
-        pass
+        return
     else:
         design_bad = filter(lambda dsgn: len(dsgn) != header_len, design)
-
         print_error(error = "Mixed read types.", context = '\n\t'.join([','.join(x) for x in design_bad])) 
 
 
