@@ -113,7 +113,16 @@ def check_read_type(header: list, design: list):
     Check that all read types are the same i.e. all single end or all paired end reads
     """
 
-    pass
+    # get number of columns in header and design rows
+    header_len = len(header)
+    design_lens = [len(line) for line in design]
+
+    if all(design_len == header_len for design_len in design_lens):
+        pass
+    else:
+        design_bad = filter(lambda dsgn: len(dsgn) != header_len, design)
+
+        print_error(error = "Mixed read types.", context = '\n\t'.join([','.join(x) for x in design_bad])) 
 
 
 def test_check_read_type():
