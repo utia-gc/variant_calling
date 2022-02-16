@@ -54,6 +54,12 @@ def main():
         # create output design
         dsgn_out = organize_samples(dsgn_in)
 
+        # write output to file
+        outfile = f'{os.path.splitext(in_fh.name)[0]}_parsed.csv'
+        out_fh = open(outfile, 'wt')
+        out_fh.write(f'{header_out}\n{dsgn_out}\n')
+        out_fh.close()
+
 
 # --------------------------------------------------
 def print_error(error, context):
