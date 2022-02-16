@@ -141,7 +141,13 @@ def organize_samples(design: list):
     Organize samples
     """
 
-    pass
+    samples = []
+
+    for sample in design:
+        reads = ','.join(sample[3:])
+        samples.append(f'{sample[0]},{sample[1]}_rep{sample[2]},{reads}')
+
+    return '\n'.join(samples)
 
 
 def test_organize_samples():
