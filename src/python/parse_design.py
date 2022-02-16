@@ -51,6 +51,9 @@ def main():
         # check read types are all the same
         check_read_type(header=header_in, design=dsgn_in)
 
+        # create output design
+        dsgn_out = organize_samples(dsgn_in)
+
 
 # --------------------------------------------------
 def print_error(error, context):
