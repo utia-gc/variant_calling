@@ -2,7 +2,7 @@
 
 /*
 ---------------------------------------------------------------------
-trev-f/sralign
+    trev-f/sralign
 ---------------------------------------------------------------------
 sralign - A flexible pipeline for short read alignment to a reference.
 https://github.com/trev-f/sralign
@@ -10,8 +10,11 @@ https://github.com/trev-f/sralign
 
 nextflow.enable.dsl=2
 
+
 /*
-Help message
+---------------------------------------------------------------------
+    HELP MESSAGE
+---------------------------------------------------------------------
 */
 
 // Write help message
@@ -28,6 +31,7 @@ def help_message() {
         --genome
     """.stripIndent()
 }
+
 
 // Show help message
 
@@ -47,7 +51,9 @@ channel
     .set { ch_fastqQC }
 
 /*
-Main Workflow
+---------------------------------------------------------------------
+    HANDLE INPUTS
+---------------------------------------------------------------------
 */
 
 include { fastQC } from './modules/readsQC_fastQC.nf'
