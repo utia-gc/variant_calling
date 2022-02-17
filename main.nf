@@ -53,9 +53,9 @@ if (params.input) {
 }
 
 
-include { ParseDesign } from './modules/ParseDesign.nf'
+include { ParseDesignSWF } from './subworkflows/ParseDesignSWF.nf'
 
 
 workflow {
-    ParseDesign(ch_input)
+    ParseDesignSWF(ch_input)
 }
