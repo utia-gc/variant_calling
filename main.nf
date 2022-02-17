@@ -44,3 +44,18 @@ if (params.help) {
     HANDLE INPUTS
 ---------------------------------------------------------------------
 */
+
+// check design file
+if (params.input) {
+    ch_input = file(params.input)
+} else {
+    exit 1, 'Input design file not specified!'
+}
+
+
+include { ParseDesign } from './modules/ParseDesign.nf'
+
+
+workflow {
+    ParseDesign(ch_input)
+}
