@@ -18,7 +18,6 @@ nextflow.enable.dsl=2
 */
 
 // Write help message
-
 def help_message() {
     log.info"""
     Usage:
@@ -34,7 +33,6 @@ def help_message() {
 
 
 // Show help message
-
 if (params.help) {
     help_message()
     exit 0
