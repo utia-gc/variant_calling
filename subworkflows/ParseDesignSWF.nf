@@ -22,11 +22,11 @@ def createReadsChannel(LinkedHashMap row) {
     def metadata = [:]
     metadata.libID      = row.lib_ID
     metadata.sampleName = row.sample_rep
-    metadata.readType   = row.fq2 ? 'doubleEnd' : 'singleEnd'
+    metadata.readType   = row.fq2 ? 'paired' : 'single'
 
     // store reads in a list
     def reads = []
-    if (metadata.readType == 'singleEnd') {
+    if (metadata.readType == 'single') {
         reads = [file(row.fq1)]
     } else {
         reads = [file(row.fq1), file(row.fq2)]
