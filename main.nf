@@ -2,7 +2,7 @@
 
 /*
 ---------------------------------------------------------------------
-trev-f/sralign
+    trev-f/sralign
 ---------------------------------------------------------------------
 sralign - A flexible pipeline for short read alignment to a reference.
 https://github.com/trev-f/sralign
@@ -10,12 +10,14 @@ https://github.com/trev-f/sralign
 
 nextflow.enable.dsl=2
 
+
 /*
-Help message
+---------------------------------------------------------------------
+    HELP MESSAGE
+---------------------------------------------------------------------
 */
 
 // Write help message
-
 def help_message() {
     log.info"""
     Usage:
@@ -29,32 +31,31 @@ def help_message() {
     """.stripIndent()
 }
 
-// Show help message
 
+// Show help message
 if (params.help) {
     help_message()
     exit 0
 }
 
-/*
-Handle input
-*/
-
-channel
-    .fromPath(params.input)
-    .splitCsv(header: false)
-    .map { row -> ["${row[0]}_rep${row[1]}", [file(row[2]), file(row[3])]] }
-    .set { ch_fastqQC }
 
 /*
-Main Workflow
+---------------------------------------------------------------------
+    HANDLE INPUTS
+---------------------------------------------------------------------
 */
 
-include { fastQC } from './modules/readsQC_fastQC.nf'
-include { multiQC } from './modules/readsQC_multiQC.nf'
+// check design file
+if (params.input) {
+    ch_input = file(params.input)
+} else {
+    exit 1, 'Input design file not specified!'
+}
+
+
+include { ParseDesignSWF } from './subworkflows/ParseDesignSWF.nf'
 
 
 workflow {
-    fastQC(ch_fastqQC)
-    multiQC(fastQC.out.collect())
+    ParseDesignSWF(ch_input)
 }
