@@ -3,7 +3,7 @@ process ParseDesign {
 
     container "kyclark/tiny_python_projects:0.2.0"
 
-    publishDir "${params.baseDirData}", mode: 'copy'
+    publishDir "${params.baseDirData}/design", mode: 'copy'
 
     input:
         path design
