@@ -12,8 +12,8 @@ process ParseDesign {
         path '*.csv', emit: csv
 
     script:
-    """
-    parse_design.py \
-        ${design}
-    """
+        """
+        parse_design.py \
+            ${design}
+        """
 }
