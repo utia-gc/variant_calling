@@ -64,10 +64,12 @@ inName = params.input.take(params.input.lastIndexOf('.')).split('/')[-1]
 */
 
 include { ParseDesignSWF as ParseDesign } from './subworkflows/ParseDesignSWF.nf'
-include { RawReadsQCSWF as RawReadsQC } from './subworkflows/RawReadsQCSWF.nf'
+include { RawReadsQCSWF as RawReadsQC }   from './subworkflows/RawReadsQCSWF.nf'
+include { TrimReadsSWF as TrimReads }     from './subworkflows/TrimReadsSWF.nf'
 
 
 workflow {
     ParseDesign(ch_input)
     RawReadsQC(ParseDesign.out.rawReads, inName)
+    TrimReads(ParseDesign.out.rawReads)
 }
