@@ -53,9 +53,21 @@ if (params.input) {
 }
 
 
-include { ParseDesignSWF } from './subworkflows/ParseDesignSWF.nf'
+// set input design name
+inName = params.input.take(params.input.lastIndexOf('.')).split('/')[-1]
+
+
+/*
+---------------------------------------------------------------------
+    MAIN WORKFLOW
+---------------------------------------------------------------------
+*/
+
+include { ParseDesignSWF as ParseDesign } from './subworkflows/ParseDesignSWF.nf'
+include { RawReadsQCSWF as RawReadsQC } from './subworkflows/RawReadsQCSWF.nf'
 
 
 workflow {
-    ParseDesignSWF(ch_input)
+    ParseDesign(ch_input)
+    RawReadsQC(ParseDesign.out.rawReads, inName)
 }
