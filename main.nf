@@ -53,6 +53,12 @@ if (params.input) {
 }
 
 
+/*
+---------------------------------------------------------------------
+    MAIN WORKFLOW
+---------------------------------------------------------------------
+*/
+
 include { ParseDesignSWF as ParseDesign } from './subworkflows/ParseDesignSWF.nf'
 include { RawReadsQCSWF as RawReadsQC } from './subworkflows/RawReadsQCSWF.nf'
 
