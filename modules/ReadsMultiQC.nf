@@ -6,12 +6,13 @@ process ReadsMultiQC {
 
     input:
         file(fastqc)
+        val(runName)
 
     output:
         path "*"
 
     script:
         """
-        multiqc ${fastqc}
+        multiqc -n ${runName}__fqc_mqc ${fastqc}
         """
 }

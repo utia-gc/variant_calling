@@ -53,6 +53,10 @@ if (params.input) {
 }
 
 
+// set input design name
+inName = params.input.take(params.input.lastIndexOf('.')).split('/')[-1]
+
+
 /*
 ---------------------------------------------------------------------
     MAIN WORKFLOW
@@ -65,5 +69,5 @@ include { RawReadsQCSWF as RawReadsQC } from './subworkflows/RawReadsQCSWF.nf'
 
 workflow {
     ParseDesign(ch_input)
-    RawReadsQC(ParseDesign.out.rawReads)
+    RawReadsQC(ParseDesign.out.rawReads, inName)
 }
