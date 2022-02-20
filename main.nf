@@ -58,5 +58,6 @@ include { RawReadsQCSWF as RawReadsQC } from './subworkflows/RawReadsQCSWF.nf'
 
 
 workflow {
-    ParseDesignSWF(ch_input)
+    ParseDesign(ch_input)
+    RawReadsQC(ParseDesign.out.rawReads)
 }

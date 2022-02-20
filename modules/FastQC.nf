@@ -1,16 +1,20 @@
-process fastQC {
+process FastQC {
+    tag "${metadata.sampleName}"
+
     container 'biocontainers/fastqc:v0.11.9_cv8'
 
+    publishDir "${params.baseDirReport}/readsQC/fastQC", mode: 'copy', pattern: '*.html'
+    publishDir "${params.baseDirData}/readsQC/fastQC",   mode: 'copy', pattern: '*.zip'
+
     input:
-    tuple val(name), file(fastq_file)
+        tuple val(metadata), file(reads)
 
     output:
-    publishDir "${params.baseDirReport}/readsQC", mode: 'copy', pattern: '*.html'
-    publishDir "${params.baseDirData}/readsQC", mode: 'copy', pattern: '*.zip'
-    path "*", emit: ch_fastQC
+        tuple val(metadata), path('*.html'), emit: html
+        tuple val(metadata), path('*.zip'), emit: zip 
 
     script:
-    """
-    fastqc ${fastq_file}
-    """
+        """
+        fastqc ${reads}
+        """
 }
