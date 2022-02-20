@@ -1,16 +1,17 @@
-process multiQC {
+process ReadsMultiQC {
     container 'ewels/multiqc:v1.11'
 
-    input:
-    path fastqc
-
-    output:
     publishDir "${params.baseDirReport}/readsQC", mode: 'copy', pattern: '*.html'
     publishDir "${params.baseDirData}/readsQC", mode: 'copy', pattern: '*multiqc_data*'
-    path "*"
+
+    input:
+        file(fastqc)
+
+    output:
+        path "*"
 
     script:
-    """
-    multiqc ${fastqc}
-    """
+        """
+        multiqc ${fastqc}
+        """
 }
