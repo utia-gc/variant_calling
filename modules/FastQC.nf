@@ -14,7 +14,18 @@ process FastQC {
         tuple val(metadata), path('*.zip'), emit: zip 
 
     script:
-        """
-        fastqc ${reads}
-        """
+        if (metadata.readType == 'single') {
+            """
+            [ ! -f ${metadata.sampleName}_R1.fastq.gz ] && ln -s ${reads} ${metadata.sampleName}_R1.fastq.gz
+
+            fastqc ${metadata.sampleName}_R1.fastq.gz
+            """
+        } else {
+            """
+            [ ! -f ${metadata.sampleName}_R1.fastq.gz ] && ln -s ${reads[0]} ${metadata.sampleName}_R1.fastq.gz
+            [ ! -f ${metadata.sampleName}_R2.fastq.gz ] && ln -s ${reads[1]} ${metadata.sampleName}_R2.fastq.gz
+
+            fastqc ${metadata.sampleName}_R1.fastq.gz ${metadata.sampleName}_R2.fastq.gz
+            """
+        }
 }
