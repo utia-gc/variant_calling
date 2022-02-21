@@ -7,7 +7,7 @@ process Fastp {
         tuple val(metadata), file(reads)
 
     output:
-        tuple val(metadata), path('*.fastq.gz'), emit: reads
+        tuple val(metadata), path('*.fastq.gz'), emit: trimReads
 
     script:
         if (metadata.readType == 'single') {

@@ -6,4 +6,7 @@ workflow TrimReadsSWF {
 
     main:
         Fastp(rawReads)
+
+    emit:
+        trimReads = Fastp.out.trimReads
 }
