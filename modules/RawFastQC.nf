@@ -3,8 +3,8 @@ process FastQC {
 
     container 'biocontainers/fastqc:v0.11.9_cv8'
 
-    publishDir "${params.baseDirReport}/readsQC/fastQC", mode: 'copy', pattern: '*.html'
-    publishDir "${params.baseDirData}/readsQC/fastQC",   mode: 'copy', pattern: '*.zip'
+    publishDir "${params.baseDirReport}/readsQC/raw/fastQC", mode: 'copy', pattern: '*.html'
+    publishDir "${params.baseDirData}/readsQC/raw/fastQC",   mode: 'copy', pattern: '*.zip'
 
     input:
         tuple val(metadata), file(reads)
