@@ -15,17 +15,22 @@ process FastQC {
 
     script:
         if (metadata.readType == 'single') {
-            """
-            [ ! -f ${metadata.sampleName}_R1.fastq.gz ] && ln -s ${reads} ${metadata.sampleName}_R1.fastq.gz
+            read1 = "${metadata.sampleName}_R1.fastq.gz"
 
-            fastqc ${metadata.sampleName}_R1.fastq.gz
+            """
+            [ ! -f ${read1} ] && ln -s ${reads} ${read1}
+
+            fastqc ${read1}
             """
         } else {
-            """
-            [ ! -f ${metadata.sampleName}_R1.fastq.gz ] && ln -s ${reads[0]} ${metadata.sampleName}_R1.fastq.gz
-            [ ! -f ${metadata.sampleName}_R2.fastq.gz ] && ln -s ${reads[1]} ${metadata.sampleName}_R2.fastq.gz
+            read1 = "${metadata.sampleName}_R1.fastq.gz"
+            read2 = "${metadata.sampleName}_R2.fastq.gz"
 
-            fastqc ${metadata.sampleName}_R1.fastq.gz ${metadata.sampleName}_R2.fastq.gz
+            """
+            [ ! -f ${read1} ] && ln -s ${reads[0]} ${read1}
+            [ ! -f ${read2} ] && ln -s ${reads[1]} ${read2}
+
+            fastqc ${read1} ${read2}
             """
         }
 }
