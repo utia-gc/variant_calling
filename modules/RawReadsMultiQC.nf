@@ -1,8 +1,8 @@
 process ReadsMultiQC {
     container 'ewels/multiqc:v1.11'
 
-    publishDir "${params.baseDirReport}/readsQC", mode: 'copy', pattern: '*.html'
-    publishDir "${params.baseDirData}/readsQC", mode: 'copy', pattern: '*multiqc_data*'
+    publishDir "${params.baseDirReport}/readsQC/raw", mode: 'copy', pattern: '*.html'
+    publishDir "${params.baseDirData}/readsQC/raw", mode: 'copy', pattern: '*multiqc_data*'
 
     input:
         file(fastqc)
