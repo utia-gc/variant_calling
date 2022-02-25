@@ -63,15 +63,18 @@ inName = params.input.take(params.input.lastIndexOf('.')).split('/')[-1]
 ---------------------------------------------------------------------
 */
 
-include { ParseDesignSWF as ParseDesign } from './subworkflows/ParseDesignSWF.nf'
-include { RawReadsQCSWF as RawReadsQC }   from './subworkflows/RawReadsQCSWF.nf'
-include { TrimReadsSWF as TrimReads }     from './subworkflows/TrimReadsSWF.nf'
-include { TrimReadsQCSWF as TrimReadsQC } from './subworkflows/TrimReadsQCSWF.nf'
+include { ParseDesignSWF  as ParseDesign  } from './subworkflows/ParseDesignSWF.nf'
+include { RawReadsQCSWF   as RawReadsQC   } from './subworkflows/RawReadsQCSWF.nf'
+include { TrimReadsSWF    as TrimReads    } from './subworkflows/TrimReadsSWF.nf'
+include { TrimReadsQCSWF  as TrimReadsQC  } from './subworkflows/TrimReadsQCSWF.nf'
+include { AlignBowtie2SWF as AlignBowtie2 } from './subworkflows/AlignBowtie2SWF.nf'
 
 
 workflow {
     ParseDesign(ch_input)
     RawReadsQC(ParseDesign.out.rawReads, inName)
     TrimReads(ParseDesign.out.rawReads)
-    TrimReadsQC(TrimReads.out.trimReads, inName)
+    TrimReadsQC(TrimReads.out.trimReads, inName) 
+
+    AlignBowtie2(TrimReads.out.trimReads, inName, bt2Indexes)
 }
