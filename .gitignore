@@ -135,5 +135,5 @@ dmypy.json
 test/.nextflow/*
 test/.nextflow.log*
 test/work/*
-test/results/data*
+test/results/*
 
