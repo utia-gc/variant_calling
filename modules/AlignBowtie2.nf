@@ -7,23 +7,28 @@ process AlignBowtie2 {
 
     input:
         tuple val(metadata), file(reads)
-        val(runName)
-        path(bt2Index)
+        val runName
+        path bt2Indexes
 
     output:
         tuple val(metadata), path('*'), emit: sam
 
     script:
+        // set reads arguments
         if (metadata.readType == 'single') {
             argReads = "-1 ${reads}"
         } else {
             argReads = "-1 ${reads[0]} -2 ${reads[1]}"
         }
 
+
+        // determine index base name
+        bt2IndexBaseName = bt2Indexes[0].toString() - ~/.rev.\d.bt2?/ - ~/.\d.bt2?/ - ~/.fa?/
+
         """
         bowtie2 \
-            -x ${bt2Index} \
+            -x ${bt2IndexBaseName} \
             ${argReads} \
-            -S ${runName}__bt2.sam
+            -S ${metadata.sampleName}__bt2.sam
         """
 }

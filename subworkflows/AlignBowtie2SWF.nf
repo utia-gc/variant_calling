@@ -4,9 +4,13 @@ workflow AlignBowtie2SWF {
     take:
         reads
         runName
-        bt2Indexes
+        bt2IndexBase
     
     main:
+        bt2Indexes = Channel
+            .fromPath("${bt2IndexBase}*", checkIfExists: true)
+            .collect()
+
         AlignBowtie2(reads, runName, bt2Indexes)
 
     emit:
