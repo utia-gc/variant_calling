@@ -45,6 +45,10 @@ if (params.help) {
 ---------------------------------------------------------------------
 */
 
+/*
+    Design and Inputs
+*/
+
 // check design file
 if (params.input) {
     ch_input = file(params.input)
@@ -55,6 +59,20 @@ if (params.input) {
 
 // set input design name
 inName = params.input.take(params.input.lastIndexOf('.')).split('/')[-1]
+
+
+/*
+    Genomes and References
+*/
+
+// check genome
+if (params.genomes && params.genome && !params.genomes.containsKey(params.genome)) {
+    exit 1, "Genome '${params.genome}' is not available.\n\tAvailable genomes include: ${params.genomes.keySet().join(", ")}"
+}
+
+
+// set genome variables
+bt2Index = params.genome ? params.genomes[params.genome].bowtie2 ?: false : false
 
 
 /*
@@ -76,5 +94,5 @@ workflow {
     TrimReads(ParseDesign.out.rawReads)
     TrimReadsQC(TrimReads.out.trimReads, inName) 
 
-    AlignBowtie2(TrimReads.out.trimReads, inName, bt2Indexes)
+    AlignBowtie2(TrimReads.out.trimReads, inName, bt2Index)
 }
