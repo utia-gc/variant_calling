@@ -3,11 +3,8 @@ process AlignBowtie2 {
 
     container 'quay.io/biocontainers/bowtie2:2.4.5--py38hfbc8389_2'
 
-    publishDir "${params.baseDirData}/align", mode: 'copy'
-
     input:
         tuple val(metadata), file(reads)
-        val runName
         path bt2Indexes
 
     output:

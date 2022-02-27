@@ -12,7 +12,7 @@ workflow AlignBowtie2SWF {
             .fromPath("${bt2IndexBase}*", checkIfExists: true)
             .collect()
 
-        AlignBowtie2(reads, runName, bt2Indexes)
+        AlignBowtie2(reads, bt2Indexes)
 
         CompressSortSam(AlignBowtie2.out.sam)
 
