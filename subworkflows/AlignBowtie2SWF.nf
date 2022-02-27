@@ -1,4 +1,5 @@
-include { AlignBowtie2 } from '../modules/AlignBowtie2.nf'
+include { AlignBowtie2    } from '../modules/AlignBowtie2.nf'
+include { Samblaster      } from '../modules/Samblaster.nf'
 include { CompressSortSam } from '../modules/CompressSortSam.nf'
 
 workflow AlignBowtie2SWF {
@@ -14,9 +15,10 @@ workflow AlignBowtie2SWF {
 
         AlignBowtie2(reads, bt2Indexes)
 
-        CompressSortSam(AlignBowtie2.out.sam)
+        Samblaster(AlignBowtie2.out.sam)
+
+        CompressSortSam(Samblaster.out.sam)
 
     emit:
-        sam = AlignBowtie2.out.sam
         bam = CompressSortSam.out.bam
 }
