@@ -1,4 +1,5 @@
 include { AlignBowtie2 } from '../modules/AlignBowtie2.nf'
+include { CompressSortSam } from '../modules/CompressSortSam.nf'
 
 workflow AlignBowtie2SWF {
     take:
@@ -13,6 +14,9 @@ workflow AlignBowtie2SWF {
 
         AlignBowtie2(reads, runName, bt2Indexes)
 
+        CompressSortSam(AlignBowtie2.out.sam)
+
     emit:
         sam = AlignBowtie2.out.sam
+        bam = CompressSortSam.out.bam
 }

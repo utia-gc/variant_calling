@@ -5,17 +5,21 @@ Purpose: Nextflow module
 */
 
 process CompressSortSam {
-    tag ""
+    tag "${metadata.sampleName}"
 
-    container ''
+    container 'quay.io/biocontainers/samtools:1.15--h1170115_1'
 
-    publishDir "", mode: 'copy', pattern: ''
+    publishDir "${params.baseDirData}/align", mode: 'copy', pattern: '*.bam'
 
     input:
+        tuple val(metadata), file(sam)
 
     output:
+        tuple val(metadata), file('*.bam'), emit: bam
 
     script:
         """
+        samtools view -bh ${sam} | \
+        samtools sort -o ${metadata.sampleName}__sSR.bam -
         """
 }
