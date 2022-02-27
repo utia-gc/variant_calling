@@ -86,6 +86,7 @@ include { RawReadsQCSWF   as RawReadsQC   } from './subworkflows/RawReadsQCSWF.n
 include { TrimReadsSWF    as TrimReads    } from './subworkflows/TrimReadsSWF.nf'
 include { TrimReadsQCSWF  as TrimReadsQC  } from './subworkflows/TrimReadsQCSWF.nf'
 include { AlignBowtie2SWF as AlignBowtie2 } from './subworkflows/AlignBowtie2SWF.nf'
+include { SamStatsQCSWF   as SamStatsQC   } from './subworkflows/SamStatsQCSWF.nf'
 
 
 workflow {
@@ -94,5 +95,7 @@ workflow {
     TrimReads(ParseDesign.out.rawReads)
     TrimReadsQC(TrimReads.out.trimReads, inName) 
 
-    AlignBowtie2(TrimReads.out.trimReads, inName, bt2Index)
+    AlignBowtie2(TrimReads.out.trimReads, bt2Index)
+    SamStatsQC(AlignBowtie2.out.bamBai, inName)
+
 }
