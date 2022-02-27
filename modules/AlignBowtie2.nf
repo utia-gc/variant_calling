@@ -11,7 +11,7 @@ process AlignBowtie2 {
         path bt2Indexes
 
     output:
-        tuple val(metadata), path('*'), emit: sam
+        tuple val(metadata), stdout, emit: sam
 
     script:
         // set reads arguments
@@ -28,7 +28,6 @@ process AlignBowtie2 {
         """
         bowtie2 \
             -x ${bt2IndexBaseName} \
-            ${argReads} \
-            -S ${metadata.sampleName}__bt2.sam
+            ${argReads}
         """
 }
