@@ -16,12 +16,18 @@ process SamStatsMultiQC {
         file sST
         file sIX
         val runName
+        val toolIDs
 
     output:
         path '*'
 
     script:
+        // update toolID and set suffix
+        toolIDs += 'mqc'
+        suffix = toolIDs ? "__${toolIDs.join('_')}" : ''
+
+
         """
-        multiqc -n ${runName}__fsp_bt2_sST_sIX ${sST} ${sIX}
+        multiqc -n ${runName}${suffix} ${sST} ${sIX}
         """
 }

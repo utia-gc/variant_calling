@@ -5,14 +5,19 @@ process ReadsMultiQC {
     publishDir "${params.baseDirData}/readsQC/trim", mode: 'copy', pattern: '*multiqc_data*'
 
     input:
-        file(fastqc)
-        val(runName)
+        file fastqc
+        val runName
+        val toolIDs
 
     output:
         path "*"
 
     script:
+        // update toolID and set suffix
+        toolIDs += 'mqc'
+        suffix = toolIDs ? "__${toolIDs.join('_')}" : ''
+
         """
-        multiqc -n ${runName}__fsp_fqc_mqc ${fastqc}
+        multiqc -n ${runName}${suffix} ${fastqc}
         """
 }

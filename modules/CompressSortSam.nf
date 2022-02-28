@@ -12,14 +12,19 @@ process CompressSortSam {
     publishDir "${params.baseDirData}/align", mode: 'copy', pattern: '*.bam'
 
     input:
-        tuple val(metadata), stdin
+        tuple val(metadata), stdin, val(toolIDs)
 
     output:
-        tuple val(metadata), file('*.bam'), emit: bam
+        tuple val(metadata), file('*.bam'), val(toolIDs), emit: bam
 
     script:
+        // update toolID and set suffix
+        toolIDs += 'sSR'
+        suffix = toolIDs ? "__${toolIDs.join('_')}" : ''
+
+
         """
         samtools view -bh - | \
-        samtools sort -o ${metadata.sampleName}__sSR.bam -
+        samtools sort -o ${metadata.sampleName}${suffix}.bam -
         """
 }

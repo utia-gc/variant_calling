@@ -12,15 +12,28 @@ process SamStats {
     publishDir "${params.baseDirData}/align/stats", mode: 'copy', pattern: '*.txt'
 
     input:
-        tuple val(metadata), path(bam), path(bai)
+        tuple val(metadata), path(bam), path(bai), val(toolIDs)
 
     output:
-        tuple val(metadata), path("*_sST*"), emit: sST
-        tuple val(metadata), path('*_sIX*'), emit: sIX
+        path '*_sST.txt', emit: sST
+        path '*_sIX-idxstat.txt', emit: sIX
+        val toolIDs, emit: tools
 
     script:
+        // update toolID and set suffix
+        toolIDsST = toolIDs
+        toolIDsST += 'sST'
+        suffixsST = toolIDsST ? "__${toolIDsST.join('_')}" : ''
+
+        toolIDsIX = toolIDs
+        toolIDsIX += 'sIX-idxstat'
+        suffixsIX = toolIDsIX ? "__${toolIDsIX.join('_')}" : ''
+
+        toolIDs += ['sST', 'sIX-idxstat']
+
+
         """
-        samtools stats ${bam} > ${metadata.sampleName}__sbl_sSR_sST.txt
-        samtools idxstats ${bam} > ${metadata.sampleName}__sbl_sSR_sIX-idxstat.txt
+        samtools stats ${bam} > ${metadata.sampleName}${suffixsST}.txt
+        samtools idxstats ${bam} > ${metadata.sampleName}${suffixsIX}.txt
         """
 }

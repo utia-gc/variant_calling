@@ -4,11 +4,11 @@ process AlignBowtie2 {
     container 'quay.io/biocontainers/bowtie2:2.4.5--py38hfbc8389_2'
 
     input:
-        tuple val(metadata), file(reads)
+        tuple val(metadata), file(reads), val(toolIDs)
         path bt2Indexes
 
     output:
-        tuple val(metadata), stdout, emit: sam
+        tuple val(metadata), stdout, val(toolIDs), emit: sam
 
     script:
         // set reads arguments
@@ -17,6 +17,11 @@ process AlignBowtie2 {
         } else {
             argReads = "-1 ${reads[0]} -2 ${reads[1]}"
         }
+
+
+        // update toolID and set suffix
+        toolIDs += "bt2-${params.genome}"
+        suffix = toolIDs ? "__${toolIDs.join('_')}" : ''
 
 
         // determine index base name

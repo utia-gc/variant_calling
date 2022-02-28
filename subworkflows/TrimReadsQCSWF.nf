@@ -8,7 +8,7 @@ workflow TrimReadsQCSWF {
 
     main:
         FastQC(trimReads)
-        ReadsMultiQC(FastQC.out.zip.collect { it[1] } , runName)
+        ReadsMultiQC(FastQC.out.zip.collect(), runName, FastQC.out.tools.first())
 
     emit:
         fqc_zip = FastQC.out.zip
