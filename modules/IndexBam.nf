@@ -12,10 +12,10 @@ process IndexBam {
     publishDir "${params.baseDirData}/align", mode: 'copy', pattern: '*.bai'
 
     input:
-        tuple val(metadata), path(bam)
+        tuple val(metadata), path(bam), val(toolIDs)
 
     output:
-        tuple val(metadata), path(bam), path('*.bai'), emit: bamBai
+        tuple val(metadata), path(bam), path('*.bai'), val(toolIDs), emit: bamBai
 
     script:
         """
