@@ -15,11 +15,12 @@ process SamStats {
         tuple val(metadata), path(bam), path(bai)
 
     output:
-        tuple val(metadata), path("*_sST*"), path("*_sIX*"), emit: samStats
+        tuple val(metadata), path("*_sST*"), emit: sST
+        tuple val(metadata), path('*_sIX*'), emit: sIX
 
     script:
         """
         samtools stats ${bam} > ${metadata.sampleName}__sbl_sSR_sST.txt
-        samtools idxstats ${bam} > ${metadata.sampleName}__sbl_sSR_sIX.txt
+        samtools idxstats ${bam} > ${metadata.sampleName}__sbl_sSR_sIX-idxstat.txt
         """
 }
