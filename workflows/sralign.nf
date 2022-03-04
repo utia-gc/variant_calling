@@ -49,12 +49,44 @@ include { SamStatsQCSWF   as SamStatsQC   } from '../subworkflows/SamStatsQCSWF.
 
 
 workflow sralign {
+
+    /*
+        Read design file, parse sample names and identifiers, and stage reads files
+    */
+
+    // run subworkflow: Parse design file
     ParseDesign(ch_input)
-    RawReadsQC(ParseDesign.out.rawReads, inName)
+
+    // collect output
+    ch_rawReads = ParseDesign.out.rawReads
+
+
+    /*
+        Raw reads
+    */
+
+    // run subworkflow: Raw reads fastqc and mulitqc
+    RawReadsQC(ch_rawReads, inName)
+
+
+    /*
+        Trim raw reads
+    */
+
+    // run subworkflow: Trim raw reads
     TrimReads(ParseDesign.out.rawReads)
+
+    // run subworkflow: Trimmed reads fastqc and multiqc
     TrimReadsQC(TrimReads.out.trimReads, inName) 
 
-    AlignBowtie2(TrimReads.out.trimReads, bt2Index)
-    SamStatsQC(AlignBowtie2.out.bamBai, inName)
 
+    /*
+        Align reads to genome
+    */
+
+    // run subworkflow: Align trimmed reads to genome, mark dups, sort and compress sam, and index bam
+    AlignBowtie2(TrimReads.out.trimReads, bt2Index)
+
+    // run subworkflow: Samtools stats and samtools idxstats and multiqc of alignment results
+    SamStatsQC(AlignBowtie2.out.bamBai, inName)
 }
