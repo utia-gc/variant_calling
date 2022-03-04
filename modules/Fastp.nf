@@ -1,6 +1,8 @@
 process Fastp {
     tag "${metadata.sampleName}"
 
+    label 'mem_mid'
+
     container 'quay.io/biocontainers/fastp:0.23.2--h79da9fb_0'
 
     input:
