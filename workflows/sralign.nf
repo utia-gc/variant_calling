@@ -1,11 +1,13 @@
 /*
----------------------------------------------------------------------
+=====================================================================
     HANDLE INPUTS
----------------------------------------------------------------------
+=====================================================================
 */
 
 /*
+    ---------------------------------------------------------------------
     Design and Inputs
+    ---------------------------------------------------------------------
 */
 
 // check design file
@@ -21,7 +23,9 @@ inName = params.input.take(params.input.lastIndexOf('.')).split('/')[-1]
 
 
 /*
+    ---------------------------------------------------------------------
     Genomes and References
+    ---------------------------------------------------------------------
 */
 
 // check genome
@@ -35,9 +39,9 @@ bt2Index = params.genome ? params.genomes[params.genome].bowtie2 ?: false : fals
 
 
 /*
----------------------------------------------------------------------
+=====================================================================
     MAIN WORKFLOW
----------------------------------------------------------------------
+=====================================================================
 */
 
 include { ParseDesignSWF  as ParseDesign  } from '../subworkflows/ParseDesignSWF.nf'
@@ -51,18 +55,22 @@ include { SamStatsQCSWF   as SamStatsQC   } from '../subworkflows/SamStatsQCSWF.
 workflow sralign {
 
     /*
+    ---------------------------------------------------------------------
         Read design file, parse sample names and identifiers, and stage reads files
+    ---------------------------------------------------------------------
     */
 
     // run subworkflow: Parse design file
     ParseDesign(ch_input)
 
-    // collect output
+    // collect output: Raw reads
     ch_rawReads = ParseDesign.out.rawReads
 
 
     /*
+    ---------------------------------------------------------------------
         Raw reads
+    ---------------------------------------------------------------------
     */
 
     // run subworkflow: Raw reads fastqc and mulitqc
@@ -70,23 +78,33 @@ workflow sralign {
 
 
     /*
+    ---------------------------------------------------------------------
         Trim raw reads
+    ---------------------------------------------------------------------
     */
 
     // run subworkflow: Trim raw reads
-    TrimReads(ParseDesign.out.rawReads)
+    TrimReads(ch_rawReads)
+
+    // collect output: Trimmed reads
+    ch_trimReads = TrimReads.out.trimReads
 
     // run subworkflow: Trimmed reads fastqc and multiqc
-    TrimReadsQC(TrimReads.out.trimReads, inName) 
+    TrimReadsQC(ch_trimReads, inName) 
 
 
     /*
+    ---------------------------------------------------------------------
         Align reads to genome
+    ---------------------------------------------------------------------
     */
 
     // run subworkflow: Align trimmed reads to genome, mark dups, sort and compress sam, and index bam
-    AlignBowtie2(TrimReads.out.trimReads, bt2Index)
+    AlignBowtie2(ch_trimReads, bt2Index)
+
+    // collect output: Indexed bams
+    ch_indexedBam = AlignBowtie2.out.bamBai
 
     // run subworkflow: Samtools stats and samtools idxstats and multiqc of alignment results
-    SamStatsQC(AlignBowtie2.out.bamBai, inName)
+    SamStatsQC(ch_indexedBam, inName)
 }
