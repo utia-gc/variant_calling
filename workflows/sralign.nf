@@ -73,8 +73,8 @@ workflow sralign {
     ---------------------------------------------------------------------
     */
 
-    // run subworkflow: Raw reads fastqc and mulitqc
     if (!params.skipRawFastQC) {
+        // Subworkflow: Raw reads fastqc and mulitqc
         RawReadsQC(ch_rawReads, inName)
     }
 
@@ -85,14 +85,16 @@ workflow sralign {
     ---------------------------------------------------------------------
     */
 
-    // run subworkflow: Trim raw reads
-    TrimReads(ch_rawReads)
+    if (!params.skipTrimReads) {
+        // Subworkflow: Trim raw reads
+        TrimReads(ch_rawReads)
+        ch_trimReads = TrimReads.out.trimReads
 
-    // collect output: Trimmed reads
-    ch_trimReads = TrimReads.out.trimReads
-
-    // run subworkflow: Trimmed reads fastqc and multiqc
-    TrimReadsQC(ch_trimReads, inName) 
+        if (!params.skipTrimReadsQC) {
+            // Subworkflow: Trimmed reads fastqc and multiqc
+            TrimReadsQC(ch_trimReads, inName) 
+        }
+    } 
 
 
     /*
