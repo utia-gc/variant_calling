@@ -3,6 +3,8 @@ process AlignBowtie2 {
 
     container 'quay.io/biocontainers/bowtie2:2.4.5--py38hfbc8389_2'
 
+    label 'cpu_mid'
+
     input:
         tuple val(metadata), file(reads), val(toolIDs)
         path bt2Indexes
