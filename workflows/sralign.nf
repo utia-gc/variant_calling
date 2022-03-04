@@ -74,7 +74,9 @@ workflow sralign {
     */
 
     // run subworkflow: Raw reads fastqc and mulitqc
-    RawReadsQC(ch_rawReads, inName)
+    if (!params.skipRawFastQC) {
+        RawReadsQC(ch_rawReads, inName)
+    }
 
 
     /*
