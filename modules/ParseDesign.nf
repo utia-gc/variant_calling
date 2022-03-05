@@ -1,7 +1,7 @@
 process ParseDesign {
     tag "${design}"
 
-    container 'kyclark/tiny_python_projects:0.2.0'
+    container 'quay.io/biocontainers/python-bioext:0.20.4--py39h7f6d023_1'
 
     publishDir "${params.baseDirData}/design", mode: 'copy'
 
