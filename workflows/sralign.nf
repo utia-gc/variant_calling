@@ -60,10 +60,10 @@ workflow sralign {
     ---------------------------------------------------------------------
     */
 
-    // run subworkflow: Parse design file
-    ParseDesign(ch_input)
-
-    // collect output: Raw reads
+    // Subworkflow: Parse design file
+    ParseDesign(
+        ch_input
+    )
     ch_rawReads = ParseDesign.out.rawReads
 
 
@@ -75,7 +75,10 @@ workflow sralign {
 
     if (!params.skipRawFastQC) {
         // Subworkflow: Raw reads fastqc and mulitqc
-        RawReadsQC(ch_rawReads, inName)
+        RawReadsQC(
+            ch_rawReads,
+            inName
+        )
     }
 
 
@@ -85,14 +88,20 @@ workflow sralign {
     ---------------------------------------------------------------------
     */
 
+    ch_trimReads = Channel.empty()
     if (!params.skipTrimReads) {
         // Subworkflow: Trim raw reads
-        TrimReads(ch_rawReads)
+        TrimReads(
+            ch_rawReads
+        )
         ch_trimReads = TrimReads.out.trimReads
 
         if (!params.skipTrimReadsQC) {
             // Subworkflow: Trimmed reads fastqc and multiqc
-            TrimReadsQC(ch_trimReads, inName) 
+            TrimReadsQC(
+                ch_trimReads,
+                inName
+            ) 
         }
     } 
 
@@ -103,12 +112,25 @@ workflow sralign {
     ---------------------------------------------------------------------
     */
 
+    // Set channel of reads for alignments
+    if (!params.forceAlignRawReads) {
+        ch_readsToAlign = ch_trimReads ?: ch_rawReads
+    } else {
+        ch_readsToAlign = ch_rawReads
+    }
+
     // run subworkflow: Align trimmed reads to genome, mark dups, sort and compress sam, and index bam
-    AlignBowtie2(ch_trimReads, bt2Index)
+    AlignBowtie2(
+        ch_readsToAlign,
+        bt2Index
+    )
 
     // collect output: Indexed bams
     ch_indexedBam = AlignBowtie2.out.bamBai
 
     // run subworkflow: Samtools stats and samtools idxstats and multiqc of alignment results
-    SamStatsQC(ch_indexedBam, inName)
+    SamStatsQC(
+        ch_readsToAlign,
+        inName
+    )
 }
