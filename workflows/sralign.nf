@@ -88,7 +88,6 @@ workflow sralign {
     ---------------------------------------------------------------------
     */
 
-    ch_trimReads = Channel.empty()
     if (!params.skipTrimReads) {
         // Subworkflow: Trim raw reads
         TrimReads(
@@ -130,7 +129,7 @@ workflow sralign {
 
     // run subworkflow: Samtools stats and samtools idxstats and multiqc of alignment results
     SamStatsQC(
-        ch_readsToAlign,
+        ch_indexedBam,
         inName
     )
 }
