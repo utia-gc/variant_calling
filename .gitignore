@@ -136,4 +136,5 @@ test/.nextflow/*
 test/.nextflow.log*
 test/work/*
 test/results/*
+test/data/references/Escherichia_coli_K_12_DH10B/*
 
