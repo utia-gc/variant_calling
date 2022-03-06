@@ -51,6 +51,7 @@ def setGenomeParams (attribute) {
 
 params.fasta   = setGenomeParams('fasta')
 params.bowtie2 = setGenomeParams('bowtie2')
+params.hisat2  = setGenomeParams('hisat2')
 
 
 /*

@@ -13,7 +13,7 @@
 
 def tools = [
     trim      : ['fastp'],
-    alignment : ['bowtie2']
+    alignment : ['bowtie2', 'hisat2']
 ]
 
 // check valid read-trimming tool
