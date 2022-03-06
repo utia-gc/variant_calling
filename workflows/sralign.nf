@@ -162,8 +162,11 @@ workflow sralign {
                 break
             
             case 'hisat2':
-                // Subworkflow: Build hisat2 genome
-                AlignHisat2()
+                // Subworkflow: Align reads to genome with hisat2 and build index if necessary
+                AlignHisat2(
+                    ch_readsToAlign
+                )
+                ch_samGenome = AlignHisat2.out.sam
                 break
         }
     
