@@ -1,5 +1,5 @@
 include { Bowtie2Build } from '../modules/Bowtie2Build.nf'
-include { AlignBowtie2 } from '../modules/AlignBowtie2.nf'
+include { Bowtie2Align } from '../modules/Bowtie2Align.nf'
 
 workflow AlignBowtie2SWF {
     take:
@@ -18,8 +18,8 @@ workflow AlignBowtie2SWF {
             .set { bowtie2Indexes }
         }
 
-        AlignBowtie2(reads, bowtie2Indexes)
+        Bowtie2Align(reads, bowtie2Indexes)
 
     emit:
-        sam = AlignBowtie2.out.sam
+        sam = Bowtie2Align.out.sam
 }
