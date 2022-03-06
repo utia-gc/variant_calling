@@ -1,7 +1,4 @@
 include { AlignBowtie2    } from '../modules/AlignBowtie2.nf'
-include { Samblaster      } from '../modules/Samblaster.nf'
-include { CompressSortSam } from '../modules/CompressSortSam.nf'
-include { IndexBam        } from '../modules/IndexBam.nf'
 
 workflow AlignBowtie2SWF {
     take:
@@ -15,14 +12,6 @@ workflow AlignBowtie2SWF {
 
         AlignBowtie2(reads, bt2Indexes)
 
-        Samblaster(AlignBowtie2.out.sam)
-
-        CompressSortSam(Samblaster.out.sam)
-
-        IndexBam(CompressSortSam.out.bam)
-
-
     emit:
-        bam = CompressSortSam.out.bam
-        bamBai = IndexBam.out.bamBai
+        sam = AlignBowtie2.out.sam
 }
