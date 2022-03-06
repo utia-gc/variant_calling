@@ -55,10 +55,6 @@ if (params.genomes && params.genome && !params.genomes.containsKey(params.genome
 }
 
 
-// set genome variables
-bt2Index = params.genome ? params.genomes[params.genome].bowtie2 ?: false : false
-
-
 /*
 =====================================================================
     MAIN WORKFLOW
@@ -158,8 +154,7 @@ workflow sralign {
             case 'bowtie2':
                 // Subworkflow: Align trimmed reads to genome, mark dups, sort and compress sam, and index bam
                 AlignBowtie2(
-                    ch_readsToAlign,
-                    bt2Index
+                    ch_readsToAlign
                 )
                 ch_samGenome = AlignBowtie2.out.sam
                 break

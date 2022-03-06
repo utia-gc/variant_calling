@@ -1,4 +1,4 @@
-process AlignBowtie2 {
+process Bowtie2Align {
     tag "${metadata.sampleName}"
 
     container 'quay.io/biocontainers/bowtie2:2.4.5--py38hfbc8389_2'

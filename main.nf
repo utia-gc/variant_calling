@@ -41,12 +41,25 @@ if (params.help) {
 
 /*
 ---------------------------------------------------------------------
+    SET GENOME PARAMETERS
+---------------------------------------------------------------------
+*/
+
+def setGenomeParams (attribute) {
+    return params.genomes[ params.genome ][ attribute ]
+}
+
+params.fasta   = setGenomeParams('fasta')
+params.bowtie2 = setGenomeParams('bowtie2')
+
+
+/*
+---------------------------------------------------------------------
     RUN MAIN WORKFLOW
 ---------------------------------------------------------------------
 */
 
 include { sralign } from './workflows/sralign.nf'
-
 
 workflow {
     sralign()

@@ -1,17 +1,25 @@
-include { AlignBowtie2    } from '../modules/AlignBowtie2.nf'
+include { Bowtie2Build } from '../modules/Bowtie2Build.nf'
+include { Bowtie2Align } from '../modules/Bowtie2Align.nf'
 
 workflow AlignBowtie2SWF {
     take:
         reads
-        bt2IndexBase
     
     main:
-        bt2Indexes = Channel
-            .fromPath("${bt2IndexBase}*", checkIfExists: true)
+        if (params.bowtie2) {
+            bowtie2Indexes = Channel
+                .fromPath("${params.bowtie2}*", checkIfExists: true)
+                .collect()
+        } else {
+            Bowtie2Build(
+                params.fasta
+            )
             .collect()
+            .set { bowtie2Indexes }
+        }
 
-        AlignBowtie2(reads, bt2Indexes)
+        Bowtie2Align(reads, bowtie2Indexes)
 
     emit:
-        sam = AlignBowtie2.out.sam
+        sam = Bowtie2Align.out.sam
 }
