@@ -152,7 +152,7 @@ workflow sralign {
         // Align reads to genome
         switch (params.alignmentTool) {
             case 'bowtie2':
-                // Subworkflow: Align trimmed reads to genome, mark dups, sort and compress sam, and index bam
+                // Subworkflow: Align reads to genome with bowtie2 and build index if necessary
                 AlignBowtie2(
                     ch_readsToAlign
                 )
