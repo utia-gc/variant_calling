@@ -160,6 +160,7 @@ workflow sralign {
                     bt2Index
                 )
                 ch_indexedBam = AlignBowtie2.out.bamBai
+                break
         }
 
 
