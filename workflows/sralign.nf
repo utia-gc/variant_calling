@@ -150,14 +150,18 @@ workflow sralign {
     }
 
 
-    // Align reads to genome
     if (!params.skipAlignGenome) {
-        // Subworkflow: Align trimmed reads to genome, mark dups, sort and compress sam, and index bam
-        AlignBowtie2(
-            ch_readsToAlign,
-            bt2Index
-        )
-        ch_indexedBam = AlignBowtie2.out.bamBai
+        // Align reads to genome
+        switch (params.alignmentTool) {
+            case 'bowtie2':
+                // Subworkflow: Align trimmed reads to genome, mark dups, sort and compress sam, and index bam
+                AlignBowtie2(
+                    ch_readsToAlign,
+                    bt2Index
+                )
+                ch_indexedBam = AlignBowtie2.out.bamBai
+        }
+
 
         if (!params.skipSamStatsQC) {
             // Subworkflow: Samtools stats and samtools idxstats and multiqc of alignment results
