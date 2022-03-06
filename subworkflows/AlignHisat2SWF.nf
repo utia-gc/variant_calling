@@ -15,6 +15,4 @@ workflow AlignHisat2SWF {
             .collect()
             .set { hisat2Indexes }
         }
-
-    emit:
 }
