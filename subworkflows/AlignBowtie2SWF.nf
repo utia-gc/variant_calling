@@ -6,14 +6,13 @@ workflow AlignBowtie2SWF {
         reads
     
     main:
-        bowtie2Index = params.genomes[params.genome].bowtie2 ?: false
-        if (bowtie2Index) {
+        if (params.bowtie2) {
             bowtie2Indexes = Channel
-                .fromPath("${bowtie2Index}*", checkIfExists: true)
+                .fromPath("${params.bowtie2}*", checkIfExists: true)
                 .collect()
         } else {
             Bowtie2Build(
-                params.genomes[params.genome].fasta
+                params.fasta
             )
             .collect()
             .set { bowtie2Indexes }
