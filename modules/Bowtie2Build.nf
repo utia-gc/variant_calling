@@ -16,7 +16,12 @@ process Bowtie2Build {
         path '*', emit: bowtie2Index
 
     script:
+        // set index basename
+        bt2Base = reference.toString() - ~/.fa?/
         """
-        bowtie2-build ${reference}
+        bowtie2-build \
+            --threads ${task.cpus} \
+            ${reference} \
+            ${bt2Base}
         """
 }
