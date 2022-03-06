@@ -66,6 +66,7 @@ include { RawReadsQCSWF    as RawReadsQC    } from '../subworkflows/RawReadsQCSW
 include { TrimReadsSWF     as TrimReads     } from '../subworkflows/TrimReadsSWF.nf'
 include { TrimReadsQCSWF   as TrimReadsQC   } from '../subworkflows/TrimReadsQCSWF.nf'
 include { AlignBowtie2SWF  as AlignBowtie2  } from '../subworkflows/AlignBowtie2SWF.nf'
+include { AlignHisat2SWF   as AlignHisat2   } from '../subworkflows/AlignHisat2SWF.nf'
 include { PreprocessSamSWF as PreprocessSam } from '../subworkflows/PreprocessSamSWF.nf'
 include { SamStatsQCSWF    as SamStatsQC    } from '../subworkflows/SamStatsQCSWF.nf'
 
@@ -149,6 +150,7 @@ workflow sralign {
 
 
     if (!params.skipAlignGenome) {
+        ch_samGenome = Channel.empty()
         // Align reads to genome
         switch (params.alignmentTool) {
             case 'bowtie2':
@@ -157,6 +159,11 @@ workflow sralign {
                     ch_readsToAlign
                 )
                 ch_samGenome = AlignBowtie2.out.sam
+                break
+            
+            case 'hisat2':
+                // Subworkflow: Build hisat2 genome
+                AlignHisat2()
                 break
         }
     
