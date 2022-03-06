@@ -65,12 +65,13 @@ bt2Index = params.genome ? params.genomes[params.genome].bowtie2 ?: false : fals
 =====================================================================
 */
 
-include { ParseDesignSWF  as ParseDesign  } from '../subworkflows/ParseDesignSWF.nf'
-include { RawReadsQCSWF   as RawReadsQC   } from '../subworkflows/RawReadsQCSWF.nf'
-include { TrimReadsSWF    as TrimReads    } from '../subworkflows/TrimReadsSWF.nf'
-include { TrimReadsQCSWF  as TrimReadsQC  } from '../subworkflows/TrimReadsQCSWF.nf'
-include { AlignBowtie2SWF as AlignBowtie2 } from '../subworkflows/AlignBowtie2SWF.nf'
-include { SamStatsQCSWF   as SamStatsQC   } from '../subworkflows/SamStatsQCSWF.nf'
+include { ParseDesignSWF   as ParseDesign   } from '../subworkflows/ParseDesignSWF.nf'
+include { RawReadsQCSWF    as RawReadsQC    } from '../subworkflows/RawReadsQCSWF.nf'
+include { TrimReadsSWF     as TrimReads     } from '../subworkflows/TrimReadsSWF.nf'
+include { TrimReadsQCSWF   as TrimReadsQC   } from '../subworkflows/TrimReadsQCSWF.nf'
+include { AlignBowtie2SWF  as AlignBowtie2  } from '../subworkflows/AlignBowtie2SWF.nf'
+include { PreprocessSamSWF as PreprocessSam } from '../subworkflows/PreprocessSamSWF.nf'
+include { SamStatsQCSWF    as SamStatsQC    } from '../subworkflows/SamStatsQCSWF.nf'
 
 
 workflow sralign {
@@ -121,6 +122,7 @@ workflow sralign {
                 break
         }
 
+
         // Trimmed reads QC
         if (!params.skipTrimReadsQC) {
             // Subworkflow: Trimmed reads fastqc and multiqc
@@ -159,15 +161,22 @@ workflow sralign {
                     ch_readsToAlign,
                     bt2Index
                 )
-                ch_indexedBam = AlignBowtie2.out.bamBai
+                ch_samGenome = AlignBowtie2.out.sam
                 break
         }
+    
+
+    PreprocessSam(
+        ch_samGenome
+    )
+    ch_bamGenome        = PreprocessSam.out.bam
+    ch_bamIndexedGenome = PreprocessSam.out.bamBai
 
 
         if (!params.skipSamStatsQC) {
             // Subworkflow: Samtools stats and samtools idxstats and multiqc of alignment results
             SamStatsQC(
-                ch_indexedBam,
+                ch_bamIndexedGenome,
                 inName
             )
         }
