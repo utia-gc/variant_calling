@@ -5,17 +5,28 @@ Purpose: Build hisat2 index
 */
 
 process Hisat2Build {
-    tag ""
+    tag "${parms.genome}"
 
-    container ''
-
-    publishDir "", mode: 'copy', pattern: ''
+    container 'quay.io/biocontainers/hisat2:2.2.1--h87f3376_4'
 
     input:
+        path reference
 
     output:
+        path '*', emit: hisat2Index
 
     script:
+        // set index basename
+        def ht2Base = reference.toString() - ~/.fa?/
+
+        // set arguments
+        def options = task.ext.args ?: ''
+
+        // build hisat2 index
         """
+        hisat2-build \
+            ${options} \
+            ${reference} \
+            ${ht2Base}
         """
 }
