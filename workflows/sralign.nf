@@ -110,12 +110,18 @@ workflow sralign {
     */
 
     if (!params.skipTrimReads) {
-        // Subworkflow: Trim raw reads
-        TrimReads(
-            ch_rawReads
-        )
-        ch_trimReads = TrimReads.out.trimReads
+        // Trim reads
+        switch (params.trimTool) {
+            case 'fastp':
+                // Subworkflow: Trim raw reads
+                TrimReads(
+                    ch_rawReads
+                )
+                ch_trimReads = TrimReads.out.trimReads
+                break
+        }
 
+        // Trimmed reads QC
         if (!params.skipTrimReadsQC) {
             // Subworkflow: Trimmed reads fastqc and multiqc
             TrimReadsQC(
