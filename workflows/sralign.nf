@@ -4,6 +4,27 @@
 =====================================================================
 */
 
+
+/*
+    ---------------------------------------------------------------------
+    Tools
+    ---------------------------------------------------------------------
+*/
+
+def tools = [
+    trim      : ['fastp'],
+    alignment : ['bowtie2']
+]
+
+// check valid read-trimming tool
+assert params.trimTool in tools.trim , 
+    "'${params.trimTool}' is not a valid read trimming tool.\n\tValid options: ${tools.trim.join(', ')}\n\t" 
+
+// check valid alignment tool
+assert params.alignmentTool in tools.alignment , 
+    "'${params.alignmentTool}' is not a valid alignment tool.\n\tValid options: ${tools.alignment.join(', ')}\n\t"
+
+
 /*
     ---------------------------------------------------------------------
     Design and Inputs
