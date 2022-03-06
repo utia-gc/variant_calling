@@ -111,7 +111,7 @@ workflow sralign {
     ---------------------------------------------------------------------
     */
 
-    // Set channel of reads for alignments
+    // Set channel of reads to align 
     if (!params.forceAlignRawReads) {
         if (!params.skipTrimReads) {
             ch_readsToAlign = ch_trimReads
@@ -122,18 +122,22 @@ workflow sralign {
         ch_readsToAlign = ch_rawReads
     }
 
-    // run subworkflow: Align trimmed reads to genome, mark dups, sort and compress sam, and index bam
-    AlignBowtie2(
-        ch_readsToAlign,
-        bt2Index
-    )
 
-    // collect output: Indexed bams
-    ch_indexedBam = AlignBowtie2.out.bamBai
+    // Align reads to genome
+    if (!params.skipAlignGenome) {
+        // Subworkflow: Align trimmed reads to genome, mark dups, sort and compress sam, and index bam
+        AlignBowtie2(
+            ch_readsToAlign,
+            bt2Index
+        )
+        ch_indexedBam = AlignBowtie2.out.bamBai
 
-    // run subworkflow: Samtools stats and samtools idxstats and multiqc of alignment results
-    SamStatsQC(
-        ch_indexedBam,
-        inName
-    )
+        if (!params.skipSamStatsQC) {
+            // Subworkflow: Samtools stats and samtools idxstats and multiqc of alignment results
+            SamStatsQC(
+                ch_indexedBam,
+                inName
+            )
+        }
+    }
 }
