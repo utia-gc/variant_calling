@@ -13,7 +13,7 @@
 
 def tools = [
     trim      : ['fastp'],
-    alignment : ['bowtie2']
+    alignment : ['bowtie2', 'hisat2']
 ]
 
 // check valid read-trimming tool
@@ -66,6 +66,7 @@ include { RawReadsQCSWF    as RawReadsQC    } from '../subworkflows/RawReadsQCSW
 include { TrimReadsSWF     as TrimReads     } from '../subworkflows/TrimReadsSWF.nf'
 include { TrimReadsQCSWF   as TrimReadsQC   } from '../subworkflows/TrimReadsQCSWF.nf'
 include { AlignBowtie2SWF  as AlignBowtie2  } from '../subworkflows/AlignBowtie2SWF.nf'
+include { AlignHisat2SWF   as AlignHisat2   } from '../subworkflows/AlignHisat2SWF.nf'
 include { PreprocessSamSWF as PreprocessSam } from '../subworkflows/PreprocessSamSWF.nf'
 include { SamStatsQCSWF    as SamStatsQC    } from '../subworkflows/SamStatsQCSWF.nf'
 
@@ -149,14 +150,23 @@ workflow sralign {
 
 
     if (!params.skipAlignGenome) {
+        ch_samGenome = Channel.empty()
         // Align reads to genome
         switch (params.alignmentTool) {
             case 'bowtie2':
-                // Subworkflow: Align trimmed reads to genome, mark dups, sort and compress sam, and index bam
+                // Subworkflow: Align reads to genome with bowtie2 and build index if necessary
                 AlignBowtie2(
                     ch_readsToAlign
                 )
                 ch_samGenome = AlignBowtie2.out.sam
+                break
+            
+            case 'hisat2':
+                // Subworkflow: Align reads to genome with hisat2 and build index if necessary
+                AlignHisat2(
+                    ch_readsToAlign
+                )
+                ch_samGenome = AlignHisat2.out.sam
                 break
         }
     
