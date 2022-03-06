@@ -1,11 +1,34 @@
 /*
----------------------------------------------------------------------
+=====================================================================
     HANDLE INPUTS
----------------------------------------------------------------------
+=====================================================================
 */
 
+
 /*
+    ---------------------------------------------------------------------
+    Tools
+    ---------------------------------------------------------------------
+*/
+
+def tools = [
+    trim      : ['fastp'],
+    alignment : ['bowtie2']
+]
+
+// check valid read-trimming tool
+assert params.trimTool in tools.trim , 
+    "'${params.trimTool}' is not a valid read trimming tool.\n\tValid options: ${tools.trim.join(', ')}\n\t" 
+
+// check valid alignment tool
+assert params.alignmentTool in tools.alignment , 
+    "'${params.alignmentTool}' is not a valid alignment tool.\n\tValid options: ${tools.alignment.join(', ')}\n\t"
+
+
+/*
+    ---------------------------------------------------------------------
     Design and Inputs
+    ---------------------------------------------------------------------
 */
 
 // check design file
@@ -21,7 +44,9 @@ inName = params.input.take(params.input.lastIndexOf('.')).split('/')[-1]
 
 
 /*
+    ---------------------------------------------------------------------
     Genomes and References
+    ---------------------------------------------------------------------
 */
 
 // check genome
@@ -35,9 +60,9 @@ bt2Index = params.genome ? params.genomes[params.genome].bowtie2 ?: false : fals
 
 
 /*
----------------------------------------------------------------------
+=====================================================================
     MAIN WORKFLOW
----------------------------------------------------------------------
+=====================================================================
 */
 
 include { ParseDesignSWF  as ParseDesign  } from '../subworkflows/ParseDesignSWF.nf'
@@ -49,12 +74,101 @@ include { SamStatsQCSWF   as SamStatsQC   } from '../subworkflows/SamStatsQCSWF.
 
 
 workflow sralign {
-    ParseDesign(ch_input)
-    RawReadsQC(ParseDesign.out.rawReads, inName)
-    TrimReads(ParseDesign.out.rawReads)
-    TrimReadsQC(TrimReads.out.trimReads, inName) 
 
-    AlignBowtie2(TrimReads.out.trimReads, bt2Index)
-    SamStatsQC(AlignBowtie2.out.bamBai, inName)
+    /*
+    ---------------------------------------------------------------------
+        Read design file, parse sample names and identifiers, and stage reads files
+    ---------------------------------------------------------------------
+    */
 
+    // Subworkflow: Parse design file
+    ParseDesign(
+        ch_input
+    )
+    ch_rawReads = ParseDesign.out.rawReads
+
+
+    /*
+    ---------------------------------------------------------------------
+        Raw reads
+    ---------------------------------------------------------------------
+    */
+
+    if (!params.skipRawFastQC) {
+        // Subworkflow: Raw reads fastqc and mulitqc
+        RawReadsQC(
+            ch_rawReads,
+            inName
+        )
+    }
+
+
+    /*
+    ---------------------------------------------------------------------
+        Trim raw reads
+    ---------------------------------------------------------------------
+    */
+
+    if (!params.skipTrimReads) {
+        // Trim reads
+        switch (params.trimTool) {
+            case 'fastp':
+                // Subworkflow: Trim raw reads
+                TrimReads(
+                    ch_rawReads
+                )
+                ch_trimReads = TrimReads.out.trimReads
+                break
+        }
+
+        // Trimmed reads QC
+        if (!params.skipTrimReadsQC) {
+            // Subworkflow: Trimmed reads fastqc and multiqc
+            TrimReadsQC(
+                ch_trimReads,
+                inName
+            ) 
+        }
+    } 
+
+
+    /*
+    ---------------------------------------------------------------------
+        Align reads to genome
+    ---------------------------------------------------------------------
+    */
+
+    // Set channel of reads to align 
+    if (!params.forceAlignRawReads) {
+        if (!params.skipTrimReads) {
+            ch_readsToAlign = ch_trimReads
+        } else {
+            ch_readsToAlign = ch_rawReads
+        }
+    } else {
+        ch_readsToAlign = ch_rawReads
+    }
+
+
+    if (!params.skipAlignGenome) {
+        // Align reads to genome
+        switch (params.alignmentTool) {
+            case 'bowtie2':
+                // Subworkflow: Align trimmed reads to genome, mark dups, sort and compress sam, and index bam
+                AlignBowtie2(
+                    ch_readsToAlign,
+                    bt2Index
+                )
+                ch_indexedBam = AlignBowtie2.out.bamBai
+        }
+
+
+        if (!params.skipSamStatsQC) {
+            // Subworkflow: Samtools stats and samtools idxstats and multiqc of alignment results
+            SamStatsQC(
+                ch_indexedBam,
+                inName
+            )
+        }
+    }
 }

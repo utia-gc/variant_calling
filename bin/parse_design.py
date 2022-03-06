@@ -6,7 +6,6 @@ Purpose: Parse input design file for nextflow pipeline
 """
 
 import argparse
-import pytest
 import sys
 import os
 
