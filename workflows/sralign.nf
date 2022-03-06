@@ -113,7 +113,11 @@ workflow sralign {
 
     // Set channel of reads for alignments
     if (!params.forceAlignRawReads) {
-        ch_readsToAlign = ch_trimReads ?: ch_rawReads
+        if (!params.skipTrimReads) {
+            ch_readsToAlign = ch_trimReads
+        } else {
+            ch_readsToAlign = ch_rawReads
+        }
     } else {
         ch_readsToAlign = ch_rawReads
     }
