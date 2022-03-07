@@ -41,37 +41,27 @@ if (params.help) {
 
 /*
 ---------------------------------------------------------------------
-    HANDLE INPUTS
+    SET GENOME PARAMETERS
 ---------------------------------------------------------------------
 */
 
-// check design file
-if (params.input) {
-    ch_input = file(params.input)
-} else {
-    exit 1, 'Input design file not specified!'
+def setGenomeParams (attribute) {
+    return params.genomes[ params.genome ][ attribute ]
 }
 
-
-// set input design name
-inName = params.input.take(params.input.lastIndexOf('.')).split('/')[-1]
+params.fasta   = setGenomeParams('fasta')
+params.bowtie2 = setGenomeParams('bowtie2')
+params.hisat2  = setGenomeParams('hisat2')
 
 
 /*
 ---------------------------------------------------------------------
-    MAIN WORKFLOW
+    RUN MAIN WORKFLOW
 ---------------------------------------------------------------------
 */
 
-include { ParseDesignSWF as ParseDesign } from './subworkflows/ParseDesignSWF.nf'
-include { RawReadsQCSWF as RawReadsQC }   from './subworkflows/RawReadsQCSWF.nf'
-include { TrimReadsSWF as TrimReads }     from './subworkflows/TrimReadsSWF.nf'
-include { TrimReadsQCSWF as TrimReadsQC } from './subworkflows/TrimReadsQCSWF.nf'
-
+include { sralign } from './workflows/sralign.nf'
 
 workflow {
-    ParseDesign(ch_input)
-    RawReadsQC(ParseDesign.out.rawReads, inName)
-    TrimReads(ParseDesign.out.rawReads)
-    TrimReadsQC(TrimReads.out.trimReads, inName)
+    sralign()
 }

@@ -32,6 +32,10 @@ def createReadsChannel(LinkedHashMap row) {
         reads = [file(row.fq1), file(row.fq2)]
     }
 
+
+    // create an empty list for tool IDs for suffixes
+    toolIDs = []
+
     // check that reads files exist
     reads.each {
         if (!it.exists()) {
@@ -39,5 +43,5 @@ def createReadsChannel(LinkedHashMap row) {
         }
     }
 
-    return [metadata, reads]
+    return [metadata, reads, toolIDs]
 }
