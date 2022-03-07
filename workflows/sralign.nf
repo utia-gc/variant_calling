@@ -186,4 +186,32 @@ workflow sralign {
             )
         }
     }
+
+    /*
+    ---------------------------------------------------------------------
+        Check contamination 
+    ---------------------------------------------------------------------
+    */
+
+    if (!params.skipAlignContam) {
+        ch_samContam = Channel.empty()
+        // Align reads to contaminant genome
+        switch (params.alignmentTool) {
+            case 'bowtie2':
+                // Subworkflow: Align reads to contaminant genome with bowtie2 and build index if necessary
+                AlignBowtie2(
+                    ch_readsToAlign
+                )
+                ch_samContam = AlignBowtie2.out.sam
+                break
+            
+            case 'hisat2':
+                // Subworkflow: Align reads to contaminant genome with hisat2 and build index if necessary
+                AlignHisat2(
+                    ch_readsToAlign
+                )
+                ch_samContam = AlignHisat2.out.sam
+                break
+        }
+    }
 }
