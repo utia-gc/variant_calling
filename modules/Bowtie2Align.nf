@@ -27,12 +27,16 @@ process Bowtie2Align {
         suffix = toolIDs ? "__${toolIDs.join('_')}" : ''
 
 
-        // determine index base name
+        // set index base name
         bt2IndexBaseName = bt2Indexes[0].toString() - ~/.rev.\d.bt2?/ - ~/.\d.bt2?/ - ~/.fa?/
+
+        // set arguments
+        def options = task.ext.args ?: ''
 
         """
         bowtie2 \
             --threads ${task.cpus} \
+            ${options} \
             -x ${bt2IndexBaseName} \
             ${argReads} \
             -S ${metadata.sampleName}${suffix}.sam
