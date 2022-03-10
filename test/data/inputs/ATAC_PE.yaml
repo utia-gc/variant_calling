@@ -1,0 +1,6 @@
+# Input
+baseDirGenome: "data/references"
+
+# Output
+baseDirReport: "results/reports"
+baseDirData:   "results/data"
