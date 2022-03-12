@@ -65,8 +65,10 @@ include { ParseDesignSWF   as ParseDesign   } from '../subworkflows/ParseDesignS
 include { RawReadsQCSWF    as RawReadsQC    } from '../subworkflows/RawReadsQCSWF.nf'
 include { TrimReadsSWF     as TrimReads     } from '../subworkflows/TrimReadsSWF.nf'
 include { TrimReadsQCSWF   as TrimReadsQC   } from '../subworkflows/TrimReadsQCSWF.nf'
-include { AlignBowtie2SWF  as AlignBowtie2  } from '../subworkflows/AlignBowtie2SWF.nf'
-include { AlignHisat2SWF   as AlignHisat2   } from '../subworkflows/AlignHisat2SWF.nf'
+include { AlignBowtie2SWF  as AlignBowtie2  ; 
+          AlignBowtie2SWF  as ContamBowtie2 } from '../subworkflows/AlignBowtie2SWF.nf'
+include { AlignHisat2SWF   as AlignHisat2   ; 
+          AlignHisat2SWF   as ContamHisat2  } from '../subworkflows/AlignHisat2SWF.nf'
 include { PreprocessSamSWF as PreprocessSam } from '../subworkflows/PreprocessSamSWF.nf'
 include { SamStatsQCSWF    as SamStatsQC    } from '../subworkflows/SamStatsQCSWF.nf'
 
@@ -195,22 +197,24 @@ workflow sralign {
     ---------------------------------------------------------------------
     */
 
-    if (!params.skipAlignContam) {
+    if (params.contaminant && !params.skipAlignContam) {
         ch_samContam = Channel.empty()
         // Align reads to contaminant genome
         switch (params.alignmentTool) {
             case 'bowtie2':
                 // Subworkflow: Align reads to contaminant genome with bowtie2 and build index if necessary
-                AlignBowtie2(
-                    ch_readsToAlign
+                ContamBowtie2(
+                    ch_readsToAlign,
+                    params.bowtie2Contaminant
                 )
                 ch_samContam = AlignBowtie2.out.sam
                 break
             
             case 'hisat2':
                 // Subworkflow: Align reads to contaminant genome with hisat2 and build index if necessary
-                AlignHisat2(
-                    ch_readsToAlign
+                ContamHisat2(
+                    ch_readsToAlign,
+                    params.hisat2Contaminant
                 )
                 ch_samContam = AlignHisat2.out.sam
                 break
