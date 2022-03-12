@@ -56,7 +56,7 @@ if (params.genomes && params.genome && !params.genomes.containsKey(params.genome
 genome = params.genomes[ params.genome ]
 
 // check contaminant
-if (params.genomes && params.contaminant && !params.genomes.containsKey(params.contaminant)) {
+if (params.genomes && params.contaminant && !params.skipAlignContam && !params.genomes.containsKey(params.contaminant)) {
     exit 1, "Contaminant genome '${params.contaminant}' is not available.\n\tAvailable genomes include: ${params.genomes.keySet().join(", ")}"
 }
 contaminant = params.genomes[ params.contaminant ]
@@ -174,7 +174,7 @@ workflow sralign {
                 // Subworkflow: Align reads to genome with hisat2 and build index if necessary
                 AlignHisat2(
                     ch_readsToAlign,
-                    params.hisat2
+                    genome
                 )
                 ch_samGenome = AlignHisat2.out.sam
                 break
@@ -220,7 +220,7 @@ workflow sralign {
                 // Subworkflow: Align reads to contaminant genome with hisat2 and build index if necessary
                 ContamHisat2(
                     ch_readsToAlign,
-                    params.hisat2Contaminant
+                    contaminant
                 )
                 ch_samContam = AlignHisat2.out.sam
                 break
