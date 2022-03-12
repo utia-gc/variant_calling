@@ -4,10 +4,11 @@ include { Hisat2Align } from '../modules/Hisat2Align.nf'
 workflow AlignHisat2SWF {
     take:
         reads
+        index
 
     main:
         // set or build hisat2 index
-        if (params.hisat2) {
+        if (index) {
             hisat2Indexes = Channel
                 .fromPath("${params.hisat2}*", checkIfExists: true)
                 .collect()

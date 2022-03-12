@@ -4,9 +4,10 @@ include { Bowtie2Align } from '../modules/Bowtie2Align.nf'
 workflow AlignBowtie2SWF {
     take:
         reads
+        index
     
     main:
-        if (params.bowtie2) {
+        if (index) {
             bowtie2Indexes = Channel
                 .fromPath("${params.bowtie2}*", checkIfExists: true)
                 .collect()

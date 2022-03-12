@@ -156,7 +156,8 @@ workflow sralign {
             case 'bowtie2':
                 // Subworkflow: Align reads to genome with bowtie2 and build index if necessary
                 AlignBowtie2(
-                    ch_readsToAlign
+                    ch_readsToAlign,
+                    params.bowtie2
                 )
                 ch_samGenome = AlignBowtie2.out.sam
                 break
@@ -164,7 +165,8 @@ workflow sralign {
             case 'hisat2':
                 // Subworkflow: Align reads to genome with hisat2 and build index if necessary
                 AlignHisat2(
-                    ch_readsToAlign
+                    ch_readsToAlign,
+                    params.hisat2
                 )
                 ch_samGenome = AlignHisat2.out.sam
                 break
