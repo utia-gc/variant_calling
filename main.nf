@@ -41,32 +41,6 @@ if (params.help) {
 
 /*
 ---------------------------------------------------------------------
-    SET GENOME PARAMETERS
----------------------------------------------------------------------
-*/
-
-def setGenomeParams (attribute) {
-    return params.genomes[ params.genome ][ attribute ]
-}
-
-
-params.fasta   = setGenomeParams('fasta')
-params.bowtie2 = setGenomeParams('bowtie2')
-params.hisat2  = setGenomeParams('hisat2')
-
-// set parameters for contamination check
-def setContaminantParams (attribute) {
-    return params.genomes[ params.contaminant ][ attribute ]
-}
-
-
-params.fastaContaminant   = setContaminantParams('fasta')
-params.bowtie2Contaminant = setContaminantParams('bowtie2')
-params.hisat2Contaminant  = setContaminantParams('hisat2')
-
-
-/*
----------------------------------------------------------------------
     RUN MAIN WORKFLOW
 ---------------------------------------------------------------------
 */

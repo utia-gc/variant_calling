@@ -45,15 +45,21 @@ inName = params.input.take(params.input.lastIndexOf('.')).split('/')[-1]
 
 /*
     ---------------------------------------------------------------------
-    Genomes and References
+    References and Contaminant Genomes
     ---------------------------------------------------------------------
 */
 
-// check genome
+// check reference genome
 if (params.genomes && params.genome && !params.genomes.containsKey(params.genome)) {
-    exit 1, "Genome '${params.genome}' is not available.\n\tAvailable genomes include: ${params.genomes.keySet().join(", ")}"
+    exit 1, "Reference genome '${params.genome}' is not available.\n\tAvailable genomes include: ${params.genomes.keySet().join(", ")}"
 }
+genome = params.genomes[ params.genome ]
 
+// check contaminant
+if (params.genomes && params.contaminant && !params.genomes.containsKey(params.contaminant)) {
+    exit 1, "Contaminant genome '${params.contaminant}' is not available.\n\tAvailable genomes include: ${params.genomes.keySet().join(", ")}"
+}
+contaminant = params.genomes[ params.contaminant ]
 
 /*
 =====================================================================
