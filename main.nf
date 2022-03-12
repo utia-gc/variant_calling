@@ -60,11 +60,10 @@ def setContaminantParams (attribute) {
 }
 
 
-if (params.contaminant) {
-    fastaContaminant   = setContamParams('fasta')
-    bowtie2Contaminant = setContamParams('bowtie2')
-    hisat2Contaminant  = setContamParams('hisat2')
-}
+params.fastaContaminant   = setContaminantParams('fasta')
+params.bowtie2Contaminant = setContaminantParams('bowtie2')
+params.hisat2Contaminant  = setContaminantParams('hisat2')
+
 
 /*
 ---------------------------------------------------------------------
