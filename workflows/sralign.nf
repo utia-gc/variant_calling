@@ -211,7 +211,7 @@ workflow sralign {
                 // Subworkflow: Align reads to contaminant genome with bowtie2 and build index if necessary
                 ContamBowtie2(
                     ch_readsToAlign,
-                    genome
+                    contaminant
                 )
                 ch_samContam = AlignBowtie2.out.sam
                 break
