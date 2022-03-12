@@ -10,13 +10,14 @@ process Hisat2Align {
     container 'quay.io/biocontainers/hisat2:2.2.1--h87f3376_4'
 
     label 'cpu_mid'
+    label 'mem_mid'
 
     input:
         tuple val(metadata), file(reads), val(toolIDs)
         path ht2Indexes
 
     output:
-        tuple val(metadata), stdout, val(toolIDs), emit: sam
+        tuple val(metadata), file('*.sam'), val(toolIDs), emit: sam
 
     script:
         // set reads arguments
@@ -38,8 +39,10 @@ process Hisat2Align {
 
         """
         hisat2 \
+            --threads ${task.cpus} \
             ${options} \
             -x ${ht2IndexBaseName} \
-            ${argReads}
+            ${argReads} \
+            -S ${metadata.sampleName}${suffix}.sam
         """
 }

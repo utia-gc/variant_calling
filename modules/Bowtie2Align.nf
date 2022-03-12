@@ -4,13 +4,14 @@ process Bowtie2Align {
     container 'quay.io/biocontainers/bowtie2:2.4.5--py38hfbc8389_2'
 
     label 'cpu_mid'
+    label 'mem_mid'
 
     input:
         tuple val(metadata), file(reads), val(toolIDs)
         path bt2Indexes
 
     output:
-        tuple val(metadata), stdout, val(toolIDs), emit: sam
+        tuple val(metadata), file('*.sam'), val(toolIDs), emit: sam
 
     script:
         // set reads arguments
@@ -26,12 +27,18 @@ process Bowtie2Align {
         suffix = toolIDs ? "__${toolIDs.join('_')}" : ''
 
 
-        // determine index base name
+        // set index base name
         bt2IndexBaseName = bt2Indexes[0].toString() - ~/.rev.\d.bt2?/ - ~/.\d.bt2?/ - ~/.fa?/
+
+        // set arguments
+        def options = task.ext.args ?: ''
 
         """
         bowtie2 \
+            --threads ${task.cpus} \
+            ${options} \
             -x ${bt2IndexBaseName} \
-            ${argReads}
+            ${argReads} \
+            -S ${metadata.sampleName}${suffix}.sam
         """
 }
