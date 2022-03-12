@@ -49,10 +49,22 @@ def setGenomeParams (attribute) {
     return params.genomes[ params.genome ][ attribute ]
 }
 
+
 params.fasta   = setGenomeParams('fasta')
 params.bowtie2 = setGenomeParams('bowtie2')
 params.hisat2  = setGenomeParams('hisat2')
 
+// set parameters for contamination check
+def setContaminantParams (attribute) {
+    return params.genomes[ params.contaminant ][ attribute ]
+}
+
+
+if (params.contaminant) {
+    fastaContaminant   = setContamParams('fasta')
+    bowtie2Contaminant = setContamParams('bowtie2')
+    hisat2Contaminant  = setContamParams('hisat2')
+}
 
 /*
 ---------------------------------------------------------------------
