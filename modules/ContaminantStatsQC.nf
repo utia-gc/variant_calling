@@ -26,6 +26,9 @@ process ContaminantStatsQC {
         suffix = toolIDs ? "__${toolIDs.join('_')}" : ''
 
         """
-        multiqc -n ${runName}${suffix} ${sFS}
+        multiqc \
+            -n ${runName}${suffix} \
+            --module samtools \
+            ${sFS}
         """
 }

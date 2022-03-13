@@ -28,6 +28,10 @@ process SamStatsMultiQC {
 
 
         """
-        multiqc -n ${runName}${suffix} ${sST} ${sIX}
+        multiqc \
+            -n ${runName}${suffix} \
+            --module samtools \
+            ${sST} \
+            ${sIX}
         """
 }

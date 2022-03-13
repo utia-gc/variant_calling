@@ -13,7 +13,8 @@ process FullMultiQC {
     publishDir "${params.baseDirData}",   mode: 'copy', pattern: '*multiqc_data*'
 
     input:
-        val runName
+        val  runName
+        file config
         file rawFastqc
         file trimFastqc
         file alignGenomeStats
@@ -25,7 +26,8 @@ process FullMultiQC {
     script:
         """
         multiqc \
-            -n ${runName} \
+            -n ${runName} -i ${runName} \
+            -c ${config} \
             ${rawFastqc} \
             ${trimFastqc} \
             ${alignGenomeStats} \
