@@ -15,7 +15,8 @@ workflow AlignHisat2SWF {
                 .collect()
         } else {
             Hisat2Build(
-                reference.fasta
+                reference[ 'fasta' ],
+                referenceName
             )
             .collect()
             .set { hisat2Indexes }

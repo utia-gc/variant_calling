@@ -8,13 +8,15 @@ workflow AlignBowtie2SWF {
         referenceName
     
     main:
+        // set or build bowtie2 index
         if (reference[ 'bowtie2' ]) {
             bowtie2Indexes = Channel
                 .fromPath("${reference[ 'bowtie2' ]}*", checkIfExists: true)
                 .collect()
         } else {
             Bowtie2Build(
-                reference[ 'fasta' ]
+                reference[ 'fasta' ],
+                referenceName
             )
             .collect()
             .set { bowtie2Indexes }
