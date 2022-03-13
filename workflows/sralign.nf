@@ -77,6 +77,7 @@ include { AlignHisat2SWF   as AlignHisat2   ;
           AlignHisat2SWF   as ContamHisat2  } from '../subworkflows/AlignHisat2SWF.nf'
 include { PreprocessSamSWF as PreprocessSam } from '../subworkflows/PreprocessSamSWF.nf'
 include { SamStatsQCSWF    as SamStatsQC    } from '../subworkflows/SamStatsQCSWF.nf'
+include { SeqtkSample      as SeqtkSample   } from '../modules/SeqtkSample.nf'
 
 
 workflow sralign {
@@ -204,25 +205,31 @@ workflow sralign {
     */
 
     if (params.contaminant && !params.skipAlignContam) {
-        ch_samContam = Channel.empty()
+        ch_samContaminant = Channel.empty()
+
+        // Sample reads
+        SeqtkSample(
+            ch_readsToAlign
+        ) .set{ ch_readsContaminant }
+
         // Align reads to contaminant genome
         switch (params.alignmentTool) {
             case 'bowtie2':
                 // Subworkflow: Align reads to contaminant genome with bowtie2 and build index if necessary
                 ContamBowtie2(
-                    ch_readsToAlign,
+                    ch_readsContaminant,
                     contaminant
                 )
-                ch_samContam = AlignBowtie2.out.sam
+                ch_samContaminant = AlignBowtie2.out.sam
                 break
             
             case 'hisat2':
                 // Subworkflow: Align reads to contaminant genome with hisat2 and build index if necessary
                 ContamHisat2(
-                    ch_readsToAlign,
+                    ch_readsContaminant,
                     contaminant
                 )
-                ch_samContam = AlignHisat2.out.sam
+                ch_samContaminant = AlignHisat2.out.sam
                 break
         }
     }
