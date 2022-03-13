@@ -5,6 +5,7 @@ workflow AlignBowtie2SWF {
     take:
         reads
         reference
+        referenceName
     
     main:
         if (reference[ 'bowtie2' ]) {
@@ -19,7 +20,11 @@ workflow AlignBowtie2SWF {
             .set { bowtie2Indexes }
         }
 
-        Bowtie2Align(reads, bowtie2Indexes)
+        Bowtie2Align(
+            reads,
+            bowtie2Indexes,
+            referenceName
+        )
 
     emit:
         sam = Bowtie2Align.out.sam

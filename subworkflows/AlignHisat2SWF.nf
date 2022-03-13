@@ -5,6 +5,7 @@ workflow AlignHisat2SWF {
     take:
         reads
         reference
+        referenceName
 
     main:
         // set or build hisat2 index
@@ -22,7 +23,8 @@ workflow AlignHisat2SWF {
 
         Hisat2Align(
             reads,
-            hisat2Indexes
+            hisat2Indexes,
+            referenceName
         )
 
     emit:

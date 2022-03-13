@@ -15,6 +15,7 @@ process Hisat2Align {
     input:
         tuple val(metadata), file(reads), val(toolIDs)
         path ht2Indexes
+        val refName
 
     output:
         tuple val(metadata), file('*.sam'), val(toolIDs), emit: sam
@@ -28,7 +29,7 @@ process Hisat2Align {
         }
 
         // update toolID and set suffix
-        toolIDs += "ht2-${params.genome}"
+        toolIDs += "ht2-${refName}"
         suffix = toolIDs ? "__${toolIDs.join('_')}" : ''
 
         // set index base name
