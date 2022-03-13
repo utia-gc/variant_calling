@@ -14,11 +14,8 @@ process FullMultiQC {
 
     input:
         val  runName
-        file config
-        file rawFastqc
-        file trimFastqc
-        file alignGenomeStats
-        file alignGenomeIdxstats
+        path config
+        path multiqcFiles
 
     output:
         path "*"
@@ -28,9 +25,6 @@ process FullMultiQC {
         multiqc \
             -n ${runName} -i ${runName} \
             -c ${config} \
-            ${rawFastqc} \
-            ${trimFastqc} \
-            ${alignGenomeStats} \
-            ${alignGenomeIdxstats}
+            ${multiqcFiles}
         """
 }

@@ -24,6 +24,7 @@ assert params.trimTool in tools.trim ,
 assert params.alignmentTool in tools.alignment , 
     "'${params.alignmentTool}' is not a valid alignment tool.\n\tValid options: ${tools.alignment.join(', ')}\n\t"
 
+ch_multiqcConfig = file(params.multiqcConfig, checkIfExists: true)
 
 /*
     ---------------------------------------------------------------------
@@ -268,9 +269,7 @@ workflow sralign {
 
     FullMultiQC(
         inName,
-        ch_rawReadsFQC.collect(),
-        ch_trimReadsFQC.collect(),
-        ch_alignGenomeStats.collect(),
-        ch_alignGenomeIdxstats.collect()
+        ch_multiqcConfig,
+        ch_fullMultiQC.collect()
     )
 }
