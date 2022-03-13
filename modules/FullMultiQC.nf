@@ -16,6 +16,8 @@ process FullMultiQC {
         val runName
         file rawFastqc
         file trimFastqc
+        file alignGenomeStats
+        file alignGenomeIdxstats
 
     output:
         path "*"
@@ -25,6 +27,8 @@ process FullMultiQC {
         multiqc \
             -n ${runName} \
             ${rawFastqc} \
-            ${trimFastqc}
+            ${trimFastqc} \
+            ${alignGenomeStats} \
+            ${alignGenomeIdxstats}
         """
 }

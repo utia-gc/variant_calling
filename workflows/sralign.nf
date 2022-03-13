@@ -207,7 +207,12 @@ workflow sralign {
             ch_bamIndexedGenome,
             inName
         )
+        ch_alignGenomeStats    = SamStatsQC.out.samtoolsStats
+        ch_alignGenomeIdxstats = SamStatsQC.out.samtoolsIdxstats
         }
+    } else {
+        ch_alignGenomeStats    = Channel.empty()
+        ch_alignGenomeIdxstats = Channel.empty()
     }
 
     /*
@@ -264,6 +269,8 @@ workflow sralign {
     FullMultiQC(
         inName,
         ch_rawReadsFQC.collect(),
-        ch_trimReadsFQC.collect()
+        ch_trimReadsFQC.collect(),
+        ch_alignGenomeStats.collect(),
+        ch_alignGenomeIdxstats.collect()
     )
 }
