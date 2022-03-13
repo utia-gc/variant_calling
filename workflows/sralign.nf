@@ -259,6 +259,9 @@ workflow sralign {
             ch_samContaminant,
             inName
         )
+        ch_contaminantFlagstat = ContaminantStatsQC.out.samtoolsFlagstat
+    } else {
+        ch_contaminantFlagstat = Channel.empty()
     }
 
     /*
@@ -266,6 +269,13 @@ workflow sralign {
         Full pipeline MultiQC
     ---------------------------------------------------------------------
     */
+
+    ch_fullMultiQC = Channel.empty()
+        .concat(ch_rawReadsFQC)
+        .concat(ch_trimReadsFQC)
+        .concat(ch_alignGenomeStats)
+        .concat(ch_alignGenomeIdxstats)
+        .concat(ch_contaminantFlagstat)
 
     FullMultiQC(
         inName,
