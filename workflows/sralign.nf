@@ -67,17 +67,18 @@ contaminant = params.genomes[ params.contaminant ]
 =====================================================================
 */
 
-include { ParseDesignSWF   as ParseDesign   } from '../subworkflows/ParseDesignSWF.nf'
-include { RawReadsQCSWF    as RawReadsQC    } from '../subworkflows/RawReadsQCSWF.nf'
-include { TrimReadsSWF     as TrimReads     } from '../subworkflows/TrimReadsSWF.nf'
-include { TrimReadsQCSWF   as TrimReadsQC   } from '../subworkflows/TrimReadsQCSWF.nf'
-include { AlignBowtie2SWF  as AlignBowtie2  ; 
-          AlignBowtie2SWF  as ContamBowtie2 } from '../subworkflows/AlignBowtie2SWF.nf'
-include { AlignHisat2SWF   as AlignHisat2   ; 
-          AlignHisat2SWF   as ContamHisat2  } from '../subworkflows/AlignHisat2SWF.nf'
-include { PreprocessSamSWF as PreprocessSam } from '../subworkflows/PreprocessSamSWF.nf'
-include { SamStatsQCSWF    as SamStatsQC    } from '../subworkflows/SamStatsQCSWF.nf'
-include { SeqtkSample      as SeqtkSample   } from '../modules/SeqtkSample.nf'
+include { ParseDesignSWF   as ParseDesign      } from '../subworkflows/ParseDesignSWF.nf'
+include { RawReadsQCSWF    as RawReadsQC       } from '../subworkflows/RawReadsQCSWF.nf'
+include { TrimReadsSWF     as TrimReads        } from '../subworkflows/TrimReadsSWF.nf'
+include { TrimReadsQCSWF   as TrimReadsQC      } from '../subworkflows/TrimReadsQCSWF.nf'
+include { AlignBowtie2SWF  as AlignBowtie2     ; 
+          AlignBowtie2SWF  as ContamBowtie2    } from '../subworkflows/AlignBowtie2SWF.nf'
+include { AlignHisat2SWF   as AlignHisat2      ; 
+          AlignHisat2SWF   as ContamHisat2     } from '../subworkflows/AlignHisat2SWF.nf'
+include { PreprocessSamSWF as PreprocessSam    } from '../subworkflows/PreprocessSamSWF.nf'
+include { SamStatsQCSWF    as SamStatsQC       } from '../subworkflows/SamStatsQCSWF.nf'
+include { SeqtkSample      as SeqtkSample      } from '../modules/SeqtkSample.nf'
+include { ContaminantStatsQCSWF as ContaminantStatsQC } from '../subworkflows/ContaminantStatsQCSWF.nf'
 
 
 workflow sralign {
@@ -210,7 +211,8 @@ workflow sralign {
         // Sample reads
         SeqtkSample(
             ch_readsToAlign
-        ) .set{ ch_readsContaminant }
+        ) 
+        ch_readsContaminant = SeqtkSample.out.sampleReads
 
         // Align reads to contaminant genome
         switch (params.alignmentTool) {
@@ -220,7 +222,7 @@ workflow sralign {
                     ch_readsContaminant,
                     contaminant
                 )
-                ch_samContaminant = AlignBowtie2.out.sam
+                ch_samContaminant = ContamBowtie2.out.sam
                 break
             
             case 'hisat2':
@@ -229,8 +231,14 @@ workflow sralign {
                     ch_readsContaminant,
                     contaminant
                 )
-                ch_samContaminant = AlignHisat2.out.sam
+                ch_samContaminant = ContamHisat2.out.sam
                 break
         }
+
+        // Get contaminant alignment stats
+        ContaminantStatsQC(
+            ch_samContaminant,
+            inName
+        )
     }
 }

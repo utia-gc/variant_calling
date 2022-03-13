@@ -12,10 +12,11 @@ process SamtoolsFlagstat {
     publishDir "${params.baseDirData}/align/stats", mode: 'copy', pattern: '*.txt'
 
     input:
-        tuple val(metadata), path(bam), path(bai), val(toolIDs)
+        tuple val(metadata), path(bam), val(toolIDs)
 
     output:
         path '*_sFS.txt', emit: sFS
+        val toolIDs,      emit: tools
 
     script:
         toolIDs += 'sFS'

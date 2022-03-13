@@ -13,7 +13,7 @@ process SeqtkSample {
         tuple val(metadata), file(reads), val(toolIDs)
 
     output:
-        tuple val(metadata), file('*fastq.gz'), val(toolIDs)
+        tuple val(metadata), file('*fastq.gz'), val(toolIDs), emit: sampleReads
 
     script:
         // update toolID and set suffix
