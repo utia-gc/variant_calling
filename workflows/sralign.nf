@@ -67,18 +67,19 @@ contaminant = params.genomes[ params.contaminant ]
 =====================================================================
 */
 
-include { ParseDesignSWF   as ParseDesign      } from '../subworkflows/ParseDesignSWF.nf'
-include { RawReadsQCSWF    as RawReadsQC       } from '../subworkflows/RawReadsQCSWF.nf'
-include { TrimReadsSWF     as TrimReads        } from '../subworkflows/TrimReadsSWF.nf'
-include { TrimReadsQCSWF   as TrimReadsQC      } from '../subworkflows/TrimReadsQCSWF.nf'
-include { AlignBowtie2SWF  as AlignBowtie2     ; 
-          AlignBowtie2SWF  as ContamBowtie2    } from '../subworkflows/AlignBowtie2SWF.nf'
-include { AlignHisat2SWF   as AlignHisat2      ; 
-          AlignHisat2SWF   as ContamHisat2     } from '../subworkflows/AlignHisat2SWF.nf'
-include { PreprocessSamSWF as PreprocessSam    } from '../subworkflows/PreprocessSamSWF.nf'
-include { SamStatsQCSWF    as SamStatsQC       } from '../subworkflows/SamStatsQCSWF.nf'
-include { SeqtkSample      as SeqtkSample      } from '../modules/SeqtkSample.nf'
+include { ParseDesignSWF        as ParseDesign        } from '../subworkflows/ParseDesignSWF.nf'
+include { RawReadsQCSWF         as RawReadsQC         } from '../subworkflows/RawReadsQCSWF.nf'
+include { TrimReadsSWF          as TrimReads          } from '../subworkflows/TrimReadsSWF.nf'
+include { TrimReadsQCSWF        as TrimReadsQC        } from '../subworkflows/TrimReadsQCSWF.nf'
+include { AlignBowtie2SWF       as AlignBowtie2       ; 
+          AlignBowtie2SWF       as ContamBowtie2      } from '../subworkflows/AlignBowtie2SWF.nf'
+include { AlignHisat2SWF        as AlignHisat2        ; 
+          AlignHisat2SWF        as ContamHisat2       } from '../subworkflows/AlignHisat2SWF.nf'
+include { PreprocessSamSWF      as PreprocessSam      } from '../subworkflows/PreprocessSamSWF.nf'
+include { SamStatsQCSWF         as SamStatsQC         } from '../subworkflows/SamStatsQCSWF.nf'
+include { SeqtkSample           as SeqtkSample        } from '../modules/SeqtkSample.nf'
 include { ContaminantStatsQCSWF as ContaminantStatsQC } from '../subworkflows/ContaminantStatsQCSWF.nf'
+include { FullMultiQC           as FullMultiQC        } from '../modules/FullMultiQC.nf'
 
 
 workflow sralign {
@@ -245,4 +246,14 @@ workflow sralign {
             inName
         )
     }
+
+    /*
+    ---------------------------------------------------------------------
+        Full pipeline MultiQC
+    ---------------------------------------------------------------------
+    */
+
+    FullMultiQC(
+        inName
+    )
 }
