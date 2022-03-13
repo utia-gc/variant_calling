@@ -192,12 +192,12 @@ workflow sralign {
     ch_bamIndexedGenome = PreprocessSam.out.bamBai
 
 
-        if (!params.skipSamStatsQC) {
-            // Subworkflow: Samtools stats and samtools idxstats and multiqc of alignment results
-            SamStatsQC(
-                ch_bamIndexedGenome,
-                inName
-            )
+    if (!params.skipSamStatsQC) {
+        // Subworkflow: Samtools stats and samtools idxstats and multiqc of alignment results
+        SamStatsQC(
+            ch_bamIndexedGenome,
+            inName
+        )
         }
     }
 
