@@ -9,6 +9,7 @@ process Bowtie2Align {
     input:
         tuple val(metadata), file(reads), val(toolIDs)
         path bt2Indexes
+        val refName
 
     output:
         tuple val(metadata), file('*.sam'), val(toolIDs), emit: sam
@@ -23,7 +24,7 @@ process Bowtie2Align {
 
 
         // update toolID and set suffix
-        toolIDs += "bt2-${params.genome}"
+        toolIDs += "bt2-${refName}"
         suffix = toolIDs ? "__${toolIDs.join('_')}" : ''
 
 

@@ -41,21 +41,6 @@ if (params.help) {
 
 /*
 ---------------------------------------------------------------------
-    SET GENOME PARAMETERS
----------------------------------------------------------------------
-*/
-
-def setGenomeParams (attribute) {
-    return params.genomes[ params.genome ][ attribute ]
-}
-
-params.fasta   = setGenomeParams('fasta')
-params.bowtie2 = setGenomeParams('bowtie2')
-params.hisat2  = setGenomeParams('hisat2')
-
-
-/*
----------------------------------------------------------------------
     RUN MAIN WORKFLOW
 ---------------------------------------------------------------------
 */
