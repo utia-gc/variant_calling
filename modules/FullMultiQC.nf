@@ -14,12 +14,17 @@ process FullMultiQC {
 
     input:
         val runName
+        file rawFastqc
+        file trimFastqc
 
     output:
         path "*"
 
     script:
         """
-        multiqc -n ${runName}
+        multiqc \
+            -n ${runName} \
+            ${rawFastqc} \
+            ${trimFastqc}
         """
 }

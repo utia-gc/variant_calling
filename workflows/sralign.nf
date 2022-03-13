@@ -109,6 +109,9 @@ workflow sralign {
             ch_rawReads,
             inName
         )
+        ch_rawReadsFQC = RawReadsQC.out.fqc_zip
+    } else {
+        ch_rawReadsFQC = Channel.empty()
     }
 
 
@@ -138,8 +141,13 @@ workflow sralign {
                 ch_trimReads,
                 inName
             ) 
+            ch_trimReadsFQC = TrimReadsQC.out.fqc_zip
+        } else {
+            ch_trimReadsFQC = Channel.empty()
         }
-    } 
+    } else {
+        ch_trimReadsFQC = Channel.empty()
+    }
 
 
     /*
@@ -254,6 +262,8 @@ workflow sralign {
     */
 
     FullMultiQC(
-        inName
+        inName,
+        ch_rawReadsFQC.collect(),
+        ch_trimReadsFQC.collect()
     )
 }
