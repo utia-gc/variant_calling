@@ -15,4 +15,7 @@ workflow ContaminantStatsQCSWF {
             runName,
             SamtoolsFlagstat.out.tools.first()
         )
+    
+    emit:
+        samtoolsFlagstat = SamtoolsFlagstat.out.sFS
 }

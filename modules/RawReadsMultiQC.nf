@@ -18,6 +18,9 @@ process ReadsMultiQC {
         suffix = toolIDs ? "__${toolIDs.join('_')}" : ''
 
         """
-        multiqc -n ${runName}${suffix} ${fastqc}
+        multiqc \
+            -n ${runName}${suffix} \
+            --module fastqc \
+            ${fastqc}
         """
 }

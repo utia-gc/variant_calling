@@ -24,6 +24,7 @@ assert params.trimTool in tools.trim ,
 assert params.alignmentTool in tools.alignment , 
     "'${params.alignmentTool}' is not a valid alignment tool.\n\tValid options: ${tools.alignment.join(', ')}\n\t"
 
+ch_multiqcConfig = file(params.multiqcConfig, checkIfExists: true)
 
 /*
     ---------------------------------------------------------------------
@@ -67,18 +68,19 @@ contaminant = params.genomes[ params.contaminant ]
 =====================================================================
 */
 
-include { ParseDesignSWF   as ParseDesign      } from '../subworkflows/ParseDesignSWF.nf'
-include { RawReadsQCSWF    as RawReadsQC       } from '../subworkflows/RawReadsQCSWF.nf'
-include { TrimReadsSWF     as TrimReads        } from '../subworkflows/TrimReadsSWF.nf'
-include { TrimReadsQCSWF   as TrimReadsQC      } from '../subworkflows/TrimReadsQCSWF.nf'
-include { AlignBowtie2SWF  as AlignBowtie2     ; 
-          AlignBowtie2SWF  as ContamBowtie2    } from '../subworkflows/AlignBowtie2SWF.nf'
-include { AlignHisat2SWF   as AlignHisat2      ; 
-          AlignHisat2SWF   as ContamHisat2     } from '../subworkflows/AlignHisat2SWF.nf'
-include { PreprocessSamSWF as PreprocessSam    } from '../subworkflows/PreprocessSamSWF.nf'
-include { SamStatsQCSWF    as SamStatsQC       } from '../subworkflows/SamStatsQCSWF.nf'
-include { SeqtkSample      as SeqtkSample      } from '../modules/SeqtkSample.nf'
+include { ParseDesignSWF        as ParseDesign        } from '../subworkflows/ParseDesignSWF.nf'
+include { RawReadsQCSWF         as RawReadsQC         } from '../subworkflows/RawReadsQCSWF.nf'
+include { TrimReadsSWF          as TrimReads          } from '../subworkflows/TrimReadsSWF.nf'
+include { TrimReadsQCSWF        as TrimReadsQC        } from '../subworkflows/TrimReadsQCSWF.nf'
+include { AlignBowtie2SWF       as AlignBowtie2       ; 
+          AlignBowtie2SWF       as ContamBowtie2      } from '../subworkflows/AlignBowtie2SWF.nf'
+include { AlignHisat2SWF        as AlignHisat2        ; 
+          AlignHisat2SWF        as ContamHisat2       } from '../subworkflows/AlignHisat2SWF.nf'
+include { PreprocessSamSWF      as PreprocessSam      } from '../subworkflows/PreprocessSamSWF.nf'
+include { SamStatsQCSWF         as SamStatsQC         } from '../subworkflows/SamStatsQCSWF.nf'
+include { SeqtkSample           as SeqtkSample        } from '../modules/SeqtkSample.nf'
 include { ContaminantStatsQCSWF as ContaminantStatsQC } from '../subworkflows/ContaminantStatsQCSWF.nf'
+include { FullMultiQC           as FullMultiQC        } from '../modules/FullMultiQC.nf'
 
 
 workflow sralign {
@@ -108,6 +110,9 @@ workflow sralign {
             ch_rawReads,
             inName
         )
+        ch_rawReadsFQC = RawReadsQC.out.fqc_zip
+    } else {
+        ch_rawReadsFQC = Channel.empty()
     }
 
 
@@ -137,8 +142,13 @@ workflow sralign {
                 ch_trimReads,
                 inName
             ) 
+            ch_trimReadsFQC = TrimReadsQC.out.fqc_zip
+        } else {
+            ch_trimReadsFQC = Channel.empty()
         }
-    } 
+    } else {
+        ch_trimReadsFQC = Channel.empty()
+    }
 
 
     /*
@@ -198,7 +208,12 @@ workflow sralign {
             ch_bamIndexedGenome,
             inName
         )
+        ch_alignGenomeStats    = SamStatsQC.out.samtoolsStats
+        ch_alignGenomeIdxstats = SamStatsQC.out.samtoolsIdxstats
         }
+    } else {
+        ch_alignGenomeStats    = Channel.empty()
+        ch_alignGenomeIdxstats = Channel.empty()
     }
 
     /*
@@ -244,5 +259,27 @@ workflow sralign {
             ch_samContaminant,
             inName
         )
+        ch_contaminantFlagstat = ContaminantStatsQC.out.samtoolsFlagstat
+    } else {
+        ch_contaminantFlagstat = Channel.empty()
     }
+
+    /*
+    ---------------------------------------------------------------------
+        Full pipeline MultiQC
+    ---------------------------------------------------------------------
+    */
+
+    ch_fullMultiQC = Channel.empty()
+        .concat(ch_rawReadsFQC)
+        .concat(ch_trimReadsFQC)
+        .concat(ch_alignGenomeStats)
+        .concat(ch_alignGenomeIdxstats)
+        .concat(ch_contaminantFlagstat)
+
+    FullMultiQC(
+        inName,
+        ch_multiqcConfig,
+        ch_fullMultiQC.collect()
+    )
 }

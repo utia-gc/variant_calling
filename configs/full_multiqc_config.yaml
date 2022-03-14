@@ -1,0 +1,7 @@
+run_modules:
+  - fastqc
+  - samtools
+
+module_order:
+  - fastqc
+  - samtools
