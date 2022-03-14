@@ -81,6 +81,7 @@ include { SamStatsQCSWF         as SamStatsQC         } from '../subworkflows/Sa
 include { SeqtkSample           as SeqtkSample        } from '../modules/SeqtkSample.nf'
 include { ContaminantStatsQCSWF as ContaminantStatsQC } from '../subworkflows/ContaminantStatsQCSWF.nf'
 include { FullMultiQC           as FullMultiQC        } from '../modules/FullMultiQC.nf'
+include { PreseqSWF             as Preseq             } from '../subworkflows/PreseqSWF.nf'
 
 
 workflow sralign {
@@ -266,6 +267,26 @@ workflow sralign {
 
     /*
     ---------------------------------------------------------------------
+        Dataset stats
+    ---------------------------------------------------------------------
+    */
+
+    // Preseq
+    if (!params.skipPreseq) {
+        Preseq(
+            ch_bamGenome
+        )
+        ch_preseqLcExtrap = Preseq.out.psL
+        ch_psRealCounts   = Preseq.out.psRealCounts
+    } else {
+        ch_preseqLcExtrap = Channel.empty()
+        ch_psRealCounts   = Channel.empty()
+    }
+    
+    ch_psRealCounts.view()
+
+    /*
+    ---------------------------------------------------------------------
         Full pipeline MultiQC
     ---------------------------------------------------------------------
     */
@@ -276,6 +297,8 @@ workflow sralign {
         .concat(ch_alignGenomeStats)
         .concat(ch_alignGenomeIdxstats)
         .concat(ch_contaminantFlagstat)
+        .concat(ch_preseqLcExtrap)
+        .concat(ch_psRealCounts)
 
     FullMultiQC(
         inName,
