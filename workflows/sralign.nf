@@ -81,6 +81,7 @@ include { SamStatsQCSWF         as SamStatsQC         } from '../subworkflows/Sa
 include { SeqtkSample           as SeqtkSample        } from '../modules/SeqtkSample.nf'
 include { ContaminantStatsQCSWF as ContaminantStatsQC } from '../subworkflows/ContaminantStatsQCSWF.nf'
 include { FullMultiQC           as FullMultiQC        } from '../modules/FullMultiQC.nf'
+include { Preseq                as Preseq             } from '../modules/Preseq.nf'
 
 
 workflow sralign {
@@ -262,6 +263,22 @@ workflow sralign {
         ch_contaminantFlagstat = ContaminantStatsQC.out.samtoolsFlagstat
     } else {
         ch_contaminantFlagstat = Channel.empty()
+    }
+
+    /*
+    ---------------------------------------------------------------------
+        Dataset stats
+    ---------------------------------------------------------------------
+    */
+
+    // Preseq
+    if (!params.skipPreseq) {
+        Preseq(
+            ch_bamGenome
+        )
+        ch_preseqLcExtrap = Preseq.out.psL
+    } else {
+        ch_preseqLcExtrap = Channel.empty()
     }
 
     /*
