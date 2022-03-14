@@ -5,12 +5,13 @@ Purpose: Build hisat2 index
 */
 
 process Hisat2Build {
-    tag "${params.genome}"
+    tag "${refName}"
 
     container 'quay.io/biocontainers/hisat2:2.2.1--h87f3376_4'
 
     input:
         path reference
+        val refName
 
     output:
         path '*', emit: hisat2Index

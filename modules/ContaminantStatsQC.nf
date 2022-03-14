@@ -1,10 +1,10 @@
 /*
 Author : Trevor F. Freeman <trvrfreeman@gmail.com>
-Date   : 2022-02-27
-Purpose: Nextflow module
+Date   : 2022-03-13
+Purpose: samtools flagstat multiQC report
 */
 
-process SamStatsMultiQC {
+process ContaminantStatsQC {
     tag "${runName}"
 
     container 'ewels/multiqc:v1.11'
@@ -13,8 +13,7 @@ process SamStatsMultiQC {
     publishDir "${params.baseDirData}/align", mode: 'copy', pattern: '*multiqc_data*'
 
     input:
-        file sST
-        file sIX
+        file sFS
         val runName
         val toolIDs
 
@@ -26,12 +25,10 @@ process SamStatsMultiQC {
         toolIDs += 'mqc'
         suffix = toolIDs ? "__${toolIDs.join('_')}" : ''
 
-
         """
         multiqc \
             -n ${runName}${suffix} \
             --module samtools \
-            ${sST} \
-            ${sIX}
+            ${sFS}
         """
 }

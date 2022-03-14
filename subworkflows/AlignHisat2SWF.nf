@@ -4,16 +4,19 @@ include { Hisat2Align } from '../modules/Hisat2Align.nf'
 workflow AlignHisat2SWF {
     take:
         reads
+        reference
+        referenceName
 
     main:
         // set or build hisat2 index
-        if (params.hisat2) {
+        if (reference[ 'hisat2' ]) {
             hisat2Indexes = Channel
-                .fromPath("${params.hisat2}*", checkIfExists: true)
+                .fromPath("${reference[ 'hisat2' ]}*", checkIfExists: true)
                 .collect()
         } else {
             Hisat2Build(
-                params.fasta
+                reference[ 'fasta' ],
+                referenceName
             )
             .collect()
             .set { hisat2Indexes }
@@ -21,7 +24,8 @@ workflow AlignHisat2SWF {
 
         Hisat2Align(
             reads,
-            hisat2Indexes
+            hisat2Indexes,
+            referenceName
         )
 
     emit:

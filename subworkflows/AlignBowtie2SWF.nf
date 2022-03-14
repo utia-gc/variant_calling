@@ -4,21 +4,29 @@ include { Bowtie2Align } from '../modules/Bowtie2Align.nf'
 workflow AlignBowtie2SWF {
     take:
         reads
+        reference
+        referenceName
     
     main:
-        if (params.bowtie2) {
+        // set or build bowtie2 index
+        if (reference[ 'bowtie2' ]) {
             bowtie2Indexes = Channel
-                .fromPath("${params.bowtie2}*", checkIfExists: true)
+                .fromPath("${reference[ 'bowtie2' ]}*", checkIfExists: true)
                 .collect()
         } else {
             Bowtie2Build(
-                params.fasta
+                reference[ 'fasta' ],
+                referenceName
             )
             .collect()
             .set { bowtie2Indexes }
         }
 
-        Bowtie2Align(reads, bowtie2Indexes)
+        Bowtie2Align(
+            reads,
+            bowtie2Indexes,
+            referenceName
+        )
 
     emit:
         sam = Bowtie2Align.out.sam

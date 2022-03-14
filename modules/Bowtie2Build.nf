@@ -5,12 +5,13 @@ Purpose: Build bowtie2 index
 */
 
 process Bowtie2Build {
-    tag "${params.genome}"
+    tag "${refName}"
 
     container 'quay.io/biocontainers/bowtie2:2.4.5--py38hfbc8389_2'
 
     input:
         path reference
+        val refName
 
     output:
         path '*', emit: bowtie2Index
