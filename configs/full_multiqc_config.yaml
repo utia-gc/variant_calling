@@ -1,7 +1,9 @@
 run_modules:
   - fastqc
   - samtools
+  - preseq
 
 module_order:
   - fastqc
   - samtools
+  - preseq

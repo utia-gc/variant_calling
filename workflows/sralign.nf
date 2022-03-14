@@ -293,6 +293,7 @@ workflow sralign {
         .concat(ch_alignGenomeStats)
         .concat(ch_alignGenomeIdxstats)
         .concat(ch_contaminantFlagstat)
+        .concat(ch_preseqLcExtrap)
 
     FullMultiQC(
         inName,
