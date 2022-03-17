@@ -13,4 +13,5 @@ workflow SamStatsQCSWF {
     emit:
         samtoolsStats = SamStats.out.sST
         samtoolsIdxstats = SamStats.out.sIX
+        pctDup           = SamStats.out.pctDup
 }
