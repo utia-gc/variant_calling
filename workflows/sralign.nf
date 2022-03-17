@@ -282,8 +282,7 @@ workflow sralign {
         ch_preseqLcExtrap = Channel.empty()
         ch_psRealCounts   = Channel.empty()
     }
-    
-    ch_psRealCounts.view()
+
 
     /*
     ---------------------------------------------------------------------
