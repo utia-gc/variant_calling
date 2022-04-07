@@ -81,7 +81,7 @@ include { SamStatsQCSWF         as SamStatsQC         } from "${baseDir}/subwork
 include { SeqtkSample           as SeqtkSample        } from "${baseDir}/modules/reads/SeqtkSample.nf"
 include { ContaminantStatsQCSWF as ContaminantStatsQC } from "${baseDir}/subworkflows/align/ContaminantStatsQCSWF.nf"
 include { PreseqSWF             as Preseq             } from "${baseDir}/subworkflows/align/PreseqSWF.nf"
-include { FullMultiQC           as FullMultiQC        } from '../modules/FullMultiQC.nf'
+include { FullMultiQC           as FullMultiQC        } from "${baseDir}/modules/misc/FullMultiQC.nf"
 
 
 workflow sralign {
