@@ -73,9 +73,9 @@ include { RawReadsQCSWF         as RawReadsQC         } from '../subworkflows/Ra
 include { TrimReadsSWF          as TrimReads          } from '../subworkflows/TrimReadsSWF.nf'
 include { TrimReadsQCSWF        as TrimReadsQC        } from '../subworkflows/TrimReadsQCSWF.nf'
 include { AlignBowtie2SWF       as AlignBowtie2       ; 
-          AlignBowtie2SWF       as ContamBowtie2      } from '../subworkflows/AlignBowtie2SWF.nf'
+          AlignBowtie2SWF       as ContamBowtie2      } from "${baseDir}/subworkflows/align/AlignBowtie2SWF.nf"
 include { AlignHisat2SWF        as AlignHisat2        ; 
-          AlignHisat2SWF        as ContamHisat2       } from '../subworkflows/AlignHisat2SWF.nf'
+          AlignHisat2SWF        as ContamHisat2       } from "${baseDir}/subworkflows/align/AlignHisat2SWF.nf"
 include { PreprocessSamSWF      as PreprocessSam      } from '../subworkflows/PreprocessSamSWF.nf'
 include { SamStatsQCSWF         as SamStatsQC         } from '../subworkflows/SamStatsQCSWF.nf'
 include { SeqtkSample           as SeqtkSample        } from '../modules/SeqtkSample.nf'
