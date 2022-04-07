@@ -68,7 +68,7 @@ contaminant = params.genomes[ params.contaminant ]
 =====================================================================
 */
 
-include { ParseDesignSWF        as ParseDesign        } from '../subworkflows/ParseDesignSWF.nf'
+include { ParseDesignSWF        as ParseDesign        } from "${baseDir}/subworkflows/ParseDesignSWF.nf"
 include { RawReadsQCSWF         as RawReadsQC         } from '../subworkflows/RawReadsQCSWF.nf'
 include { TrimReadsSWF          as TrimReads          } from '../subworkflows/TrimReadsSWF.nf'
 include { TrimReadsQCSWF        as TrimReadsQC        } from '../subworkflows/TrimReadsQCSWF.nf'
