@@ -1,11 +1,14 @@
 include { ParseDesign } from "${baseDir}/modules/inputs/ParseDesign.nf"
 
-workflow ParseDesignSWF {
+workflow ParseDesignReadsSWF {
     take:
         design
 
     main:
-        ParseDesign(design)
+        ParseDesign(
+            'reads',
+            design
+        )
             .csv
             .splitCsv(header:true, sep:',')
             .map { createReadsChannel(it) }

@@ -8,7 +8,7 @@ Purpose: Parse input design file for nextflow pipeline
 import argparse
 import sys
 import os
-import pytest
+# import pytest
 
 
 # --------------------------------------------------

@@ -68,7 +68,7 @@ contaminant = params.genomes[ params.contaminant ]
 =====================================================================
 */
 
-include { ParseDesignSWF        as ParseDesign        } from "${baseDir}/subworkflows/inputs/ParseDesignSWF.nf"
+include { ParseDesignReadsSWF   as ParseDesignReads   } from "${baseDir}/subworkflows/inputs/ParseDesignReadsSWF.nf"
 include { RawReadsQCSWF         as RawReadsQC         } from "${baseDir}/subworkflows/reads/RawReadsQCSWF.nf"
 include { TrimReadsSWF          as TrimReads          } from "${baseDir}/subworkflows/reads/TrimReadsSWF.nf"
 include { TrimReadsQCSWF        as TrimReadsQC        } from "${baseDir}/subworkflows/reads/TrimReadsQCSWF.nf"
@@ -93,10 +93,10 @@ workflow sralign {
     */
 
     // Subworkflow: Parse design file
-    ParseDesign(
+    ParseDesignReads(
         ch_input
     )
-    ch_rawReads = ParseDesign.out.rawReads
+    ch_rawReads = ParseDesignReads.out.rawReads
 
 
     /*

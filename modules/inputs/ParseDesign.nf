@@ -6,6 +6,7 @@ process ParseDesign {
     publishDir "${params.baseDirData}/design", mode: 'copy'
 
     input:
+        val inputType
         path design
 
     output:
@@ -14,6 +15,7 @@ process ParseDesign {
     script:
         """
         parse_design.py \
+            ${inputType} \
             ${design}
         """
 }
