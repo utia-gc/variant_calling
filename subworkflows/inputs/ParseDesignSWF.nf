@@ -1,0 +1,80 @@
+include { ParseDesign } from "${projectDir}/modules/inputs/ParseDesign.nf"
+
+workflow ParseDesignSWF {
+    take:
+        design
+
+    main:
+        ParseDesign(
+            design
+        )
+            .csv
+            .splitCsv(header:true, sep:',')
+            .map { createDesignChannel(it) }
+            .branch {
+                reads: it[1] =~ /(fastq|fq)/   // add channels with fastq files (either fastq or fq) to reads channel
+                bams:  it[1] =~ /bam$/         // add channels with bams to reads channel
+            }
+            .set { design }
+
+    emit:
+        reads = design.reads
+        bams  = design.bams
+}
+
+
+// create a list of data from the csv
+def createDesignChannel(LinkedHashMap row) {
+    // reads
+    if (row.fq1) {
+        // store metadata in a Map
+        def metadata = [:]
+        metadata.libID      = row.lib_ID
+        metadata.sampleName = row.sample_rep
+        metadata.readType   = row.fq2 ? 'paired' : 'single'
+
+        // store reads in a list
+        def reads = []
+        if (metadata.readType == 'single') {
+            reads = [file(row.fq1)]
+        } else {
+            reads = [file(row.fq1), file(row.fq2)]
+        }
+
+
+        // create an empty list for tool IDs for suffixes
+        toolIDs = []
+
+        // check that reads files exist
+        reads.each {
+            if (!it.exists()) {
+                exit 1, "ERROR: ${it} does not exist!"
+            }
+        }
+
+        return [metadata, reads, toolIDs]
+    }
+    
+    // bams
+    else if (row.bam) {
+        // store metadata in a Map
+        def metadata = [:]
+        metadata.libID      = row.lib_ID
+        metadata.sampleName = row.sample_rep
+
+        // store bams
+        bam = row.bam
+
+        // create an empty list for tool IDs for suffixes
+        toolIDs = row.tool_IDs.split('_')
+
+        // check that reads files exist
+        bam.each {
+            if (!it.exists()) {
+                exit 1, "ERROR: ${it} does not exist!"
+            }
+        }
+
+        return [metadata, bam, toolIDs]
+    }
+}

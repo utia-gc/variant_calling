@@ -20,18 +20,12 @@ def get_args():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     
     parser.add_argument(
-        'input_type',
-        help='Type of input file',
-        metavar='TYPE',
-        type=str,
-        choices=['reads', 'alignments'] 
+        'design',
+        metavar='DESIGN',
+        nargs='+',
+        type=argparse.FileType('rt'),
+        help='Input csv design file'
     )
-
-    parser.add_argument('design',
-                        metavar='DESIGN',
-                        nargs='+',
-                        type=argparse.FileType('rt'),
-                        help='Input csv design file')
 
 
     args = parser.parse_args()
@@ -54,16 +48,16 @@ def main():
         header_in = dsgn_in.pop(0)
 
         # check header and get output header
-        header_out = check_header(header=header_in, in_type=args.input_type)
+        header_out, in_type = check_header(header=header_in)
 
-        if args.input_type == 'reads':
+        if in_type == 'reads':
             # check read types are all the same
             check_read_type(header=header_in, design=dsgn_in)
 
             # create output design
             dsgn_out = organize_reads(dsgn_in)
         
-        elif args.input_type == 'alignments':
+        elif in_type == 'alignments':
             # create output design
             dsgn_out = organize_alignments(dsgn_in)
 
@@ -95,7 +89,7 @@ def test_print_error():
 
 
 # --------------------------------------------------
-def check_header(header, in_type):
+def check_header(header):
     """
     Check design file has proper header format:
 
@@ -113,12 +107,12 @@ def check_header(header, in_type):
 
     if header not in VALID_HEADERS:
         print_error(error="Missing or invalid header.", context=','.join(header))
-    elif in_type == 'reads' and header == VALID_HEADERS[0]:
-        return "lib_ID,sample_rep,fq1"
-    elif in_type == 'reads' and header == VALID_HEADERS[1]:
-        return "lib_ID,sample_rep,fq1,fq2"
-    elif in_type == 'alignments' and header == VALID_HEADERS[2]:
-        return "lib_ID,sample_rep,bam,tool_IDs"
+    elif header == VALID_HEADERS[0]:
+        return "lib_ID,sample_rep,fq1", 'reads'
+    elif header == VALID_HEADERS[1]:
+        return "lib_ID,sample_rep,fq1,fq2", 'reads'
+    elif header == VALID_HEADERS[2]:
+        return "lib_ID,sample_rep,bam,tool_IDs", 'alignments'
 
 
 def test_check_header():
@@ -127,14 +121,14 @@ def test_check_header():
     # test no or incorrect header
     error_str = f"ERROR: Samplesheet -> Missing or invalid header.\n\tLINE: HSL-1,wt_control,1,data/HSL-1_R1.fastq.gz"
     with pytest.raises(SystemExit) as out:
-        check_header(['HSL-1', 'wt_control', '1', 'data/HSL-1_R1.fastq.gz'], 'reads') 
+        check_header(['HSL-1', 'wt_control', '1', 'data/HSL-1_R1.fastq.gz']) 
     assert out.type == SystemExit
     assert out.value.code == error_str
 
     # test correct header output
-    assert check_header(['lib_ID', 'sample_name', 'replicate', 'reads1'], 'reads') == "lib_ID,sample_rep,fq1"
-    assert check_header(['lib_ID', 'sample_name', 'replicate', 'reads1', 'reads2'], 'reads') == "lib_ID,sample_rep,fq1,fq2"
-    assert check_header(['lib_ID', 'sample_name', 'replicate', 'bam', 'tool_IDs'], 'alignments') == "lib_ID,sample_rep,bam,tool_IDs"
+    assert check_header(['lib_ID', 'sample_name', 'replicate', 'reads1']) == ("lib_ID,sample_rep,fq1", 'reads')
+    assert check_header(['lib_ID', 'sample_name', 'replicate', 'reads1', 'reads2']) == ("lib_ID,sample_rep,fq1,fq2", 'reads')
+    assert check_header(['lib_ID', 'sample_name', 'replicate', 'bam', 'tool_IDs']) == ("lib_ID,sample_rep,bam,tool_IDs", 'alignments')
 
 
 # --------------------------------------------------

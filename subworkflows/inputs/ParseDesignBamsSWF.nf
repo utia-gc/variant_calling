@@ -6,7 +6,6 @@ workflow ParseDesignBamsSWF{
 
     main:
         ParseDesign(
-            'alignments',
             design
         )
             .csv
