@@ -62,6 +62,10 @@ def main():
 
             # create output design
             dsgn_out = organize_reads(dsgn_in)
+        
+        elif args.input_type == 'alignments':
+            # create output design
+            dsgn_out = organize_alignments(dsgn_in)
 
         # write output to file
         outfile = f'{os.path.splitext(in_fh.name)[0]}_parsed.csv'
@@ -98,11 +102,13 @@ def check_header(header, in_type):
     lib_ID,sample_name,replicate,reads1,reads2
 
     Note: reads2 column is optional to handle single end reads
+    Note: also take bam input header
     """
 
     VALID_HEADERS =[
         'lib_ID,sample_name,replicate,reads1'.split(','),
-        'lib_ID,sample_name,replicate,reads1,reads2'.split(',')
+        'lib_ID,sample_name,replicate,reads1,reads2'.split(','),
+        'lib_ID,sample_name,replicate,bam,tool_IDs'.split(',')
     ]
 
     if header not in VALID_HEADERS:
@@ -111,6 +117,8 @@ def check_header(header, in_type):
         return "lib_ID,sample_rep,fq1"
     elif in_type == 'reads' and header == VALID_HEADERS[1]:
         return "lib_ID,sample_rep,fq1,fq2"
+    elif in_type == 'alignments' and header == VALID_HEADERS[2]:
+        return "lib_ID,sample_rep,bam,tool_IDs"
 
 
 def test_check_header():
@@ -126,6 +134,7 @@ def test_check_header():
     # test correct header output
     assert check_header(['lib_ID', 'sample_name', 'replicate', 'reads1'], 'reads') == "lib_ID,sample_rep,fq1"
     assert check_header(['lib_ID', 'sample_name', 'replicate', 'reads1', 'reads2'], 'reads') == "lib_ID,sample_rep,fq1,fq2"
+    assert check_header(['lib_ID', 'sample_name', 'replicate', 'bam', 'tool_IDs'], 'alignments') == "lib_ID,sample_rep,bam,tool_IDs"
 
 
 # --------------------------------------------------
@@ -184,6 +193,34 @@ def test_organize_reads():
     assert organize_reads(design=SE_design) == SE_expected.strip()
     assert organize_reads(design=PE_design) == PE_expected.strip()
 
+
+# --------------------------------------------------
+def organize_alignments(design: list):
+    """
+    Organize alignments
+    """
+
+    samples = []
+
+    for sample in design:
+        samples.append(f'{sample[0]},{sample[1]}_rep{sample[2]},{sample[3]},{sample[4]}')
+    
+    return '\n'.join(samples)
+
+
+def test_organize_alignments():
+    """test organize_alignments"""
+
+    bam_design = [
+        ['HSL-3', 'wt_DMSO', '1', 'data/HSL-3.bam', 'bwM'],
+        ['HSL-4', 'wt_DMSO', '2', 'data/HSL-4.bam', '']
+    ]
+    bam_expected = (
+        'HSL-3,wt_DMSO_rep1,data/HSL-3.bam,bwM\n'
+        'HSL-4,wt_DMSO_rep2,data/HSL-4.bam,'
+    )
+
+    assert organize_alignments(design=bam_design) == bam_expected.strip()
 
 # --------------------------------------------------
 if __name__ == '__main__':
