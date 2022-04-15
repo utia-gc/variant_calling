@@ -31,7 +31,7 @@ def test_usage():
 def test_missing_header():
     """no header"""
 
-    rv, out = getstatusoutput(f'{prg} PE_design_noHeader.csv')
+    rv, out = getstatusoutput(f'{prg} reads PE_design_noHeader.csv')
     assert rv == 1
     expected = f"ERROR: Samplesheet -> Missing or invalid header.\n\tLINE: HSL-1,wt_control,1,data/HSL-1_R1.fastq.gz,data/HSL-1_R2.fastq.gz"
     assert out.strip() == expected
@@ -41,7 +41,7 @@ def test_missing_header():
 def test_check_read_types():
     """mixed read types"""
 
-    rv, out = getstatusoutput(f'{prg} SE_design_mixTypes.csv')
+    rv, out = getstatusoutput(f'{prg} reads SE_design_mixTypes.csv')
     assert rv == 1
     expected = f"ERROR: Samplesheet -> Mixed read types.\n\tLINE: HSL-3,wt_DMSO,1,data/HSL-3_R1.fastq.gz,data/HSL-3_R2.fastq.gz\n\tHSL-4,wt_DMSO,2,data/HSL-4_R1.fastq.gz,data/HSL-4_R2.fastq.gz"
     assert out.strip() == expected
@@ -51,7 +51,7 @@ def test_check_read_types():
 def test_single_end():
     """single end"""
 
-    rv, out = getstatusoutput(f'{prg} SE_design_good.csv')
+    rv, out = getstatusoutput(f'{prg} reads SE_design_good.csv')
     
     # check status
     assert rv == 0
@@ -69,12 +69,16 @@ def test_single_end():
     out_text = open(out_file).read().rstrip()
     assert out_text == expected
 
+    # cleanup
+    if os.path.isfile(out_file):
+        os.remove(out_file)
+
 
 # --------------------------------------------------
 def test_paired_end():
     """paired end"""
 
-    rv, out = getstatusoutput(f'{prg} PE_design_good.csv')
+    rv, out = getstatusoutput(f'{prg} reads PE_design_good.csv')
 
     # check status
     assert rv == 0
@@ -92,12 +96,16 @@ def test_paired_end():
     out_text = open(out_file).read().rstrip()
     assert out_text == expected
 
+    # cleanup
+    if os.path.isfile(out_file):
+        os.remove(out_file)
+
 
 # --------------------------------------------------
 def test_bam():
     """bam"""
 
-    rv, out = getstatusoutput(f'{prg} bam_design_good.csv')
+    rv, out = getstatusoutput(f'{prg} alignments bam_design_good.csv')
 
     # check status
     assert rv == 0
@@ -114,4 +122,8 @@ def test_bam():
     out_file = 'bam_design_good_parsed.csv'
     out_text = open(out_file).read().rstrip()
     assert out_text == expected
+
+    # cleanup
+    if os.path.isfile(out_file):
+        os.remove(out_file)
     

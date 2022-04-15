@@ -8,6 +8,7 @@ Purpose: Parse input design file for nextflow pipeline
 import argparse
 import sys
 import os
+import pytest
 
 
 # --------------------------------------------------
@@ -17,6 +18,14 @@ def get_args():
     parser = argparse.ArgumentParser(
         description='Parse input design file for nextflow pipeline',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    
+    parser.add_argument(
+        'input_type',
+        help='Type of input file',
+        metavar='TYPE',
+        type=str,
+        choices=['reads', 'alignments'] 
+    )
 
     parser.add_argument('design',
                         metavar='DESIGN',
@@ -45,13 +54,14 @@ def main():
         header_in = dsgn_in.pop(0)
 
         # check header and get output header
-        header_out = check_header(header_in)
+        header_out = check_header(header=header_in, in_type=args.input_type)
 
-        # check read types are all the same
-        check_read_type(header=header_in, design=dsgn_in)
+        if args.input_type == 'reads':
+            # check read types are all the same
+            check_read_type(header=header_in, design=dsgn_in)
 
-        # create output design
-        dsgn_out = organize_samples(dsgn_in)
+            # create output design
+            dsgn_out = organize_reads(dsgn_in)
 
         # write output to file
         outfile = f'{os.path.splitext(in_fh.name)[0]}_parsed.csv'
@@ -81,7 +91,7 @@ def test_print_error():
 
 
 # --------------------------------------------------
-def check_header(header):
+def check_header(header, in_type):
     """
     Check design file has proper header format:
 
@@ -90,13 +100,16 @@ def check_header(header):
     Note: reads2 column is optional to handle single end reads
     """
 
-    VALID_HEADERS = ['lib_ID,sample_name,replicate,reads1'.split(','), 'lib_ID,sample_name,replicate,reads1,reads2'.split(',')]
+    VALID_HEADERS =[
+        'lib_ID,sample_name,replicate,reads1'.split(','),
+        'lib_ID,sample_name,replicate,reads1,reads2'.split(',')
+    ]
 
     if header not in VALID_HEADERS:
         print_error(error="Missing or invalid header.", context=','.join(header))
-    elif header == VALID_HEADERS[0]:
+    elif in_type == 'reads' and header == VALID_HEADERS[0]:
         return "lib_ID,sample_rep,fq1"
-    else:
+    elif in_type == 'reads' and header == VALID_HEADERS[1]:
         return "lib_ID,sample_rep,fq1,fq2"
 
 
@@ -106,13 +119,13 @@ def test_check_header():
     # test no or incorrect header
     error_str = f"ERROR: Samplesheet -> Missing or invalid header.\n\tLINE: HSL-1,wt_control,1,data/HSL-1_R1.fastq.gz"
     with pytest.raises(SystemExit) as out:
-        check_header(['HSL-1', 'wt_control', '1', 'data/HSL-1_R1.fastq.gz']) 
+        check_header(['HSL-1', 'wt_control', '1', 'data/HSL-1_R1.fastq.gz'], 'reads') 
     assert out.type == SystemExit
     assert out.value.code == error_str
 
     # test correct header output
-    assert check_header(['lib_ID', 'sample_name', 'replicate', 'reads1']) == "lib_ID,sample_rep,fq1"
-    assert check_header(['lib_ID', 'sample_name', 'replicate', 'reads1', 'reads2']) == "lib_ID,sample_rep,fq1,fq2"
+    assert check_header(['lib_ID', 'sample_name', 'replicate', 'reads1'], 'reads') == "lib_ID,sample_rep,fq1"
+    assert check_header(['lib_ID', 'sample_name', 'replicate', 'reads1', 'reads2'], 'reads') == "lib_ID,sample_rep,fq1,fq2"
 
 
 # --------------------------------------------------
@@ -144,9 +157,9 @@ def test_check_read_type():
 
 
 # --------------------------------------------------
-def organize_samples(design: list):
+def organize_reads(design: list):
     """
-    Organize samples
+    Organize reads 
     """
 
     samples = []
@@ -158,8 +171,8 @@ def organize_samples(design: list):
     return '\n'.join(samples)
 
 
-def test_organize_samples():
-    """test organize_samples"""
+def test_organize_reads():
+    """test organize_reads"""
 
     SE_design = [['HSL-3', 'wt_DMSO', '1', 'data/HSL-3_R1.fastq.gz'], ['HSL-4', 'wt_DMSO', '2', 'data/HSL-4_R1.fastq.gz']]
     SE_expected = ('HSL-3,wt_DMSO_rep1,data/HSL-3_R1.fastq.gz\n'
@@ -168,8 +181,8 @@ def test_organize_samples():
     PE_expected = ('HSL-3,wt_DMSO_rep1,data/HSL-3_R1.fastq.gz,data/HSL-3_R2.fastq.gz\n'
                    'HSL-4,wt_DMSO_rep2,data/HSL-4_R1.fastq.gz,data/HSL-4_R2.fastq.gz')
                    
-    assert organize_samples(design=SE_design) == SE_expected.strip()
-    assert organize_samples(design=PE_design) == PE_expected.strip()
+    assert organize_reads(design=SE_design) == SE_expected.strip()
+    assert organize_reads(design=PE_design) == PE_expected.strip()
 
 
 # --------------------------------------------------
