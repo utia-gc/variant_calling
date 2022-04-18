@@ -77,6 +77,7 @@ include { AlignBowtie2SWF       as AlignBowtie2       ;
 include { AlignHisat2SWF        as AlignHisat2        ; 
           AlignHisat2SWF        as ContamHisat2       } from "${baseDir}/subworkflows/align/AlignHisat2SWF.nf"
 include { PreprocessSamSWF      as PreprocessSam      } from "${baseDir}/subworkflows/align/PreprocessSamSWF.nf"
+include { IndexBam              as IndexBam           } from "${projectDir}/modules/align/IndexBam.nf"
 include { SamStatsQCSWF         as SamStatsQC         } from "${baseDir}/subworkflows/align/SamStatsQCSWF.nf"
 include { SeqtkSample           as SeqtkSample        } from "${baseDir}/modules/reads/SeqtkSample.nf"
 include { ContaminantStatsQCSWF as ContaminantStatsQC } from "${baseDir}/subworkflows/align/ContaminantStatsQCSWF.nf"
@@ -95,8 +96,16 @@ workflow sralign {
     ParseDesign(
         ch_input
     )
-    ch_rawReads  = ParseDesign.out.reads
-    ch_bamGenome = ParseDesign.out.bams
+    ch_rawReads         = ParseDesign.out.reads
+    ch_bamIndexedGenome = ParseDesign.out.bamBai
+
+    // 
+    /*
+    IndexBam(
+        ch_bamGenome
+    )
+    ch_bamIndexedGenome = IndexBam.out.bamBai
+    */
 
 
     /*
@@ -199,8 +208,8 @@ workflow sralign {
     PreprocessSam(
         ch_samGenome
     )
-    ch_bamGenome        = PreprocessSam.out.bam.mix(ch_bamGenome)
-    ch_bamIndexedGenome = PreprocessSam.out.bamBai
+    ch_bamGenome        = PreprocessSam.out.bam
+    ch_bamIndexedGenome = PreprocessSam.out.bamBai.mix(ch_bamIndexedGenome)
 
 
     if (!params.skipSamStatsQC) {

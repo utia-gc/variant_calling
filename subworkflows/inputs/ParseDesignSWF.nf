@@ -1,4 +1,5 @@
 include { ParseDesign } from "${projectDir}/modules/inputs/ParseDesign.nf"
+include { IndexBam    } from "${projectDir}/modules/align/IndexBam.nf"
 
 workflow ParseDesignSWF {
     take:
@@ -16,10 +17,16 @@ workflow ParseDesignSWF {
                 bams:  it[1].any { it =~ /\.bam$/ }       // add channels with bams to bams channel
             }
             .set { design }
+        
+        // Index bams
+        IndexBam(
+            design.bams
+        )
+            .set { bamBai }
 
     emit:
-        reads = design.reads
-        bams  = design.bams
+        reads  = design.reads
+        bamBai = bamBai
 }
 
 
