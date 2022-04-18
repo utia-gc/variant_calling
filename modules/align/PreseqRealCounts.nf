@@ -10,7 +10,7 @@ process PreseqRealCounts {
     container 'quay.io/biocontainers/samtools:1.15--h1170115_1'
 
     input:
-        tuple val(metadata), path(bam), val(toolIDs)
+        tuple val(metadata), path(bam), path(bai), val(toolIDs)
         path psL
 
     output:

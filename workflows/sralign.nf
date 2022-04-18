@@ -99,14 +99,6 @@ workflow sralign {
     ch_rawReads         = ParseDesign.out.reads
     ch_bamIndexedGenome = ParseDesign.out.bamBai
 
-    // 
-    /*
-    IndexBam(
-        ch_bamGenome
-    )
-    ch_bamIndexedGenome = IndexBam.out.bamBai
-    */
-
 
     /*
     ---------------------------------------------------------------------
@@ -208,7 +200,6 @@ workflow sralign {
     PreprocessSam(
         ch_samGenome
     )
-    ch_bamGenome        = PreprocessSam.out.bam
     ch_bamIndexedGenome = PreprocessSam.out.bamBai.mix(ch_bamIndexedGenome)
 
 
@@ -285,7 +276,7 @@ workflow sralign {
     // Preseq
     if (!params.skipPreseq) {
         Preseq(
-            ch_bamGenome
+            ch_bamIndexedGenome
         )
         ch_preseqLcExtrap = Preseq.out.psL
         ch_psRealCounts   = Preseq.out.psRealCounts
