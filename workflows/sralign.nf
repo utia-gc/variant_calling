@@ -77,7 +77,6 @@ include { AlignBowtie2SWF       as AlignBowtie2       ;
 include { AlignHisat2SWF        as AlignHisat2        ; 
           AlignHisat2SWF        as ContamHisat2       } from "${baseDir}/subworkflows/align/AlignHisat2SWF.nf"
 include { PreprocessSamSWF      as PreprocessSam      } from "${baseDir}/subworkflows/align/PreprocessSamSWF.nf"
-include { IndexBam              as IndexBam           } from "${projectDir}/modules/align/IndexBam.nf"
 include { SamStatsQCSWF         as SamStatsQC         } from "${baseDir}/subworkflows/align/SamStatsQCSWF.nf"
 include { SeqtkSample           as SeqtkSample        } from "${baseDir}/modules/reads/SeqtkSample.nf"
 include { ContaminantStatsQCSWF as ContaminantStatsQC } from "${baseDir}/subworkflows/align/ContaminantStatsQCSWF.nf"
@@ -279,10 +278,8 @@ workflow sralign {
             ch_bamIndexedGenome
         )
         ch_preseqLcExtrap = Preseq.out.psL
-        ch_psRealCounts   = Preseq.out.psRealCounts
     } else {
         ch_preseqLcExtrap = Channel.empty()
-        ch_psRealCounts   = Channel.empty()
     }
 
 
@@ -300,7 +297,6 @@ workflow sralign {
         .concat(ch_alignGenomePctDup)
         .concat(ch_contaminantFlagstat)
         .concat(ch_preseqLcExtrap)
-        .concat(ch_psRealCounts)
 
     FullMultiQC(
         inName,
