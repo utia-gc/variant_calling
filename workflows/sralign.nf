@@ -85,7 +85,6 @@ include { FullMultiQC           as FullMultiQC        } from "${baseDir}/modules
 
 
 workflow sralign {
-
     /*
     ---------------------------------------------------------------------
         Read design file, parse sample names and identifiers, and stage reads files
@@ -96,7 +95,8 @@ workflow sralign {
     ParseDesign(
         ch_input
     )
-    ch_rawReads = ParseDesign.out.rawReads
+    ch_rawReads         = ParseDesign.out.reads
+    ch_bamIndexedGenome = ParseDesign.out.bamBai
 
 
     /*
@@ -193,14 +193,13 @@ workflow sralign {
                 )
                 ch_samGenome = AlignHisat2.out.sam
                 break
-        }
-    
+    }
 
+    // Preprocess sam files: mark duplicates, sort alignments, compress to bam, and index
     PreprocessSam(
         ch_samGenome
     )
-    ch_bamGenome        = PreprocessSam.out.bam
-    ch_bamIndexedGenome = PreprocessSam.out.bamBai
+    ch_bamIndexedGenome = PreprocessSam.out.bamBai.mix(ch_bamIndexedGenome)
 
 
     if (!params.skipSamStatsQC) {
@@ -276,13 +275,11 @@ workflow sralign {
     // Preseq
     if (!params.skipPreseq) {
         Preseq(
-            ch_bamGenome
+            ch_bamIndexedGenome
         )
         ch_preseqLcExtrap = Preseq.out.psL
-        ch_psRealCounts   = Preseq.out.psRealCounts
     } else {
         ch_preseqLcExtrap = Channel.empty()
-        ch_psRealCounts   = Channel.empty()
     }
 
 
@@ -300,7 +297,6 @@ workflow sralign {
         .concat(ch_alignGenomePctDup)
         .concat(ch_contaminantFlagstat)
         .concat(ch_preseqLcExtrap)
-        .concat(ch_psRealCounts)
 
     FullMultiQC(
         inName,
