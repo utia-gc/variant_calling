@@ -193,13 +193,13 @@ workflow sralign {
                 )
                 ch_samGenome = AlignHisat2.out.sam
                 break
-        }
-    
+    }
 
+    // Preprocess sam files: mark duplicates, sort alignments, compress to bam, and index
     PreprocessSam(
         ch_samGenome
     )
-    ch_bamGenome        = PreprocessSam.out.bam
+    ch_bamGenome        = PreprocessSam.out.bam.mix(ch_bamGenome)
     ch_bamIndexedGenome = PreprocessSam.out.bamBai
 
 
