@@ -63,7 +63,7 @@ def createDesignChannel(LinkedHashMap row) {
         metadata.sampleName = row.sample_rep
 
         // store bams
-        bam = row.bam
+        bam = [file(row.bam)]
 
         // create an empty list for tool IDs for suffixes
         toolIDs = row.tool_IDs.split('_')
