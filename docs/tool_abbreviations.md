@@ -13,4 +13,16 @@ Each major step is encoded in a brief, unique identifier.
 
 #### `fastp`
 
-fsp - `fastp`
+`fastp` - `fsp`
+
+### Align reads
+
+Note: For `SRAlign` (and pipelines built on `SRAlign`), the alignment tool is followed by a hyphen and the genome name (e.g. for reads aligned to the hg19 genome by `bowtie2`, the abbreviation would be `bt2-hg19`).
+
+#### `bowtie2`
+
+`bowtie2` - `bt2`
+
+#### `HISAT2`
+
+`HISAT2` - `ht2`
