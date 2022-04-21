@@ -36,3 +36,17 @@ Note: For `SRAlign` (and pipelines built on `SRAlign`), the alignment tool is fo
 * `stats` - `ST` - (`sST`)
 * `idxstat` - `IX-idxstat` - (`sIX-idxstat`)
 * This seems nonsensical, but MultiQC requires "idxstat" to be in the file name for recognition of the file.
+
+### Alignments QC and analysis
+
+#### `preseq`
+
+`preseq` - `ps`
+* `lc_extrap` - `L`
+
+### Miscellaneous
+
+#### `seqtk`
+
+`seqtk` - `sk`
+* `sample` - `S`
