@@ -81,6 +81,7 @@ include { SamStatsQCSWF         as SamStatsQC         } from "${baseDir}/subwork
 include { SeqtkSample           as SeqtkSample        } from "${baseDir}/modules/reads/SeqtkSample.nf"
 include { ContaminantStatsQCSWF as ContaminantStatsQC } from "${baseDir}/subworkflows/align/ContaminantStatsQCSWF.nf"
 include { PreseqSWF             as Preseq             } from "${baseDir}/subworkflows/align/PreseqSWF.nf"
+include { DeepToolsMultiBamSWF  as DeepToolsMultiBam  } from "${projectDir}/subworkflows/align/DeepToolsMultiBamSWF.nf"
 include { FullMultiQC           as FullMultiQC        } from "${baseDir}/modules/misc/FullMultiQC.nf"
 
 
@@ -282,6 +283,25 @@ workflow sralign {
         ch_preseqLcExtrap = Channel.empty()
     }
 
+    // deepTools
+    ch_alignments = ch_bamIndexedGenome
+    ch_alignmentsCollect = 
+        ch_alignments
+        .multiMap {
+            it ->
+            bam:     it[1]
+            bai:     it[2]
+            toolIDs: it[3]
+        }
+
+    DeepToolsMultiBam(
+        ch_alignmentsCollect.bam.collect(),
+        ch_alignmentsCollect.bai.collect(),
+        inName
+    )
+    ch_corMatrix = DeepToolsMultiBam.out.corMatrix
+    ch_PCAMatrix = DeepToolsMultiBam.out.PCAMatrix
+
 
     /*
     ---------------------------------------------------------------------
@@ -297,6 +317,8 @@ workflow sralign {
         .concat(ch_alignGenomePctDup)
         .concat(ch_contaminantFlagstat)
         .concat(ch_preseqLcExtrap)
+        .concat(ch_corMatrix)
+        .concat(ch_PCAMatrix)
 
     FullMultiQC(
         inName,
