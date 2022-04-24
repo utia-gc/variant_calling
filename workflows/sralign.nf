@@ -43,6 +43,9 @@ if (params.input) {
 // set input design name
 inName = params.input.take(params.input.lastIndexOf('.')).split('/')[-1]
 
+// set workflow prefix name to be used for output files that combine all files (i.e. only one output file such as the full MultiQC)
+wfPrefix = "${inName}_-_${workflow.runName}_-_${workflow.start}"
+
 
 /*
     ---------------------------------------------------------------------
@@ -81,6 +84,7 @@ include { SamStatsQCSWF         as SamStatsQC         } from "${baseDir}/subwork
 include { SeqtkSample           as SeqtkSample        } from "${baseDir}/modules/reads/SeqtkSample.nf"
 include { ContaminantStatsQCSWF as ContaminantStatsQC } from "${baseDir}/subworkflows/align/ContaminantStatsQCSWF.nf"
 include { PreseqSWF             as Preseq             } from "${baseDir}/subworkflows/align/PreseqSWF.nf"
+include { DeepToolsMultiBamSWF  as DeepToolsMultiBam  } from "${projectDir}/subworkflows/align/DeepToolsMultiBamSWF.nf"
 include { FullMultiQC           as FullMultiQC        } from "${baseDir}/modules/misc/FullMultiQC.nf"
 
 
@@ -109,7 +113,7 @@ workflow sralign {
         // Subworkflow: Raw reads fastqc and mulitqc
         RawReadsQC(
             ch_rawReads,
-            inName
+            wfPrefix
         )
         ch_rawReadsFQC = RawReadsQC.out.fqc_zip
     } else {
@@ -141,7 +145,7 @@ workflow sralign {
             // Subworkflow: Trimmed reads fastqc and multiqc
             TrimReadsQC(
                 ch_trimReads,
-                inName
+                wfPrefix
             ) 
             ch_trimReadsFQC = TrimReadsQC.out.fqc_zip
         } else {
@@ -206,7 +210,7 @@ workflow sralign {
         // Subworkflow: Samtools stats and samtools idxstats and multiqc of alignment results
         SamStatsQC(
             ch_bamIndexedGenome,
-            inName
+            wfPrefix
         )
         ch_alignGenomeStats    = SamStatsQC.out.samtoolsStats
         ch_alignGenomeIdxstats = SamStatsQC.out.samtoolsIdxstats
@@ -259,7 +263,7 @@ workflow sralign {
         // Get contaminant alignment stats
         ContaminantStatsQC(
             ch_samContaminant,
-            inName
+            wfPrefix
         )
         ch_contaminantFlagstat = ContaminantStatsQC.out.samtoolsFlagstat
     } else {
@@ -282,6 +286,25 @@ workflow sralign {
         ch_preseqLcExtrap = Channel.empty()
     }
 
+    // deepTools
+    ch_alignments = ch_bamIndexedGenome
+    ch_alignmentsCollect = 
+        ch_alignments
+        .multiMap {
+            it ->
+            bam:     it[1]
+            bai:     it[2]
+            toolIDs: it[3]
+        }
+
+    DeepToolsMultiBam(
+        ch_alignmentsCollect.bam.collect(),
+        ch_alignmentsCollect.bai.collect(),
+        wfPrefix
+    )
+    ch_corMatrix = DeepToolsMultiBam.out.corMatrix
+    ch_PCAMatrix = DeepToolsMultiBam.out.PCAMatrix
+
 
     /*
     ---------------------------------------------------------------------
@@ -297,6 +320,8 @@ workflow sralign {
         .concat(ch_alignGenomePctDup)
         .concat(ch_contaminantFlagstat)
         .concat(ch_preseqLcExtrap)
+        .concat(ch_corMatrix)
+        .concat(ch_PCAMatrix)
 
     FullMultiQC(
         inName,

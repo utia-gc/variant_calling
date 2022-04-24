@@ -4,12 +4,14 @@ run_modules:
   - fastqc
   - samtools
   - preseq
+  - deeptools
   - custom_content
 
 module_order:
   - fastqc
   - samtools
   - preseq
+  - deeptools
   - custom_content
 
 custom_data:
