@@ -4,13 +4,13 @@ workflow DeepToolsMultiBamSWF {
     take:
         bams
         bais
-        outFileName
+        prefix
     
     main:
         DeepToolsMultiBamSummary(
             bams,
             bais,
-            outFileName
+            prefix
         )
     
     emit:

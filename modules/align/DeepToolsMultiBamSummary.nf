@@ -5,7 +5,7 @@ Purpose: Compute read coverages for BAMs
 */
 
 process DeepToolsMultiBamSummary {
-    tag ""
+    tag "${}"
 
     label 'mem_mid'
     label 'cpu_mid'
@@ -19,7 +19,7 @@ process DeepToolsMultiBamSummary {
     input:
         path bams
         path bais
-        val  inName 
+        val  outName 
 
     output:
         path '*_dBS.npz',     emit: multiBamSummary
@@ -36,16 +36,16 @@ process DeepToolsMultiBamSummary {
             --bamfiles ${bams} \
             ${task.ext.args.multiBamSummary} \
             --numberOfProcessors ${task.cpus} \
-            --outFileName ${inName}${suffix}.npz
+            --outFileName ${outName}${suffix}.npz
 
         plotCorrelation \
-            -in ${inName}${suffix}.npz \
+            -in ${outName}${suffix}.npz \
             ${task.ext.args.plotCorrelation} \
-            --outFileCorMatrix ${inName}${suffix}_dPC.txt
+            --outFileCorMatrix ${outName}${suffix}_dPC.txt
 
         plotPCA \
-            -in ${inName}${suffix}.npz \
+            -in ${outName}${suffix}.npz \
             ${task.ext.args.plotPCA} \
-            --outFileNameData ${inName}${suffix}_dPP.tab
+            --outFileNameData ${outName}${suffix}_dPP.tab
         """
 }
