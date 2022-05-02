@@ -8,6 +8,7 @@ process CompressSortSam {
     tag "${metadata.sampleName}"
 
     label 'cpu_mid'
+    label 'mem_mid'
 
     container 'quay.io/biocontainers/samtools:1.15--h1170115_1'
 
