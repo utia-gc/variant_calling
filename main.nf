@@ -17,6 +17,16 @@ nextflow.enable.dsl=2
 ---------------------------------------------------------------------
 */
 
+// create new SRAlignWorkflow object
+def srawf = new SRAlignWorkflow(log)
+
+
+/*
+---------------------------------------------------------------------
+    HELP MESSAGE
+---------------------------------------------------------------------
+*/
+
 // Write help message
 def help_message() {
     log.info"""
