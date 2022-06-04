@@ -1,12 +1,18 @@
 class SRAlignWorkflow {
-    // import log
-    public static def          log
+    /*
+    ---------------------------------------------------------------------
+        Fields and properties
+    ---------------------------------------------------------------------
+    */
+
+    // workflow features
+    public static def log
 
     // workflow name
-    public static final String workflowName = "trev-f/SRAlign"
+    public static final String pipelineName = "trev-f/SRAlign"
 
     // workflow title in ASCII characters
-    public static final String workflowHeader = (
+    public static final String pipelineTitle = (
         """
          ######  ########     ###    ##       ####  ######   ##    ## 
         ##    ## ##     ##   ## ##   ##        ##  ##    ##  ###   ## 
@@ -17,18 +23,33 @@ class SRAlignWorkflow {
          ######  ##     ## ##     ## ######## ####  ######   ##    ## 
         """
     )
+
+
+    /*
+    ---------------------------------------------------------------------
+        Methods
+    ---------------------------------------------------------------------
+    */
         
     // constructor method
     SRAlignWorkflow(log) {
         // set log
         this.log = log
 
-        logHeader()
+        // display the header
+        log.info createHeader()
     }
 
-    // display the title
-    def logHeader() {
-        log.info workflowHeader
-        log.info workflowName
+    // create a header
+    public static String createHeader() {
+        // initialize an empty header list
+        def header = []
+
+        // add pipeline header info to list
+        header.add(pipelineTitle)
+        header.add(pipelineName)
+
+        // return header info as string with new line breaks
+        header.join("\n")
     }
 }
