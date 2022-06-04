@@ -25,13 +25,19 @@ class SRAlignWorkflow {
     // pipeline name
     public static final String pipelineName = "trev-f/SRAlign"
 
+    // purpose statement
+    public static final String purpose = (
+        """
+        A flexible pipeline for short read alignment to a reference with extensive QC reporting.
+        """
+    )
+
     // usage statement
     public static final String usage = (
         """
         nextflow run trev-f/SRAlign -profile docker --input input.csv --genome WBcel235
         """
     )
-
 
     /*
     ---------------------------------------------------------------------
@@ -64,6 +70,7 @@ class SRAlignWorkflow {
         // add pipeline header info to list
         header.add(pipelineLogo)
         header.add(pipelineName)
+        header.add(purpose)
         header.add("")            // extra newline at end helps formatting look better
 
         // return header info as string with new line breaks
