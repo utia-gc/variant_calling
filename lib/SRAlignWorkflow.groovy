@@ -1,3 +1,7 @@
+/**
+ * SRAlignWorkflow class is a class to perform necessary workflow functions upon initialization.
+ * These functions include: creating a header for STDOUT and documentation, generating help documentation, checking that specified params are valid, and others.
+*/
 class SRAlignWorkflow {
     /*
     ---------------------------------------------------------------------
@@ -6,8 +10,12 @@ class SRAlignWorkflow {
     */
 
     // workflow features
-    public static def log
-    public static def params
+    /** built-in Nextflow logging */
+    public static def           log
+    /** Parameters specified in the workflow */
+    public static def           params
+    /** Specifications for parameters such as default values, param descriptions, etc. to be used in creating help documentation and check parameters. */
+    public static LinkedHashMap paramSpecs
 
     // pipeline ASCII logo
     public static final String pipelineLogo = (
@@ -45,24 +53,37 @@ class SRAlignWorkflow {
     ---------------------------------------------------------------------
     */
         
-    // constructor method
-    SRAlignWorkflow(log, params) {
+    /**
+     * SRAlignWorkflow constructor method
+     *
+     * @param log the Nextflow log object
+     * @param params the workflow parameters
+     * @param paramSpecs the parameters specifications and defaults
+     *
+     * @return SRAlignWorkflow object
+    */
+    SRAlignWorkflow(log, params, paramSpecs) {
         // set log
-        this.log    = log
-        this.params = params
+        this.log        = log
+        this.params     = params
+        this.paramSpecs = paramSpecs
 
         // display the header
         log.info createHeader()
 
         // display a help message and exit the program
         if (params.help) {
-            log.info getHelp()
+            log.info getHelp(paramSpecs)
             System.exit(0)
         }
     }
 
 
-    // create a header
+    /**
+     * Creates a header from pipeline info to be displayed on STDOUT and in logging.
+     *
+     * @return a header message
+    */
     public static String createHeader() {
         // initialize an empty header list
         def header = []
@@ -71,7 +92,7 @@ class SRAlignWorkflow {
         header.add(pipelineLogo)
         header.add(pipelineName)
         header.add(purpose)
-        header.add("")            // extra newline at end helps formatting look better
+        header.add("")              // extra newline at end helps formatting look better
 
         // return header info as string with new line breaks
         header.join("\n")
