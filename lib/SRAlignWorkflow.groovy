@@ -17,6 +17,12 @@ class SRAlignWorkflow {
     /** Specifications for parameters such as default values, param descriptions, etc. to be used in creating help documentation and check parameters. */
     public static LinkedHashMap paramSpecs
 
+    /** valid tools available in the pipeline */
+    public static LinkedHashMap validTools = [
+        trim      : ['fastp'],
+        alignment : ['bowtie2', 'hisat2']
+    ]
+
     // pipeline ASCII logo
     public static final String pipelineLogo = (
         """
