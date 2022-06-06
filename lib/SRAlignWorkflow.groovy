@@ -40,10 +40,21 @@ class SRAlignWorkflow {
         """
     )
 
+    // general nextflow help
+    public static final String generalNFHelp = (
+        """
+        Nextflow command-line options:
+            nextflow help
+
+        Nextflow run command-line options:
+            nextflow run -help
+        """
+    )
+
     // usage statement
     public static final String usage = (
         """
-        nextflow run trev-f/SRAlign -profile docker --input input.csv --genome WBcel235
+        nextflow run trev-f/SRAlign -profile docker --input <input.csv> --genome <valid genome key>
         """
     )
 
@@ -99,14 +110,108 @@ class SRAlignWorkflow {
     }
 
 
-    // create a help message
-    public static String getHelp() {
+    /**
+     * Creates a help string for a set of parameter specifications.
+     * This is a helper function to be used with `writeHelpDoc` to write help documentation.
+     *
+     * @param specs a set of parameter specifications
+     *
+     * @return a help message string for a set of parameter specifications
+    */
+    public static String writeHelpString(LinkedHashMap specs) {
+        // intialize an empty documentation list
+        List doc = []
+        
+        // iterate through parameters
+        specs.each {
+            spec ->
+            // add parameter name and description to help doc as a single line
+            doc.add("--${spec.key.padRight(30)}${spec.value.description}")
+
+            // add parameter default value to help doc
+            if (spec.value.default) {
+                doc.add("${"".padRight(32)}Default: ${spec.value.default}")
+            }
+
+            // add parameter options to help doc
+            if (spec.value.options) {
+                doc.add("${"".padRight(32)}Options: ${spec.value.options.join(", ")}")
+            }
+
+            // extra newline at end helps formatting look better
+            doc.add("")
+        }
+
+        // join help docs together into a string all on new lines
+        doc.join("\n")
+    }
+
+
+    /**
+     * Creates a mature string of help documentation for parameter specifications.
+     * This method splits up parameter help docs into three sets: required params, optional params, and params that skip steps of the workflow.
+     *
+     * @param specs parameter specifications
+     *
+     * @return a mature help message string for parameters
+    */
+    public static String writeParamHelpDoc(LinkedHashMap specs) {
+        // initialize an emtpy list of help docs
+        List help = []
+
+        // add required params
+        help.add("Required parameters:")
+        help.add(
+            writeHelpString(
+                specs.findAll {
+                    it.value.required == true
+                }
+            )
+        )
+
+        // add optional params
+        help.add("Optional parameters:")
+        help.add(
+            writeHelpString(
+                specs.findAll {
+                    it.value.required != true && it.value.skip != true
+                }
+            )
+        )
+
+        // add skip params
+        help.add("Skip module parameters:")
+        help.add(
+            writeHelpString(
+                specs.findAll {
+                    it.value.required != true && it.value.skip == true
+                }
+            )
+        )
+
+        // extra newline helps formatting look better
+        help.join("\n")
+    }
+
+
+    /**
+     * Creates a help message for parameter specifications
+     *
+     * @param paramSpecs the parameters specifications and defaults
+     *
+     * @return help documentation
+    */
+    public static String getHelp(paramSpecs) {
         // initialize an empty help list
         def help = []
 
         // add help message info to list
+        help.add("Nextflow command-line help:${generalNFHelp}")
+        help.add("")                // extra newline helps formatting look better
         help.add("Usage:${usage}")
-        help.add("")                // extra newline at end helps formatting look better
+        help.add("")
+        help.add(writeParamHelpDoc(paramSpecs))
+        help.add("")
 
         // return help message as string with new line breaks
         help.join("\n")
