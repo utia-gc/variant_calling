@@ -22,17 +22,7 @@ This object takes care of many necessary steps upon construction:
     - Logs a header for the pipeline that prints pipeline name and logo
     - Prints a help message if help parameter is specified
 */ 
-
-import groovy.json.JsonSlurper
-
-def jsonSlurper = new JsonSlurper()
-
-LinkedHashMap defaults = jsonSlurper.parse(new File('/home/treevooor/SRAlign/parameter_specifications.json'))
-
-println "Defaults"
-println defaults
-
-def srawf = new SRAlignWorkflow(log, params, defaults)
+def srawf = new SRAlignWorkflow(log, params)
 
 
 /*

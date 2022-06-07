@@ -21,18 +21,15 @@
     },
     "genome"        : {
         "description" : "Reference genome ID.",
-        "options"     : ["TODO"],
         "required"    : true
     },
     "contaminant"   : {
         "default"     : "EB1",
-        "description" : "Contaminant genome ID.",
-        "options"     : ["TODO"]
+        "description" : "Contaminant genome ID."
     },
     "trimTool"      : {
         "default"     : "fastp",
-        "description" : "Tool to use for read trimming.",
-        "options"     : ["TODO"]
+        "description" : "Tool to use for read trimming."
     },
     "adapterR1"     : {
         "default"     : "",
