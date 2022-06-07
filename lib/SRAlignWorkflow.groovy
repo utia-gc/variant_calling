@@ -16,7 +16,7 @@ class SRAlignWorkflow {
     /** Parameters specified in the workflow */
     public static def           params
     /** Specifications for parameters such as default values, param descriptions, etc. to be used in creating help documentation and check parameters. */
-    public static LinkedHashMap paramSpecs
+    public static LinkedHashMap paramSpecs = (new JsonSlurper()).parse(new File('/home/treevooor/SRAlign/parameter_specifications.json'))
 
     /** valid tools available in the pipeline */
     public static LinkedHashMap validTools = [
@@ -84,7 +84,6 @@ class SRAlignWorkflow {
         // set log
         this.log        = log
         this.params     = params
-        this.paramSpecs = (new JsonSlurper()).parse(new File('/home/treevooor/SRAlign/parameter_specifications.json'))
 
         // add options to paramSpecs
         LinkedHashMap paramSpecs = addValidOptions(paramSpecs)
