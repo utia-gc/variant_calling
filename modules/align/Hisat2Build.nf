@@ -30,4 +30,21 @@ process Hisat2Build {
             ${reference} \
             ${ht2Base}
         """
+
+    stub:
+        // set index basename
+        def ht2Base = reference.toString() - ~/.fa?/
+
+        """
+        touch \
+            ${ht2Base}.fa \
+            ${ht2Base}.1.ht2 \
+            ${ht2Base}.2.ht2 \
+            ${ht2Base}.3.ht2 \
+            ${ht2Base}.4.ht2 \
+            ${ht2Base}.5.ht2 \
+            ${ht2Base}.6.ht2 \
+            ${ht2Base}.7.ht2 \
+            ${ht2Base}.8.ht2
+        """
 }

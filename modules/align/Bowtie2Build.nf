@@ -25,4 +25,17 @@ process Bowtie2Build {
             ${reference} \
             ${bt2Base}
         """
+     stub:
+        // set index basename
+        bt2Base = reference.toString() - ~/.fa?/
+        """
+        touch \
+            ${bt2Base}.fa \
+            ${bt2Base}.1.bt2 \
+            ${bt2Base}.2.bt2 \
+            ${bt2Base}.3.bt2 \
+            ${bt2Base}.4.bt2 \
+            ${bt2Base}.rev.1.bt2 \
+            ${bt2Base}.rev.2.bt2
+        """
 }
