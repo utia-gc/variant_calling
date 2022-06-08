@@ -6,8 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- CHANGELOG.md to track changes between versions.
+- Header to display pipeline info like title and name on STDOUT and in log.
 
 ### Changed
+- Help message usage statement.
+- Help message parameter help message display.
+- Parameter specifications such as descriptions stored in `parameter_specifications.json`.
 
 ### Deprecated
 
