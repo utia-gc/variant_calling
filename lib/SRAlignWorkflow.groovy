@@ -86,7 +86,7 @@ class SRAlignWorkflow {
         this.params     = params
 
         // add options to paramSpecs
-        LinkedHashMap paramSpecs = addValidOptions(paramSpecs)
+        LinkedHashMap paramSpecs = addValidOptions(params, paramSpecs)
 
         // display the header
         log.info createHeader()
@@ -126,100 +126,66 @@ class SRAlignWorkflow {
      *
      * @return parameter specifications with valid options added
     */
-    public static LinkedHashMap addValidOptions(paramSpecs) {
+    public static LinkedHashMap addValidOptions(params, paramSpecs) {
         // add valid genome options to genome and contaminant
-        paramSpecs.genome.options        = params.genomes.keySet()
-        paramSpecs.contaminant.options   = params.genomes.keySet()
+        paramSpecs.mandatory.parameters.genome.options       = params.genomes.keySet()
+        paramSpecs.references.parameters.contaminant.options = params.genomes.keySet()
 
         // add valid tools
-        paramSpecs.trimTool.options      = validTools.trim
-        paramSpecs.alignmentTool.options = validTools.alignment
+        paramSpecs.trimReads.parameters.trimTool.options      = validTools.trim
+        paramSpecs.alignment.parameters.alignmentTool.options = validTools.alignment
 
         return paramSpecs
     }
 
 
     /**
-     * Creates a help string for a set of parameter specifications.
-     * This is a helper function to be used with `writeHelpDoc` to write help documentation.
+     * Writes a string of help documentation from parameter specifications
      *
-     * @param specs a set of parameter specifications
-     *
-     * @return a help message string for a set of parameter specifications
-    */
-    public static String writeHelpString(LinkedHashMap specs) {
-        // intialize an empty documentation list
-        List doc = []
-        
-        // iterate through parameters
-        specs.each {
-            spec ->
-            // add parameter name and description to help doc as a single line
-            doc.add("--${spec.key.padRight(30)}${spec.value.description}")
-
-            // add parameter default value to help doc
-            if (spec.value.default) {
-                doc.add("${"".padRight(32)}Default: ${spec.value.default}")
-            }
-
-            // add parameter options to help doc
-            if (spec.value.options) {
-                doc.add("${"".padRight(32)}Options: ${spec.value.options.join(", ")}")
-            }
-
-            // extra newline at end helps formatting look better
-            doc.add("")
-        }
-
-        // join help docs together into a string all on new lines
-        doc.join("\n")
-    }
-
-
-    /**
-     * Creates a mature string of help documentation for parameter specifications.
-     * This method splits up parameter help docs into three sets: required params, optional params, and params that skip steps of the workflow.
-     *
-     * @param specs parameter specifications
+     * @param paramSpecs the parameters specifications and defaults
      *
      * @return a mature help message string for parameters
     */
     public static String writeParamHelpDoc(LinkedHashMap specs) {
-        // initialize an emtpy list of help docs
-        List help = []
-
-        // add required params
-        help.add("Required parameters:")
-        help.add(
-            writeHelpString(
-                specs.findAll {
-                    it.value.required == true
+        // initialize an emtpy list of help doc strings
+        List helpDoc = []
+        
+        // iterate through parameter specifications
+        specs.each {
+            // break into categories
+            category ->
+            
+            // add category title as help doc subsection title
+            helpDoc.add("${category.value.title}:")
+            
+            // iterate through parameter specifications within the category
+            category.value.parameters.each{
+                spec ->
+                
+                // add parameter name to help doc
+                helpDoc.add("${"".padRight(8)}--${spec.key}")
+                
+                // add parameter description to help doc
+                helpDoc.add("${"".padRight(16)}${spec.value.description}")
+                
+                // add parameter default value to help doc
+                if (spec.value.default) {
+                    helpDoc.add("${"".padRight(16)}Default: ${spec.value.default}")
                 }
-            )
-        )
-
-        // add optional params
-        help.add("Optional parameters:")
-        help.add(
-            writeHelpString(
-                specs.findAll {
-                    it.value.required != true && it.value.skip != true
+                
+                // add paramater value options to doc
+                if (spec.value.options) {
+                    helpDoc.add("${"".padRight(16)}Options: ${spec.value.options}")
                 }
-            )
-        )
-
-        // add skip params
-        help.add("Skip module parameters:")
-        help.add(
-            writeHelpString(
-                specs.findAll {
-                    it.value.required != true && it.value.skip == true
-                }
-            )
-        )
-
-        // extra newline helps formatting look better
-        help.join("\n")
+                            
+                // extra newline at end helps formatting look better
+                helpDoc.add("")
+            }
+            // extra newline at end helps formatting look better
+            helpDoc.add("")
+        }
+        // create help string
+        helpDoc.join("\n")
     }
 
 
@@ -239,6 +205,8 @@ class SRAlignWorkflow {
         help.add("")                // extra newline helps formatting look better
         help.add("Usage:${usage}")
         help.add("")
+
+        // add param help messages
         help.add(writeParamHelpDoc(paramSpecs))
         help.add("")
 
