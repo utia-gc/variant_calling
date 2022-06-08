@@ -13,30 +13,16 @@ nextflow.enable.dsl=2
 
 /*
 ---------------------------------------------------------------------
-    HELP MESSAGE
+    CREATE SRALIGNWORKFLOW OBJECT
 ---------------------------------------------------------------------
 */
 
-// Write help message
-def help_message() {
-    log.info"""
-    Usage:
-
-        nextflow run sralign -profile docker --input YYYYMMDD_input.csv --genome WBCel235
-
-    Required arguments:
-        -profile
-        --input
-        --genome
-    """.stripIndent()
-}
-
-
-// Show help message
-if (params.help) {
-    help_message()
-    exit 0
-}
+/*
+This object takes care of many necessary steps upon construction:
+    - Logs a header for the pipeline that prints pipeline name and logo
+    - Prints a help message if help parameter is specified
+*/ 
+def srawf = new SRAlignWorkflow(log, params, workflow)
 
 
 /*
