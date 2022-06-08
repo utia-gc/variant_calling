@@ -1,4 +1,5 @@
 import groovy.json.JsonSlurper
+
 /**
  * SRAlignWorkflow class is a class to perform necessary workflow functions upon initialization.
  * These functions include: creating a header for STDOUT and documentation, generating help documentation, checking that specified params are valid, and others.
@@ -15,8 +16,10 @@ class SRAlignWorkflow {
     public static def           log
     /** Parameters specified in the workflow */
     public static def           params
+    /** workflow introspection */
+    public static def           workflow
     /** Specifications for parameters such as default values, param descriptions, etc. to be used in creating help documentation and check parameters. */
-    public static LinkedHashMap paramSpecs = (new JsonSlurper()).parse(new File('/home/treevooor/SRAlign/parameter_specifications.json'))
+    public static LinkedHashMap paramSpecs
 
     /** valid tools available in the pipeline */
     public static LinkedHashMap validTools = [
@@ -80,10 +83,12 @@ class SRAlignWorkflow {
      *
      * @return SRAlignWorkflow object
     */
-    SRAlignWorkflow(log, params) {
+    SRAlignWorkflow(log, params, workflow) {
         // set log
         this.log        = log
         this.params     = params
+        this.workflow   = workflow
+        this.paramSpecs = (new JsonSlurper()).parse(new File("${workflow.projectDir}/parameter_specifications.json"))
 
         // add options to paramSpecs
         LinkedHashMap paramSpecs = addValidOptions(params, paramSpecs)

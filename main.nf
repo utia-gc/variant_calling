@@ -22,7 +22,7 @@ This object takes care of many necessary steps upon construction:
     - Logs a header for the pipeline that prints pipeline name and logo
     - Prints a help message if help parameter is specified
 */ 
-def srawf = new SRAlignWorkflow(log, params)
+def srawf = new SRAlignWorkflow(log, params, workflow)
 
 
 /*
