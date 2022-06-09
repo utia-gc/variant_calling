@@ -147,6 +147,7 @@ workflow sralign {
         ch_trimReadsFQC = Channel.empty()
     }
 
+
     /*
     ---------------------------------------------------------------------
         Align reads to genome
