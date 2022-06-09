@@ -8,11 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - CHANGELOG.md to track changes between versions.
 - Header to display pipeline info like title and name on STDOUT and in log.
+- Stub commands for easier testing of pipeline logic.
 
 ### Changed
 - Help message usage statement.
 - Help message parameter help message display.
 - Parameter specifications such as descriptions stored in `parameter_specifications.json`.
+- Combined raw and trimmed reads FastQC steps to avoid duplication of modules and subworkflows.
 
 ### Deprecated
 
