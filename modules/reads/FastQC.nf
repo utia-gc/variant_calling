@@ -3,8 +3,8 @@ process FastQC {
 
     container 'biocontainers/fastqc:v0.11.9_cv8'
 
-    publishDir "${params.baseDirReport}/readsQC/raw/fastQC", mode: 'copy', pattern: '*.html'
-    publishDir "${params.baseDirData}/readsQC/raw/fastQC",   mode: 'copy', pattern: '*.zip'
+    publishDir "${params.baseDirReport}/readsQC/fastQC", mode: 'copy', pattern: '*.html'
+    publishDir "${params.baseDirData}/readsQC/fastQC",   mode: 'copy', pattern: '*.zip'
 
     input:
         tuple val(metadata), file(reads), val(toolIDs)
@@ -36,6 +36,25 @@ process FastQC {
             [ ! -f ${read2} ] && ln -s ${reads[1]} ${read2}
 
             fastqc ${read1} ${read2}
+            """
+        }
+
+    stub:
+        // update toolID and set suffix
+        toolIDs += 'fqc'
+        suffix = toolIDs ? "__${toolIDs.join('_')}" : ''
+
+        if (metadata.readType == 'single') {
+            """
+            touch ${metadata.sampleName}${suffix}_R1_fastqc.html
+            touch ${metadata.sampleName}${suffix}_R1_fastqc.zip
+            """
+        } else {
+            """
+            touch ${metadata.sampleName}${suffix}_R1_fastqc.html
+            touch ${metadata.sampleName}${suffix}_R1_fastqc.zip
+            touch ${metadata.sampleName}${suffix}_R2_fastqc.html
+            touch ${metadata.sampleName}${suffix}_R2_fastqc.zip
             """
         }
 }
