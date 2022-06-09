@@ -75,9 +75,8 @@ contaminant = params.genomes[ params.contaminant ]
 */
 
 include { ParseDesignSWF        as ParseDesign        } from "${baseDir}/subworkflows/inputs/ParseDesignSWF.nf"
-include { RawReadsQCSWF         as RawReadsQC         } from "${baseDir}/subworkflows/reads/RawReadsQCSWF.nf"
 include { TrimReadsSWF          as TrimReads          } from "${baseDir}/subworkflows/reads/TrimReadsSWF.nf"
-include { TrimReadsQCSWF        as TrimReadsQC        } from "${baseDir}/subworkflows/reads/TrimReadsQCSWF.nf"
+include { ReadsQCSWF            as ReadsQC            } from "${baseDir}/subworkflows/reads/ReadsQCSWF.nf"
 include { AlignBowtie2SWF       as AlignBowtie2       ; 
           AlignBowtie2SWF       as ContamBowtie2      } from "${baseDir}/subworkflows/align/AlignBowtie2SWF.nf"
 include { AlignHisat2SWF        as AlignHisat2        ; 
@@ -108,24 +107,6 @@ workflow sralign {
 
     /*
     ---------------------------------------------------------------------
-        Raw reads
-    ---------------------------------------------------------------------
-    */
-
-    if (!params.skipRawFastQC) {
-        // Subworkflow: Raw reads fastqc and mulitqc
-        RawReadsQC(
-            ch_rawReads,
-            wfPrefix
-        )
-        ch_rawReadsFQC = RawReadsQC.out.fqc_zip
-    } else {
-        ch_rawReadsFQC = Channel.empty()
-    }
-
-
-    /*
-    ---------------------------------------------------------------------
         Trim raw reads
     ---------------------------------------------------------------------
     */
@@ -141,20 +122,28 @@ workflow sralign {
                 ch_trimReads = TrimReads.out.trimReads
                 break
         }
-
-
-        // Trimmed reads QC
-        if (!params.skipTrimReadsQC) {
-            // Subworkflow: Trimmed reads fastqc and multiqc
-            TrimReadsQC(
-                ch_trimReads,
-                wfPrefix
-            ) 
-            ch_trimReadsFQC = TrimReadsQC.out.fqc_zip
-        } else {
-            ch_trimReadsFQC = Channel.empty()
-        }
     } else {
+        ch_trimReads = Channel.empty()
+    }
+
+
+    /*
+    ---------------------------------------------------------------------
+        Reads QC
+    ---------------------------------------------------------------------
+    */
+
+    if (!params.skipReadsQC) {
+        // Subworkflow: FastQC and MulitQC for raw and trimmed reads
+        ReadsQC(
+            ch_rawReads,
+            ch_trimReads,
+            wfPrefix
+        )
+        ch_rawReadsFQC  = ReadsQC.out.raw_fqc_zip
+        ch_trimReadsFQC = ReadsQC.out.trim_fqc_zip
+    } else {
+        ch_rawReadsFQC  = Channel.empty()
         ch_trimReadsFQC = Channel.empty()
     }
 

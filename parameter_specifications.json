@@ -45,6 +45,23 @@
             }
         }
     }, 
+    "readsQC"   : {
+        "title" : "Reads QC parameters",
+        "parameters" : {
+            "skipReadsQC"   : {
+                "default"     : false,
+                "description" : "Skip all reporting of reads QC. This skips FastQC reporting for raw and trimmed reads as well as the creation of a dedicated reads MultiQC report."
+            },
+            "skipDedicatedReadsMultiQC"   : {
+                "default"     : false,
+                "description" : "Skip creation of an additional MultiQC report for reads. FastQC metrics will still be present in the final MultiQC report upon pipeline completion. A dedicated reads MultiQC report can be beneficial for assessing information about reads prior to (or concurrent with) alignment and post-alignment steps."
+            },
+            "skipRawFastQC" : {
+                "default"     : false,
+                "description" : "Skip FastQC report for raw reads."
+            }
+        }
+    },
     "trimReads" : {
         "title" : "Read-trimming parameters",
         "parameters" : {
@@ -65,7 +82,7 @@
                 "description" : "Skip the read trimming step.",
                 "skip"        : true
             },
-            "skipTrimReadsQC" : {
+            "skipTrimFastQC" : {
                 "default"     : false,
                 "description" : "Skip QC report for trimmed reads.",
                 "skip"        : true

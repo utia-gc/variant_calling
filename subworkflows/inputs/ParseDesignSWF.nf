@@ -17,7 +17,7 @@ workflow ParseDesignSWF {
                 bams:  it[1].any { it =~ /\.bam$/ }       // add channels with bams to bams channel
             }
             .set { design }
-        
+
         // Index bams
         IndexBam(
             design.bams
@@ -53,9 +53,11 @@ def createDesignChannel(LinkedHashMap row) {
         toolIDs = []
 
         // check that reads files exist
-        reads.each {
-            if (!it.exists()) {
-                exit 1, "ERROR: ${it} does not exist!"
+        if (!workflow.stubRun) {        // ignore file checking for stub-run executions
+            reads.each {
+                if (!it.exists()) {
+                    exit 1, "ERROR: ${it} does not exist!"
+                }
             }
         }
 
@@ -76,9 +78,11 @@ def createDesignChannel(LinkedHashMap row) {
         toolIDs = row.tool_IDs.split('_')
 
         // check that reads files exist
-        bam.each {
-            if (!it.exists()) {
-                exit 1, "ERROR: ${it} does not exist!"
+        if (!workflow.stubRun) {        // ignore file checking for stub-run executions
+            bam.each {
+                if (!it.exists()) {
+                    exit 1, "ERROR: ${it} does not exist!"
+                }
             }
         }
 

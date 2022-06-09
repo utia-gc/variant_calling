@@ -44,4 +44,19 @@ process Fastp {
                 -O ${metadata.sampleName}${suffix}_R2.fastq.gz
             """
         }
+    
+    stub:
+        // update toolID and set suffix
+        toolIDs += 'fsp'
+        suffix = toolIDs ? "__${toolIDs.join('_')}" : ''
+
+        if (metadata.readType == 'single') {
+            """
+            touch ${metadata.sampleName}${suffix}_R1.fastq.gz
+            """
+        } else {
+            """
+            touch ${metadata.sampleName}${suffix}_R1.fastq.gz ${metadata.sampleName}${suffix}_R2.fastq.gz
+            """
+        }
 }
