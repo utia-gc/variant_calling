@@ -35,4 +35,13 @@ process CompressSortSam {
             -o ${metadata.sampleName}${suffix}.bam \
             -
         """
+    
+    stub:
+        // update toolID and set suffix
+        toolIDs += 'sSR'
+        suffix = toolIDs ? "__${toolIDs.join('_')}" : ''
+
+        """
+        touch ${metadata.sampleName}${suffix}.bam
+        """
 }

@@ -25,4 +25,9 @@ process IndexBam {
             -@ ${task.cpus} \
             -b ${bam}
         """
+    
+    stub:
+        """
+        touch ${bam}.bai
+        """
 }
