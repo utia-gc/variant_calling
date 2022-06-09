@@ -34,4 +34,16 @@ process Preseq {
             ${readTypeArg} \
             -bam ${bam}
         """
+    
+    stub:
+        // update toolIDs and set suffix
+        toolIDspsL = toolIDs
+        toolIDspsL += 'psL'
+        suffixpsL = toolIDspsL ? "__${toolIDspsL.join('_')}" : ''
+
+        toolIDs += ['psL']
+
+        """
+        touch ${metadata.sampleName}${suffixpsL}.txt
+        """
 }

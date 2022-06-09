@@ -57,4 +57,26 @@ process SamStats {
         PCTDUP=\$(awk -v MAPPED=\$MAPPED -v DUPPED=\$DUPPED 'BEGIN{print DUPPED / MAPPED * 100}')
         echo -e "${metadata.sampleName}${suffixspd}\t\$PCTDUP" > ${metadata.sampleName}${suffixspd}.txt
         """
+    
+    stub:
+        // update toolID and set suffix
+        toolIDsST = toolIDs
+        toolIDsST += 'sST'
+        suffixsST = toolIDsST ? "__${toolIDsST.join('_')}" : ''
+
+        toolIDsIX = toolIDs
+        toolIDsIX += 'sIX-idxstat'
+        suffixsIX = toolIDsIX ? "__${toolIDsIX.join('_')}" : ''
+
+        toolIDspd = toolIDs
+        toolIDspd += 'pctDup'
+        suffixspd = toolIDspd ? "__${toolIDspd.join('_')}" : ''
+
+        toolIDs += ['sST', 'sIX-idxstat']
+
+        """
+        touch ${metadata.sampleName}${suffixsST}.txt
+        touch ${metadata.sampleName}${suffixsIX}.txt
+        touch ${metadata.sampleName}${suffixspd}.txt
+        """
 }

@@ -33,4 +33,13 @@ process SamStatsMultiQC {
             ${sST} \
             ${sIX}
         """
+    
+    stub:
+        // update toolID and set suffix
+        toolIDs += 'mqc-alignments'
+        suffix = toolIDs ? "__${toolIDs.join('_')}" : ''
+
+        """
+        touch ${outName}${suffix}.html
+        """
 }
