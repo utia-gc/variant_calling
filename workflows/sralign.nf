@@ -4,23 +4,11 @@
 =====================================================================
 */
 
-ch_multiqcConfig = file(params.multiqcConfig, checkIfExists: true)
-
 /*
     ---------------------------------------------------------------------
     Design and Inputs
     ---------------------------------------------------------------------
 */
-
-// check design file
-if (params.input) {
-    ch_input = file(params.input)
-} else {
-    exit 1, 'Input design file not specified!'
-}
-
-// check MultiQC config
-ch_multiqcConfig = file(params.multiqcConfig, checkIfExists: true)
 
 // set input design name
 inName = params.input.take(params.input.lastIndexOf('.')).split('/')[-1]
@@ -78,6 +66,9 @@ workflow sralign {
         Read design file, parse sample names and identifiers, and stage reads files
     ---------------------------------------------------------------------
     */
+
+    // set channel for input design file
+    ch_input = file(params.input)
 
     // Subworkflow: Parse design file
     ParseDesign(
@@ -296,6 +287,9 @@ workflow sralign {
         .concat(ch_preseqLcExtrap)
         .concat(ch_corMatrix)
         .concat(ch_PCAMatrix)
+    
+    // set channel for MultiQC config file
+    ch_multiqcConfig = file(params.multiqcConfig)
 
     FullMultiQC(
         inName,

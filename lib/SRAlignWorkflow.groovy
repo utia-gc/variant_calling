@@ -104,6 +104,9 @@ class SRAlignWorkflow {
 
         // check that only valid tools are specified
         checkTools(validTools, params)
+
+        // check that input and MultiQC config are specified and exist
+        checkInputs(params)
     }
 
 
@@ -238,5 +241,27 @@ class SRAlignWorkflow {
         // check valid alignment tool
         assert params.alignmentTool in validTools.alignment , 
             "'${params.alignmentTool}' is not a valid alignment tool.\n\tValid options: ${validTools.alignment.join(', ')}\n\t"
+    }
+
+
+    /**
+     * Checks that inputs exist
+     *
+     * @param params parameters
+    */
+    public static def checkInputs(params) {
+        // check that input design is specified and exists
+        assert params.input ,                       // check input is specified
+            "Input design file not specified. An input design file is required.\n"
+
+        assert new File(params.input).exists() ,    // check input file exists
+            "'${params.input}' does not exist. An existing input design file is required.\n"
+
+        // check that MultiQC config exists
+        assert params.multiqcConfig ,                       // check MultiQC config is specified
+            "MultiQC config file not specified. A MultiQC config file is required.\n"
+
+        assert new File(params.multiqcConfig).exists() ,    // check MultiQc file exists
+            "'${params.multiqcConfig}' does not exist. An existing MultiQC config file is required.\n"
     }
 }
