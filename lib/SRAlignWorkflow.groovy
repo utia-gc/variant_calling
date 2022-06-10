@@ -101,6 +101,9 @@ class SRAlignWorkflow {
             log.info getHelp(paramSpecs)
             System.exit(0)
         }
+
+        // check that only valid tools are specified
+        checkTools(validTools, params)
     }
 
 
@@ -217,5 +220,23 @@ class SRAlignWorkflow {
 
         // return help message as string with new line breaks
         help.join("\n")
+    }
+
+
+    /**
+     * Checks that valid tools are specified for each process where choosing a tool is an option.
+     * Returns nothing if valid tools are specified, otherwise returns an assertion error.
+     *
+     * @param validTools a map of valid tool choices. Keys are the function of each tool (e.g. trim and alignment). Values are a list of available tools for that function.
+     * @param params parameters
+    */
+    public static def checkTools(validTools, params) {
+        // check valid read-trimming tool
+        assert params.trimTool in validTools.trim, 
+            "'${params.trimTool}' is not a valid read trimming tool.\n\tValid options: ${validTools.trim.join(', ')}\n\t" 
+        
+        // check valid alignment tool
+        assert params.alignmentTool in validTools.alignment , 
+            "'${params.alignmentTool}' is not a valid alignment tool.\n\tValid options: ${validTools.alignment.join(', ')}\n\t"
     }
 }

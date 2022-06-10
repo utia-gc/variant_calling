@@ -4,26 +4,6 @@
 =====================================================================
 */
 
-
-/*
-    ---------------------------------------------------------------------
-    Tools
-    ---------------------------------------------------------------------
-*/
-
-def tools = [
-    trim      : ['fastp'],
-    alignment : ['bowtie2', 'hisat2']
-]
-
-// check valid read-trimming tool
-assert params.trimTool in tools.trim , 
-    "'${params.trimTool}' is not a valid read trimming tool.\n\tValid options: ${tools.trim.join(', ')}\n\t" 
-
-// check valid alignment tool
-assert params.alignmentTool in tools.alignment , 
-    "'${params.alignmentTool}' is not a valid alignment tool.\n\tValid options: ${tools.alignment.join(', ')}\n\t"
-
 ch_multiqcConfig = file(params.multiqcConfig, checkIfExists: true)
 
 /*
@@ -39,6 +19,8 @@ if (params.input) {
     exit 1, 'Input design file not specified!'
 }
 
+// check MultiQC config
+ch_multiqcConfig = file(params.multiqcConfig, checkIfExists: true)
 
 // set input design name
 inName = params.input.take(params.input.lastIndexOf('.')).split('/')[-1]
