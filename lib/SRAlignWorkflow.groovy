@@ -107,6 +107,9 @@ class SRAlignWorkflow {
 
         // check that input and MultiQC config are specified and exist
         checkInputs(params)
+
+        // check reference and contaminant genomes
+        checkReferences(params)
     }
 
 
@@ -236,16 +239,16 @@ class SRAlignWorkflow {
     public static def checkTools(validTools, params) {
         // check valid read-trimming tool
         assert params.trimTool in validTools.trim, 
-            "'${params.trimTool}' is not a valid read trimming tool.\n\tValid options: ${validTools.trim.join(', ')}\n\t" 
+            "'${params.trimTool}' is not a valid read-trimming tool option.\n\tValid read-trimming tool options: ${validTools.trim.join(', ')}\n\t" 
         
         // check valid alignment tool
         assert params.alignmentTool in validTools.alignment , 
-            "'${params.alignmentTool}' is not a valid alignment tool.\n\tValid options: ${validTools.alignment.join(', ')}\n\t"
+            "'${params.alignmentTool}' is not a valid alignment tool option.\n\tValid alignment tool options: ${validTools.alignment.join(', ')}\n\t"
     }
 
 
     /**
-     * Checks that inputs exist
+     * Checks that inputs and MultiQC config exist
      *
      * @param params parameters
     */
@@ -263,5 +266,25 @@ class SRAlignWorkflow {
 
         assert new File(params.multiqcConfig).exists() ,    // check MultiQc file exists
             "'${params.multiqcConfig}' does not exist. An existing MultiQC config file is required.\n"
+    }
+
+
+    /**
+     * Checks reference genome and contaminant
+     *
+     * @param params parameters
+    */
+    public static def checkReferences(params) {
+        // check reference genome
+        if (!params.skipAlignGenome) {
+            assert params.genomes && params.genome && params.genomes.containsKey(params.genome) ,
+                "Reference genome '${params.genome}' is not a valid genome option.\n\tValid genome options: ${params.genomes.keySet().join(", ")}\n\t"
+        }
+
+        // check contaminant genome
+        if (!params.skipAlignContam) {
+            assert params.genomes && params.contaminant && params.genomes.containsKey(params.contaminant) ,
+                "Contaminant genome '${params.contaminant}' is not a valid genome option.\n\tValid genome options: ${params.genomes.keySet().join(", ")}\n\t"
+        }
     }
 }

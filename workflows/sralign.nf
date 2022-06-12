@@ -26,16 +26,8 @@ wfPrefix = "${inName}_-_${workflow.runName}_-_${timeStamp}"
     ---------------------------------------------------------------------
 */
 
-// check reference genome
-if (params.genomes && params.genome && !params.genomes.containsKey(params.genome)) {
-    exit 1, "Reference genome '${params.genome}' is not available.\n\tAvailable genomes include: ${params.genomes.keySet().join(", ")}"
-}
 genome = params.genomes[ params.genome ]
 
-// check contaminant
-if (params.genomes && params.contaminant && !params.skipAlignContam && !params.genomes.containsKey(params.contaminant)) {
-    exit 1, "Contaminant genome '${params.contaminant}' is not available.\n\tAvailable genomes include: ${params.genomes.keySet().join(", ")}"
-}
 contaminant = params.genomes[ params.contaminant ]
 
 /*
