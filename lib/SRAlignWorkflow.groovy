@@ -20,6 +20,8 @@ class SRAlignWorkflow {
     public static def           workflow
     /** Specifications for parameters such as default values, param descriptions, etc. to be used in creating help documentation and check parameters. */
     public static LinkedHashMap paramSpecs
+    /** Output basename prefix */
+    public static String        outBasePrefix
 
     /** valid tools available in the pipeline */
     public static LinkedHashMap validTools = [
@@ -89,6 +91,7 @@ class SRAlignWorkflow {
         this.params     = params
         this.workflow   = workflow
         this.paramSpecs = (new JsonSlurper()).parse(new File("${workflow.projectDir}/parameter_specifications.json"))
+        this.outBasePrefix = constructOutBasePrefix(params, workflow)
 
         // add options to paramSpecs
         LinkedHashMap paramSpecs = addValidOptions(params, paramSpecs)
@@ -101,6 +104,15 @@ class SRAlignWorkflow {
             log.info getHelp(paramSpecs)
             System.exit(0)
         }
+
+        // check that only valid tools are specified
+        checkTools(validTools, params)
+
+        // check that input and MultiQC config are specified and exist
+        checkInputs(params)
+
+        // check reference and contaminant genomes
+        checkReferences(params)
     }
 
 
@@ -217,5 +229,84 @@ class SRAlignWorkflow {
 
         // return help message as string with new line breaks
         help.join("\n")
+    }
+
+
+    /**
+     * Checks that valid tools are specified for each process where choosing a tool is an option.
+     * Returns nothing if valid tools are specified, otherwise returns an assertion error.
+     *
+     * @param validTools a map of valid tool choices. Keys are the function of each tool (e.g. trim and alignment). Values are a list of available tools for that function.
+     * @param params parameters
+    */
+    public static def checkTools(validTools, params) {
+        // check valid read-trimming tool
+        assert params.trimTool in validTools.trim, 
+            "'${params.trimTool}' is not a valid read-trimming tool option.\n\tValid read-trimming tool options: ${validTools.trim.join(', ')}\n\t" 
+        
+        // check valid alignment tool
+        assert params.alignmentTool in validTools.alignment , 
+            "'${params.alignmentTool}' is not a valid alignment tool option.\n\tValid alignment tool options: ${validTools.alignment.join(', ')}\n\t"
+    }
+
+
+    /**
+     * Checks that inputs and MultiQC config exist
+     *
+     * @param params parameters
+    */
+    public static def checkInputs(params) {
+        // check that input design is specified and exists
+        assert params.input ,                       // check input is specified
+            "Input design file not specified. An input design file is required.\n"
+
+        assert new File(params.input).exists() ,    // check input file exists
+            "'${params.input}' does not exist. An existing input design file is required.\n"
+
+        // check that MultiQC config exists
+        assert params.multiqcConfig ,                       // check MultiQC config is specified
+            "MultiQC config file not specified. A MultiQC config file is required.\n"
+
+        assert new File(params.multiqcConfig).exists() ,    // check MultiQc file exists
+            "'${params.multiqcConfig}' does not exist. An existing MultiQC config file is required.\n"
+    }
+
+
+    /**
+     * Checks reference genome and contaminant
+     *
+     * @param params parameters
+    */
+    public static def checkReferences(params) {
+        // check reference genome
+        if (!params.skipAlignGenome) {
+            assert params.genomes && params.genome && params.genomes.containsKey(params.genome) ,
+                "Reference genome '${params.genome}' is not a valid genome option.\n\tValid genome options: ${params.genomes.keySet().join(", ")}\n\t"
+        }
+
+        // check contaminant genome
+        if (!params.skipAlignContam) {
+            assert params.genomes && params.contaminant && params.genomes.containsKey(params.contaminant) ,
+                "Contaminant genome '${params.contaminant}' is not a valid genome option.\n\tValid genome options: ${params.genomes.keySet().join(", ")}\n\t"
+        }
+    }
+
+
+    /**
+     * Constructs an ouput basename prefix
+     *
+     * @param params parameters
+     *
+     * @return output basename prefix string
+    */
+    public static String constructOutBasePrefix(params, workflow) {
+        // set input design name
+        String inBaseName = params.input.take(params.input.lastIndexOf('.')).split('/')[-1]
+
+        // set a timestamp
+        def timeStamp = new java.util.Date().format('yyyy-MM-dd_HH-mm')
+
+        // set output basename prefix
+        "${inBaseName}_-_${workflow.runName}_-_${timeStamp}"
     }
 }

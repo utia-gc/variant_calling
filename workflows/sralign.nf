@@ -1,77 +1,35 @@
 /*
 =====================================================================
-    HANDLE INPUTS
+    SRAlign WORKFLOW
 =====================================================================
 */
 
-
 /*
-    ---------------------------------------------------------------------
-    Tools
-    ---------------------------------------------------------------------
-*/
-
-def tools = [
-    trim      : ['fastp'],
-    alignment : ['bowtie2', 'hisat2']
-]
-
-// check valid read-trimming tool
-assert params.trimTool in tools.trim , 
-    "'${params.trimTool}' is not a valid read trimming tool.\n\tValid options: ${tools.trim.join(', ')}\n\t" 
-
-// check valid alignment tool
-assert params.alignmentTool in tools.alignment , 
-    "'${params.alignmentTool}' is not a valid alignment tool.\n\tValid options: ${tools.alignment.join(', ')}\n\t"
-
-ch_multiqcConfig = file(params.multiqcConfig, checkIfExists: true)
-
-/*
-    ---------------------------------------------------------------------
-    Design and Inputs
-    ---------------------------------------------------------------------
-*/
-
-// check design file
-if (params.input) {
-    ch_input = file(params.input)
-} else {
-    exit 1, 'Input design file not specified!'
-}
-
-
-// set input design name
-inName = params.input.take(params.input.lastIndexOf('.')).split('/')[-1]
-
-// set a timestamp
-timeStamp = new java.util.Date().format('yyyy-MM-dd_HH-mm')
-
-// set workflow prefix name to be used for output files that combine all files (i.e. only one output file such as the full MultiQC)
-wfPrefix = "${inName}_-_${workflow.runName}_-_${timeStamp}"
+This object takes care of many necessary steps upon construction:
+    - Logs a header for the pipeline that prints pipeline name and logo
+    - Prints a help message if help parameter is specified
+    - Checks parameters
+*/ 
+def srawf = new SRAlignWorkflow(log, params, workflow)
 
 
 /*
     ---------------------------------------------------------------------
-    References and Contaminant Genomes
+    Set useful pipeline values
     ---------------------------------------------------------------------
 */
 
-// check reference genome
-if (params.genomes && params.genome && !params.genomes.containsKey(params.genome)) {
-    exit 1, "Reference genome '${params.genome}' is not available.\n\tAvailable genomes include: ${params.genomes.keySet().join(", ")}"
-}
+// set output filename base prefix
+outBasePrefix = srawf.outBasePrefix
+
+// set genome and contaminant values
 genome = params.genomes[ params.genome ]
-
-// check contaminant
-if (params.genomes && params.contaminant && !params.skipAlignContam && !params.genomes.containsKey(params.contaminant)) {
-    exit 1, "Contaminant genome '${params.contaminant}' is not available.\n\tAvailable genomes include: ${params.genomes.keySet().join(", ")}"
-}
 contaminant = params.genomes[ params.contaminant ]
 
 /*
-=====================================================================
-    MAIN WORKFLOW
-=====================================================================
+    ---------------------------------------------------------------------
+    Import modules
+    ---------------------------------------------------------------------
 */
 
 include { ParseDesignSWF        as ParseDesign        } from "${baseDir}/subworkflows/inputs/ParseDesignSWF.nf"
@@ -96,6 +54,9 @@ workflow sralign {
         Read design file, parse sample names and identifiers, and stage reads files
     ---------------------------------------------------------------------
     */
+
+    // set channel for input design file
+    ch_input = file(params.input)
 
     // Subworkflow: Parse design file
     ParseDesign(
@@ -138,7 +99,7 @@ workflow sralign {
         ReadsQC(
             ch_rawReads,
             ch_trimReads,
-            wfPrefix
+            outBasePrefix
         )
         ch_rawReadsFQC  = ReadsQC.out.raw_fqc_zip
         ch_trimReadsFQC = ReadsQC.out.trim_fqc_zip
@@ -202,7 +163,7 @@ workflow sralign {
         // Subworkflow: Samtools stats and samtools idxstats and multiqc of alignment results
         SamStatsQC(
             ch_bamIndexedGenome,
-            wfPrefix
+            outBasePrefix
         )
         ch_alignGenomeStats    = SamStatsQC.out.samtoolsStats
         ch_alignGenomeIdxstats = SamStatsQC.out.samtoolsIdxstats
@@ -255,7 +216,7 @@ workflow sralign {
         // Get contaminant alignment stats
         ContaminantStatsQC(
             ch_samContaminant,
-            wfPrefix
+            outBasePrefix
         )
         ch_contaminantFlagstat = ContaminantStatsQC.out.samtoolsFlagstat
     } else {
@@ -292,7 +253,7 @@ workflow sralign {
     DeepToolsMultiBam(
         ch_alignmentsCollect.bam.collect(),
         ch_alignmentsCollect.bai.collect(),
-        wfPrefix
+        outBasePrefix
     )
     ch_corMatrix = DeepToolsMultiBam.out.corMatrix
     ch_PCAMatrix = DeepToolsMultiBam.out.PCAMatrix
@@ -314,9 +275,12 @@ workflow sralign {
         .concat(ch_preseqLcExtrap)
         .concat(ch_corMatrix)
         .concat(ch_PCAMatrix)
+    
+    // set channel for MultiQC config file
+    ch_multiqcConfig = file(params.multiqcConfig)
 
     FullMultiQC(
-        inName,
+        outBasePrefix,
         ch_multiqcConfig,
         ch_fullMultiQC.collect()
     )
