@@ -146,7 +146,8 @@ workflow sralign {
                 AlignHisat2(
                     ch_readsToAlign,
                     genome,
-                    params.genome
+                    params.genome,
+                    params.forceUseHisat2Index
                 )
                 ch_samGenome = AlignHisat2.out.sam
                 break
@@ -207,7 +208,8 @@ workflow sralign {
                 ContamHisat2(
                     ch_readsContaminant,
                     contaminant,
-                    params.contaminant
+                    params.contaminant,
+                    params.forceUseHisat2Index
                 )
                 ch_samContaminant = ContamHisat2.out.sam
                 break

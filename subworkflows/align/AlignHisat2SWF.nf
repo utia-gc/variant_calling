@@ -6,10 +6,11 @@ workflow AlignHisat2SWF {
         reads
         reference
         referenceName
+        forceUseHisat2Index
 
     main:
         // set or build hisat2 index
-        if (reference[ 'hisat2' ]) {
+        if (reference[ 'hisat2' ] && forceUseHisat2Index) {
             hisat2Indexes = Channel
                 .fromPath("${reference[ 'hisat2' ]}*", checkIfExists: true)
                 .collect()
