@@ -20,6 +20,8 @@ class SRAlignWorkflow {
     public static def           workflow
     /** Specifications for parameters such as default values, param descriptions, etc. to be used in creating help documentation and check parameters. */
     public static LinkedHashMap paramSpecs
+    /** Output basename prefix */
+    public static String        outBasePrefix
 
     /** valid tools available in the pipeline */
     public static LinkedHashMap validTools = [
@@ -89,6 +91,7 @@ class SRAlignWorkflow {
         this.params     = params
         this.workflow   = workflow
         this.paramSpecs = (new JsonSlurper()).parse(new File("${workflow.projectDir}/parameter_specifications.json"))
+        this.outBasePrefix = constructOutBasePrefix(params, workflow)
 
         // add options to paramSpecs
         LinkedHashMap paramSpecs = addValidOptions(params, paramSpecs)
@@ -286,5 +289,24 @@ class SRAlignWorkflow {
             assert params.genomes && params.contaminant && params.genomes.containsKey(params.contaminant) ,
                 "Contaminant genome '${params.contaminant}' is not a valid genome option.\n\tValid genome options: ${params.genomes.keySet().join(", ")}\n\t"
         }
+    }
+
+
+    /**
+     * Constructs an ouput basename prefix
+     *
+     * @param params parameters
+     *
+     * @return output basename prefix string
+    */
+    public static String constructOutBasePrefix(params, workflow) {
+        // set input design name
+        String inBaseName = params.input.take(params.input.lastIndexOf('.')).split('/')[-1]
+
+        // set a timestamp
+        def timeStamp = new java.util.Date().format('yyyy-MM-dd_HH-mm')
+
+        // set output basename prefix
+        "${inBaseName}_-_${workflow.runName}_-_${timeStamp}"
     }
 }
