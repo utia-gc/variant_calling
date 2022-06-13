@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CHANGELOG.md to track changes between versions.
 - Header to display pipeline info like title and name on STDOUT and in log.
 - Stub commands for easier testing of pipeline logic.
+- Set seed for HISAT2 build and align pseudo-random processes.
+- Add splice-aware option for building HISAT2 index.
 
 ### Changed
 - Help message usage statement.
