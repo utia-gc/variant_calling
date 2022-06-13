@@ -100,7 +100,7 @@ workflow SRAlign {
         ReadsQC(
             ch_rawReads,
             ch_trimReads,
-            outBasePrefix
+            outUniquePrefix
         )
         ch_rawReadsFQC  = ReadsQC.out.raw_fqc_zip
         ch_trimReadsFQC = ReadsQC.out.trim_fqc_zip
@@ -166,7 +166,7 @@ workflow SRAlign {
         // Subworkflow: Samtools stats and samtools idxstats and multiqc of alignment results
         SamStatsQC(
             ch_bamIndexedGenome,
-            outBasePrefix
+            outUniquePrefix
         )
         ch_alignGenomeStats    = SamStatsQC.out.samtoolsStats
         ch_alignGenomeIdxstats = SamStatsQC.out.samtoolsIdxstats
@@ -221,7 +221,7 @@ workflow SRAlign {
         // Get contaminant alignment stats
         ContaminantStatsQC(
             ch_samContaminant,
-            outBasePrefix
+            outUniquePrefix
         )
         ch_contaminantFlagstat = ContaminantStatsQC.out.samtoolsFlagstat
     } else {
@@ -285,7 +285,7 @@ workflow SRAlign {
     ch_multiqcConfig = file(params.multiqcConfig)
 
     FullMultiQC(
-        outBasePrefix,
+        outUniquePrefix,
         ch_multiqcConfig,
         ch_fullMultiQC.collect()
     )
