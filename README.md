@@ -9,11 +9,29 @@ A flexible pipeline for short read alignment to a reference with extensive QC re
 
 ## Pipeline overview
 
-1. QC of raw reads - [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) & [MultiQC](https://multiqc.info/)
-2. Trim raw reads - [cutadapt](https://github.com/marcelm/cutadapt)
-3. Align reads - [BWA](http://bio-bwa.sourceforge.net/) -OR- [Bowtie 2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml)
-4. Mark duplicates - [samblaster](https://github.com/GregoryFaust/samblaster)
-5. QC of alignments - [Samtools](http://www.htslib.org/) & [MultiQC](https://multiqc.info/) 
+1. Trim reads
+2. QC of reads
+   1. Raw reads FastQC
+   2. Trim reads FastQC
+   3. Summary MultiQC
+3. Align reads
+    1. Align to reference genome/transcriptome
+    2. Check contamination
+4. Preprocess alignments
+   1. Mark duplicates
+   2. Compress sam to bam
+   3. Index bam
+5. QC of alignments
+   1. samtools stats
+   2. Samtools index stats
+   3. Percent duplicates
+   4. Percent aligned to contamination reference
+   5. Summary MultiQC
+6. Library complexity and reproducibility
+   1. Preseq library complexity
+   2. DeepTools correlation
+   3. DeepTools PCA
+7. Full pipeline MultiQC
 
 ## Quick start
 
