@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Help message parameter help message display.
 - Parameter specifications such as descriptions stored in `parameter_specifications.json`.
 - Combined raw and trimmed reads FastQC steps to avoid duplication of modules and subworkflows.
+- Only MultiQC reports use the unique prefix name to keep other processes from having to be repeated upon `-resume`.
 
 ### Deprecated
 

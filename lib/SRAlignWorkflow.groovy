@@ -22,6 +22,8 @@ class SRAlignWorkflow {
     public static LinkedHashMap paramSpecs
     /** Output basename prefix */
     public static String        outBasePrefix
+    /** Output basename unique prefix */
+    public static String        outUniquePrefix
 
     /** valid tools available in the pipeline */
     public static LinkedHashMap validTools = [
@@ -87,11 +89,12 @@ class SRAlignWorkflow {
     */
     SRAlignWorkflow(log, params, workflow) {
         // set log
-        this.log        = log
-        this.params     = params
-        this.workflow   = workflow
-        this.paramSpecs = (new JsonSlurper()).parse(new File("${workflow.projectDir}/parameter_specifications.json"))
-        this.outBasePrefix = constructOutBasePrefix(params, workflow)
+        this.log             = log
+        this.params          = params
+        this.workflow        = workflow
+        this.paramSpecs      = (new JsonSlurper()).parse(new File("${workflow.projectDir}/parameter_specifications.json"))
+        this.outBasePrefix   = params.input.take(params.input.lastIndexOf('.')).split('/')[-1]
+        this.outUniquePrefix = constructOutBasePrefix(params, workflow)
 
         // add options to paramSpecs
         LinkedHashMap paramSpecs = addValidOptions(params, paramSpecs)
