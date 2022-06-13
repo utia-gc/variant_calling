@@ -20,7 +20,8 @@ def srawf = new SRAlignWorkflow(log, params, workflow)
 */
 
 // set output filename base prefix
-outBasePrefix = srawf.outBasePrefix
+outBasePrefix   = srawf.outBasePrefix
+outUniquePrefix = srawf.outUniquePrefix
 
 // set genome and contaminant values
 genome = params.genomes[ params.genome ]
