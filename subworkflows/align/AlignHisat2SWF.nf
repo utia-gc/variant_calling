@@ -6,17 +6,29 @@ workflow AlignHisat2SWF {
         reads
         reference
         referenceName
+        forceUseHisat2Index
+        buildSpliceAwareIndex
 
     main:
-        // set or build hisat2 index
-        if (reference[ 'hisat2' ]) {
+        // set or build HISAT2 index
+        if (reference[ 'hisat2' ] && forceUseHisat2Index) {
             hisat2Indexes = Channel
                 .fromPath("${reference[ 'hisat2' ]}*", checkIfExists: true)
                 .collect()
         } else {
+            // set genes channel
+            if (reference[ 'genes' ]) {
+                ch_genes = Channel.fromPath(reference[ 'genes' ])
+            } else {
+                ch_genes = Channel.fromPath(params.dummyFile)
+            }
+
+            // build HISAT2 index
             Hisat2Build(
                 reference[ 'fasta' ],
-                referenceName
+                ch_genes,
+                referenceName,
+                buildSpliceAwareIndex
             )
             .collect()
             .set { hisat2Indexes }

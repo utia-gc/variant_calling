@@ -10,7 +10,7 @@ process SamStatsMultiQC {
     container 'ewels/multiqc:v1.11'
 
     publishDir "${params.baseDirReport}/align", mode: 'copy', pattern: '*.html'
-    publishDir "${params.baseDirData}/align", mode: 'copy', pattern: '*multiqc_data*'
+    publishDir "${params.baseDirData}/align", mode: 'copy', pattern: '*mqc-alignments_data*'
 
     input:
         file sST
@@ -23,9 +23,8 @@ process SamStatsMultiQC {
 
     script:
         // update toolID and set suffix
-        toolIDs += 'mqc'
+        toolIDs += 'mqc-alignments'
         suffix = toolIDs ? "__${toolIDs.join('_')}" : ''
-
 
         """
         multiqc \
@@ -33,5 +32,14 @@ process SamStatsMultiQC {
             --module samtools \
             ${sST} \
             ${sIX}
+        """
+    
+    stub:
+        // update toolID and set suffix
+        toolIDs += 'mqc-alignments'
+        suffix = toolIDs ? "__${toolIDs.join('_')}" : ''
+
+        """
+        touch ${outName}${suffix}.html
         """
 }

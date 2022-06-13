@@ -11,7 +11,9 @@ process Hisat2Build {
 
     input:
         path reference
+        path genes
         val refName
+        val spliceAware
 
     output:
         path '*', emit: hisat2Index
@@ -24,10 +26,41 @@ process Hisat2Build {
         def options = task.ext.args ?: ''
 
         // build hisat2 index
+        if (!spliceAware) {
+            """
+            hisat2-build \
+                ${options} \
+                ${reference} \
+                ${ht2Base}
+            """
+        } else {
+            """
+            hisat2_extract_splice_sites.py ${genes} > splicesites.txt
+            hisat2_extract_exons.py        ${genes} > exons.txt
+
+            hisat2-build \
+                --ss splicesites.txt \
+                --exon exons.txt \
+                ${options} \
+                ${reference} \
+                ${ht2Base}
+            """
+        }
+
+    stub:
+        // set index basename
+        def ht2Base = reference.toString() - ~/.fa?/
+
         """
-        hisat2-build \
-            ${options} \
-            ${reference} \
-            ${ht2Base}
+        touch \
+            ${ht2Base}.fa \
+            ${ht2Base}.1.ht2 \
+            ${ht2Base}.2.ht2 \
+            ${ht2Base}.3.ht2 \
+            ${ht2Base}.4.ht2 \
+            ${ht2Base}.5.ht2 \
+            ${ht2Base}.6.ht2 \
+            ${ht2Base}.7.ht2 \
+            ${ht2Base}.8.ht2
         """
 }
