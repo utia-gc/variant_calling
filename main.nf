@@ -2,10 +2,10 @@
 
 /*
 ---------------------------------------------------------------------
-    trev-f/sralign
+    trev-f/SRAlign
 ---------------------------------------------------------------------
-sralign - A flexible pipeline for short read alignment to a reference.
-https://github.com/trev-f/sralign
+SRAlign - A flexible pipeline for short read alignment to a reference.
+https://github.com/trev-f/SRAlign
 */
 
 nextflow.enable.dsl=2
@@ -16,8 +16,8 @@ nextflow.enable.dsl=2
 ---------------------------------------------------------------------
 */
 
-include { sralign } from './workflows/sralign.nf'
+include { SRAlign } from './workflows/SRAlign.nf'
 
 workflow {
-    sralign()
+    SRAlign()
 }
