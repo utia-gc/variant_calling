@@ -48,7 +48,7 @@ include { DeepToolsMultiBamSWF  as DeepToolsMultiBam  } from "${projectDir}/subw
 include { FullMultiQC           as FullMultiQC        } from "${baseDir}/modules/misc/FullMultiQC.nf"
 
 
-workflow sralign {
+workflow SRAlign {
     /*
     ---------------------------------------------------------------------
         Read design file, parse sample names and identifiers, and stage reads files
