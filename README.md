@@ -1,5 +1,5 @@
 # SRAlign
-A flexible pipeline for short read alignment to a reference.
+A flexible pipeline for short read alignment to a reference with extensive QC reporting.
 
 ## Introduction
 
@@ -29,7 +29,7 @@ A flexible pipeline for short read alignment to a reference.
     ```
 5. Run your analysis:
     ```
-    nextflow run trev-f/SRAlign -profile docker --input <input.csv> --genome <valid genome key>
+    nextflow run SRAlign -profile docker --input <input.csv> --genome <valid genome key>
     ```
 
 Detailed documentation can be found in [docs](docs/) and [usage](docs/usage.md)
