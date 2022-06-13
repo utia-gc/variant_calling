@@ -100,6 +100,14 @@
                 "default"     : false,
                 "description" : "Force alignment of raw reads even if read trimming is performed."
             },
+            "forceUseHisat2Index" : {
+                "default"     : true,
+                "description" : "Use the provided HISAT2 index if it is supplied."
+            },
+            "buildSpliceAwareIndex" : {
+                "default"     : false,
+                "description" : "Build the alignment tool index in a splice-aware manner (for aligners where this is possible)."
+            },
             "skipAlignGenome" : {
                 "default"     : false,
                 "description" : "Skip alignment of reads to reference.",
@@ -135,6 +143,10 @@
     "miscellaneous" : {
         "title" : "Miscellaneous parameters",
         "parameters" : {
+            "seed"          : {
+                "default"     : 40,
+                "description" : "Seed integer for all pseudo-random processes. Specific seed value should not be important but ensures reproducibility."
+            },
             "help"          : {
                 "default"     : false,
                 "description" : "Display this help message and exit the program."
