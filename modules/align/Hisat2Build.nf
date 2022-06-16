@@ -16,7 +16,7 @@ process Hisat2Build {
         val spliceAware
 
     output:
-        path '*', emit: hisat2Index
+        path "${reference.toString() - ~/.fa?/}*", emit: hisat2Index
 
     script:
         // set index basename
