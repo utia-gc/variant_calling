@@ -8,6 +8,9 @@ process Hisat2Build {
     tag "${refName}"
 
     container 'quay.io/biocontainers/hisat2:2.2.1--h87f3376_4'
+    
+    label 'cpu_mid'
+    label 'mem_high'
 
     input:
         path reference
@@ -29,6 +32,7 @@ process Hisat2Build {
         if (!spliceAware) {
             """
             hisat2-build \
+                -p ${task.cpus} \
                 ${options} \
                 ${reference} \
                 ${ht2Base}
@@ -39,6 +43,7 @@ process Hisat2Build {
             hisat2_extract_exons.py        ${genes} > exons.txt
 
             hisat2-build \
+                -p ${task.cpus} \
                 --ss splicesites.txt \
                 --exon exons.txt \
                 ${options} \
