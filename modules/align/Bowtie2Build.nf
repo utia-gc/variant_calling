@@ -9,6 +9,9 @@ process Bowtie2Build {
 
     container 'quay.io/biocontainers/bowtie2:2.4.5--py38hfbc8389_2'
 
+    label 'cpu_mid'
+    label 'mem_high'
+
     input:
         path reference
         val refName
