@@ -52,15 +52,6 @@ def createDesignChannel(LinkedHashMap row) {
         // create an empty list for tool IDs for suffixes
         toolIDs = []
 
-        // check that reads files exist
-        if (!workflow.stubRun) {        // ignore file checking for stub-run executions
-            reads.each {
-                if (!it.exists()) {
-                    exit 1, "ERROR: ${it} does not exist!"
-                }
-            }
-        }
-
         return [metadata, reads, toolIDs]
     }
     
@@ -76,15 +67,6 @@ def createDesignChannel(LinkedHashMap row) {
 
         // create an empty list for tool IDs for suffixes
         toolIDs = row.tool_IDs.split('_')
-
-        // check that reads files exist
-        if (!workflow.stubRun) {        // ignore file checking for stub-run executions
-            bam.each {
-                if (!it.exists()) {
-                    exit 1, "ERROR: ${it} does not exist!"
-                }
-            }
-        }
 
         return [metadata, bam, toolIDs]
     }
