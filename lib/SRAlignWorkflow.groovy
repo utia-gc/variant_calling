@@ -263,7 +263,7 @@ class SRAlignWorkflow {
         assert params.input ,                       // check input is specified
             "Input design file not specified. An input design file is required.\n"
 
-        assert new File(params.input).exists() ,    // check input file exists
+        assert new File(params.input).exists() || new URL(params.input).openConnection().getResponseCode() == 200 ,    // check input file exists or that connecting to the URL succeeds
             "'${params.input}' does not exist. An existing input design file is required.\n"
 
         // check that MultiQC config exists
