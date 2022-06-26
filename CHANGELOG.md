@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Moved helper scripts from `general_utilities` submodule to a local subidrectory.
+- Moved test files to external repository [trev-f/SRAlign-test](https://github.com/trev-f/SRAlign-test)
 
 ### Fixed
 - StackOverflowError in input design parsing subworkflow. 
