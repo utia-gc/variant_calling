@@ -1,7 +1,7 @@
 include { SamtoolsStatsIdxstats } from "${projectDir}/modules/align/SamtoolsStatsIdxstats.nf"
 include { AlignmentStatsMultiQC } from "${projectDir}/modules/align/AlignmentStatsMultiQC.nf"
 
-workflow SamStatsQCSWF {
+workflow AlignmentStatsQCSWF {
     take:
         bamIndexed
         prefix

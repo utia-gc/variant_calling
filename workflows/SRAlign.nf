@@ -41,7 +41,7 @@ include { Bowtie2SWF            as Bowtie2Genome      ;
 include { Hisat2SWF             as Hisat2Genome       ; 
           Hisat2SWF             as Hisat2Contaminant  } from "${projectDir}/subworkflows/align/Hisat2SWF.nf"
 include { PostprocessSamSWF     as PostprocessSam     } from "${projectDir}/subworkflows/align/PostprocessSamSWF.nf"
-include { SamStatsQCSWF         as SamStatsQC         } from "${projectDir}/subworkflows/align/SamStatsQCSWF.nf"
+include { AlignmentStatsQCSWF   as AlignmentStatsQC   } from "${projectDir}/subworkflows/align/AlignmentStatsQCSWF.nf"
 include { SeqtkSample           as SeqtkSample        } from "${projectDir}/modules/reads/SeqtkSample.nf"
 include { ContaminantStatsQCSWF as ContaminantStatsQC } from "${projectDir}/subworkflows/align/ContaminantStatsQCSWF.nf"
 include { PreseqSWF             as Preseq             } from "${baseDir}/subworkflows/align/PreseqSWF.nf"
@@ -162,15 +162,15 @@ workflow SRAlign {
     ch_bamIndexedGenome = PostprocessSam.out.bamIndexed.mix(ch_bamIndexedGenome)
 
 
-    if (!params.skipSamStatsQC) {
+    if (!params.skipAlignmentStatsQC) {
         // Subworkflow: Samtools stats and samtools idxstats and multiqc of alignment results
-        SamStatsQC(
+        AlignmentStatsQC(
             ch_bamIndexedGenome,
             outUniquePrefix
         )
-        ch_alignGenomeStats    = SamStatsQC.out.samtoolsStats
-        ch_alignGenomeIdxstats = SamStatsQC.out.samtoolsIdxstats
-        ch_alignGenomePctDup   = SamStatsQC.out.pctDup
+        ch_alignGenomeStats    = AlignmentStatsQC.out.samtoolsStats
+        ch_alignGenomeIdxstats = AlignmentStatsQC.out.samtoolsIdxstats
+        ch_alignGenomePctDup   = AlignmentStatsQC.out.pctDup
         }
     } else {
         ch_alignGenomeStats    = Channel.empty()
