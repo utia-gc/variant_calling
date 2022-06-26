@@ -38,8 +38,8 @@ include { FastpTrimReadsSWF     as FastpTrimReads     } from "${projectDir}/subw
 include { ReadsQCSWF            as ReadsQC            } from "${projectDir}/subworkflows/reads/ReadsQCSWF.nf"
 include { Bowtie2SWF            as Bowtie2Genome      ; 
           Bowtie2SWF            as Bowtie2Contaminant } from "${projectDir}/subworkflows/align/Bowtie2SWF.nf"
-include { AlignHisat2SWF        as AlignHisat2        ; 
-          AlignHisat2SWF        as ContamHisat2       } from "${baseDir}/subworkflows/align/AlignHisat2SWF.nf"
+include { Hisat2SWF             as Hisat2Genome       ; 
+          Hisat2SWF             as Hisat2Contaminant  } from "${projectDir}/subworkflows/align/Hisat2SWF.nf"
 include { PreprocessSamSWF      as PreprocessSam      } from "${baseDir}/subworkflows/align/PreprocessSamSWF.nf"
 include { SamStatsQCSWF         as SamStatsQC         } from "${baseDir}/subworkflows/align/SamStatsQCSWF.nf"
 include { SeqtkSample           as SeqtkSample        } from "${baseDir}/modules/reads/SeqtkSample.nf"
@@ -144,14 +144,14 @@ workflow SRAlign {
             
             case 'hisat2':
                 // Subworkflow: Align reads to genome with hisat2 and build index if necessary
-                AlignHisat2(
+                Hisat2Genome(
                     ch_readsToAlign,
                     genome,
                     params.genome,
                     params.forceUseHisat2Index,
                     params.buildSpliceAwareIndex
                 )
-                ch_samGenome = AlignHisat2.out.sam
+                ch_samGenome = Hisat2Genome.out.sam
                 break
     }
 
@@ -207,14 +207,14 @@ workflow SRAlign {
             
             case 'hisat2':
                 // Subworkflow: Align reads to contaminant genome with hisat2 and build index if necessary
-                ContamHisat2(
+                Hisat2Contaminant(
                     ch_readsContaminant,
                     contaminant,
                     params.contaminant,
                     params.forceUseHisat2Index,
                     false
                 )
-                ch_samContaminant = ContamHisat2.out.sam
+                ch_samContaminant = Hisat2Contaminant.out.sam
                 break
         }
 
