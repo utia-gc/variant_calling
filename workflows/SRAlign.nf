@@ -46,7 +46,7 @@ include { SeqtkSample           as SeqtkSample        } from "${projectDir}/modu
 include { ContaminantStatsQCSWF as ContaminantStatsQC } from "${projectDir}/subworkflows/align/ContaminantStatsQCSWF.nf"
 include { PreseqSWF             as Preseq             } from "${projectDir}/subworkflows/complexity/PreseqSWF.nf"
 include { DeepToolsMultiBamSWF  as DeepToolsMultiBam  } from "${projectDir}/subworkflows/align/DeepToolsMultiBamSWF.nf"
-include { FullMultiQC           as FullMultiQC        } from "${baseDir}/modules/misc/FullMultiQC.nf"
+include { FullMultiQC           as FullMultiQC        } from "${projectDir}/modules/misc/FullMultiQC.nf"
 
 
 workflow SRAlign {
