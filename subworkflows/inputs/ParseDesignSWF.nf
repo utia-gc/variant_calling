@@ -1,5 +1,5 @@
-include { ParseDesign } from "${projectDir}/modules/inputs/ParseDesign.nf"
-include { IndexBam    } from "${projectDir}/modules/align/IndexBam.nf"
+include { ParseDesign   } from "${projectDir}/modules/inputs/ParseDesign.nf"
+include { SamtoolsIndex } from "${projectDir}/modules/align/SamtoolsIndex.nf"
 
 workflow ParseDesignSWF {
     take:
@@ -19,7 +19,7 @@ workflow ParseDesignSWF {
             .set { design }
 
         // Index bams
-        IndexBam(
+        SamtoolsIndex(
             design.bams
         )
             .set { bamBai }

@@ -4,7 +4,7 @@ Date   : 2022-02-27
 Purpose: Nextflow module
 */
 
-process CompressSortSam {
+process SamtoolsCompressSort {
     tag "${metadata.sampleName}"
 
     label 'cpu_mid'
@@ -18,7 +18,7 @@ process CompressSortSam {
         tuple val(metadata), file(sam), val(toolIDs)
 
     output:
-        tuple val(metadata), file('*.bam'), val(toolIDs), emit: bam
+        tuple val(metadata), file('*.bam'), val(toolIDs), emit: bamSorted
 
     script:
         // update toolID and set suffix

@@ -40,7 +40,7 @@ include { Bowtie2SWF            as Bowtie2Genome      ;
           Bowtie2SWF            as Bowtie2Contaminant } from "${projectDir}/subworkflows/align/Bowtie2SWF.nf"
 include { Hisat2SWF             as Hisat2Genome       ; 
           Hisat2SWF             as Hisat2Contaminant  } from "${projectDir}/subworkflows/align/Hisat2SWF.nf"
-include { PreprocessSamSWF      as PreprocessSam      } from "${baseDir}/subworkflows/align/PreprocessSamSWF.nf"
+include { PostprocessSamSWF     as PostprocessSam     } from "${projectDir}/subworkflows/align/PostprocessSamSWF.nf"
 include { SamStatsQCSWF         as SamStatsQC         } from "${baseDir}/subworkflows/align/SamStatsQCSWF.nf"
 include { SeqtkSample           as SeqtkSample        } from "${baseDir}/modules/reads/SeqtkSample.nf"
 include { ContaminantStatsQCSWF as ContaminantStatsQC } from "${baseDir}/subworkflows/align/ContaminantStatsQCSWF.nf"
@@ -155,11 +155,11 @@ workflow SRAlign {
                 break
     }
 
-    // Preprocess sam files: mark duplicates, sort alignments, compress to bam, and index
-    PreprocessSam(
+    // Postprocess sam files: mark duplicates, sort alignments, compress to bam, and index
+    PostprocessSam(
         ch_samGenome
     )
-    ch_bamIndexedGenome = PreprocessSam.out.bamBai.mix(ch_bamIndexedGenome)
+    ch_bamIndexedGenome = PostprocessSam.out.bamIndexed.mix(ch_bamIndexedGenome)
 
 
     if (!params.skipSamStatsQC) {
