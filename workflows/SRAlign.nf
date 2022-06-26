@@ -36,8 +36,8 @@ contaminant = params.genomes[ params.contaminant ]
 include { ParseDesignSWF        as ParseDesign        } from "${projectDir}/subworkflows/inputs/ParseDesignSWF.nf"
 include { FastpTrimReadsSWF     as FastpTrimReads     } from "${projectDir}/subworkflows/reads/FastpTrimReadsSWF.nf"
 include { ReadsQCSWF            as ReadsQC            } from "${projectDir}/subworkflows/reads/ReadsQCSWF.nf"
-include { AlignBowtie2SWF       as AlignBowtie2       ; 
-          AlignBowtie2SWF       as ContamBowtie2      } from "${baseDir}/subworkflows/align/AlignBowtie2SWF.nf"
+include { Bowtie2SWF            as Bowtie2Genome      ; 
+          Bowtie2SWF            as Bowtie2Contaminant } from "${projectDir}/subworkflows/align/Bowtie2SWF.nf"
 include { AlignHisat2SWF        as AlignHisat2        ; 
           AlignHisat2SWF        as ContamHisat2       } from "${baseDir}/subworkflows/align/AlignHisat2SWF.nf"
 include { PreprocessSamSWF      as PreprocessSam      } from "${baseDir}/subworkflows/align/PreprocessSamSWF.nf"
@@ -134,12 +134,12 @@ workflow SRAlign {
         switch (params.alignmentTool) {
             case 'bowtie2':
                 // Subworkflow: Align reads to genome with bowtie2 and build index if necessary
-                AlignBowtie2(
+                Bowtie2Genome(
                     ch_readsToAlign,
                     genome,
                     params.genome
                 )
-                ch_samGenome = AlignBowtie2.out.sam
+                ch_samGenome = Bowtie2Genome.out.sam
                 break
             
             case 'hisat2':
@@ -197,12 +197,12 @@ workflow SRAlign {
         switch (params.alignmentTool) {
             case 'bowtie2':
                 // Subworkflow: Align reads to contaminant genome with bowtie2 and build index if necessary
-                ContamBowtie2(
+                Bowtie2Contaminant(
                     ch_readsContaminant,
                     contaminant,
                     params.contaminant
                 )
-                ch_samContaminant = ContamBowtie2.out.sam
+                ch_samContaminant = Bowtie2Contaminant.out.sam
                 break
             
             case 'hisat2':
