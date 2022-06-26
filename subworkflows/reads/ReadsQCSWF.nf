@@ -4,8 +4,8 @@ include { ReadsMultiQC               } from "${baseDir}/modules/reads/ReadsMulti
 
 workflow ReadsQCSWF {
     take:
-        rawReads
-        trimReads
+        readsRaw
+        readsTrimmed
         prefix
 
 
@@ -13,7 +13,7 @@ workflow ReadsQCSWF {
         // run FastQC on raw reads
         if (!params.skipRawFastQC) {
             RawFastQC(
-                rawReads
+                readsRaw
             )
             ch_rawFastQCZip = RawFastQC.out.zip
         } else {
@@ -23,7 +23,7 @@ workflow ReadsQCSWF {
         // run FastQC on trimmed reads
         if (!params.skipTrimFastQC) {
             TrimFastQC(
-                trimReads
+                readsTrimmed
             )
             ch_trimFastQCZip = TrimFastQC.out.zip
         } else {

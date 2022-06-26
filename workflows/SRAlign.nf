@@ -34,8 +34,8 @@ contaminant = params.genomes[ params.contaminant ]
 */
 
 include { ParseDesignSWF        as ParseDesign        } from "${projectDir}/subworkflows/inputs/ParseDesignSWF.nf"
-include { TrimReadsSWF          as TrimReads          } from "${baseDir}/subworkflows/reads/TrimReadsSWF.nf"
-include { ReadsQCSWF            as ReadsQC            } from "${baseDir}/subworkflows/reads/ReadsQCSWF.nf"
+include { FastpTrimReadsSWF     as FastpTrimReads     } from "${projectDir}/subworkflows/reads/FastpTrimReadsSWF.nf"
+include { ReadsQCSWF            as ReadsQC            } from "${projectDir}/subworkflows/reads/ReadsQCSWF.nf"
 include { AlignBowtie2SWF       as AlignBowtie2       ; 
           AlignBowtie2SWF       as ContamBowtie2      } from "${baseDir}/subworkflows/align/AlignBowtie2SWF.nf"
 include { AlignHisat2SWF        as AlignHisat2        ; 
@@ -63,7 +63,7 @@ workflow SRAlign {
     ParseDesign(
         ch_input
     )
-    ch_rawReads         = ParseDesign.out.reads
+    ch_readsRaw         = ParseDesign.out.reads
     ch_bamIndexedGenome = ParseDesign.out.bamBai
 
 
@@ -78,14 +78,14 @@ workflow SRAlign {
         switch (params.trimTool) {
             case 'fastp':
                 // Subworkflow: Trim raw reads
-                TrimReads(
-                    ch_rawReads
+                FastpTrimReads(
+                    ch_readsRaw
                 )
-                ch_trimReads = TrimReads.out.trimReads
+                ch_readsTrimmed = FastpTrimReads.out.readsTrimmed
                 break
         }
     } else {
-        ch_trimReads = Channel.empty()
+        ch_readsTrimmed = Channel.empty()
     }
 
 
@@ -98,15 +98,15 @@ workflow SRAlign {
     if (!params.skipReadsQC) {
         // Subworkflow: FastQC and MulitQC for raw and trimmed reads
         ReadsQC(
-            ch_rawReads,
-            ch_trimReads,
+            ch_readsRaw,
+            ch_readsTrimmed,
             outUniquePrefix
         )
-        ch_rawReadsFQC  = ReadsQC.out.raw_fqc_zip
-        ch_trimReadsFQC = ReadsQC.out.trim_fqc_zip
+        ch_readsRawFQC     = ReadsQC.out.raw_fqc_zip
+        ch_readsTrimmedFQC = ReadsQC.out.trim_fqc_zip
     } else {
-        ch_rawReadsFQC  = Channel.empty()
-        ch_trimReadsFQC = Channel.empty()
+        ch_readsRawFQC     = Channel.empty()
+        ch_readsTrimmedFQC = Channel.empty()
     }
 
 
@@ -119,12 +119,12 @@ workflow SRAlign {
     // Set channel of reads to align 
     if (!params.forceAlignRawReads) {
         if (!params.skipTrimReads) {
-            ch_readsToAlign = ch_trimReads
+            ch_readsToAlign = ch_readsTrimmed
         } else {
-            ch_readsToAlign = ch_rawReads
+            ch_readsToAlign = ch_readsRaw
         }
     } else {
-        ch_readsToAlign = ch_rawReads
+        ch_readsToAlign = ch_readsRaw
     }
 
 
@@ -271,8 +271,8 @@ workflow SRAlign {
     */
 
     ch_fullMultiQC = Channel.empty()
-        .concat(ch_rawReadsFQC)
-        .concat(ch_trimReadsFQC)
+        .concat(ch_readsRawFQC)
+        .concat(ch_readsTrimmedFQC)
         .concat(ch_alignGenomeStats)
         .concat(ch_alignGenomeIdxstats)
         .concat(ch_alignGenomePctDup)
