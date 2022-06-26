@@ -8,9 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Check that maximum resources aren't exceeded.
 - Helper script to create a new subworkflow template: `src/python/new_nf_subworkflow.py`
+- Allow URL as input design file
 
 ### Changed
 - Moved helper scripts from `general_utilities` submodule to a local subidrectory.
+- Moved test files to external repository [trev-f/SRAlign-test](https://github.com/trev-f/SRAlign-test)
 
 ### Fixed
 - StackOverflowError in input design parsing subworkflow. 
