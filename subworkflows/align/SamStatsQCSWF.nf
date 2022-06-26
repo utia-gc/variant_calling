@@ -1,22 +1,25 @@
-include { SamStats        } from "${baseDir}/modules/align/SamStats.nf"
-include { SamStatsMultiQC } from "${baseDir}/modules/align/SamStatsMultiQC.nf"
+include { SamtoolsStatsIdxstats } from "${projectDir}/modules/align/SamtoolsStatsIdxstats.nf"
+include { AlignmentStatsMultiQC } from "${projectDir}/modules/align/AlignmentStatsMultiQC.nf"
 
 workflow SamStatsQCSWF {
     take:
-        bamBai
+        bamIndexed
         prefix
     
     main:
-        SamStats(bamBai)
-        SamStatsMultiQC(
-            SamStats.out.sST.collect(),
-            SamStats.out.sIX.collect(),
+        SamtoolsStatsIdxstats(
+            bamIndexed
+        )
+
+        AlignmentStatsMultiQC(
+            SamtoolsStatsIdxstats.out.sST.collect(),
+            SamtoolsStatsIdxstats.out.sIX.collect(),
             prefix,
-            SamStats.out.tools.first()
+            SamtoolsStatsIdxstats.out.tools.first()
         )
 
     emit:
-        samtoolsStats    = SamStats.out.sST
-        samtoolsIdxstats = SamStats.out.sIX
-        pctDup           = SamStats.out.pctDup
+        samtoolsStats    = SamtoolsStatsIdxstats.out.sST
+        samtoolsIdxstats = SamtoolsStatsIdxstats.out.sIX
+        pctDup           = SamtoolsStatsIdxstats.out.pctDup
 }

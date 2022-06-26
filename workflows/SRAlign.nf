@@ -41,7 +41,7 @@ include { Bowtie2SWF            as Bowtie2Genome      ;
 include { Hisat2SWF             as Hisat2Genome       ; 
           Hisat2SWF             as Hisat2Contaminant  } from "${projectDir}/subworkflows/align/Hisat2SWF.nf"
 include { PostprocessSamSWF     as PostprocessSam     } from "${projectDir}/subworkflows/align/PostprocessSamSWF.nf"
-include { SamStatsQCSWF         as SamStatsQC         } from "${baseDir}/subworkflows/align/SamStatsQCSWF.nf"
+include { SamStatsQCSWF         as SamStatsQC         } from "${projectDir}/subworkflows/align/SamStatsQCSWF.nf"
 include { SeqtkSample           as SeqtkSample        } from "${baseDir}/modules/reads/SeqtkSample.nf"
 include { ContaminantStatsQCSWF as ContaminantStatsQC } from "${baseDir}/subworkflows/align/ContaminantStatsQCSWF.nf"
 include { PreseqSWF             as Preseq             } from "${baseDir}/subworkflows/align/PreseqSWF.nf"

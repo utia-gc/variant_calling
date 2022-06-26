@@ -4,7 +4,7 @@ Date   : 2022-02-27
 Purpose: Nextflow module
 */
 
-process SamStats {
+process SamtoolsStatsIdxstats {
     tag "${metadata.sampleName}"
 
     container 'quay.io/biocontainers/samtools:1.15--h1170115_1'
