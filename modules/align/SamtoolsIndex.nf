@@ -4,7 +4,7 @@ Date   : 2022-02-27
 Purpose: Nextflow module
 */
 
-process IndexBam {
+process SamtoolsIndex {
     tag "${metadata.sampleName}"
 
     label 'cpu_mid'
@@ -17,7 +17,7 @@ process IndexBam {
         tuple val(metadata), path(bam), val(toolIDs)
 
     output:
-        tuple val(metadata), path(bam), path('*.bai'), val(toolIDs), emit: bamBai
+        tuple val(metadata), path(bam), path('*.bai'), val(toolIDs), emit: bamIndexed
 
     script:
         """

@@ -4,7 +4,7 @@ Date   : 2022-03-14
 Purpose: Run preseq commands
 */
 
-process Preseq {
+process PreseqLcExtrap {
     tag "${metadata.sampleName}"
 
     container 'quay.io/biocontainers/preseq:3.1.2--h2c25361_3'

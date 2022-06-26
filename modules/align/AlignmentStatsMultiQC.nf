@@ -4,7 +4,7 @@ Date   : 2022-02-27
 Purpose: Nextflow module
 */
 
-process SamStatsMultiQC {
+process AlignmentStatsMultiQC {
     tag "${outName}"
 
     container 'ewels/multiqc:v1.11'
@@ -13,8 +13,8 @@ process SamStatsMultiQC {
     publishDir "${params.baseDirData}/align", mode: 'copy', pattern: '*mqc-alignments_data*'
 
     input:
-        file sST
-        file sIX
+        file samtoolsStats
+        file samtoolsIdxstats
         val outName
         val toolIDs
 
@@ -30,8 +30,8 @@ process SamStatsMultiQC {
         multiqc \
             -n ${outName}${suffix} \
             --module samtools \
-            ${sST} \
-            ${sIX}
+            ${samtoolsStats} \
+            ${samtoolsIdxstats}
         """
     
     stub:

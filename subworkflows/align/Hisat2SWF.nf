@@ -1,7 +1,7 @@
-include { Hisat2Build } from "${baseDir}/modules/align/Hisat2Build.nf"
-include { Hisat2Align } from "${baseDir}/modules/align/Hisat2Align.nf"
+include { Hisat2Build } from "${projectDir}/modules/align/Hisat2Build.nf"
+include { Hisat2Align } from "${projectDir}/modules/align/Hisat2Align.nf"
 
-workflow AlignHisat2SWF {
+workflow Hisat2SWF {
     take:
         reads
         reference

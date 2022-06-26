@@ -1,7 +1,7 @@
-include { Bowtie2Build } from "${baseDir}/modules/align/Bowtie2Build.nf"
-include { Bowtie2Align } from "${baseDir}/modules/align/Bowtie2Align.nf"
+include { Bowtie2Build } from "${projectDir}/modules/align/Bowtie2Build.nf"
+include { Bowtie2Align } from "${projectDir}/modules/align/Bowtie2Align.nf"
 
-workflow AlignBowtie2SWF {
+workflow Bowtie2SWF {
     take:
         reads
         reference
