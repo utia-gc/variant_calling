@@ -140,6 +140,23 @@
             }
         }
     },
+    "resources" : {
+        "title" : "Resources default parameters",
+        "parameters" : {
+            "maxCpus"       : {
+                "default"     : 16,
+                "description" : "Maximum number of CPUs for a task."
+            },
+            "maxMemory"     : {
+                "default"     : "24.GB",
+                "description" : "Maximum memory for a task."
+            },
+            "maxTime"       : {
+                "default"     : "24.h",
+                "description" : "Maximum time for a task."
+            }
+        }
+    },
     "miscellaneous" : {
         "title" : "Miscellaneous parameters",
         "parameters" : {
