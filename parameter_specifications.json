@@ -123,7 +123,7 @@
     "libraryQC" : {
         "title" : "Library QC parameters",
         "parameters" : {
-            "skipSamStatsQC" : {
+            "skipAlignmentStatsQC" : {
                 "default"     : false,
                 "description" : "Skip QC report for alignment.",
                 "skip"        : true
