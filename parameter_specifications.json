@@ -165,7 +165,7 @@
                 "description" : "Seed integer for all pseudo-random processes. Specific seed value should not be important but ensures reproducibility."
             },
             "help"          : {
-                "default"     : false,
+                "default"     : null,
                 "description" : "Display this help message and exit the program."
             }
         }
