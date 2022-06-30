@@ -56,6 +56,7 @@ A flexible pipeline for short read alignment to a reference with extensive QC re
 
     - Downloads the project into `$HOME/.nextflow/assets`
     - Useful for quickly downloading and easily running a project.
+      - Allows for accessing `SRAlign` using Nextflow command by simply referring to `trev-f/SRAlign` without having to refer to the location of `SRAlign` in the system.
       - To customize or expand `SRAlign`, see the documentation on [customizing or expanding `SRAlign`](docs/customize_expand.md).
 
     ```bash
@@ -77,13 +78,23 @@ A flexible pipeline for short read alignment to a reference with extensive QC re
       - For more information, see the `profiles` section of the [nextflow config file](nextflow.config) and [trev-f/SRAlign-test](https://github.com/trev-f/SRAlign-test).
 
     ```bash
-    nextflow run SRAlign -profile test 
+    nextflow run trev-f/SRAlign -profile test 
     ```
 
+### Run `SRAlign`
 
-2. Run your analysis:
-    ```
-    nextflow run SRAlign -profile docker --input <input.csv> --genome <valid genome key>
+1. Show all configurable options for `SRAlign` by showing a help message:
+
+    - The most important information here is likely the list of available reference genomes.
+
+   ```bash
+    nextflow run trev-f/SRAlign --help
+   ```
+
+2. Analyze your data with `SRAlign`:
+
+    ```bash
+    nextflow run trev-f/SRAlign -profile docker --input <input.csv> --genome <valid genome key>
     ```
 
-Detailed documentation can be found in [docs](docs/) and [usage](docs/usage.md)
+Additional documentation can be found in [docs](docs/) and [usage](docs/usage.md)
