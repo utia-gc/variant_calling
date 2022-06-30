@@ -1,9 +1,10 @@
 # SRAlign
+
 A flexible pipeline for short read alignment to a reference with extensive QC reporting.
 
 ## Introduction
 
-**SRAlign** is a [Nextflow](https://www.nextflow.io/) pipeline for aligning short reads to a reference. 
+**SRAlign** is a [Nextflow](https://www.nextflow.io/) pipeline for aligning short reads to a reference.
 
 **SRAlign** is designed to be highly flexible by allowing for the easy addition of tools to the pipeline as well as serving as a starting point for genomic analyses that rely on alignment of short reads to a reference.
 
@@ -35,17 +36,52 @@ A flexible pipeline for short read alignment to a reference with extensive QC re
 
 ## Quick start
 
-1. [Install Nextflow](https://www.nextflow.io/docs/latest/getstarted.html)
-2. [Install Docker](https://docs.docker.com/engine/install/)
-3. Download **SRAlign**:
+### Prerequisites
+
+1. Any POSIX compatible system (e.g. Linux, OS X, etc) with internet access
+
+   - Run on Windows with [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/). WSL2 highly recommended.
+
+2. [Nextflow](https://www.nextflow.io/) version >= 21.04
+
+   - See [Nextflow Get started](https://www.nextflow.io/docs/latest/getstarted.html#) for prerequisites and instructions on installing and updating Nextflow.
+
+3. [Docker](https://docs.docker.com/)
+
+    - I recommend Docker Desktop for OS X or Windows users
+
+### Get or update `SRAlign`
+
+1. Download or update `SRAlign`:
+
+    - Downloads the project into `$HOME/.nextflow/assets`
+    - Useful for quickly downloading and easily running a project.
+      - To customize or expand `SRAlign`, see the documentation on [customizing or expanding `SRAlign`](docs/customize_expand.md).
+
+    ```bash
+    nextflow pull trev-f/SRAlign
     ```
-    git clone https://github.com/trev-f/SRAlign.git
+
+2. Show project info:
+
+    ```bash
+    nextflow info trev-f/SRAlign
     ```
-4. Run **SRAlign** in test mode:
-    ```
+
+### Test `SRAlign`
+
+1. Check that `SRAlign` works on your system:
+
+    - `-profile test` uses preconfigured test parameters to run `SRAlign` in full on a small test dataset stored in a remote GitHub repository.
+      - Because these test files are stored in a remote repository, internet access is required to run the test.
+      - For more information, see the `profiles` section of the [nextflow config file](nextflow.config) and [trev-f/SRAlign-test](https://github.com/trev-f/SRAlign-test).
+
+    ```bash
     nextflow run SRAlign -profile test 
     ```
-5. Run your analysis:
+
+
+2. Run your analysis:
     ```
     nextflow run SRAlign -profile docker --input <input.csv> --genome <valid genome key>
     ```
