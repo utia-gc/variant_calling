@@ -108,6 +108,19 @@ A flexible pipeline for short read alignment to a reference with extensive QC re
     nextflow run trev-f/SRAlign -profile docker --input <input.csv> --genome <valid genome key>
     ```
 
+## Tips for running Nextflow and `SRAlign`
+
+`SRAlign` is designed to be highly configurable, meaning that its default behavior can be changed by supplying any of a number of configurable parameters. These can be [supplied in a number of ways](https://www.nextflow.io/docs/latest/config.html#configuration-file) that have a specific hierarchy of precedence.
+
+- Show configurable parameters by showing command line help documentation: `nextflow run trev-f/SRAlign --help`
+- Nextflow arguments always begin with a single dash, e.g. `-profile`.
+- Pipeline parameters specified at the command line always begin with a double dash, e.g. `--input`.
+  - Parameters specified at the command line always have the highest precedence. They will overwrite parameters specified in any config or params files.
+  - I recommend specifying required parameters (i.e. `--input` and `--genome`) and up to a few others at the command line in this manner. Specifying more than this at the command line gets unwieldy.
+- A custom config or parameters file is a good option for cases where you want to supply more parameters than can comfortably be done at the command line or you want to use the same custom parameters in multiple runs.
+  - For a config file, use the [params scope](https://www.nextflow.io/docs/latest/config.html#scope-params)
+  - For a JSON/UAML parameters file, see the [Nextflow CLI docs](https://www.nextflow.io/docs/latest/cli.html?highlight=params%20file#run).
+
 ## Additional documentation
 
 Additional documentation can be found in [docs](docs/).
