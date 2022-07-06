@@ -92,6 +92,7 @@ A flexible pipeline for short read alignment to a reference with extensive QC re
       - reads: lib_ID, sample_name, replicate, reads1, reads2 (optional)
       - alignments: lib_ID, sample_name, replicate, bam, tool_IDs
     - See [sample inputs](https://github.com/trev-f/SRAlign-test/tree/main/inputs) in the [`SRAlign-test` repository](https://github.com/trev-f/SRAlign-test).
+    - A template project repository can be downloaded from the [`SRAlign-template` repository](https://github.com/trev-f/SRAlign-template).
 
 2. Show all configurable options for `SRAlign` by showing a help message:
 
