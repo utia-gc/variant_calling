@@ -83,7 +83,7 @@ A flexible pipeline for short read alignment to a reference with extensive QC re
 
 ### Run `SRAlign`
 
-1. Prepare the [input design csv file](docs/input_design.md).
+1. Prepare the [input design csv file](docs/input_output.md).
 
     - Input design file must be in csv format with no whitespace.
     - Either reads (fastq or fastq.gz) or alignments (bam) are accepted.
@@ -108,4 +108,13 @@ A flexible pipeline for short read alignment to a reference with extensive QC re
     nextflow run trev-f/SRAlign -profile docker --input <input.csv> --genome <valid genome key>
     ```
 
-Additional documentation can be found in [docs](docs/) and [usage](docs/usage.md)
+## Additional documentation
+
+Additional documentation can be found in [docs](docs/).
+
+Quick links:
+
+- [Information about SRAlign](docs/SRAlign_info.md)
+- [Detailed usage](docs/usage.md)
+- [Inputs and outputs](docs/input_output.md)
+- [Pipeline configuration](docs/configuration.md)
