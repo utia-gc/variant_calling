@@ -83,15 +83,25 @@ A flexible pipeline for short read alignment to a reference with extensive QC re
 
 ### Run `SRAlign`
 
-1. Show all configurable options for `SRAlign` by showing a help message:
+1. Prepare the [input design csv file](docs/input_design.md).
 
-    - The most important information here is likely the list of available reference genomes.
+    - Input design file must be in csv format with no whitespace.
+    - Either reads (fastq or fastq.gz) or alignments (bam) are accepted.
+      - If reads are supplied, can be paired or unpaired.
+    - Required columns:
+      - reads: lib_ID, sample_name, replicate, reads1, reads2 (optional)
+      - alignments: lib_ID, sample_name, replicate, bam, tool_IDs
+    - See [sample inputs](https://github.com/trev-f/SRAlign-test/tree/main/inputs) in the [`SRAlign-test` repository](https://github.com/trev-f/SRAlign-test).
+
+2. Show all configurable options for `SRAlign` by showing a help message:
+
+    - The most important information here is probably the list of available reference genomes.
 
    ```bash
     nextflow run trev-f/SRAlign --help
    ```
 
-2. Analyze your data with `SRAlign`:
+3. Analyze your data with `SRAlign`:
 
     ```bash
     nextflow run trev-f/SRAlign -profile docker --input <input.csv> --genome <valid genome key>
