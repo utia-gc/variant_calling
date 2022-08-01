@@ -1,9 +1,10 @@
 # SRAlign
+
 A flexible pipeline for short read alignment to a reference with extensive QC reporting.
 
 ## Introduction
 
-**SRAlign** is a [Nextflow](https://www.nextflow.io/) pipeline for aligning short reads to a reference. 
+**SRAlign** is a [Nextflow](https://www.nextflow.io/) pipeline for aligning short reads to a reference.
 
 **SRAlign** is designed to be highly flexible by allowing for the easy addition of tools to the pipeline as well as serving as a starting point for genomic analyses that rely on alignment of short reads to a reference.
 
@@ -38,15 +39,20 @@ A flexible pipeline for short read alignment to a reference with extensive QC re
 1. [Install Nextflow](https://www.nextflow.io/docs/latest/getstarted.html)
 2. [Install Docker](https://docs.docker.com/engine/install/)
 3. Download **SRAlign**:
-    ```
+
+    ```bash
     git clone https://github.com/trev-f/SRAlign.git
     ```
+
 4. Run **SRAlign** in test mode:
-    ```
+
+    ```bash
     nextflow run SRAlign -profile test 
     ```
+
 5. Run your analysis:
-    ```
+
+    ```bash
     nextflow run SRAlign -profile docker --input <input.csv> --genome <valid genome key>
     ```
 
