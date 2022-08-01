@@ -93,8 +93,8 @@ class SRAlignWorkflow {
         this.params          = params
         this.workflow        = workflow
         this.paramSpecs      = (new JsonSlurper()).parse(new File("${workflow.projectDir}/parameter_specifications.json"))
-        this.outBasePrefix   = params.input.take(params.input.lastIndexOf('.')).split('/')[-1]
-        this.outUniquePrefix = constructOutBasePrefix(params, workflow)
+        this.outBasePrefix   = params.input ? params.input.take(params.input.lastIndexOf('.')).split('/')[-1] : ''
+        this.outUniquePrefix = params.input ? constructOutBasePrefix(params, workflow) : ''
 
         // add options to paramSpecs
         LinkedHashMap paramSpecs = addValidOptions(params, paramSpecs)
@@ -263,7 +263,7 @@ class SRAlignWorkflow {
         assert params.input ,                       // check input is specified
             "Input design file not specified. An input design file is required.\n"
 
-        assert new File(params.input).exists() ,    // check input file exists
+        assert new File(params.input).exists() || new URL(params.input).openConnection().getResponseCode() == 200 ,    // check input file exists or that connecting to the URL succeeds
             "'${params.input}' does not exist. An existing input design file is required.\n"
 
         // check that MultiQC config exists

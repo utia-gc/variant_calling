@@ -123,7 +123,7 @@
     "libraryQC" : {
         "title" : "Library QC parameters",
         "parameters" : {
-            "skipSamStatsQC" : {
+            "skipAlignmentStatsQC" : {
                 "default"     : false,
                 "description" : "Skip QC report for alignment.",
                 "skip"        : true
@@ -140,6 +140,23 @@
             }
         }
     },
+    "resources" : {
+        "title" : "Resources default parameters",
+        "parameters" : {
+            "maxCpus"       : {
+                "default"     : 16,
+                "description" : "Maximum number of CPUs for a task."
+            },
+            "maxMemory"     : {
+                "default"     : "24.GB",
+                "description" : "Maximum memory for a task."
+            },
+            "maxTime"       : {
+                "default"     : "24.h",
+                "description" : "Maximum time for a task."
+            }
+        }
+    },
     "miscellaneous" : {
         "title" : "Miscellaneous parameters",
         "parameters" : {
@@ -148,7 +165,7 @@
                 "description" : "Seed integer for all pseudo-random processes. Specific seed value should not be important but ensures reproducibility."
             },
             "help"          : {
-                "default"     : false,
+                "default"     : null,
                 "description" : "Display this help message and exit the program."
             }
         }

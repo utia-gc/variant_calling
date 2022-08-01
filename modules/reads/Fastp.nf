@@ -10,7 +10,7 @@ process Fastp {
         tuple val(metadata), file(reads), val(toolIDs)
 
     output:
-        tuple val(metadata), path('*.fastq.gz'), val(toolIDs), emit: trimReads
+        tuple val(metadata), path('*.fastq.gz'), val(toolIDs), emit: readsTrimmed
 
     script:
         // update toolID and set suffix
