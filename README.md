@@ -131,3 +131,4 @@ Quick links:
 - [Detailed usage](docs/usage.md)
 - [Inputs and outputs](docs/input_output.md)
 - [Pipeline configuration](docs/configuration.md)
+- [Reference genomes](docs/reference_genomes.md)
