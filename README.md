@@ -98,9 +98,9 @@ A flexible pipeline for short read alignment to a reference with extensive QC re
 
     - The most important information here is probably the list of available reference genomes.
 
-   ```bash
+    ```bash
     nextflow run trev-f/SRAlign --help
-   ```
+    ```
 
 3. Analyze your data with `SRAlign`:
 
@@ -119,7 +119,7 @@ A flexible pipeline for short read alignment to a reference with extensive QC re
   - I recommend specifying required parameters (i.e. `--input` and `--genome`) and up to a few others at the command line in this manner. Specifying more than this at the command line gets unwieldy.
 - A custom config or parameters file is a good option for cases where you want to supply more parameters than can comfortably be done at the command line or you want to use the same custom parameters in multiple runs.
   - For a config file, use the [params scope](https://www.nextflow.io/docs/latest/config.html#scope-params)
-  - For a JSON/UAML parameters file, see the [Nextflow CLI docs](https://www.nextflow.io/docs/latest/cli.html?highlight=params%20file#run).
+  - For a JSON/YAML parameters file, see the [Nextflow CLI docs](https://www.nextflow.io/docs/latest/cli.html?highlight=params%20file#run).
 
 ## Additional documentation
 
