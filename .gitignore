@@ -131,6 +131,7 @@ dmypy.json
 .nextflow/*
 .nextflow.log*
 .nextflow.pid*
+
 # test nextflow files
 test/.nextflow/*
 test/.nextflow.log*
