@@ -1,11 +1,8 @@
-#!/usr/bin/env nextflow
-
 /*
 ---------------------------------------------------------------------
-    trev-f/SRAlign
+    trev-f/utia_rnaseq
 ---------------------------------------------------------------------
-SRAlign - A flexible pipeline for short read alignment to a reference.
-https://github.com/trev-f/SRAlign
+https://github.com/trev-f/utia_rnaseq
 */
 
 nextflow.enable.dsl=2
@@ -16,8 +13,8 @@ nextflow.enable.dsl=2
 ---------------------------------------------------------------------
 */
 
-include { SRAlign } from './workflows/SRAlign.nf'
+include { UTIA_RNASEQ } from './workflows/utia_rnaseq.nf'
 
 workflow {
-    SRAlign()
+    UTIA_RNASEQ()
 }

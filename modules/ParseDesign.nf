@@ -1,9 +1,10 @@
 process ParseDesign {
-    tag "${design}"
+    label 'fastqc'
+    label 'lil_mem'
 
-    container 'quay.io/biocontainers/python-bioext:0.20.4--py39h7f6d023_1'
+    container 'quay.io/biocontainers/pandas:1.5.2'
 
-    publishDir "${params.baseDirData}/design", mode: 'copy'
+    publishDir "${publish_dir}/design", mode: 'copy'
 
     input:
         path design
@@ -16,7 +17,7 @@ process ParseDesign {
         parse_design.py \
             ${design}
         """
-    
+        
     stub:
         """
         touch stub_design.csv
