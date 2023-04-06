@@ -2,6 +2,8 @@ process STAR_INDEX {
   label 'star'
   label 'sup_mem'
 
+  container = "quay.io/biocontainers/star:2.7.10b--h9ee0642_0"
+
   //publishDir(path: "${publish_dir}/star", mode: "symlink")
 
   input:
@@ -31,11 +33,11 @@ process STAR_MAP {
   //publishDir(path: "${publish_dir}/star", mode: "symlink")
 
   input:
-  tuple val(sample_id), path(reads)
-  path star_idx
+      tuple val(metadata), path(reads)
+      path star_idx
 
   output:
-  tuple val(sample_id), path("*.bam") , emit : star_bam
+      tuple val(metadata), path("*.bam") , emit : star_bam
 
   script:
   """
@@ -43,7 +45,7 @@ process STAR_MAP {
   --genomeDir ${star_idx} \
   --readFilesIn ${reads[0]} ${reads[1]} \
   --runThreadN ${task.cpus} \
-  --outFileNamePrefix ${sample_id}_ \
+  --outFileNamePrefix ${metadata.sampleName}_ \
   --readFilesCommand zcat \
   --limitBAMsortRAM ${task.memory.bytes} \
   --outSAMtype BAM SortedByCoordinate

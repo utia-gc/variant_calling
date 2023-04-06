@@ -2,13 +2,19 @@ process MULTIQC {
   label 'multiqc'
   label 'lil_mem'
 
-  publishDir(path: "${publish_dir}/raw_qc", mode: "symlink")
+  container = "quay.io/biocontainers/multiqc:1.14--pyhdfd78af_0"  
+
+  publishDir(path: "${publish_dir}/qc/${outdir_name}", mode: "copy")
 
   input:
-  path('*')
+      path('*')
+      val outdir_name
+
+  output:
+        path("*html")
 
   script:
-  """
-  multiqc .
-  """
+      """
+      multiqc .
+      """
 }

@@ -20,7 +20,10 @@ Import modules
 */
 
 include { ParseDesignSWF as ParseDesign } from "${projectDir}/subworkflows/ParseDesignSWF.nf"
-
+include { FASTQC                        } from "${projectDir}/modules/fastqc.nf"
+include { MULTIQC                       } from "${projectDir}/modules/multiqc.nf"
+include { CUTADAPT_ADAPTERS             } from "${projectDir}/modules/cutadapt.nf"
+include { STAR_INDEX ; STAR_MAP         } from "${projectDir}/modules/star.nf"
 
 workflow UTIA_RNASEQ {
     /*
@@ -35,34 +38,42 @@ workflow UTIA_RNASEQ {
     // Subworkflow: Parse design file
     ParseDesign(ch_input)
     ch_readsRaw = ParseDesign.out.reads
-    ch_readsRaw.view()
 
 
     /*
     ---------------------------------------------------------------------
         Reads QC
     ---------------------------------------------------------------------
+    */
 
-    if (!params.skipReadsQC) {
-        // perform QC
-    } else {
-        // don't perform QC
+    if (!params.skipRawFastQC) {
+        FASTQC(ch_readsRaw, "raw")
+        MULTIQC(FASTQC.out.fastq_ch.collect(), "raw")
     }
 
-
+    /*
     ---------------------------------------------------------------------
         Trim raw reads
     ---------------------------------------------------------------------
+    */
 
     if (!params.skipTrimReads) {
-        // perform trimming and adapter removal
+        // CUTADAPT_ADAPTERS(ch_readsRaw)
+        // ch_reads_pre_align = CUTADAPT_ADAPTERS.out.reads
     } else {
-        // don't perform trimming and adapter removal
+        ch_reads_pre_align = ch_readsRaw
     }
 
 
+    /*
     ---------------------------------------------------------------------
         Align reads to genome
     ---------------------------------------------------------------------
     */
+
+    if (params.alignmentTool == "star") {
+        STAR_INDEX(params.ref, params.annot)
+        //STAR_MAP(ch_reads_pre_align, STAR_INDEX.out.star_idx)
+    }
+
 }
