@@ -1,20 +1,28 @@
 process FASTQC {
-  label 'fastqc'
-  label 'lil_mem'
+    label 'fastqc'
+    label 'lil_mem'
 
-  container = "quay.io/biocontainers/fastqc:0.12.1--hdfd78af_0"
+    container = "quay.io/biocontainers/fastqc:0.12.1--hdfd78af_0"
 
-  publishDir(path: "${publish_dir}/raw_qc", mode: "symlink")
+    publishDir(path: "${publish_dir}/qc/${outdir_name}", mode: "copy")
 
-  input:
-  tuple val(sample_id), path(reads)
+    input:
+        tuple val(metadata), path(reads)
+        val outdir_name
 
-  output:
-  path("fastqc_${sample_id}_logs"), emit: fastq_ch
+    output:
+        path("fastqc_${metadata.sampleName}_logs"), emit: fastq_ch
 
-  script:
-  """
-  mkdir fastqc_${sample_id}_logs
-  fastqc -o fastqc_${sample_id}_logs -q ${reads}
-  """
+    script:
+        if (metadata.readType == 'single') {
+            """
+            mkdir fastqc_${metadata.sampleName}_logs
+            fastqc -o fastqc_${metadata.sampleName}_logs -q ${reads}
+            """
+        } else {
+            """
+            mkdir fastqc_${metadata.sampleName}_logs
+            fastqc -o fastqc_${metadata.sampleName}_logs -q ${reads}
+            """
+        }
 }
