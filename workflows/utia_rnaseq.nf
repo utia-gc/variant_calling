@@ -24,6 +24,7 @@ include { FASTQC                        } from "${projectDir}/modules/fastqc.nf"
 include { MULTIQC                       } from "${projectDir}/modules/multiqc.nf"
 include { CUTADAPT_ADAPTERS             } from "${projectDir}/modules/cutadapt.nf"
 include { STAR_INDEX ; STAR_MAP         } from "${projectDir}/modules/star.nf"
+include { SAMTOOLS_SORT                 } from "${projectDir}/modules/samtools.nf"
 
 workflow UTIA_RNASEQ {
     /*
@@ -73,7 +74,10 @@ workflow UTIA_RNASEQ {
 
     if (params.alignmentTool == "star") {
         STAR_INDEX(params.ref, params.annot)
-        //STAR_MAP(ch_reads_pre_align, STAR_INDEX.out.star_idx)
+        STAR_MAP(ch_reads_pre_align, STAR_INDEX.out.star_idx)
     }
+
+    SAMTOOLS_SORT(STAR_MAP.out.star_bam)
+    SAMTOOLS_SORT.out.sort_star_bam.view()
 
 }
