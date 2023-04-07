@@ -14,15 +14,8 @@ process FASTQC {
         path("fastqc_${metadata.sampleName}_logs"), emit: fastq_ch
 
     script:
-        if (metadata.readType == 'single') {
-            """
-            mkdir fastqc_${metadata.sampleName}_logs
-            fastqc -o fastqc_${metadata.sampleName}_logs -q ${reads}
-            """
-        } else {
-            """
-            mkdir fastqc_${metadata.sampleName}_logs
-            fastqc -o fastqc_${metadata.sampleName}_logs -q ${reads}
-            """
-        }
+        """
+        mkdir fastqc_${metadata.sampleName}_logs
+        fastqc -o fastqc_${metadata.sampleName}_logs -q ${reads}
+        """
 }
