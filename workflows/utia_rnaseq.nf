@@ -59,8 +59,17 @@ workflow UTIA_RNASEQ {
     */
 
     if (!params.skipTrimReads) {
-        // CUTADAPT_ADAPTERS(ch_readsRaw)
-        // ch_reads_pre_align = CUTADAPT_ADAPTERS.out.reads
+        CUTADAPT_ADAPTERS(ch_readsRaw,
+                          params.r1_adapter,
+                          params.r2_adapter,
+                          params.minimum_length)
+        ch_reads_pre_align = CUTADAPT_ADAPTERS.out.reads
+
+        if (!params.skipTrimFastQC) {
+            FASTQC(ch_reads_pre_align, "trimmed")
+            MULTIQC(FASTQC.out.fastq_ch.collect(), "trimmed")
+        }
+
     } else {
         ch_reads_pre_align = ch_readsRaw
     }

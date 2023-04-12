@@ -11,7 +11,7 @@ process MULTIQC {
       val outdir_name
 
   output:
-        path("*html")
+      path("*html")
 
   script:
       """
