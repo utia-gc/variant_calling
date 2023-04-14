@@ -1,4 +1,4 @@
-process ParseDesign {
+process PARSE_DESIGN {
     label 'fastqc'
     label 'lil_mem'
 

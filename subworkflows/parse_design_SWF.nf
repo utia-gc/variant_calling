@@ -1,11 +1,11 @@
-include { ParseDesign   } from "${projectDir}/modules/ParseDesign.nf"
+include { PARSE_DESIGN } from "${projectDir}/modules/parse_design.nf"
 
-workflow ParseDesignSWF {
+workflow PARSE_DESIGN_SWF {
     take:
         design
 
     main:
-        ParseDesign(
+        PARSE_DESIGN(
             design
         )
             .csv

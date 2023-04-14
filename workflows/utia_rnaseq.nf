@@ -5,26 +5,19 @@
 */
 
 /*
-This object takes care of many necessary steps upon construction:
-    - Logs a header for the pipeline that prints pipeline name and logo
-    - Prints a help message if help parameter is specified
-    - Checks parameters
-*/ 
-//def srawf = new SRAlignWorkflow(log, params, workflow)
-
-
-/*
 ---------------------------------------------------------------------
 Import modules
 ---------------------------------------------------------------------
 */
 
-include { ParseDesignSWF as ParseDesign } from "${projectDir}/subworkflows/ParseDesignSWF.nf"
-include { FASTQC                        } from "${projectDir}/modules/fastqc.nf"
-include { MULTIQC                       } from "${projectDir}/modules/multiqc.nf"
-include { CUTADAPT_ADAPTERS             } from "${projectDir}/modules/cutadapt.nf"
-include { STAR_INDEX ; STAR_MAP         } from "${projectDir}/modules/star.nf"
-include { SAMTOOLS_SORT                 } from "${projectDir}/modules/samtools.nf"
+include { PARSE_DESIGN_SWF                } from "${projectDir}/subworkflows/parse_design_SWF.nf"
+include { CUTADAPT_ADAPTERS               } from "${projectDir}/modules/cutadapt.nf"
+include { FASTQC as FQRAW                 } from "${projectDir}/modules/fastqc.nf"
+include { FASTQC as FQTRIM                } from "${projectDir}/modules/fastqc.nf"
+include { MULTIQC as MQRAW                } from "${projectDir}/modules/multiqc.nf"
+include { MULTIQC as MQTRIM               } from "${projectDir}/modules/multiqc.nf"
+include { STAR_INDEX ; STAR_MAP           } from "${projectDir}/modules/star.nf"
+include { SAMTOOLS_SORT                   } from "${projectDir}/modules/samtools.nf"
 
 workflow UTIA_RNASEQ {
     /*
@@ -37,8 +30,8 @@ workflow UTIA_RNASEQ {
     ch_input = file(params.input)
 
     // Subworkflow: Parse design file
-    ParseDesign(ch_input)
-    ch_readsRaw = ParseDesign.out.reads
+    PARSE_DESIGN_SWF(ch_input)
+    ch_reads_raw = PARSE_DESIGN_SWF.out.reads
 
 
     /*
@@ -48,8 +41,8 @@ workflow UTIA_RNASEQ {
     */
 
     if (!params.skipRawFastQC) {
-        FASTQC(ch_readsRaw, "raw")
-        MULTIQC(FASTQC.out.fastq_ch.collect(), "raw")
+        FQRAW(ch_reads_raw, "raw")
+        MQRAW(FQRAW.out.fastq_ch.collect(), "raw")
     }
 
     /*
@@ -59,19 +52,21 @@ workflow UTIA_RNASEQ {
     */
 
     if (!params.skipTrimReads) {
-        CUTADAPT_ADAPTERS(ch_readsRaw,
+
+
+        CUTADAPT_ADAPTERS(ch_reads_raw,
                           params.r1_adapter,
                           params.r2_adapter,
                           params.minimum_length)
         ch_reads_pre_align = CUTADAPT_ADAPTERS.out.reads
 
         if (!params.skipTrimFastQC) {
-            FASTQC(ch_reads_pre_align, "trimmed")
-            MULTIQC(FASTQC.out.fastq_ch.collect(), "trimmed")
+            FQTRIM(ch_reads_pre_align, "trimmed")
+            MQTRIM(FQTRIM.out.fastq_ch.collect(), "trimmed")
         }
 
     } else {
-        ch_reads_pre_align = ch_readsRaw
+        ch_reads_pre_align = ch_reads_raw
     }
 
 
