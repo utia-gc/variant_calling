@@ -5,23 +5,20 @@ process HTSEQ_COUNT {
   //publishDir(path: "${publish_dir}/htseq", mode: "symlink")
 
   input:
-  tuple val(sample_id), path(bam)
+  tuple val(metadata), path(bam)
   path annotation
 
   output:
-  path "*.counts.txt" , emit : htseq_counts
+  tuple val(metadata), path("*.counts.txt"),    emit: htseq_counts
 
   script:
   """
   htseq-count \
-      --format=bam \
       --order=pos \
       --stranded=no \
-      --type=gene \
-      --idattr=ID \
       ${bam} \
       ${annotation} \
-      > ${sample_id}.counts.txt \
-      2> ${sample_id}.out
+      > ${metadata.sampleName}.counts.txt \
+      2> ${metadata.sampleName}.out
   """
 }

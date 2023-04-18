@@ -1,0 +1,25 @@
+{
+    "HTSEQ_COUNT produces output file of counts with default params.": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000"
+                        },
+                        "SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.counts.txt:md5,9166eeb256b0be30ac2c4d2c3d5085fd"
+                    ]
+                ],
+                "htseq_counts": [
+                    [
+                        {
+                            "sampleName": "SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000"
+                        },
+                        "SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.counts.txt:md5,9166eeb256b0be30ac2c4d2c3d5085fd"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-04-18T21:20:18+0000"
+    }
+}
