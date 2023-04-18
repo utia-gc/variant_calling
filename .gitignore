@@ -138,3 +138,5 @@ test/.nextflow.log*
 test/work/*
 test/results/*
 
+# nf-test
+.nf-test
