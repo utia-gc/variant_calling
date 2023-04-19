@@ -1,0 +1,32 @@
+nextflow_process {
+
+    name "Test Process GUNZIP"
+    script "modules/file_utils/gunzip.nf"
+    process "GUNZIP"
+
+    test("GUNZIP successfully unzips GZIP-compressed fasta file.") {
+
+        when {
+            params {}
+            process {
+                """
+                input[0] = file("https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/genome_I.fa.gz")
+                """
+            }
+        }
+
+        then {
+            assert process.success
+
+            with(process.out.gunzip) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/genome_I.fa/
+                assert path(get(0)).md5 == "e050100d0a9a7d06a8accf8424ad0d98"
+            }
+
+            assert snapshot(process.out).match()
+        }
+
+    }
+
+}
