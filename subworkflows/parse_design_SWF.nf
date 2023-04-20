@@ -1,44 +1,33 @@
-include { PARSE_DESIGN } from "../modules/parse_design.nf"
-
 workflow PARSE_DESIGN_SWF {
     take:
-        design
+        samplesheet
 
     main:
-        PARSE_DESIGN(
-            design
-        )
-            .csv
-            .splitCsv(header:true, sep:',')
-            .map { createDesignChannel(it) }
-            .branch {
-                reads: it[1].any { it =~ /(fastq|fq)/ }   // add channels with fastq files (either fastq or fq) to reads channel
-            }
-            .set { design }
+        Channel
+            .fromPath( samplesheet, checkIfExists: true )
+            .splitCsv( header:true, sep:',' )
+            .map { createSampleReadsChannel(it) }
+            .set { ch_samples }
 
     emit:
-        reads  = design.reads
+        samples = ch_samples
 }
 
 
 // create a list of data from the csv
-def createDesignChannel(LinkedHashMap row) {
-    // reads
-    if (row.fq1) {
-        // store metadata in a Map
-        def metadata = [:]
-        metadata.libID      = row.lib_ID
-        metadata.sampleName = row.sample_rep
-        metadata.readType   = row.fq2 ? 'paired' : 'single'
+def createSampleReadsChannel(LinkedHashMap row) {
+    // store metadata in a Map
+    def metadata = [:]
+    metadata.sampleName = row.sampleName
+    metadata.readType   = row.reads2 ? "paired" : "single"
 
-        // store reads in a list
-        def reads = []
-        if (metadata.readType == 'single') {
-            reads = [file(row.fq1)]
-        } else {
-            reads = [file(row.fq1), file(row.fq2)]
-        }
-
-        return [metadata, reads]
+    // store reads in a list
+    def reads = []
+    if (metadata.readType == "single") {
+        reads = [file(row.reads1)]
+    } else {
+        reads = [file(row.reads1), file(row.reads2)]
     }
+
+    return [metadata, reads]
 }
