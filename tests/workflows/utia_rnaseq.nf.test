@@ -30,7 +30,7 @@ nextflow_workflow {
 
         then {
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 25
+            assert workflow.trace.succeeded().size() == 23
         }
 
     }
