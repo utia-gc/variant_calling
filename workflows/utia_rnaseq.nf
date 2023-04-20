@@ -32,7 +32,7 @@ workflow UTIA_RNASEQ {
 
     // Subworkflow: Parse design file
     PARSE_DESIGN_SWF(ch_input)
-    ch_reads_raw = PARSE_DESIGN_SWF.out.reads
+    ch_reads_raw = PARSE_DESIGN_SWF.out.samples
 
 
     /*
