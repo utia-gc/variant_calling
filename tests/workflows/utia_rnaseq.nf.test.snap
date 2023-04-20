@@ -1,0 +1,26 @@
+{
+    "successfully runs with uncompressed reference and annotation files.": {
+        "content": [
+            {
+                
+            }
+        ],
+        "timestamp": "2023-04-20T18:21:54+0000"
+    },
+    "successfully runs with default params of nf_test profile.": {
+        "content": [
+            {
+                
+            }
+        ],
+        "timestamp": "2023-04-20T18:21:54+0000"
+    },
+    "UTIA_RNASEQ succeeds with default params.": {
+        "content": [
+            {
+                
+            }
+        ],
+        "timestamp": "2023-04-20T18:21:54+0000"
+    }
+}

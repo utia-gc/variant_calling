@@ -10,14 +10,15 @@ Import modules
 ---------------------------------------------------------------------
 */
 
-include { PARSE_DESIGN_SWF                } from "${projectDir}/subworkflows/parse_design_SWF.nf"
-include { CUTADAPT_ADAPTERS               } from "${projectDir}/modules/cutadapt.nf"
-include { FASTQC as FQRAW                 } from "${projectDir}/modules/fastqc.nf"
-include { FASTQC as FQTRIM                } from "${projectDir}/modules/fastqc.nf"
-include { MULTIQC as MQRAW                } from "${projectDir}/modules/multiqc.nf"
-include { MULTIQC as MQTRIM               } from "${projectDir}/modules/multiqc.nf"
-include { STAR_INDEX ; STAR_MAP           } from "${projectDir}/modules/star.nf"
-include { SAMTOOLS_SORT                   } from "${projectDir}/modules/samtools.nf"
+include { PARSE_DESIGN_SWF                } from "../subworkflows/parse_design_SWF.nf"
+include { PREPARE_REFS                    } from "../subworkflows/prepare_refs.nf"
+include { CUTADAPT_ADAPTERS               } from "../modules/cutadapt.nf"
+include { FASTQC as FQRAW                 } from "../modules/fastqc.nf"
+include { FASTQC as FQTRIM                } from "../modules/fastqc.nf"
+include { MULTIQC as MQRAW                } from "../modules/multiqc.nf"
+include { MULTIQC as MQTRIM               } from "../modules/multiqc.nf"
+include { STAR_INDEX ; STAR_MAP           } from "../modules/star.nf"
+include { SAMTOOLS_SORT                   } from "../modules/samtools.nf"
 
 workflow UTIA_RNASEQ {
     /*
@@ -32,6 +33,19 @@ workflow UTIA_RNASEQ {
     // Subworkflow: Parse design file
     PARSE_DESIGN_SWF(ch_input)
     ch_reads_raw = PARSE_DESIGN_SWF.out.reads
+
+
+    /*
+    ---------------------------------------------------------------------
+        Prepare reference files
+    ---------------------------------------------------------------------
+    */
+    PREPARE_REFS(
+        params.ref,
+        params.annot
+    )
+    ch_ref   = PREPARE_REFS.out.fasta
+    ch_annot = PREPARE_REFS.out.annotations
 
 
     /*
@@ -77,7 +91,7 @@ workflow UTIA_RNASEQ {
     */
 
     if (params.alignmentTool == "star") {
-        STAR_INDEX(params.ref, params.annot)
+        STAR_INDEX(ch_ref, ch_annot)
         STAR_MAP(ch_reads_pre_align, STAR_INDEX.out.star_idx)
     }
 

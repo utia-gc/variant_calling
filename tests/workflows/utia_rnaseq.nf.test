@@ -1,0 +1,38 @@
+nextflow_workflow {
+
+    name "Test Workflow UTIA_RNASEQ"
+    script "workflows/utia_rnaseq.nf"
+    workflow "UTIA_RNASEQ"
+
+    test("successfully runs with default params of nf_test profile.") {
+
+        when {
+            params {}
+            workflow {}
+        }
+
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().size() == 26
+        }
+
+    }
+
+    test("successfully runs with uncompressed reference and annotation files.") {
+
+        when {
+            params {
+                ref   = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/genome_I.fa"
+                annot = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/annotations_I.gtf"
+            }
+            workflow {}
+        }
+
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().size() == 26
+        }
+
+    }
+
+}

@@ -1,4 +1,4 @@
-include { PARSE_DESIGN } from "${projectDir}/modules/parse_design.nf"
+include { PARSE_DESIGN } from "../modules/parse_design.nf"
 
 workflow PARSE_DESIGN_SWF {
     take:
