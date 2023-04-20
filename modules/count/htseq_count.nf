@@ -12,6 +12,8 @@ process HTSEQ_COUNT {
   tuple val(metadata), path("*.counts.txt"),    emit: htseq_counts
 
   script:
+  // TODO: Find some way to incorporate strandedness
+  // TODO: Add customizable options
   """
   htseq-count \
       --order=pos \

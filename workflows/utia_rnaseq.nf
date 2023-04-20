@@ -84,4 +84,7 @@ workflow UTIA_RNASEQ {
     SAMTOOLS_SORT(STAR_MAP.out.star_bam)
     SAMTOOLS_SORT.out.sort_star_bam.view()
 
+
+    // TODO: Add htseq-count to workflow
+
 }
