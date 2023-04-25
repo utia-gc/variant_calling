@@ -2,8 +2,6 @@ process CUTADAPT_ADAPTERS {
     label 'cutadapt'
     label 'lil_mem'
 
-    container = "quay.io/biocontainers/cutadapt:4.3--py310h1425a21_0"
-
     publishDir(path: "${publish_dir}/cutadapt", mode: "symlink")
 
     input:

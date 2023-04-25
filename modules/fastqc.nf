@@ -2,8 +2,6 @@ process FASTQC {
     label 'fastqc'
     label 'lil_mem'
 
-    container = "quay.io/biocontainers/fastqc:0.12.1--hdfd78af_0"
-
     publishDir(path: "${publish_dir}/qc/${outdir_name}", mode: "copy")
 
     input:
