@@ -1,8 +1,8 @@
 nextflow_workflow {
 
-    name "Test Workflow UTIA_RNASEQ"
-    script "workflows/utia_rnaseq.nf"
-    workflow "UTIA_RNASEQ"
+    name "Test Workflow NGS"
+    script "workflows/NGS.nf"
+    workflow "NGS"
 
     test("successfully runs with default params of nf_test profile.") {
 

@@ -1,8 +1,8 @@
 /*
 ---------------------------------------------------------------------
-    trev-f/utia_rnaseq
+    utia-gc/ngs
 ---------------------------------------------------------------------
-https://github.com/trev-f/utia_rnaseq
+https://github.com/utia-gc/ngs
 */
 
 nextflow.enable.dsl=2
@@ -13,8 +13,8 @@ nextflow.enable.dsl=2
 ---------------------------------------------------------------------
 */
 
-include { UTIA_RNASEQ } from './workflows/utia_rnaseq.nf'
+include { NGS } from './workflows/ngs.nf'
 
 workflow {
-    UTIA_RNASEQ()
+    NGS()
 }

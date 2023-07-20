@@ -1,6 +1,6 @@
 /*
 =====================================================================
-    utia_rnaseq WORKFLOW
+    NGS WORKFLOW
 =====================================================================
 */
 
@@ -19,7 +19,7 @@ include { MULTIQC as MQRAW                } from "../modules/multiqc.nf"
 include { MULTIQC as MQTRIM               } from "../modules/multiqc.nf"
 include { SAMTOOLS_SORT                   } from "../modules/samtools.nf"
 
-workflow UTIA_RNASEQ {
+workflow NGS {
     /*
     ---------------------------------------------------------------------
         Read design file, parse sample names and identifiers, and stage reads files
