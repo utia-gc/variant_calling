@@ -17,7 +17,6 @@ include { FASTQC as FQRAW                 } from "../modules/fastqc.nf"
 include { FASTQC as FQTRIM                } from "../modules/fastqc.nf"
 include { MULTIQC as MQRAW                } from "../modules/multiqc.nf"
 include { MULTIQC as MQTRIM               } from "../modules/multiqc.nf"
-include { STAR_INDEX ; STAR_MAP           } from "../modules/star.nf"
 include { SAMTOOLS_SORT                   } from "../modules/samtools.nf"
 
 workflow UTIA_RNASEQ {
@@ -89,16 +88,5 @@ workflow UTIA_RNASEQ {
         Align reads to genome
     ---------------------------------------------------------------------
     */
-
-    if (params.alignmentTool == "star") {
-        STAR_INDEX(ch_ref, ch_annot)
-        STAR_MAP(ch_reads_pre_align, STAR_INDEX.out.star_idx)
-    }
-
-    SAMTOOLS_SORT(STAR_MAP.out.star_bam)
-    SAMTOOLS_SORT.out.sort_star_bam.view()
-
-
-    // TODO: Add htseq-count to workflow
 
 }
