@@ -17,7 +17,6 @@ include { FASTQC as FQRAW                 } from "../modules/fastqc.nf"
 include { FASTQC as FQTRIM                } from "../modules/fastqc.nf"
 include { MULTIQC as MQRAW                } from "../modules/multiqc.nf"
 include { MULTIQC as MQTRIM               } from "../modules/multiqc.nf"
-include { SAMTOOLS_SORT                   } from "../modules/samtools.nf"
 
 workflow NGS {
     /*
