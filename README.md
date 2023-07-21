@@ -1,8 +1,10 @@
-# utia_rnaseq
+# NGS
 
 ## Introduction
 
-**utia_rnaseq** is a [Nextflow](https://www.nextflow.io/) pipeline for <>
+`ngs` is a [Nextflow](https://www.nextflow.io/) pipeline for base NGS analysis.
+`ngs` is primarily intended to be used as a starting point for building more specific NGS analysis pipelines, e.g. for RNA-seq, WGS genotyping, snATAC-seq, etc.
+While `ngs` can be run on any platform supported by Nextflow, it is developed for use in HPC environments and specifically [ISAAC Next Generation] at the University of Tennessee, Knoxville.
 
 ## Pipeline overview
 
