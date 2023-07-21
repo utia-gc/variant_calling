@@ -28,32 +28,31 @@ While `ngs` can be run on any platform supported by Nextflow, it is developed fo
 
 3. [Singularity](https://sylabs.io)
 
+### Get or update `ngs`
 
-### Get or update `utia_rnaseq`
-
-1. Download or update `utia_rnaseq`:
+1. Download or update `ngs`:
 
     ```bash
-    nextflow pull trev-f/utia_rnaseq
+    nextflow pull utia-gc/ngs
     ```
 
 2. Show project info:
 
     ```bash
-    nextflow info trev-f/utia_rnaseq
+    nextflow info utia-gc/ngs
     ```
 
-### Test `utia_rnaseq`
+### Test `ngs`
 
-1. Check that `utia_rnaseq` works on your system:
+1. Check that `ngs` works on your system:
 
-      - `-profile test` uses preconfigured test parameters to run `utia_rnaseq` in full on a small test dataset stored in a remote GitHub repository.
-      - Because these test files are stored in a remote repository, internet access is required to run the test.
-      - For more information, see the `profiles` section of the [nextflow config file](nextflow.config) and [trev-f/utia_rnaseq-test](https://github.com/trev-f/utia_rnaseq-test).
+   - `-profile nf_test` uses preconfigured test parameters to run `ngs` in full on a small test dataset stored in a remote GitHub repository.
+   - Because these test files are stored in a remote repository, internet access is required to run the test.
+   - For more information, see the `profiles` section of the [nextflow config file](nextflow.config).
 
-    ```bash
-    nextflow run utia_rnaseq -profile test 
-    ```
+   ```bash
+   nextflow run utia-gc/ngs -profile nf_test 
+   ```
 
 ### Run `utia_rnaseq`
 
