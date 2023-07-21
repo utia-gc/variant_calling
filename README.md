@@ -8,7 +8,11 @@ While `ngs` can be run on any platform supported by Nextflow, it is developed fo
 
 ## Pipeline overview
 
-1. QC
+1. Trim/filter reads
+2. Reads QC
+3. Map reads
+4. Process alignments
+5. Full workflow QC
 
 ## Quick start
 
