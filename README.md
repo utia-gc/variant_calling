@@ -54,16 +54,6 @@ While `ngs` can be run on any platform supported by Nextflow, it is developed fo
    nextflow run utia-gc/ngs -profile nf_test 
    ```
 
-### Run `utia_rnaseq`
+### Run `ngs`
 
-1. Prepare the [input design csv file](docs/input_output.md).
-
-    - Input design file must be in csv format with no whitespace.
-    - Either reads (fastq or fastq.gz) or alignments (bam) are accepted.
-      - If reads are supplied, can be paired or unpaired.
-    - Required columns:
-      - reads: lib_ID, sample_name, replicate, reads1, reads2 (optional)
-      - alignments: lib_ID, sample_name, replicate, bam, tool_IDs
-    - See [sample inputs](https://github.com/trev-f/utia_rnaseq-test/tree/main/inputs) in the [`utia_rnaseq-test` repository](https://github.com/trev-f/utia_rnaseq-test).
-    - A template project repository can be downloaded from the [`utia_rnaseq-template` repository](https://github.com/trev-f/utia_rnaseq-template).
-
+TODO
