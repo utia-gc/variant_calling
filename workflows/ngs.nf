@@ -53,8 +53,8 @@ workflow NGS {
     */
 
     if (!params.skipRawFastQC) {
-        FQRAW(ch_reads_raw, "raw")
-        MQRAW(FQRAW.out.fastq_ch.collect(), "raw")
+        FQRAW(ch_reads_raw)
+        MQRAW(FQRAW.out.zip.collect(), "raw")
     }
 
     /*
@@ -73,8 +73,8 @@ workflow NGS {
         ch_reads_pre_align = CUTADAPT_ADAPTERS.out.reads
 
         if (!params.skipTrimFastQC) {
-            FQTRIM(ch_reads_pre_align, "trimmed")
-            MQTRIM(FQTRIM.out.fastq_ch.collect(), "trimmed")
+            FQTRIM(ch_reads_pre_align)
+            MQTRIM(FQTRIM.out.zip.collect(), "trimmed")
         }
 
     } else {
