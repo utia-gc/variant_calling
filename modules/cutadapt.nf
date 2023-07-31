@@ -24,17 +24,16 @@ process CUTADAPT {
                 ${reads} \
                 > ${metadata.sampleName}_cutadapt-log.txt
             """
-        } else {
-            forward = "cut_${reads[0]}"
-            reverse = "cut_${reads[1]}"
+        } else if(metadata.readType == 'paired') {
             """
             cutadapt \
                 -a ${r1_adapter} \
                 -A ${r2_adapter} \
                 -m ${minimum_length} \
-                -o ${forward} \
-                -p ${reverse} \
-                ${reads} 
+                -o ${metadata.sampleName}_R1.fastq.gz \
+                -p ${metadata.sampleName}_R2.fastq.gz \
+                ${reads} \
+                > ${metadata.sampleName}_cutadapt-log.txt
             """
         }
 }
