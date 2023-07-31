@@ -1,0 +1,39 @@
+nextflow_process {
+
+    name "Test Process MULTIQC"
+    script "modules/multiqc.nf"
+    process "MULTIQC"
+
+    test("MULTIQC should run on MultiQC test data.") {
+
+        when {
+            params {
+                // define parameters here. Example:
+                // outdir = "tests/results"
+            }
+            process {
+                """
+                input[0] = [
+                    file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/fastqc/v0.11.2/SRR1067505_1_fastqc.zip"),
+                    file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/samtools/stats/SRR1067503_1.fastq.gz_bowtie_srtd.bam_dedup.bam_samtools_stats.txt")
+                ]
+                input[1] = "multiqc"
+                """
+            }
+        }
+
+        then {
+            assert process.success
+
+            with(process.out.report) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/multiqc.html/
+            }
+            with(process.out.data) {
+                assert get(0).size() == 6
+            }
+        }
+
+    }
+
+}
