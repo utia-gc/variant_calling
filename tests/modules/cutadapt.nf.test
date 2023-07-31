@@ -44,4 +44,45 @@ nextflow_process {
 
     }
 
+    test("CUTADAPT works for paired-end reads.") {
+
+        when {
+            params {
+            }
+            process {
+                """
+                input[0] = [
+                    [
+                        sampleName: "SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1",
+                        readType:   "paired"
+                    ],
+                    [
+                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz"),
+                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz")
+                    ]
+                ]
+                input[1] = "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"
+                input[2] = "AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC"
+                input[3] = "30"
+                """
+            }
+        }
+
+        then {
+            assert process.success
+
+            with(process.out.reads) {
+                assert size() == 1
+                assert get(0).get(1).get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_R1.fastq.gz/
+                assert get(0).get(1).get(1) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_R2.fastq.gz/
+            }
+            with(process.out.log) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_cutadapt-log.txt/
+            }
+
+            assert snapshot(process.out.reads).match()
+        }
+    }
+
 }
