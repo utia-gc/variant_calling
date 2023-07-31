@@ -12,7 +12,10 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [sampleName: "SRR1066657_GSM1299413_WT_NR_A"],
+                    [
+                        sampleName: "SRR1066657_GSM1299413_WT_NR_A",
+                        readType:   "single"
+                    ],
                     [
                         file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz")
                     ]
