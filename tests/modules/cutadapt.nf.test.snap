@@ -1,0 +1,33 @@
+{
+    "CUTADAPT works for single-end reads.": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR1066657_GSM1299413_WT_NR_A",
+                            "readType": "single"
+                        },
+                        "SRR1066657_GSM1299413_WT_NR_A_R1.fastq.gz:md5,9c46e73133a169e413c6f94eb6afb277"
+                    ]
+                ],
+                "1": [
+                    "SRR1066657_GSM1299413_WT_NR_A_cutadapt-log.txt:md5,03230863d4085c42c44f3d441e5a756f"
+                ],
+                "log": [
+                    "SRR1066657_GSM1299413_WT_NR_A_cutadapt-log.txt:md5,03230863d4085c42c44f3d441e5a756f"
+                ],
+                "reads": [
+                    [
+                        {
+                            "sampleName": "SRR1066657_GSM1299413_WT_NR_A",
+                            "readType": "single"
+                        },
+                        "SRR1066657_GSM1299413_WT_NR_A_R1.fastq.gz:md5,9c46e73133a169e413c6f94eb6afb277"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-07-31T18:31:52+0000"
+    }
+}
