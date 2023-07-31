@@ -1,0 +1,44 @@
+nextflow_process {
+
+    name "Test Process CUTADAPT_ADAPTERS"
+    script "modules/cutadapt.nf"
+    process "CUTADAPT"
+
+    test("CUTADAPT works for single-end reads.") {
+
+        when {
+            params {
+            }
+            process {
+                """
+                input[0] = [
+                    [sampleName: "SRR1066657_GSM1299413_WT_NR_A"],
+                    [
+                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz")
+                    ]
+                ]
+                input[1] = "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"
+                input[2] = "AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC"
+                input[3] = "30"
+                """
+            }
+        }
+
+        then {
+            assert process.success
+
+            with(process.out.reads) {
+                assert size() == 2
+                assert get(1) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A.fastq.gz/
+            }
+            with(process.out.log) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_cutadapt-log.txt/
+            }
+
+            assert snapshot(process.out).match()
+        }
+
+    }
+
+}
