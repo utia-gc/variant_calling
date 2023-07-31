@@ -31,8 +31,8 @@ nextflow_process {
             assert process.success
 
             with(process.out.reads) {
-                assert size() == 2
-                assert get(1) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A.fastq.gz/
+                assert size() == 1
+                assert get(0).get(1) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_R1.fastq.gz/
             }
             with(process.out.log) {
                 assert size() == 1
