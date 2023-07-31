@@ -12,7 +12,7 @@ Import modules
 
 include { PARSE_DESIGN_SWF                } from "../subworkflows/parse_design_SWF.nf"
 include { PREPARE_REFS                    } from "../subworkflows/prepare_refs.nf"
-include { CUTADAPT_ADAPTERS               } from "../modules/cutadapt.nf"
+include { CUTADAPT                        } from "../modules/cutadapt.nf"
 include { FASTQC as FQRAW                 } from "../modules/fastqc.nf"
 include { FASTQC as FQTRIM                } from "../modules/fastqc.nf"
 include { MULTIQC as MQRAW                } from "../modules/multiqc.nf"
@@ -66,11 +66,11 @@ workflow NGS {
     if (!params.skipTrimReads) {
 
 
-        CUTADAPT_ADAPTERS(ch_reads_raw,
+        CUTADAPT(ch_reads_raw,
                           params.r1_adapter,
                           params.r2_adapter,
                           params.minimum_length)
-        ch_reads_pre_align = CUTADAPT_ADAPTERS.out.reads
+        ch_reads_pre_align = CUTADAPT.out.reads
 
         if (!params.skipTrimFastQC) {
             FQTRIM(ch_reads_pre_align)
