@@ -31,6 +31,13 @@ nextflow_process {
             }
             with(process.out.data.get(0)) {
                 assert size() == 7
+                assert get(0) ==~ /^.*\/multiqc_data\/multiqc[.]log/
+                assert get(1) ==~ /^.*\/multiqc_data\/multiqc_citations[.]txt/
+                assert get(2) ==~ /^.*\/multiqc_data\/multiqc_data[.]json/
+                assert get(3) ==~ /^.*\/multiqc_data\/multiqc_fastqc[.]txt/
+                assert get(4) ==~ /^.*\/multiqc_data\/multiqc_general_stats[.]txt/
+                assert get(5) ==~ /^.*\/multiqc_data\/multiqc_samtools_stats[.]txt/
+                assert get(6) ==~ /^.*\/multiqc_data\/multiqc_sources[.]txt/
             }
         }
 
