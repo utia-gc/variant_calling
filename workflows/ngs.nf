@@ -12,11 +12,11 @@ Import modules
 
 include { PARSE_DESIGN_SWF                } from "../subworkflows/parse_design_SWF.nf"
 include { PREPARE_REFS                    } from "../subworkflows/prepare_refs.nf"
-include { CUTADAPT                        } from "../modules/cutadapt.nf"
-include { FASTQC as FQRAW                 } from "../modules/fastqc.nf"
-include { FASTQC as FQTRIM                } from "../modules/fastqc.nf"
-include { MULTIQC as MQRAW                } from "../modules/multiqc.nf"
-include { MULTIQC as MQTRIM               } from "../modules/multiqc.nf"
+include { cutadapt                        } from "../modules/cutadapt.nf"
+include { fastqc as fastqc_raw            } from "../modules/fastqc.nf"
+include { fastqc as fastqc_trim           } from "../modules/fastqc.nf"
+include { multiqc as multiqc_raw          } from "../modules/multiqc.nf"
+include { multiqc as multiqc_trim         } from "../modules/multiqc.nf"
 
 workflow NGS {
     /*
@@ -53,8 +53,8 @@ workflow NGS {
     */
 
     if(!params.skipRawFastQC) {
-        FQRAW(ch_reads_raw)
-        MQRAW(FQRAW.out.zip.collect(), "raw")
+        fastqc_raw(ch_reads_raw)
+        multiqc_raw(fastqc_raw.out.zip.collect(), "raw")
     }
 
     /*
@@ -66,15 +66,15 @@ workflow NGS {
     if(!params.skipTrimReads) {
 
 
-        CUTADAPT(ch_reads_raw,
+        cutadapt(ch_reads_raw,
                           params.r1_adapter,
                           params.r2_adapter,
                           params.minimum_length)
-        ch_reads_pre_align = CUTADAPT.out.reads
+        ch_reads_pre_align = cutadapt.out.reads
 
         if(!params.skipTrimFastQC) {
-            FQTRIM(ch_reads_pre_align)
-            MQTRIM(FQTRIM.out.zip.collect(), "trimmed")
+            fastqc_trim(ch_reads_pre_align)
+            multiqc_trim(fastqc_trim.out.zip.collect(), "trimmed")
         }
 
     } else {

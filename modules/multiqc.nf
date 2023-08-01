@@ -1,4 +1,4 @@
-process MULTIQC {
+process multiqc {
     tag "${fileName}"
     
     label 'multiqc'

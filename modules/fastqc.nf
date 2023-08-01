@@ -1,4 +1,4 @@
-process FASTQC {
+process fastqc {
     tag "${metadata.sampleName}"
     
     label 'fastqc'

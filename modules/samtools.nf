@@ -1,4 +1,4 @@
-process SAMTOOLS_SORT {
+process samtools_sort {
     tag "${metadata.sampleName}"
 
     label 'samtools'

@@ -1,4 +1,4 @@
-process CUTADAPT {
+process cutadapt {
     tag "${metadata.sampleName}"
     
     label 'cutadapt'

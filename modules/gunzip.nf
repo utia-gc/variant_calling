@@ -1,4 +1,4 @@
-process GUNZIP {
+process gunzip {
     tag "${archive}"
 
     label 'base'

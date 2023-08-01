@@ -1,10 +1,10 @@
 nextflow_process {
 
-    name "Test Process CUTADAPT_ADAPTERS"
+    name "Test Process cutadapt"
     script "modules/cutadapt.nf"
-    process "CUTADAPT"
+    process "cutadapt"
 
-    test("CUTADAPT works for single-end reads.") {
+    test("cutadapt works for single-end reads.") {
 
         when {
             params {
@@ -44,7 +44,7 @@ nextflow_process {
 
     }
 
-    test("CUTADAPT works for paired-end reads.") {
+    test("cutadapt works for paired-end reads.") {
 
         when {
             params {

@@ -1,10 +1,10 @@
 nextflow_process {
 
-    name "Test Process GUNZIP"
+    name "Test Process gunzip"
     script "modules/gunzip.nf"
-    process "GUNZIP"
+    process "gunzip"
 
-    test("GUNZIP successfully unzips GZIP-compressed fasta file.") {
+    test("gunzip successfully unzips GZIP-compressed fasta file.") {
 
         when {
             params {}

@@ -1,10 +1,10 @@
 nextflow_process {
 
-    name "Test Process MULTIQC"
+    name "Test Process multiqc"
     script "modules/multiqc.nf"
-    process "MULTIQC"
+    process "multiqc"
 
-    test("MULTIQC should run on MultiQC test data.") {
+    test("multiqc should run on MultiQC test data.") {
 
         when {
             params {
