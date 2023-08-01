@@ -9,8 +9,8 @@ process MULTIQC {
         val fileName
 
     output:
-        path("*html"),          emit: report
-        path("multiqc_data/*"), emit: data
+        path("*html"),              emit: report
+        path("${fileName}_data/*"), emit: data
 
     script:
         """
