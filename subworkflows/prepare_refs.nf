@@ -1,8 +1,8 @@
-include { gunzip as gunzip_fasta      } from "../modules/gunzip.nf"
+include { gunzip as gunzip_fasta       } from "../modules/gunzip.nf"
 include { gunzip as gunzip_annotations } from "../modules/gunzip.nf"
 
 
-workflow PREPARE_REFS {
+workflow Prepare_Refs {
     take:
         fasta
         annotations

@@ -1,10 +1,10 @@
 nextflow_workflow {
 
-    name "Test Workflow PREPARE_REFS"
+    name "Test Workflow Prepare_Refs"
     script "subworkflows/prepare_refs.nf"
-    workflow "PREPARE_REFS"
+    workflow "Prepare_Refs"
 
-    test("successfully unzips and emits GZIP-compressed fasta and GTF files.") {
+    test("Prepare_Refs successfully unzips and emits GZIP-compressed fasta and GTF files.") {
 
         when {
             params {}
@@ -39,7 +39,7 @@ nextflow_workflow {
 
 
     }
-    test("successfully emits uncompressed fasta and GTF files when uncompressed inputs are given.") {
+    test("Prepare_Refs successfully emits uncompressed fasta and GTF files when uncompressed inputs are given.") {
 
         when {
             params {}

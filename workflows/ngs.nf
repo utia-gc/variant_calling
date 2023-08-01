@@ -10,8 +10,8 @@ Import modules
 ---------------------------------------------------------------------
 */
 
-include { PARSE_DESIGN_SWF                } from "../subworkflows/parse_design_SWF.nf"
-include { PREPARE_REFS                    } from "../subworkflows/prepare_refs.nf"
+include { Parse_Design                    } from "../subworkflows/parse_design.nf"
+include { Prepare_Refs                    } from "../subworkflows/prepare_refs.nf"
 include { cutadapt                        } from "../modules/cutadapt.nf"
 include { fastqc as fastqc_raw            } from "../modules/fastqc.nf"
 include { fastqc as fastqc_trim           } from "../modules/fastqc.nf"
@@ -29,8 +29,8 @@ workflow NGS {
     ch_input = file(params.input)
 
     // Subworkflow: Parse design file
-    PARSE_DESIGN_SWF(ch_input)
-    ch_reads_raw = PARSE_DESIGN_SWF.out.samples
+    Parse_Design(ch_input)
+    ch_reads_raw = Parse_Design.out.samples
 
 
     /*
@@ -38,12 +38,12 @@ workflow NGS {
         Prepare reference files
     ---------------------------------------------------------------------
     */
-    PREPARE_REFS(
+    Prepare_Refs(
         params.ref,
         params.annot
     )
-    ch_ref   = PREPARE_REFS.out.fasta
-    ch_annot = PREPARE_REFS.out.annotations
+    ch_ref   = Prepare_Refs.out.fasta
+    ch_annot = Prepare_Refs.out.annotations
 
 
     /*

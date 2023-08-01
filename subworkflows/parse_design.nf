@@ -1,4 +1,4 @@
-workflow PARSE_DESIGN_SWF {
+workflow Parse_Design {
     take:
         samplesheet
 
