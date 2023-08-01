@@ -17,7 +17,7 @@ process CUTADAPT {
         path("${metadata.sampleName}_cutadapt-log.txt"), emit: log
 
     script:
-        if (metadata.readType == 'single') {
+        if(metadata.readType == 'single') {
             """
             cutadapt \
                 -a ${r1_adapter} \

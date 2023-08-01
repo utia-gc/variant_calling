@@ -23,7 +23,7 @@ def createSampleReadsChannel(LinkedHashMap row) {
 
     // store reads in a list
     def reads = []
-    if (metadata.readType == "single") {
+    if(metadata.readType == "single") {
         reads = [file(row.reads1)]
     } else {
         reads = [file(row.reads1), file(row.reads2)]

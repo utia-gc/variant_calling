@@ -52,7 +52,7 @@ workflow NGS {
     ---------------------------------------------------------------------
     */
 
-    if (!params.skipRawFastQC) {
+    if(!params.skipRawFastQC) {
         FQRAW(ch_reads_raw)
         MQRAW(FQRAW.out.zip.collect(), "raw")
     }
@@ -63,7 +63,7 @@ workflow NGS {
     ---------------------------------------------------------------------
     */
 
-    if (!params.skipTrimReads) {
+    if(!params.skipTrimReads) {
 
 
         CUTADAPT(ch_reads_raw,
@@ -72,7 +72,7 @@ workflow NGS {
                           params.minimum_length)
         ch_reads_pre_align = CUTADAPT.out.reads
 
-        if (!params.skipTrimFastQC) {
+        if(!params.skipTrimFastQC) {
             FQTRIM(ch_reads_pre_align)
             MQTRIM(FQTRIM.out.zip.collect(), "trimmed")
         }

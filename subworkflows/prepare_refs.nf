@@ -8,7 +8,7 @@ workflow PREPARE_REFS {
         annotations
 
     main:
-        if (fasta.toString().endsWith(".gz")) {
+        if(fasta.toString().endsWith(".gz")) {
             GUNZIP_FASTA(
                 fasta
             )
@@ -17,7 +17,7 @@ workflow PREPARE_REFS {
             ch_fasta = Channel.value(file(fasta))
         }
 
-        if (annotations.toString().endsWith(".gz")) {
+        if(annotations.toString().endsWith(".gz")) {
             GUNZIP_ANNOTATIONS(
                 annotations
             )
