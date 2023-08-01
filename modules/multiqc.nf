@@ -1,4 +1,6 @@
 process MULTIQC {
+    tag "${fileName}"
+    
     label 'multiqc'
     label 'lil_mem'
 

@@ -1,4 +1,6 @@
 process SAMTOOLS_SORT {
+    tag "${metadata.sampleName}"
+
     label 'samtools'
     label 'med_mem'
 

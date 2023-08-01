@@ -1,4 +1,6 @@
 process CUTADAPT {
+    tag "${metadata.sampleName}"
+    
     label 'cutadapt'
     label 'lil_mem'
 
