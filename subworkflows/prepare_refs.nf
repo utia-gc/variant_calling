@@ -1,5 +1,5 @@
-include { GUNZIP as GUNZIP_FASTA       } from "../modules/file_utils/gunzip.nf"
-include { GUNZIP as GUNZIP_ANNOTATIONS } from "../modules/file_utils/gunzip.nf"
+include { GUNZIP as GUNZIP_FASTA       } from "../modules/gunzip.nf"
+include { GUNZIP as GUNZIP_ANNOTATIONS } from "../modules/gunzip.nf"
 
 
 workflow PREPARE_REFS {
