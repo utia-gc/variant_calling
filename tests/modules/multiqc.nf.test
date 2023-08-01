@@ -27,10 +27,10 @@ nextflow_process {
 
             with(process.out.report) {
                 assert size() == 1
-                assert get(0) ==~ /^.*\/multiqc.html/
+                assert get(0) ==~ /^.*\/multiqc[.]html/
             }
-            with(process.out.data) {
-                assert get(0).size() == 6
+            with(process.out.data.get(0)) {
+                assert size() == 7
             }
         }
 
