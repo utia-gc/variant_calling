@@ -60,7 +60,7 @@ nextflow_workflow {
                         file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz")
                     ]
                 ]
-                input[1] = "cutadpat"
+                input[1] = "cutadapt"
                 """
             }
         }
