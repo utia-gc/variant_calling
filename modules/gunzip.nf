@@ -6,15 +6,15 @@ process gunzip {
     label 'lil_mem'
 
     input:
-    path archive
+        path archive
     
     output:
-    path "${archive.toString() - '.gz'}", emit: gunzip
+        path "${archive.toString() - '.gz'}", emit: gunzip
     
     script:
-    """
-    gunzip \
-        --force \
-        ${archive}
-    """
+        """
+        gunzip \
+            --force \
+            ${archive}
+        """
 }
