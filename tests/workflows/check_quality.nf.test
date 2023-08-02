@@ -1,0 +1,85 @@
+nextflow_workflow {
+
+    name "Test Workflow CHECK_QUALITY"
+    script "workflows/check_quality.nf"
+    workflow "CHECK_QUALITY"
+
+    test("CHECK_QUALITY succeeds for single-end reads and cutadapt log with default params.") {
+
+        when {
+            params {
+            }
+            workflow {
+                """
+                input[0] = [
+                    [
+                        sampleName: "SRR1066657_GSM1299413_WT_NR_A",
+                        readType:   "single"
+                    ],
+                    [
+                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz")
+                    ]
+                ]
+                input[1] = [
+                    [
+                        sampleName: "SRR1066658_GSM1299414_WT_NR_B",
+                        readType:   "single"
+                    ],
+                    [
+                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz")
+                    ]
+                ]
+                input[2] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log"))
+                """
+            }
+        }
+
+        then {
+            // test workflow status
+            assert workflow.success
+            assert workflow.trace.succeeded().size() == 5
+        }
+
+    }
+
+    test("CHECK_QUALITY succeeds for paired-end reads and cutadapt log with default params.") {
+
+        when {
+            params {
+            }
+            workflow {
+                """
+                input[0] = [
+                    [
+                        sampleName: "SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2",
+                        readType:   "paired"
+                    ],
+                    [
+                        file("https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz"),
+                        file("https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz")
+                    ]
+                ]
+                input[1] = [
+                    [
+                        sampleName: "SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1",
+                        readType:   "paired"
+                    ],
+                    [
+                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz"),
+                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz")
+                    ]
+                ]
+                input[2] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log"))
+                """
+            }
+        }
+
+        then {
+            // test workflow status
+            assert workflow.success
+            assert workflow.trace.succeeded().size() == 5
+        }
+
+    }
+
+}
