@@ -1,4 +1,4 @@
-include { cutadapt } from "../modules/cutadapt.nf"
+include { Trim_Reads } from "../subworkflows/trim_reads.nf"
 
 /**
  * Workflow to process reads.
@@ -11,14 +11,12 @@ workflow PROCESS_READS {
 
     main:
         if(!params.skipTrimReads) {
-            cutadapt(
+            Trim_Reads(
                 reads_raw,
-                params.r1_adapter,
-                params.r2_adapter,
-                params.minimum_length
+                params.tools.trim
             )
-            ch_reads_trim = cutadapt.out.reads
-            ch_trim_log   = cutadapt.out.log
+            ch_reads_trim = Trim_Reads.out.reads_trim
+            ch_trim_log   = Trim_Reads.out.trim_log
         } else {
             ch_reads_trim = Channel.empty()
             ch_trim_log   = Channel.empty()
