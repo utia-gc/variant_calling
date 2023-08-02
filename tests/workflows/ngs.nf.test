@@ -22,8 +22,8 @@ nextflow_workflow {
 
         when {
             params {
-                ref   = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/genome_I.fa"
-                annot = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/annotations_I.gtf"
+                genome      = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/genome_I.fa"
+                annotations = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/annotations_I.gtf"
             }
             workflow {}
         }

@@ -23,6 +23,6 @@ workflow PREPARE_INPUTS {
     
     emit:
         samples     = Parse_Design.out.samples
-        genome      = Prepare_Refs.out.fasta
+        genome      = Prepare_Refs.out.genome
         annotations = Prepare_Refs.out.annotations
 }

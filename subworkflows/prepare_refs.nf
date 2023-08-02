@@ -1,20 +1,20 @@
-include { gunzip as gunzip_fasta       } from "../modules/gunzip.nf"
+include { gunzip as gunzip_genome      } from "../modules/gunzip.nf"
 include { gunzip as gunzip_annotations } from "../modules/gunzip.nf"
 
 
 workflow Prepare_Refs {
     take:
-        fasta
+        genome
         annotations
 
     main:
-        if(fasta.toString().endsWith(".gz")) {
-            gunzip_fasta(
-                fasta
+        if(genome.toString().endsWith(".gz")) {
+            gunzip_genome(
+                genome
             )
-            ch_fasta = gunzip_fasta.out.gunzip
+            ch_genome = gunzip_genome.out.gunzip
         } else {
-            ch_fasta = Channel.value(file(fasta))
+            ch_genome = Channel.value(file(genome))
         }
 
         if(annotations.toString().endsWith(".gz")) {
@@ -27,6 +27,6 @@ workflow Prepare_Refs {
         }
 
     emit:
-        fasta       = ch_fasta
+        genome      = ch_genome
         annotations = ch_annotations
 }

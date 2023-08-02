@@ -19,13 +19,13 @@ include { multiqc as multiqc_trim         } from "../modules/multiqc.nf"
 
 workflow NGS {
     PREPARE_INPUTS(
-        params.input,
-        params.ref,
-        params.annot
+        params.samplesheet,
+        params.genome,
+        params.annotations
     )
-    ch_reads_raw = PREPARE_INPUTS.out.samples
-    ch_ref       = PREPARE_INPUTS.out.genome
-    ch_annot     = PREPARE_INPUTS.out.annotations
+    ch_reads_raw   = PREPARE_INPUTS.out.samples
+    ch_genome      = PREPARE_INPUTS.out.genome
+    ch_annotations = PREPARE_INPUTS.out.annotations
 
 
     /*
