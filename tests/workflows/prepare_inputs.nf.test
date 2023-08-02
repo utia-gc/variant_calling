@@ -1,0 +1,49 @@
+nextflow_workflow {
+
+    name "Test Workflow PREPARE_INPUTS"
+    script "workflows/prepare_inputs.nf"
+    workflow "PREPARE_INPUTS"
+
+    test("PREPARE_INPUTS succeeds when valid samplesheet, genome, and annotation are supplied.") {
+
+        when {
+            params {
+            }
+            workflow {
+                """
+                input[0] = "https://github.com/utia-gc/ngs-test/raw/rnaseq/samplesheets/samplesheet_mix.csv"
+                input[1] = "https://github.com/utia-gc/ngs-test/raw/rnaseq/data/references/R64-1-1/genome_I.fa.gz"
+                input[2] = "https://github.com/utia-gc/ngs-test/raw/rnaseq/data/references/R64-1-1/annotations_I.gtf.gz"
+                """
+            }
+        }
+
+        then {
+            // test workflow status
+            assert workflow.success
+            assert workflow.trace.succeeded().size() == 2
+
+            // test samplesheet parsing
+            assert workflow.out.samples.size() == 4
+
+            // test reference genome prep
+            assert workflow.out.genome
+            with(workflow.out.genome) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/genome_I.fa/
+            }
+
+            // test reference annotations prep
+            assert workflow.out.annotations
+            with(workflow.out.annotations) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/annotations_I.gtf/
+            }
+
+            // test workflow stability
+            assert snapshot(workflow.out).match()
+        }
+
+    }
+
+}
