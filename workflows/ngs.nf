@@ -10,8 +10,7 @@ Import modules
 ---------------------------------------------------------------------
 */
 
-include { Parse_Design                    } from "../subworkflows/parse_design.nf"
-include { Prepare_Refs                    } from "../subworkflows/prepare_refs.nf"
+include { PREPARE_INPUTS                  } from "../workflows/prepare_inputs.nf"
 include { cutadapt                        } from "../modules/cutadapt.nf"
 include { fastqc as fastqc_raw            } from "../modules/fastqc.nf"
 include { fastqc as fastqc_trim           } from "../modules/fastqc.nf"
@@ -19,31 +18,14 @@ include { multiqc as multiqc_raw          } from "../modules/multiqc.nf"
 include { multiqc as multiqc_trim         } from "../modules/multiqc.nf"
 
 workflow NGS {
-    /*
-    ---------------------------------------------------------------------
-        Read design file, parse sample names and identifiers, and stage reads files
-    ---------------------------------------------------------------------
-    */
-
-    // set channel for input design file
-    ch_input = file(params.input)
-
-    // Subworkflow: Parse design file
-    Parse_Design(ch_input)
-    ch_reads_raw = Parse_Design.out.samples
-
-
-    /*
-    ---------------------------------------------------------------------
-        Prepare reference files
-    ---------------------------------------------------------------------
-    */
-    Prepare_Refs(
+    PREPARE_INPUTS(
+        params.input,
         params.ref,
         params.annot
     )
-    ch_ref   = Prepare_Refs.out.fasta
-    ch_annot = Prepare_Refs.out.annotations
+    ch_reads_raw = PREPARE_INPUTS.out.samples
+    ch_ref       = PREPARE_INPUTS.out.genome
+    ch_annot     = PREPARE_INPUTS.out.annotations
 
 
     /*
