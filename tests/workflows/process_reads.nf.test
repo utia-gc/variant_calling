@@ -30,8 +30,8 @@ nextflow_workflow {
             assert workflow.trace.succeeded().size() == 1
 
             // test read trimming
-            assert workflow.out.reads_trim
-            with(workflow.out.reads_trim) {
+            assert workflow.out.reads_pre_align
+            with(workflow.out.reads_pre_align) {
                 assert size() == 1
                 assert get(0).get(1) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_R1.fastq.gz/
             }
@@ -69,11 +69,11 @@ nextflow_workflow {
             assert workflow.trace.succeeded().size() == 1
 
             // test read trimming
-            assert workflow.out.reads_trim
-            with(workflow.out.reads_trim) {
+            assert workflow.out.reads_pre_align
+            with(workflow.out.reads_pre_align) {
                 assert size() == 1
                 assert get(0).get(1).get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_R1.fastq.gz/
-                assert get(0).get(1).get(1) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-2_R1.fastq.gz/
+                assert get(0).get(1).get(1) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_R2.fastq.gz/
             }
 
             // test read trimming log
