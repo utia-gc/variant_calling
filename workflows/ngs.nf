@@ -49,7 +49,7 @@ workflow NGS {
                 Channel.empty()
                     .concat(fastqc_trim.out.zip)
                     .concat(ch_trim_log)
-                    .collect(),
+                    .collect( sort: true ),
                 "trimmed"
             )
         }
