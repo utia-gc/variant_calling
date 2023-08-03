@@ -1,6 +1,5 @@
-include { fastqc as fastqc_raw        } from "../modules/fastqc.nf"
+include { QC_Reads_Raw                } from '../subworkflows/qc_reads_raw.nf'
 include { fastqc as fastqc_prealign   } from "../modules/fastqc.nf"
-include { multiqc as multiqc_raw      } from "../modules/multiqc.nf"
 include { multiqc as multiqc_prealign } from "../modules/multiqc.nf"
 include { multiqc as multiqc_full     } from "../modules/multiqc.nf"
 
@@ -12,17 +11,11 @@ workflow CHECK_QUALITY {
 
     main:
         if(!params.skipRawFastQC) {
-            fastqc_raw(reads_raw)
-            ch_multiqc_reads_raw = Channel.empty()
-                .concat(fastqc_raw.out.zip)
-                .collect( sort: true )
+            QC_Reads_Raw(reads_raw)
+            ch_multiqc_reads_raw = QC_Reads_Raw.out.multiqc
         } else {
             ch_multiqc_reads_raw = Channel.empty()
         }
-        multiqc_raw(
-            ch_multiqc_reads_raw,
-            "raw"
-        )
 
         if(!params.skipTrimFastQC) {
             fastqc_prealign(reads_prealign)
