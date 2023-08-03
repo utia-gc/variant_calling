@@ -10,14 +10,14 @@ workflow CHECK_QUALITY {
         trim_log
 
     main:
-        if(!params.skipRawFastQC) {
+        if(!params.skipRawReadsQC) {
             QC_Reads_Raw(reads_raw)
             ch_multiqc_reads_raw = QC_Reads_Raw.out.multiqc
         } else {
             ch_multiqc_reads_raw = Channel.empty()
         }
 
-        if(!params.skipTrimFastQC) {
+        if(!params.skipPrealignReadsQC) {
             fastqc_prealign(reads_prealign)
             ch_multiqc_reads_prealign = Channel.empty()
                 .concat(fastqc_prealign.out.zip)
