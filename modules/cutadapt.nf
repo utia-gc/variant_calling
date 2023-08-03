@@ -4,7 +4,17 @@ process cutadapt {
     label 'cutadapt'
     label 'lil_mem'
 
-    publishDir(path: "${publish_dir}/cutadapt", mode: "symlink")
+    publishDir(
+        path:    "${params.publishDirData}/reads/trim",
+        mode:    "${params.publishMode}",
+        pattern: '*.fastq.gz',
+        enabled: params.publishTrimReads
+    )
+    publishDir(
+        path:    "${params.publishDirReports}/reads/trim",
+        mode:    "${params.publishMode}",
+        pattern: '*_cutadapt-log.txt'
+    )
 
     input:
         tuple val(metadata), path(reads)
