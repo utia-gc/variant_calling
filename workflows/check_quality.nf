@@ -1,6 +1,5 @@
+include { QC_Reads_Prealign           } from '../subworkflows/qc_reads_prealign.nf'
 include { QC_Reads_Raw                } from '../subworkflows/qc_reads_raw.nf'
-include { fastqc as fastqc_prealign   } from "../modules/fastqc.nf"
-include { multiqc as multiqc_prealign } from "../modules/multiqc.nf"
 include { multiqc as multiqc_full     } from "../modules/multiqc.nf"
 
 workflow CHECK_QUALITY {
@@ -18,18 +17,14 @@ workflow CHECK_QUALITY {
         }
 
         if(!params.skipPrealignReadsQC) {
-            fastqc_prealign(reads_prealign)
-            ch_multiqc_reads_prealign = Channel.empty()
-                .concat(fastqc_prealign.out.zip)
-                .concat(trim_log)
-                .collect( sort: true )
+            QC_Reads_Prealign(
+                reads_prealign,
+                trim_log
+            )
+            ch_multiqc_reads_prealign = QC_Reads_Prealign.out.multiqc
         } else {
             ch_multiqc_reads_prealign = Channel.empty()
         }
-        multiqc_prealign(
-            ch_multiqc_reads_prealign,
-            "prealign"
-        )
 
         ch_multiqc_full = Channel.empty()
             .concat(ch_multiqc_reads_raw)
