@@ -1,0 +1,79 @@
+nextflow_workflow {
+
+    name "Test Workflow QC_Reads_Raw"
+    script "subworkflows/qc_reads_raw.nf"
+    workflow "QC_Reads_Raw"
+
+    test("QC_Reads_Raw succeeds for single-end reads with default params.") {
+
+        when {
+            params {
+            }
+            workflow {
+                """
+                input[0] = [
+                    [
+                        sampleName: "SRR1066657_GSM1299413_WT_NR_A",
+                        readType:   "single"
+                    ],
+                    [
+                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz")
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            // test workflow status
+            assert workflow.success
+            assert workflow.trace.succeeded().size() == 2
+
+            // test output for full MultiQC
+            assert workflow.out.multiqc
+            with(workflow.out.multiqc.get(0)) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.zip/
+            }
+        }
+
+    }
+
+    test("QC_Reads_Raw succeeds for paired-end reads with default params.") {
+
+        when {
+            params {
+            }
+            workflow {
+                """
+                input[0] = [
+                    [
+                        sampleName: "SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1",
+                        readType:   "paired"
+                    ],
+                    [
+                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz"),
+                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz")
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            // test workflow status
+            assert workflow.success
+            assert workflow.trace.succeeded().size() == 2
+
+            // test output for full MultiQC
+            assert workflow.out.multiqc
+            with(workflow.out.multiqc.get(0)) {
+                assert size() == 2
+                assert get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.zip/
+                assert get(1) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.zip/
+            }
+        }
+
+    }
+
+}
