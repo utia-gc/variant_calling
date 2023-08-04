@@ -4,7 +4,10 @@ process multiqc {
     label 'multiqc'
     label 'lil_mem'
 
-    publishDir(path: "${publish_dir}/qc/${fileName}", mode: "copy")
+    publishDir(
+        path:    "${params.publishDirReports}/multiqc/${fileName}",
+        mode:    "${params.publishMode}"
+    )
 
     input:
         path('*')

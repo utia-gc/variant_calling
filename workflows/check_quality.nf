@@ -32,6 +32,6 @@ workflow CHECK_QUALITY {
             .collect( sort: true )
         multiqc_full(
             ch_multiqc_full,
-            "full"
+            params.projectTitle
         )
 }
