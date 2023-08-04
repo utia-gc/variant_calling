@@ -1,8 +1,20 @@
-process CUTADAPT_ADAPTERS {
+process cutadapt {
+    tag "${metadata.sampleName}"
+    
     label 'cutadapt'
     label 'lil_mem'
 
-    publishDir(path: "${publish_dir}/cutadapt", mode: "symlink")
+    publishDir(
+        path:    "${params.publishDirData}/reads/trim",
+        mode:    "${params.publishMode}",
+        pattern: '*.fastq.gz',
+        enabled: params.publishTrimReads
+    )
+    publishDir(
+        path:    "${params.publishDirReports}/reads/trim",
+        mode:    "${params.publishMode}",
+        pattern: '*_cutadapt-log.txt'
+    )
 
     input:
         tuple val(metadata), path(reads)
@@ -11,29 +23,29 @@ process CUTADAPT_ADAPTERS {
         val minimum_length
 
     output:
-        tuple val(metadata), path("cut*") , emit : reads
+        tuple val(metadata), path("${metadata.sampleName}_*.fastq.gz"), emit: reads
+        path("${metadata.sampleName}_cutadapt-log.txt"), emit: log
 
     script:
-        if (metadata.readType == 'single') {
-            forward = "cut_${reads[0]}"
+        if(metadata.readType == 'single') {
             """
             cutadapt \
-              -a ${r1_adapter} \
-              -m ${minimum_length} \
-              -o $forward \
-              $reads 
+                -a ${r1_adapter} \
+                -m ${minimum_length} \
+                -o ${metadata.sampleName}_R1.fastq.gz \
+                ${reads} \
+                > ${metadata.sampleName}_cutadapt-log.txt
             """
-        } else {
-            forward = "cut_${reads[0]}"
-            reverse = "cut_${reads[1]}"
+        } else if(metadata.readType == 'paired') {
             """
             cutadapt \
-              -a ${r1_adapter} \
-              -A ${r2_adapter} \
-              -m ${minimum_length} \
-              -o $forward \
-              -p $reverse \
-              $reads 
+                -a ${r1_adapter} \
+                -A ${r2_adapter} \
+                -m ${minimum_length} \
+                -o ${metadata.sampleName}_R1.fastq.gz \
+                -p ${metadata.sampleName}_R2.fastq.gz \
+                ${reads} \
+                > ${metadata.sampleName}_cutadapt-log.txt
             """
         }
 }

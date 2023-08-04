@@ -1,0 +1,117 @@
+nextflow_workflow {
+
+    name "Test Workflow QC_Reads_Prealign"
+    script "subworkflows/qc_reads_prealign.nf"
+    workflow "QC_Reads_Prealign"
+
+    test("QC_Reads_Prealign succeeds for single-end reads and cutadapt log with default params.") {
+
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
+            workflow {
+                """
+                input[0] = [
+                    [
+                        sampleName: "SRR1066657_GSM1299413_WT_NR_A",
+                        readType:   "single"
+                    ],
+                    [
+                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz")
+                    ]
+                ]
+                input[1] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log"))
+                """
+            }
+        }
+
+        then {
+            // test workflow status
+            assert workflow.success
+            assert workflow.trace.succeeded().size() == 2
+
+            // test output for full MultiQC
+            assert workflow.out.multiqc
+            with(workflow.out.multiqc.get(0)) {
+                assert size() == 2
+                assert get(0) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.zip/
+                assert get(1) ==~ /^.*\/SAMPLE3_SE.cutadapt.log/
+            }
+
+            // test FastQC html files get published to reports directory
+            def html = path("${params.publishDirReports}/fastqc/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.html")
+            assert html.exists()
+            // test FastQC zip files get published to reports directory
+            def zip  = path("${params.publishDirReports}/fastqc/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.zip")
+            assert zip.exists()
+            // test MultiQC html report gets published to reports directory
+            def htmlMQC    = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign.html")
+            assert htmlMQC.exists()
+            // test MultiQC data files get published to reports directory
+            def dataDirMQC = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign_data")
+            assert dataDirMQC.exists()
+        }
+
+    }
+
+    test("QC_Reads_Prealign succeeds for paired-end reads and cutadapt log with default params.") {
+
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
+            workflow {
+                """
+                input[0] = [
+                    [
+                        sampleName: "SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1",
+                        readType:   "paired"
+                    ],
+                    [
+                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz"),
+                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz")
+                    ]
+                ]
+                input[1] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log"))
+                """
+            }
+        }
+
+        then {
+            // test workflow status
+            assert workflow.success
+            assert workflow.trace.succeeded().size() == 2
+
+            // test output for full MultiQC
+            assert workflow.out.multiqc
+            with(workflow.out.multiqc.get(0)) {
+                assert size() == 3
+                assert get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.zip/
+                assert get(1) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.zip/
+                assert get(2) ==~ /^.*\/SAMPLE3_SE.cutadapt.log/
+            }
+
+            // test FastQC html files get published to reports directory
+            def htmlR1 = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.html")
+            def htmlR2 = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.html")
+            assert htmlR1.exists()
+            assert htmlR2.exists()
+            // test FastQC zip files get published to reports directory
+            def zipR1  = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.zip")
+            def zipR2  = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.zip")
+            assert zipR1.exists()
+            assert zipR2.exists()
+            // test MultiQC html report gets published to reports directory
+            def htmlMQC    = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign.html")
+            assert htmlMQC.exists()
+            // test MultiQC data files get published to reports directory
+            def dataDirMQC = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign_data")
+            assert dataDirMQC.exists()
+        }
+
+    }
+
+}

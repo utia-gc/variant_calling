@@ -1,13 +1,16 @@
 nextflow_workflow {
 
-    name "Test Workflow PARSE_DESIGN_SWF"
-    script "subworkflows/parse_design_SWF.nf"
-    workflow "PARSE_DESIGN_SWF"
+    name "Test Workflow Parse_Design"
+    script "subworkflows/parse_design.nf"
+    workflow "Parse_Design"
 
-    test("successfully creates read channels from single-end samplesheet.") {
+    test("Parse_Design successfully creates read channels from single-end samplesheet.") {
 
         when {
-            params {}
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
             workflow {
                 """
                 input[0] = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/samplesheets/samplesheet_se.csv"
@@ -23,10 +26,13 @@ nextflow_workflow {
 
     }
 
-    test("successfully creates read channels from paired-end samplesheet.") {
+    test("Parse_Design successfully creates read channels from paired-end samplesheet.") {
 
         when {
-            params {}
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
             workflow {
                 """
                 input[0] = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/samplesheets/samplesheet_pe.csv"
@@ -42,10 +48,13 @@ nextflow_workflow {
 
     }
 
-    test("successfully creates read channels from mixed single-end and paired-end samplesheet.") {
+    test("Parse_Design successfully creates read channels from mixed single-end and paired-end samplesheet.") {
 
         when {
-            params {}
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
             workflow {
                 """
                 input[0] = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/samplesheets/samplesheet_mix.csv"

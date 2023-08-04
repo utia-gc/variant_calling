@@ -1,13 +1,16 @@
 nextflow_workflow {
 
-    name "Test Workflow PREPARE_REFS"
+    name "Test Workflow Prepare_Refs"
     script "subworkflows/prepare_refs.nf"
-    workflow "PREPARE_REFS"
+    workflow "Prepare_Refs"
 
-    test("successfully unzips and emits GZIP-compressed fasta and GTF files.") {
+    test("Prepare_Refs successfully unzips and emits GZIP-compressed genome and GTF files.") {
 
         when {
-            params {}
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
             workflow {
                 """
                 input[0] = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/genome_I.fa.gz"
@@ -20,8 +23,8 @@ nextflow_workflow {
             assert workflow.success
             assert workflow.trace.succeeded().size() == 2
 
-            assert workflow.out.fasta
-            with(workflow.out.fasta) {
+            assert workflow.out.genome
+            with(workflow.out.genome) {
                 assert size() == 1
                 assert get(0) ==~ /^.*\/genome_I.fa/
                 assert path(get(0)).md5 == "e050100d0a9a7d06a8accf8424ad0d98"
@@ -39,10 +42,13 @@ nextflow_workflow {
 
 
     }
-    test("successfully emits uncompressed fasta and GTF files when uncompressed inputs are given.") {
+    test("Prepare_Refs successfully emits uncompressed genome and GTF files when uncompressed inputs are given.") {
 
         when {
-            params {}
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
             workflow {
                 """
                 input[0] = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/genome_I.fa"
@@ -55,8 +61,8 @@ nextflow_workflow {
             assert workflow.success
             assert workflow.trace.succeeded().size() == 0
 
-            assert workflow.out.fasta
-            with(workflow.out.fasta) {
+            assert workflow.out.genome
+            with(workflow.out.genome) {
                 assert size() == 1
                 assert get(0) ==~ /^.*\/genome_I.fa/
             }

@@ -1,12 +1,18 @@
-# utia_rnaseq
+# NGS
 
 ## Introduction
 
-**utia_rnaseq** is a [Nextflow](https://www.nextflow.io/) pipeline for <>
+`ngs` is a [Nextflow](https://www.nextflow.io/) pipeline for base NGS analysis.
+`ngs` is primarily intended to be used as a starting point for building more specific NGS analysis pipelines, e.g. for RNA-seq, WGS genotyping, snATAC-seq, etc.
+While `ngs` can be run on any platform supported by Nextflow, it is developed for use in HPC environments and specifically [ISAAC Next Generation] at the University of Tennessee, Knoxville.
 
 ## Pipeline overview
 
-1. QC
+1. Trim/filter reads
+2. Reads QC
+3. Map reads
+4. Process alignments
+5. Full workflow QC
 
 ## Quick start
 
@@ -22,43 +28,70 @@
 
 3. [Singularity](https://sylabs.io)
 
+### Get or update `ngs`
 
-### Get or update `utia_rnaseq`
-
-1. Download or update `utia_rnaseq`:
+1. Download or update `ngs`:
 
     ```bash
-    nextflow pull trev-f/utia_rnaseq
+    nextflow pull utia-gc/ngs
     ```
 
 2. Show project info:
 
     ```bash
-    nextflow info trev-f/utia_rnaseq
+    nextflow info utia-gc/ngs
     ```
 
-### Test `utia_rnaseq`
+### Test `ngs`
 
-1. Check that `utia_rnaseq` works on your system:
+1. Check that `ngs` works on your system:
 
-      - `-profile test` uses preconfigured test parameters to run `utia_rnaseq` in full on a small test dataset stored in a remote GitHub repository.
-      - Because these test files are stored in a remote repository, internet access is required to run the test.
-      - For more information, see the `profiles` section of the [nextflow config file](nextflow.config) and [trev-f/utia_rnaseq-test](https://github.com/trev-f/utia_rnaseq-test).
+   - `-profile nf_test` uses preconfigured test parameters to run `ngs` in full on a small test dataset stored in a remote GitHub repository.
+   - Because these test files are stored in a remote repository, internet access is required to run the test.
+   - For more information, see the `profiles` section of the [nextflow config file](nextflow.config).
 
-    ```bash
-    nextflow run utia_rnaseq -profile test 
-    ```
+   ```bash
+   nextflow run utia-gc/ngs -profile nf_test 
+   ```
 
-### Run `utia_rnaseq`
+### Run `ngs`
 
-1. Prepare the [input design csv file](docs/input_output.md).
+TODO
 
-    - Input design file must be in csv format with no whitespace.
-    - Either reads (fastq or fastq.gz) or alignments (bam) are accepted.
-      - If reads are supplied, can be paired or unpaired.
-    - Required columns:
-      - reads: lib_ID, sample_name, replicate, reads1, reads2 (optional)
-      - alignments: lib_ID, sample_name, replicate, bam, tool_IDs
-    - See [sample inputs](https://github.com/trev-f/utia_rnaseq-test/tree/main/inputs) in the [`utia_rnaseq-test` repository](https://github.com/trev-f/utia_rnaseq-test).
-    - A template project repository can be downloaded from the [`utia_rnaseq-template` repository](https://github.com/trev-f/utia_rnaseq-template).
+## Recommended usage
 
+### The `exploratory` profile
+
+Analysis of NGS data frequently requires an exploratory stage that involves iterating through various parameter options and scrutinizing their effects on important QC metrics before settling on a final set of parameters.
+To help facilitate this crucial process, we have included an `exploratory` profile option which implements the following features:
+
+- Data and reports are published within time-stamped subdirectories of `exploratory` structured as follows: `<current working directory>/exploratory/<timestamp>_<project title>`. This allows the user to see a chronological log of their changes and gives the option to put a brief description of changes in the project title.
+- Results are published as symbolic links as opposed to the default behavior of copying published results. This prevents the user's working directory from being bloated with duplicates of data.
+- Sets the `-resume` flag in Nextflow through the profile so that it does not need to be supplied at the command line. This allows for faster iteration and exploration as results from intensive processes are used from their cached location instead of being reproduced.
+For more info on Nextflow's resume feature, checkout these articles on [demistifying](https://www.nextflow.io/blog/2019/demystifying-nextflow-resume.html) and [troubleshooting](https://www.nextflow.io/blog/2019/troubleshooting-nextflow-resume.html) Nextflow resume.
+
+Once the user finishes exploring and has decided on a final set of parameters, those parameters should be specified during an explicitly resumed run of the pipeline without the `exploratory` profile.
+By default this will rerun the pipeline and publish results by copying them into the user's specified data and report publishing directories (see [output documentation](docs/output.md)).
+This serves the dual purpose of saving time by not repeating logged tasks while aiding in data persistence.
+
+#### Example usage
+
+During exploratory analysis, iteratively make changes to parameters and run the pipeline with the `exploratory` profile:
+
+```bash
+nextflow run utia-gc/ngs -profile exploratory
+```
+
+Once you have settled on an optimal set of parameters, rerun the pipeline without the `exploratory` profile:
+
+```bash
+nextflow run utia-gc/ngs -resume
+```
+
+Useful tip --- if a specific previous run contained the user's optimal set of parameter, or more generally if for some reason it would be advantageous to resume from some run of the pipeline other than the most recent run, then the pipeline can be resumed from any previous cached run using the RUN NAME or SESSION ID of the desired run.
+Use `nextflow log` to view information about previous runs.
+For example, to resume from a run named 'boring_euler':
+
+```bash
+nextflow run utia-gc/ngs -resume boring_euler
+```

@@ -1,0 +1,55 @@
+nextflow_process {
+
+    name "Test Process multiqc"
+    script "modules/multiqc.nf"
+    process "multiqc"
+
+    test("multiqc should run on MultiQC test data.") {
+
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
+            process {
+                """
+                input[0] = [
+                    file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/fastqc/v0.11.2/SRR1067505_1_fastqc.zip"),
+                    file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/samtools/stats/SRR1067503_1.fastq.gz_bowtie_srtd.bam_dedup.bam_samtools_stats.txt")
+                ]
+                input[1] = "multiqc"
+                """
+            }
+        }
+
+        then {
+            assert process.success
+
+            // test html output
+            with(process.out.report) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/multiqc[.]html/
+            }
+            // test multiqc data output
+            with(process.out.data.get(0)) {
+                assert size() == 7
+                assert get(0) ==~ /^.*\/multiqc_data\/multiqc[.]log/
+                assert get(1) ==~ /^.*\/multiqc_data\/multiqc_citations[.]txt/
+                assert get(2) ==~ /^.*\/multiqc_data\/multiqc_data[.]json/
+                assert get(3) ==~ /^.*\/multiqc_data\/multiqc_fastqc[.]txt/
+                assert get(4) ==~ /^.*\/multiqc_data\/multiqc_general_stats[.]txt/
+                assert get(5) ==~ /^.*\/multiqc_data\/multiqc_samtools_stats[.]txt/
+                assert get(6) ==~ /^.*\/multiqc_data\/multiqc_sources[.]txt/
+            }
+
+            // test html report gets published to reports directory
+            def html    = path("${params.publishDirReports}/multiqc/multiqc/multiqc.html")
+            assert html.exists()
+            // test data files get published to reports directory
+            def dataDir = path("${params.publishDirReports}/multiqc/multiqc/multiqc_data")
+            assert dataDir.exists()
+        }
+
+    }
+
+}

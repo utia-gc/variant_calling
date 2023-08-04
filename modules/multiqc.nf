@@ -1,18 +1,26 @@
-process MULTIQC {
-  label 'multiqc'
-  label 'lil_mem'
+process multiqc {
+    tag "${fileName}"
+    
+    label 'multiqc'
+    label 'lil_mem'
 
-  publishDir(path: "${publish_dir}/qc/${outdir_name}", mode: "copy")
+    publishDir(
+        path:    "${params.publishDirReports}/multiqc/${fileName}",
+        mode:    "${params.publishMode}"
+    )
 
-  input:
-      path('*')
-      val outdir_name
+    input:
+        path('*')
+        val fileName
 
-  output:
-      path("*html")
+    output:
+        path("*html"),              emit: report
+        path("${fileName}_data/*"), emit: data
 
-  script:
-      """
-      multiqc .
-      """
+    script:
+        """
+        multiqc \
+            --filename ${fileName} \
+            .
+        """
 }

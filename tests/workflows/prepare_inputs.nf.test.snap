@@ -1,0 +1,101 @@
+{
+    "PREPARE_INPUTS succeeds when valid samplesheet, genome, and annotation are supplied.": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2",
+                            "readType": "paired"
+                        },
+                        [
+                            "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz",
+                            "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz"
+                        ]
+                    ],
+                    [
+                        {
+                            "sampleName": "SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1",
+                            "readType": "paired"
+                        },
+                        [
+                            "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz",
+                            "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz"
+                        ]
+                    ],
+                    [
+                        {
+                            "sampleName": "SRR1066657_GSM1299413_WT_NR_A",
+                            "readType": "single"
+                        },
+                        [
+                            "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz"
+                        ]
+                    ],
+                    [
+                        {
+                            "sampleName": "SRR1066658_GSM1299414_WT_NR_B",
+                            "readType": "single"
+                        },
+                        [
+                            "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz"
+                        ]
+                    ]
+                ],
+                "1": [
+                    "genome_I.fa:md5,e050100d0a9a7d06a8accf8424ad0d98"
+                ],
+                "2": [
+                    "annotations_I.gtf:md5,61525d86cb937e0fe5b349215c50498c"
+                ],
+                "annotations": [
+                    "annotations_I.gtf:md5,61525d86cb937e0fe5b349215c50498c"
+                ],
+                "genome": [
+                    "genome_I.fa:md5,e050100d0a9a7d06a8accf8424ad0d98"
+                ],
+                "samples": [
+                    [
+                        {
+                            "sampleName": "SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2",
+                            "readType": "paired"
+                        },
+                        [
+                            "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz",
+                            "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz"
+                        ]
+                    ],
+                    [
+                        {
+                            "sampleName": "SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1",
+                            "readType": "paired"
+                        },
+                        [
+                            "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz",
+                            "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz"
+                        ]
+                    ],
+                    [
+                        {
+                            "sampleName": "SRR1066657_GSM1299413_WT_NR_A",
+                            "readType": "single"
+                        },
+                        [
+                            "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz"
+                        ]
+                    ],
+                    [
+                        {
+                            "sampleName": "SRR1066658_GSM1299414_WT_NR_B",
+                            "readType": "single"
+                        },
+                        [
+                            "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz"
+                        ]
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-08-02T13:44:15+0000"
+    }
+}

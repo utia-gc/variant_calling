@@ -1,4 +1,23 @@
 {
+    "Prepare_Refs successfully unzips and emits GZIP-compressed fasta and GTF files.": {
+        "content": [
+            {
+                "0": [
+                    "genome_I.fa:md5,e050100d0a9a7d06a8accf8424ad0d98"
+                ],
+                "1": [
+                    "annotations_I.gtf:md5,61525d86cb937e0fe5b349215c50498c"
+                ],
+                "annotations": [
+                    "annotations_I.gtf:md5,61525d86cb937e0fe5b349215c50498c"
+                ],
+                "fasta": [
+                    "genome_I.fa:md5,e050100d0a9a7d06a8accf8424ad0d98"
+                ]
+            }
+        ],
+        "timestamp": "2023-08-02T14:56:21+0000"
+    },
     "successfully emits uncompressed fasta and GTF files when uncompressed inputs are given.": {
         "content": [
             {
@@ -16,7 +35,7 @@
                 ]
             }
         ],
-        "timestamp": "2023-04-19T21:36:02+0000"
+        "timestamp": "2023-08-02T14:56:21+0000"
     },
     "successfully unzips and emits GZIP-compressed fasta and GTF files.": {
         "content": [
@@ -35,6 +54,63 @@
                 ]
             }
         ],
-        "timestamp": "2023-04-19T21:36:02+0000"
+        "timestamp": "2023-08-02T14:56:21+0000"
+    },
+    "Prepare_Refs successfully unzips and emits GZIP-compressed genome and GTF files.": {
+        "content": [
+            {
+                "0": [
+                    "genome_I.fa:md5,e050100d0a9a7d06a8accf8424ad0d98"
+                ],
+                "1": [
+                    "annotations_I.gtf:md5,61525d86cb937e0fe5b349215c50498c"
+                ],
+                "annotations": [
+                    "annotations_I.gtf:md5,61525d86cb937e0fe5b349215c50498c"
+                ],
+                "genome": [
+                    "genome_I.fa:md5,e050100d0a9a7d06a8accf8424ad0d98"
+                ]
+            }
+        ],
+        "timestamp": "2023-08-02T14:56:21+0000"
+    },
+    "Prepare_Refs successfully emits uncompressed fasta and GTF files when uncompressed inputs are given.": {
+        "content": [
+            {
+                "0": [
+                    "/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/genome_I.fa"
+                ],
+                "1": [
+                    "/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/annotations_I.gtf"
+                ],
+                "annotations": [
+                    "/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/annotations_I.gtf"
+                ],
+                "fasta": [
+                    "/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/genome_I.fa"
+                ]
+            }
+        ],
+        "timestamp": "2023-08-02T14:56:21+0000"
+    },
+    "Prepare_Refs successfully emits uncompressed genome and GTF files when uncompressed inputs are given.": {
+        "content": [
+            {
+                "0": [
+                    "/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/genome_I.fa"
+                ],
+                "1": [
+                    "/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/annotations_I.gtf"
+                ],
+                "annotations": [
+                    "/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/annotations_I.gtf"
+                ],
+                "genome": [
+                    "/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/genome_I.fa"
+                ]
+            }
+        ],
+        "timestamp": "2023-08-02T14:56:21+0000"
     }
 }
