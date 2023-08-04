@@ -7,7 +7,10 @@ nextflow_process {
     test("gunzip successfully unzips GZIP-compressed fasta file.") {
 
         when {
-            params {}
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
             process {
                 """
                 input[0] = file("https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/genome_I.fa.gz")

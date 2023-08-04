@@ -7,7 +7,10 @@ nextflow_workflow {
     test("Prepare_Refs successfully unzips and emits GZIP-compressed genome and GTF files.") {
 
         when {
-            params {}
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
             workflow {
                 """
                 input[0] = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/genome_I.fa.gz"
@@ -42,7 +45,10 @@ nextflow_workflow {
     test("Prepare_Refs successfully emits uncompressed genome and GTF files when uncompressed inputs are given.") {
 
         when {
-            params {}
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
             workflow {
                 """
                 input[0] = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/genome_I.fa"
