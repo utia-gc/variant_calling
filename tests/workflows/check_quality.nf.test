@@ -53,8 +53,8 @@ nextflow_workflow {
             assert zipPrealign.exists()
             // test MultiQC html reports get published to reports directory
             def htmlMQCRaw         = path("${params.publishDirReports}/multiqc/reads_raw/reads_raw.html")
-            def htmlMQCPrealign    = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign_multiqc.html")
-            def htmlMQCFull        = path("${params.publishDirReports}/multiqc/ngs/ngs_multiqc.html")
+            def htmlMQCPrealign    = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign.html")
+            def htmlMQCFull        = path("${params.publishDirReports}/multiqc/ngs/ngs.html")
             assert htmlMQCRaw.exists()
             assert htmlMQCPrealign.exists()
             assert htmlMQCFull.exists()
@@ -128,8 +128,8 @@ nextflow_workflow {
             assert zipR2Prealign.exists()
             // test MultiQC html reports get published to reports directory
             def htmlMQCRaw         = path("${params.publishDirReports}/multiqc/reads_raw/reads_raw.html")
-            def htmlMQCPrealign    = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign_multiqc.html")
-            def htmlMQCFull        = path("${params.publishDirReports}/multiqc/ngs/ngs_multiqc.html")
+            def htmlMQCPrealign    = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign.html")
+            def htmlMQCFull        = path("${params.publishDirReports}/multiqc/ngs/ngs.html")
             assert htmlMQCRaw.exists()
             assert htmlMQCPrealign.exists()
             assert htmlMQCFull.exists()
@@ -195,8 +195,8 @@ nextflow_workflow {
             assert zipR1Prealign.exists()
             assert zipR2Prealign.exists()
             // test MultiQC html reports get published to reports directory
-            def htmlMQCPrealign    = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign_multiqc.html")
-            def htmlMQCFull        = path("${params.publishDirReports}/multiqc/ngs/ngs_multiqc.html")
+            def htmlMQCPrealign    = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign.html")
+            def htmlMQCFull        = path("${params.publishDirReports}/multiqc/ngs/ngs.html")
             assert htmlMQCPrealign.exists()
             assert htmlMQCFull.exists()
             // test MultiQC data files get published to reports directory
@@ -260,7 +260,7 @@ nextflow_workflow {
             assert zipR2Raw.exists()
             // test MultiQC html reports get published to reports directory
             def htmlMQCRaw         = path("${params.publishDirReports}/multiqc/reads_raw/reads_raw.html")
-            def htmlMQCFull        = path("${params.publishDirReports}/multiqc/ngs/ngs_multiqc.html")
+            def htmlMQCFull        = path("${params.publishDirReports}/multiqc/ngs/ngs.html")
             assert htmlMQCRaw.exists()
             assert htmlMQCFull.exists()
             // test MultiQC data files get published to reports directory

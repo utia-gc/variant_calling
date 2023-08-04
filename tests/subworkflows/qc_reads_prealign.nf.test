@@ -47,7 +47,7 @@ nextflow_workflow {
             def zip  = path("${params.publishDirReports}/fastqc/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.zip")
             assert zip.exists()
             // test MultiQC html report gets published to reports directory
-            def htmlMQC    = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign_multiqc.html")
+            def htmlMQC    = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign.html")
             assert htmlMQC.exists()
             // test MultiQC data files get published to reports directory
             def dataDirMQC = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign_data")
@@ -105,7 +105,7 @@ nextflow_workflow {
             assert zipR1.exists()
             assert zipR2.exists()
             // test MultiQC html report gets published to reports directory
-            def htmlMQC    = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign_multiqc.html")
+            def htmlMQC    = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign.html")
             assert htmlMQC.exists()
             // test MultiQC data files get published to reports directory
             def dataDirMQC = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign_data")
