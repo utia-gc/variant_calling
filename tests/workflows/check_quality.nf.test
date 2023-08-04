@@ -51,6 +51,20 @@ nextflow_workflow {
             def zipPrealign  = path("${params.publishDirReports}/fastqc/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.zip")
             assert zipRaw.exists()
             assert zipPrealign.exists()
+            // test MultiQC html reports get published to reports directory
+            def htmlMQCRaw         = path("${params.publishDirReports}/multiqc/reads_raw/reads_raw.html")
+            def htmlMQCPrealign    = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign_multiqc.html")
+            def htmlMQCFull        = path("${params.publishDirReports}/multiqc/ngs/ngs_multiqc.html")
+            assert htmlMQCRaw.exists()
+            assert htmlMQCPrealign.exists()
+            assert htmlMQCFull.exists()
+            // test MultiQC data files get published to reports directory
+            def dataDirMQCRaw      = path("${params.publishDirReports}/multiqc/reads_raw/reads_raw_data")
+            def dataDirMQCPrealign = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign_data")
+            def dataDirMQCFull     = path("${params.publishDirReports}/multiqc/ngs/ngs_data")
+            assert dataDirMQCRaw.exists()
+            assert dataDirMQCPrealign.exists()
+            assert dataDirMQCFull.exists()
         }
 
     }
@@ -112,6 +126,20 @@ nextflow_workflow {
             def zipR2Prealign  = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.zip")
             assert zipR1Prealign.exists()
             assert zipR2Prealign.exists()
+            // test MultiQC html reports get published to reports directory
+            def htmlMQCRaw         = path("${params.publishDirReports}/multiqc/reads_raw/reads_raw.html")
+            def htmlMQCPrealign    = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign_multiqc.html")
+            def htmlMQCFull        = path("${params.publishDirReports}/multiqc/ngs/ngs_multiqc.html")
+            assert htmlMQCRaw.exists()
+            assert htmlMQCPrealign.exists()
+            assert htmlMQCFull.exists()
+            // test MultiQC data files get published to reports directory
+            def dataDirMQCRaw      = path("${params.publishDirReports}/multiqc/reads_raw/reads_raw_data")
+            def dataDirMQCPrealign = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign_data")
+            def dataDirMQCFull     = path("${params.publishDirReports}/multiqc/ngs/ngs_data")
+            assert dataDirMQCRaw.exists()
+            assert dataDirMQCPrealign.exists()
+            assert dataDirMQCFull.exists()
         }
 
     }
@@ -166,6 +194,16 @@ nextflow_workflow {
             def zipR2Prealign  = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.zip")
             assert zipR1Prealign.exists()
             assert zipR2Prealign.exists()
+            // test MultiQC html reports get published to reports directory
+            def htmlMQCPrealign    = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign_multiqc.html")
+            def htmlMQCFull        = path("${params.publishDirReports}/multiqc/ngs/ngs_multiqc.html")
+            assert htmlMQCPrealign.exists()
+            assert htmlMQCFull.exists()
+            // test MultiQC data files get published to reports directory
+            def dataDirMQCPrealign = path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign_data")
+            def dataDirMQCFull     = path("${params.publishDirReports}/multiqc/ngs/ngs_data")
+            assert dataDirMQCPrealign.exists()
+            assert dataDirMQCFull.exists()
         }
 
     }
@@ -220,6 +258,16 @@ nextflow_workflow {
             def zipR2Raw       = path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.zip")
             assert zipR1Raw.exists()
             assert zipR2Raw.exists()
+            // test MultiQC html reports get published to reports directory
+            def htmlMQCRaw         = path("${params.publishDirReports}/multiqc/reads_raw/reads_raw.html")
+            def htmlMQCFull        = path("${params.publishDirReports}/multiqc/ngs/ngs_multiqc.html")
+            assert htmlMQCRaw.exists()
+            assert htmlMQCFull.exists()
+            // test MultiQC data files get published to reports directory
+            def dataDirMQCRaw      = path("${params.publishDirReports}/multiqc/reads_raw/reads_raw_data")
+            def dataDirMQCFull     = path("${params.publishDirReports}/multiqc/ngs/ngs_data")
+            assert dataDirMQCRaw.exists()
+            assert dataDirMQCFull.exists()
         }
 
     }
