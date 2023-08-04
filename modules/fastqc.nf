@@ -4,7 +4,11 @@ process fastqc {
     label 'fastqc'
     label 'lil_mem'
 
-    publishDir(path: "${publish_dir}/fastqc", mode: "copy")
+    publishDir(
+        path:    "${params.publishDirReports}/fastqc",
+        mode:    "${params.publishMode}",
+        pattern: '*{.html,.zip}'
+    )
 
     input:
         tuple val(metadata), path(reads)
