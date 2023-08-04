@@ -67,19 +67,19 @@ To help facilitate this crucial process, we have included an `exploratory` profi
 
 - Data and reports are published within time-stamped subdirectories of `exploratory` structured as follows: `<current working directory>/exploratory/<timestamp>_<project title>`. This allows the user to see a chronological log of their changes and gives the option to put a brief description of changes in the project title.
 - Results are published as symbolic links as opposed to the default behavior of copying published results. This prevents the user's working directory from being bloated with duplicates of data.
+- Sets the `-resume` flag in Nextflow through the profile so that it does not need to be supplied at the command line. This allows for faster iteration and exploration as results from intensive processes are used from their cached location instead of being reproduced.
+For more info on Nextflow's resume feature, checkout these articles on [demistifying](https://www.nextflow.io/blog/2019/demystifying-nextflow-resume.html) and [troubleshooting](https://www.nextflow.io/blog/2019/troubleshooting-nextflow-resume.html) Nextflow resume.
 
-The `exploratory` profile is best used with Nextflow's `resume` flag to speed up the iterative exploratory analysis process ().
-Once the user finishes exploring and has decided on a final set of parameters, those parameters should be specified during a resumed run of the pipeline without the `exploratory` profile.
+Once the user finishes exploring and has decided on a final set of parameters, those parameters should be specified during an explicitly resumed run of the pipeline without the `exploratory` profile.
 By default this will rerun the pipeline and publish results by copying them into the user's specified data and report publishing directories (see [output documentation](docs/output.md)).
 This serves the dual purpose of saving time by not repeating logged tasks while aiding in data persistence.
-For more info on Nextflow's resume feature, checkout these articles on [demistifying](https://www.nextflow.io/blog/2019/demystifying-nextflow-resume.html) and [troubleshooting](https://www.nextflow.io/blog/2019/troubleshooting-nextflow-resume.html) Nextflow resume.
 
 #### Example usage
 
-During exploratory analysis, iteratively make changes to parameters and run the pipeline with the `exploratory` profile and `resume` flag:
+During exploratory analysis, iteratively make changes to parameters and run the pipeline with the `exploratory` profile:
 
 ```bash
-nextflow run utia-gc/ngs -profile exploratory -resume
+nextflow run utia-gc/ngs -profile exploratory
 ```
 
 Once you have settled on an optimal set of parameters, rerun the pipeline without the `exploratory` profile:
