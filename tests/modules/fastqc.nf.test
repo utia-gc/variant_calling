@@ -7,7 +7,10 @@ nextflow_process {
     test("fastqc works for single-end reads.") {
 
         when {
-            params {}
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
             process {
                 """
                 input[0] = [
@@ -23,14 +26,23 @@ nextflow_process {
         then {
             assert process.success
 
+            //test html output
             with(process.out.html) {
                 assert size() == 1
                 assert get(0) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.html/
             }
+            //test zip output
             with(process.out.zip) {
                 assert size() == 1
                 assert get(0) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.zip/
             }
+
+            // test html files get published to reports directory
+            def html = path("${params.publishDirReports}/fastqc/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.html")
+            assert html.exists()
+            // test zip files get published to reports directory
+            def zip  = path("${params.publishDirReports}/fastqc/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.zip")
+            assert zip.exists()
         }
 
     }
@@ -38,7 +50,10 @@ nextflow_process {
     test("fastqc works for paired-end reads.") {
 
         when {
-            params {}
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
             process {
                 """
                 input[0] = [
@@ -55,16 +70,29 @@ nextflow_process {
         then {
             assert process.success
 
+            // test html output
             with(process.out.html.get(0)) {
                 assert size() == 2
                 assert get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.html/
                 assert get(1) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.html/
             }
+            // test zip output
             with(process.out.zip.get(0)) {
                 assert size() == 2
                 assert get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.zip/
                 assert get(1) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.zip/
             }
+
+            // test html files get published to reports directory
+            def htmlR1 = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.html")
+            def htmlR2 = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.html")
+            assert htmlR1.exists()
+            assert htmlR2.exists()
+            // test zip files get published to reports directory
+            def zipR1  = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.zip")
+            def zipR2  = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.zip")
+            assert zipR1.exists()
+            assert zipR2.exists()
         }
 
     }

@@ -8,6 +8,8 @@ nextflow_workflow {
 
         when {
             params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
             }
             workflow {
                 """
@@ -38,6 +40,17 @@ nextflow_workflow {
             // test workflow status
             assert workflow.success
             assert workflow.trace.succeeded().size() == 5
+
+            // test FastQC html files get published to reports directory
+            def htmlRaw      = path("${params.publishDirReports}/fastqc/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.html")
+            def htmlPrealign = path("${params.publishDirReports}/fastqc/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.html")
+            assert htmlRaw.exists()
+            assert htmlPrealign.exists()
+            // test FastQC zip files get published to reports directory
+            def zipRaw       = path("${params.publishDirReports}/fastqc/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.zip")
+            def zipPrealign  = path("${params.publishDirReports}/fastqc/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.zip")
+            assert zipRaw.exists()
+            assert zipPrealign.exists()
         }
 
     }
@@ -46,6 +59,8 @@ nextflow_workflow {
 
         when {
             params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
             }
             workflow {
                 """
@@ -78,6 +93,25 @@ nextflow_workflow {
             // test workflow status
             assert workflow.success
             assert workflow.trace.succeeded().size() == 5
+
+            // test FastQC html files get published to reports directory
+            def htmlR1Raw      = path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.html")
+            def htmlR2Raw      = path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.html")
+            assert htmlR1Raw.exists()
+            assert htmlR2Raw.exists()
+            def htmlR1Prealign = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.html")
+            def htmlR2Prealign = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.html")
+            assert htmlR1Prealign.exists()
+            assert htmlR2Prealign.exists()
+            // test FastQC zip files get published to reports directory
+            def zipR1Raw       = path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.zip")
+            def zipR2Raw       = path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.zip")
+            assert zipR1Raw.exists()
+            assert zipR2Raw.exists()
+            def zipR1Prealign  = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.zip")
+            def zipR2Prealign  = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.zip")
+            assert zipR1Prealign.exists()
+            assert zipR2Prealign.exists()
         }
 
     }
@@ -86,7 +120,9 @@ nextflow_workflow {
 
         when {
             params {
-                skipRawReadsQC = true
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+                skipRawReadsQC    = true
             }
             workflow {
                 """
@@ -119,6 +155,17 @@ nextflow_workflow {
             // test workflow status
             assert workflow.success
             assert workflow.trace.succeeded().size() == 3
+
+            // test FastQC html files get published to reports directory
+            def htmlR1Prealign = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.html")
+            def htmlR2Prealign = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.html")
+            assert htmlR1Prealign.exists()
+            assert htmlR2Prealign.exists()
+            // test FastQC zip files get published to reports directory
+            def zipR1Prealign  = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.zip")
+            def zipR2Prealign  = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.zip")
+            assert zipR1Prealign.exists()
+            assert zipR2Prealign.exists()
         }
 
     }
@@ -127,6 +174,8 @@ nextflow_workflow {
 
         when {
             params {
+                publishDirReports   = "${outputDir}/reports"
+                publishDirData      = "${outputDir}/data"
                 skipPrealignReadsQC = true
             }
             workflow {
@@ -160,6 +209,17 @@ nextflow_workflow {
             // test workflow status
             assert workflow.success
             assert workflow.trace.succeeded().size() == 3
+
+            // test FastQC html files get published to reports directory
+            def htmlR1Raw      = path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.html")
+            def htmlR2Raw      = path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.html")
+            assert htmlR1Raw.exists()
+            assert htmlR2Raw.exists()
+            // test FastQC zip files get published to reports directory
+            def zipR1Raw       = path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.zip")
+            def zipR2Raw       = path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.zip")
+            assert zipR1Raw.exists()
+            assert zipR2Raw.exists()
         }
 
     }
@@ -168,6 +228,8 @@ nextflow_workflow {
 
         when {
             params {
+                publishDirReports   = "${outputDir}/reports"
+                publishDirData      = "${outputDir}/data"
                 skipRawReadsQC      = true
                 skipPrealignReadsQC = true
             }
