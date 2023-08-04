@@ -7,13 +7,16 @@ nextflow_workflow {
     test("successfully runs with default params of nf_test profile.") {
 
         when {
-            params {}
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
             workflow {}
         }
 
         then {
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 16
+            assert workflow.trace.succeeded().size() == 17
         }
 
     }
@@ -22,15 +25,17 @@ nextflow_workflow {
 
         when {
             params {
-                genome      = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/genome_I.fa"
-                annotations = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/annotations_I.gtf"
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+                genome            = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/genome_I.fa"
+                annotations       = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/annotations_I.gtf"
             }
             workflow {}
         }
 
         then {
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 14
+            assert workflow.trace.succeeded().size() == 15
         }
 
     }
