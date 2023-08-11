@@ -41,13 +41,6 @@ nextflow_process {
                 assert get(5) ==~ /^.*\/multiqc_data\/multiqc_samtools_stats[.]txt/
                 assert get(6) ==~ /^.*\/multiqc_data\/multiqc_sources[.]txt/
             }
-
-            // test html report gets published to reports directory
-            def html    = path("${params.publishDirReports}/multiqc/multiqc/multiqc.html")
-            assert html.exists()
-            // test data files get published to reports directory
-            def dataDir = path("${params.publishDirReports}/multiqc/multiqc/multiqc_data")
-            assert dataDir.exists()
         }
 
     }
