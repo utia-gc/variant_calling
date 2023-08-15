@@ -1,0 +1,62 @@
+{
+    "cat_fastq concatenates fastq files for paired end reads": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "readType": "paired"
+                        },
+                        [
+                            "SRR6924569_R1.fastq.gz:md5,0882125d5d207a7069e3ee4b5de8071a",
+                            "SRR6924569_R2.fastq.gz:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ],
+                "reads": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "readType": "paired"
+                        },
+                        [
+                            "SRR6924569_R1.fastq.gz:md5,0882125d5d207a7069e3ee4b5de8071a",
+                            "SRR6924569_R2.fastq.gz:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-08-15T14:19:50+0000"
+    },
+    "cat_fastq concatenates fastq files for single end reads": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "readType": "single"
+                        },
+                        "SRR1066657_R1.fastq.gz:md5,457577c22978f5444e955f6a86723b99"
+                    ]
+                ],
+                "reads": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "readType": "single"
+                        },
+                        "SRR1066657_R1.fastq.gz:md5,457577c22978f5444e955f6a86723b99"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-08-15T14:19:50+0000"
+    }
+}
