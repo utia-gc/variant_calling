@@ -1,0 +1,136 @@
+{
+    "Merge_Reads merges read channels for paired end reads when set to cat reads": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "readType": "paired"
+                        },
+                        [
+                            "SRR6924569_R1.fastq.gz:md5,525ad355d8f72020b2ad716e38a231f3",
+                            "SRR6924569_R2.fastq.gz:md5,4be7fdf7176be1216c332c49de3656df"
+                        ]
+                    ]
+                ],
+                "reads_merged": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "readType": "paired"
+                        },
+                        [
+                            "SRR6924569_R1.fastq.gz:md5,525ad355d8f72020b2ad716e38a231f3",
+                            "SRR6924569_R2.fastq.gz:md5,4be7fdf7176be1216c332c49de3656df"
+                        ]
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-08-15T20:19:09+0000"
+    },
+    "Merge_Reads merges read channels for single end reads when set to not cat reads": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "readType": "single"
+                        },
+                        [
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L001_R1_001.fastq.gz",
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L002_R1_001.fastq.gz"
+                        ]
+                    ]
+                ],
+                "reads_merged": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "readType": "single"
+                        },
+                        [
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L001_R1_001.fastq.gz",
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L002_R1_001.fastq.gz"
+                        ]
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-08-15T20:19:09+0000"
+    },
+    "Merge_Reads merges and concatenates fastq files for single end reads when set to cat reads": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "readType": "single"
+                        },
+                        "SRR1066657_R1.fastq.gz:md5,ccabf5ada78353bc8c0584940ab92d35"
+                    ]
+                ],
+                "reads_merged": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "readType": "single"
+                        },
+                        "SRR1066657_R1.fastq.gz:md5,ccabf5ada78353bc8c0584940ab92d35"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-08-15T20:19:09+0000"
+    },
+    "Merge_Reads merges read channels for paired end reads when set to not cat reads": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "readType": "paired"
+                        },
+                        [
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L001_R1_001.fastq.gz",
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L002_R1_001.fastq.gz"
+                        ],
+                        [
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L001_R2_001.fastq.gz",
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L002_R2_001.fastq.gz"
+                        ]
+                    ]
+                ],
+                "reads_merged": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "readType": "paired"
+                        },
+                        [
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L001_R1_001.fastq.gz",
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L002_R1_001.fastq.gz"
+                        ],
+                        [
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L001_R2_001.fastq.gz",
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L002_R2_001.fastq.gz"
+                        ]
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-08-15T20:19:09+0000"
+    }
+}
