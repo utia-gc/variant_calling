@@ -20,11 +20,10 @@ nextflow_process {
                         readType:     "single"
                     ],
                     [
-                        [
-                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L001_R1_001.fastq.gz"),
-                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L002_R1_001.fastq.gz")
-                        ]
-                    ]
+                        file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L001_R1_001.fastq.gz"),
+                        file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L002_R1_001.fastq.gz")
+                    ],
+                    []
                 ]
                 """
             }
@@ -33,9 +32,10 @@ nextflow_process {
         then {
             assert process.success
 
-            with(process.out.reads) {
-                assert size() == 1
-                assert get(0).get(1) ==~ /^.*\/SRR1066657_R1.fastq.gz/
+            with(process.out.reads.get(0)) {
+                assert size() == 2
+                assert get(1) ==~ /^.*\/SRR1066657_R1.fastq.gz/
+                assert path(get(1)).linesGzip.size() == 400000
             }
 
             assert snapshot(process.out).match()
@@ -59,14 +59,12 @@ nextflow_process {
                         readType:     "paired"
                     ],
                     [
-                        [
-                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L001_R1_001.fastq.gz"),
-                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L002_R1_001.fastq.gz")
-                        ],
-                        [
-                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L001_R2_001.fastq.gz"),
-                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L002_R2_001.fastq.gz")
-                        ]
+                        file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L001_R1_001.fastq.gz"),
+                        file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L002_R1_001.fastq.gz")
+                    ],
+                    [
+                        file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L001_R2_001.fastq.gz"),
+                        file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L002_R2_001.fastq.gz")
                     ]
                 ]
                 """
@@ -76,10 +74,12 @@ nextflow_process {
         then {
             assert process.success
 
-            with(process.out.reads) {
-                assert size() == 1
-                assert get(0).get(1).get(0) ==~ /^.*\/SRR6924569_R1.fastq.gz/
-                assert get(0).get(1).get(1) ==~ /^.*\/SRR6924569_R2.fastq.gz/
+            with(process.out.reads.get(0)) {
+                assert size() == 2
+                assert get(1).get(0) ==~ /^.*\/SRR6924569_R1.fastq.gz/
+                assert path(get(1).get(0)).linesGzip.size() == 400000
+                assert get(1).get(1) ==~ /^.*\/SRR6924569_R2.fastq.gz/
+                assert path(get(1).get(1)).linesGzip.size() == 400000
             }
 
             assert snapshot(process.out).match()

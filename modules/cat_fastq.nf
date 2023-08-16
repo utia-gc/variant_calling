@@ -4,7 +4,7 @@ process cat_fastq {
     label 'base'
 
     input:
-        tuple val(metadata), file(reads1), file(reads2)
+        tuple val(metadata), path(reads1), path(reads2)
 
     output:
         tuple val(metadata), path('*.fastq.gz'), emit: reads
