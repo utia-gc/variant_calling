@@ -1,0 +1,89 @@
+{
+    "Cat_Reads concatenates reads for PE reads": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "readType": "paired"
+                        },
+                        [
+                            "SRR6924569_R1.fastq.gz:md5,525ad355d8f72020b2ad716e38a231f3",
+                            "SRR6924569_R2.fastq.gz:md5,4be7fdf7176be1216c332c49de3656df"
+                        ]
+                    ]
+                ],
+                "reads_catted": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "readType": "paired"
+                        },
+                        [
+                            "SRR6924569_R1.fastq.gz:md5,525ad355d8f72020b2ad716e38a231f3",
+                            "SRR6924569_R2.fastq.gz:md5,4be7fdf7176be1216c332c49de3656df"
+                        ]
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-08-17T18:59:10+0000"
+    },
+    "Cat_Reads concatenates reads for SE reads": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "readType": "single"
+                        },
+                        "SRR1066657_R1.fastq.gz:md5,ccabf5ada78353bc8c0584940ab92d35"
+                    ]
+                ],
+                "reads_catted": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "readType": "single"
+                        },
+                        "SRR1066657_R1.fastq.gz:md5,ccabf5ada78353bc8c0584940ab92d35"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-08-17T18:59:10+0000"
+    },
+    "Cat_Reads concatenates reads for PE reads in lexicographic order": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "readType": "paired"
+                        },
+                        [
+                            "SRR6924569_R1.fastq.gz:md5,525ad355d8f72020b2ad716e38a231f3",
+                            "SRR6924569_R2.fastq.gz:md5,4be7fdf7176be1216c332c49de3656df"
+                        ]
+                    ]
+                ],
+                "reads_catted": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "readType": "paired"
+                        },
+                        [
+                            "SRR6924569_R1.fastq.gz:md5,525ad355d8f72020b2ad716e38a231f3",
+                            "SRR6924569_R2.fastq.gz:md5,4be7fdf7176be1216c332c49de3656df"
+                        ]
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-08-17T18:59:10+0000"
+    }
+}
