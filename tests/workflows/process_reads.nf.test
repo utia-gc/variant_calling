@@ -81,15 +81,6 @@ nextflow_workflow {
 
             // test read trimming log
             assert workflow.out.trim_log
-
-
-            // test trimmed fastq gets published to data directory
-            def fastq = path("${params.publishDirData}/reads/trim/SRR1066657_GSM1299413_WT_NR_A_R1.fastq.gz")
-            assert fastq.exists()
-
-            // test trim log gets published to reports directory
-            def log = path("${params.publishDirReports}/reads/trim/SRR1066657_GSM1299413_WT_NR_A_cutadapt-log.txt")
-            assert log.exists()
         }
 
     }

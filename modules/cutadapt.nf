@@ -5,12 +5,6 @@ process cutadapt {
     label 'lil_mem'
 
     publishDir(
-        path:    "${params.publishDirData}/reads/trim",
-        mode:    "${params.publishMode}",
-        pattern: '*.fastq.gz',
-        enabled: params.publishTrimReads
-    )
-    publishDir(
         path:    "${params.publishDirReports}/reads/trim",
         mode:    "${params.publishMode}",
         pattern: '*_cutadapt-log.txt'
