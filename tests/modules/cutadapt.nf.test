@@ -4,7 +4,7 @@ nextflow_process {
     script "modules/cutadapt.nf"
     process "cutadapt"
 
-    test("cutadapt works for single-end reads.") {
+    test("cutadapt works for SE reads.") {
 
         when {
             params {
@@ -34,7 +34,7 @@ nextflow_process {
 
             with(process.out.reads) {
                 assert size() == 1
-                assert get(0).get(1) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_R1.fastq.gz/
+                assert get(0).get(1) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_trimmed_R1.fastq.gz/
             }
             with(process.out.log) {
                 assert size() == 1
@@ -46,50 +46,7 @@ nextflow_process {
 
     }
 
-    test("cutadapt works for single-end reads and publishes trimmed reads when `params.publishTrimReads = true`.") {
-
-        when {
-            params {
-                publishDirReports = "${outputDir}/reports"
-                publishDirData    = "${outputDir}/data"
-                publishTrimReads  = true
-            }
-            process {
-                """
-                input[0] = [
-                    [
-                        sampleName: "SRR1066657_GSM1299413_WT_NR_A",
-                        readType:   "single"
-                    ],
-                    [
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz")
-                    ]
-                ]
-                input[1] = "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"
-                input[2] = "AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC"
-                input[3] = "30"
-                """
-            }
-        }
-
-        then {
-            assert process.success
-
-            with(process.out.reads) {
-                assert size() == 1
-                assert get(0).get(1) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_R1.fastq.gz/
-            }
-            with(process.out.log) {
-                assert size() == 1
-                assert get(0) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_cutadapt-log.txt/
-            }
-
-            assert snapshot(process.out.reads).match()
-        }
-
-    }
-
-    test("cutadapt works for paired-end reads.") {
+    test("cutadapt works for PE reads.") {
 
         when {
             params {
@@ -120,8 +77,8 @@ nextflow_process {
 
             with(process.out.reads) {
                 assert size() == 1
-                assert get(0).get(1).get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_R1.fastq.gz/
-                assert get(0).get(1).get(1) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_R2.fastq.gz/
+                assert get(0).get(1).get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_trimmed_R1.fastq.gz/
+                assert get(0).get(1).get(1) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_trimmed_R2.fastq.gz/
             }
             with(process.out.log) {
                 assert size() == 1
