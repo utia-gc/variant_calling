@@ -4,7 +4,7 @@ nextflow_workflow {
     script "workflows/process_reads.nf"
     workflow "PROCESS_READS"
 
-    test("PROCESS_READS succeeds for single-end reads.") {
+    test("PROCESS_READS concatenates and trims reads by default -- SE reads.") {
 
         when {
             params {
@@ -13,15 +13,30 @@ nextflow_workflow {
             }
             workflow {
                 """
-                input[0] = [
+                input[0] = Channel.of(
                     [
-                        sampleName: "SRR1066657_GSM1299413_WT_NR_A",
-                        readType:   "single"
+                        [
+                            sampleName:   "SRR1066657",
+                            sampleNumber: "3",
+                            lane:         "001",
+                            readType:     "single"
+                        ],
+                        [
+                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L001_R1_001.fastq.gz")
+                        ]
                     ],
                     [
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz")
+                        [
+                            sampleName:   "SRR1066657",
+                            sampleNumber: "3",
+                            lane:         "002",
+                            readType:     "single"
+                        ],
+                        [
+                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L002_R1_001.fastq.gz")
+                        ]
                     ]
-                ]
+                )
                 """
             }
         }
@@ -29,40 +44,62 @@ nextflow_workflow {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 1
+            assert workflow.trace.succeeded().size() == 2
 
-            // test read trimming
-            assert workflow.out.reads_pre_align
+            // test read trimming and concatenation
             with(workflow.out.reads_pre_align) {
                 assert size() == 1
-                assert get(0).get(1) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_R1.fastq.gz/
+                with(get(0)) {
+                    assert size() == 2
+                    assert get(1) ==~ /^.*\/SRR1066657_trimmed_R1.fastq.gz/
+                }
             }
+            assert snapshot(workflow.out.reads_pre_align).match()
 
             // test read trimming log
-            assert workflow.out.trim_log
+            with(workflow.out.trim_log) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/SRR1066657_cutadapt-log.txt/
+            }
         }
 
     }
 
-    test("PROCESS_READS succeeds for single-end reads and publishes trimmed reads when `params.publishTrimReads = true`.") {
+    test("PROCESS_READS concatenates and trims reads by default -- PE reads.") {
 
         when {
             params {
                 publishDirReports = "${outputDir}/reports"
                 publishDirData    = "${outputDir}/data"
-                publishTrimReads  = true
             }
             workflow {
                 """
-                input[0] = [
+                input[0] = Channel.of(
                     [
-                        sampleName: "SRR1066657_GSM1299413_WT_NR_A",
-                        readType:   "single"
+                        [
+                            sampleName:   "SRR6924569",
+                            sampleNumber: "1",
+                            lane:         "001",
+                            readType:     "paired"
+                        ],
+                        [
+                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L001_R1_001.fastq.gz"),
+                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L001_R2_001.fastq.gz")
+                        ]
                     ],
                     [
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz")
+                        [
+                            sampleName:   "SRR6924569",
+                            sampleNumber: "1",
+                            lane:         "002",
+                            readType:     "paired"
+                        ],
+                        [
+                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L002_R1_001.fastq.gz"),
+                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L002_R2_001.fastq.gz")
+                        ]
                     ]
-                ]
+                )
                 """
             }
         }
@@ -70,40 +107,62 @@ nextflow_workflow {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 1
+            assert workflow.trace.succeeded().size() == 2
 
-            // test read trimming
-            assert workflow.out.reads_pre_align
+            // test read trimming and concatenation
             with(workflow.out.reads_pre_align) {
                 assert size() == 1
-                assert get(0).get(1) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_R1.fastq.gz/
+                with(get(0)) {
+                    assert size() == 2
+                    assert get(1).get(0) ==~ /^.*\/SRR6924569_trimmed_R1.fastq.gz/
+                    assert get(1).get(1) ==~ /^.*\/SRR6924569_trimmed_R2.fastq.gz/
+                }
             }
+            assert snapshot(workflow.out.reads_pre_align).match()
 
             // test read trimming log
-            assert workflow.out.trim_log
+            with(workflow.out.trim_log) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/SRR6924569_cutadapt-log.txt/
+            }
         }
 
     }
 
-    test("PROCESS_READS succeeds for paired-end reads.") {
+    test("PROCESS_READS only concatenates reads when `params.skipTrimReads = true` -- SE reads.") {
 
         when {
             params {
                 publishDirReports = "${outputDir}/reports"
                 publishDirData    = "${outputDir}/data"
+                skipTrimReads     = true
             }
             workflow {
                 """
-                input[0] = [
+                input[0] = Channel.of(
                     [
-                        sampleName: "SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1",
-                        readType:   "paired"
+                        [
+                            sampleName:   "SRR1066657",
+                            sampleNumber: "3",
+                            lane:         "001",
+                            readType:     "single"
+                        ],
+                        [
+                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L001_R1_001.fastq.gz")
+                        ]
                     ],
                     [
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz"),
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz")
+                        [
+                            sampleName:   "SRR1066657",
+                            sampleNumber: "3",
+                            lane:         "002",
+                            readType:     "single"
+                        ],
+                        [
+                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L002_R1_001.fastq.gz")
+                        ]
                     ]
-                ]
+                )
                 """
             }
         }
@@ -113,16 +172,20 @@ nextflow_workflow {
             assert workflow.success
             assert workflow.trace.succeeded().size() == 1
 
-            // test read trimming
-            assert workflow.out.reads_pre_align
+            // test read trimming and concatenation
             with(workflow.out.reads_pre_align) {
                 assert size() == 1
-                assert get(0).get(1).get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_R1.fastq.gz/
-                assert get(0).get(1).get(1) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_R2.fastq.gz/
+                with(get(0)) {
+                    assert size() == 2
+                    assert get(1) ==~ /^.*\/SRR1066657_R1.fastq.gz/
+                }
             }
+            assert snapshot(workflow.out.reads_pre_align).match()
 
             // test read trimming log
-            assert workflow.out.trim_log
+            with(workflow.out.trim_log) {
+                assert get(0) == 'EMPTY'
+            }
         }
 
     }

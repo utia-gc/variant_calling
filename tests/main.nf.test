@@ -15,7 +15,7 @@ nextflow_pipeline {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 17
+            assert workflow.trace.succeeded().size() == 21
 
             // test raw FastQC html reports and zip files published to reports dir
             assert path("${params.publishDirReports}/fastqc/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.html").exists()
@@ -38,18 +38,18 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/reads/trim/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_cutadapt-log.txt").exists()
             assert path("${params.publishDirReports}/reads/trim/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_cutadapt-log.txt").exists()
             // test prealign FastQC html reports and zip files published to reports dir
-            assert path("${params.publishDirReports}/fastqc/SRR1066657_GSM1299413_WT_NR_A_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR1066657_GSM1299413_WT_NR_A_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR1066658_GSM1299414_WT_NR_B_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR1066658_GSM1299414_WT_NR_B_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_R2_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_R2_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_R2_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_R2_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR1066657_GSM1299413_WT_NR_A_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR1066657_GSM1299413_WT_NR_A_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR1066658_GSM1299414_WT_NR_B_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR1066658_GSM1299414_WT_NR_B_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_trimmed_R2_fastqc.html").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_trimmed_R2_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_trimmed_R2_fastqc.html").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_trimmed_R2_fastqc.zip").exists()
             // test MultiQC reports and data published to reports dir
             assert path("${params.publishDirReports}/multiqc/reads_raw/reads_raw.html").exists()
             assert path("${params.publishDirReports}/multiqc/reads_raw/reads_raw_data/").exists()
@@ -75,7 +75,7 @@ nextflow_pipeline {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 15
+            assert workflow.trace.succeeded().size() == 19
 
             // test raw FastQC html reports and zip files published to reports dir
             assert path("${params.publishDirReports}/fastqc/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.html").exists()
@@ -98,18 +98,18 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/reads/trim/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_cutadapt-log.txt").exists()
             assert path("${params.publishDirReports}/reads/trim/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_cutadapt-log.txt").exists()
             // test prealign FastQC html reports and zip files published to reports dir
-            assert path("${params.publishDirReports}/fastqc/SRR1066657_GSM1299413_WT_NR_A_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR1066657_GSM1299413_WT_NR_A_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR1066658_GSM1299414_WT_NR_B_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR1066658_GSM1299414_WT_NR_B_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_R2_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_R2_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_R2_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_R2_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR1066657_GSM1299413_WT_NR_A_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR1066657_GSM1299413_WT_NR_A_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR1066658_GSM1299414_WT_NR_B_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR1066658_GSM1299414_WT_NR_B_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_trimmed_R2_fastqc.html").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_trimmed_R2_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_trimmed_R2_fastqc.html").exists()
+            assert path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_trimmed_R2_fastqc.zip").exists()
             // test MultiQC reports and data published to reports dir
             assert path("${params.publishDirReports}/multiqc/reads_raw/reads_raw.html").exists()
             assert path("${params.publishDirReports}/multiqc/reads_raw/reads_raw_data/").exists()
