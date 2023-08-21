@@ -1,18 +1,9 @@
-# NGS
+# scrnaseq
 
 ## Introduction
 
-`ngs` is a [Nextflow](https://www.nextflow.io/) pipeline for base NGS analysis.
-`ngs` is primarily intended to be used as a starting point for building more specific NGS analysis pipelines, e.g. for RNA-seq, WGS genotyping, snATAC-seq, etc.
-While `ngs` can be run on any platform supported by Nextflow, it is developed for use in HPC environments and specifically [ISAAC Next Generation] at the University of Tennessee, Knoxville.
-
-## Pipeline overview
-
-1. Trim/filter reads
-2. Reads QC
-3. Map reads
-4. Process alignments
-5. Full workflow QC
+`scrnaseq` is a [Nextflow](https://www.nextflow.io/) pipeline built on [utia-gc/ngs](htpps://github.com/utia-gc/ngs) for base single cell RNA-seq analysis.
+While `scrnaseq` can be run on any platform supported by Nextflow, it is developed for use in HPC environments and specifically [ISAAC Next Generation] at the University of Tennessee, Knoxville.
 
 ## Quick start
 
@@ -28,33 +19,33 @@ While `ngs` can be run on any platform supported by Nextflow, it is developed fo
 
 3. [Singularity](https://sylabs.io)
 
-### Get or update `ngs`
+### Get or update `scrnaseq`
 
-1. Download or update `ngs`:
+1. Download or update `scrnaseq`:
 
     ```bash
-    nextflow pull utia-gc/ngs
+    nextflow pull utia-gc/scrnaseq
     ```
 
 2. Show project info:
 
     ```bash
-    nextflow info utia-gc/ngs
+    nextflow info utia-gc/scrnaseq
     ```
 
-### Test `ngs`
+### Test `scrnaseq`
 
-1. Check that `ngs` works on your system:
+1. Check that `scrnaseq` works on your system:
 
-   - `-profile nf_test` uses preconfigured test parameters to run `ngs` in full on a small test dataset stored in a remote GitHub repository.
+   - `-profile nf_test` uses preconfigured test parameters to run `scrnaseq` in full on a small test dataset stored in a remote GitHub repository.
    - Because these test files are stored in a remote repository, internet access is required to run the test.
    - For more information, see the `profiles` section of the [nextflow config file](nextflow.config).
 
    ```bash
-   nextflow run utia-gc/ngs -profile nf_test 
+   nextflow run utia-gc/scrnaseq -profile nf_test 
    ```
 
-### Run `ngs`
+### Run `scrnaseq`
 
 TODO
 
@@ -62,7 +53,7 @@ TODO
 
 ### The `exploratory` profile
 
-Analysis of NGS data frequently requires an exploratory stage that involves iterating through various parameter options and scrutinizing their effects on important QC metrics before settling on a final set of parameters.
+Analysis of single cell RNA-seq data frequently requires an exploratory stage that involves iterating through various parameter options and scrutinizing their effects on important QC metrics before settling on a final set of parameters.
 To help facilitate this crucial process, we have included an `exploratory` profile option which implements the following features:
 
 - Data and reports are published within time-stamped subdirectories of `exploratory` structured as follows: `<current working directory>/exploratory/<timestamp>_<project title>`. This allows the user to see a chronological log of their changes and gives the option to put a brief description of changes in the project title.
@@ -79,13 +70,13 @@ This serves the dual purpose of saving time by not repeating logged tasks while 
 During exploratory analysis, iteratively make changes to parameters and run the pipeline with the `exploratory` profile:
 
 ```bash
-nextflow run utia-gc/ngs -profile exploratory
+nextflow run utia-gc/scrnaseq -profile exploratory
 ```
 
 Once you have settled on an optimal set of parameters, rerun the pipeline without the `exploratory` profile:
 
 ```bash
-nextflow run utia-gc/ngs -resume
+nextflow run utia-gc/scrnaseq -resume
 ```
 
 Useful tip --- if a specific previous run contained the user's optimal set of parameter, or more generally if for some reason it would be advantageous to resume from some run of the pipeline other than the most recent run, then the pipeline can be resumed from any previous cached run using the RUN NAME or SESSION ID of the desired run.
@@ -93,5 +84,5 @@ Use `nextflow log` to view information about previous runs.
 For example, to resume from a run named 'boring_euler':
 
 ```bash
-nextflow run utia-gc/ngs -resume boring_euler
+nextflow run utia-gc/scrnaseq -resume boring_euler
 ```
