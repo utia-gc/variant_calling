@@ -7,11 +7,11 @@
                         "sampleName": "SRR1066657_GSM1299413_WT_NR_A",
                         "readType": "single"
                     },
-                    "SRR1066657_GSM1299413_WT_NR_A_R1.fastq.gz:md5,9c46e73133a169e413c6f94eb6afb277"
+                    "SRR1066657_GSM1299413_WT_NR_A_trimmed_R1.fastq.gz:md5,9c46e73133a169e413c6f94eb6afb277"
                 ]
             ]
         ],
-        "timestamp": "2023-08-03T21:09:14+0000"
+        "timestamp": "2023-08-17T20:03:28+0000"
     },
     "CUTADAPT works for single-end reads.": {
         "content": [
@@ -25,7 +25,7 @@
                 ]
             ]
         ],
-        "timestamp": "2023-08-03T21:09:14+0000"
+        "timestamp": "2023-08-17T20:03:28+0000"
     },
     "CUTADAPT works for paired-end reads.": {
         "content": [
@@ -42,7 +42,7 @@
                 ]
             ]
         ],
-        "timestamp": "2023-08-03T21:09:14+0000"
+        "timestamp": "2023-08-17T20:03:28+0000"
     },
     "cutadapt works for paired-end reads.": {
         "content": [
@@ -59,7 +59,7 @@
                 ]
             ]
         ],
-        "timestamp": "2023-08-03T21:09:14+0000"
+        "timestamp": "2023-08-17T20:03:28+0000"
     },
     "cutadapt works for single-end reads.": {
         "content": [
@@ -73,6 +73,37 @@
                 ]
             ]
         ],
-        "timestamp": "2023-08-03T21:09:14+0000"
+        "timestamp": "2023-08-17T20:03:28+0000"
+    },
+    "cutadapt works for SE reads.": {
+        "content": [
+            [
+                [
+                    {
+                        "sampleName": "SRR1066657_GSM1299413_WT_NR_A",
+                        "readType": "single"
+                    },
+                    "SRR1066657_GSM1299413_WT_NR_A_trimmed_R1.fastq.gz:md5,9c46e73133a169e413c6f94eb6afb277"
+                ]
+            ]
+        ],
+        "timestamp": "2023-08-17T20:03:28+0000"
+    },
+    "cutadapt works for PE reads.": {
+        "content": [
+            [
+                [
+                    {
+                        "sampleName": "SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1",
+                        "readType": "paired"
+                    },
+                    [
+                        "SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_trimmed_R1.fastq.gz:md5,ce49af7bca8aedfc501c2b805034c7f4",
+                        "SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_trimmed_R2.fastq.gz:md5,c8ae59bdc21d387338e752c1ed066bb2"
+                    ]
+                ]
+            ]
+        ],
+        "timestamp": "2023-08-17T20:03:28+0000"
     }
 }

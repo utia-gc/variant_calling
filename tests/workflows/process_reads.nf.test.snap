@@ -1,0 +1,47 @@
+{
+    "PROCESS_READS concatenates and trims reads by default -- PE reads.": {
+        "content": [
+            [
+                [
+                    {
+                        "sampleName": "SRR6924569",
+                        "readType": "paired"
+                    },
+                    [
+                        "SRR6924569_trimmed_R1.fastq.gz:md5,68b0217aba5b177e752fd689d251527f",
+                        "SRR6924569_trimmed_R2.fastq.gz:md5,6477b103ff26f0e32294ab80b265b184"
+                    ]
+                ]
+            ]
+        ],
+        "timestamp": "2023-08-21T15:28:46+0000"
+    },
+    "PROCESS_READS only concatenates reads when `params.skipTrimReads = true` -- SE reads.": {
+        "content": [
+            [
+                [
+                    {
+                        "sampleName": "SRR1066657",
+                        "readType": "single"
+                    },
+                    "SRR1066657_R1.fastq.gz:md5,ccabf5ada78353bc8c0584940ab92d35"
+                ]
+            ]
+        ],
+        "timestamp": "2023-08-21T15:28:46+0000"
+    },
+    "PROCESS_READS concatenates and trims reads by default -- SE reads.": {
+        "content": [
+            [
+                [
+                    {
+                        "sampleName": "SRR1066657",
+                        "readType": "single"
+                    },
+                    "SRR1066657_trimmed_R1.fastq.gz:md5,98f53500019dd1bdff84a8255e5bf975"
+                ]
+            ]
+        ],
+        "timestamp": "2023-08-21T15:28:46+0000"
+    }
+}

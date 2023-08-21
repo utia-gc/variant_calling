@@ -5,12 +5,6 @@ process cutadapt {
     label 'lil_mem'
 
     publishDir(
-        path:    "${params.publishDirData}/reads/trim",
-        mode:    "${params.publishMode}",
-        pattern: '*.fastq.gz',
-        enabled: params.publishTrimReads
-    )
-    publishDir(
         path:    "${params.publishDirReports}/reads/trim",
         mode:    "${params.publishMode}",
         pattern: '*_cutadapt-log.txt'
@@ -23,7 +17,7 @@ process cutadapt {
         val minimum_length
 
     output:
-        tuple val(metadata), path("${metadata.sampleName}_*.fastq.gz"), emit: reads
+        tuple val(metadata), path("${metadata.sampleName}_trimmed_*.fastq.gz"), emit: reads
         path("${metadata.sampleName}_cutadapt-log.txt"), emit: log
 
     script:
@@ -32,7 +26,7 @@ process cutadapt {
             cutadapt \
                 -a ${r1_adapter} \
                 -m ${minimum_length} \
-                -o ${metadata.sampleName}_R1.fastq.gz \
+                -o ${metadata.sampleName}_trimmed_R1.fastq.gz \
                 ${reads} \
                 > ${metadata.sampleName}_cutadapt-log.txt
             """
@@ -42,8 +36,8 @@ process cutadapt {
                 -a ${r1_adapter} \
                 -A ${r2_adapter} \
                 -m ${minimum_length} \
-                -o ${metadata.sampleName}_R1.fastq.gz \
-                -p ${metadata.sampleName}_R2.fastq.gz \
+                -o ${metadata.sampleName}_trimmed_R1.fastq.gz \
+                -p ${metadata.sampleName}_trimmed_R2.fastq.gz \
                 ${reads} \
                 > ${metadata.sampleName}_cutadapt-log.txt
             """

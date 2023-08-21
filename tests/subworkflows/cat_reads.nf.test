@@ -1,10 +1,10 @@
 nextflow_workflow {
 
-    name "Test Workflow PROCESS_READS"
-    script "workflows/process_reads.nf"
-    workflow "PROCESS_READS"
+    name "Test Workflow Cat_Reads"
+    script "subworkflows/cat_reads.nf"
+    workflow "Cat_Reads"
 
-    test("PROCESS_READS concatenates and trims reads by default -- SE reads.") {
+    test("Cat_Reads concatenates reads for SE reads") {
 
         when {
             params {
@@ -42,30 +42,20 @@ nextflow_workflow {
         }
 
         then {
-            // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 2
 
-            // test read trimming and concatenation
-            with(workflow.out.reads_pre_align) {
-                assert size() == 1
-                with(get(0)) {
-                    assert size() == 2
-                    assert get(1) ==~ /^.*\/SRR1066657_trimmed_R1.fastq.gz/
-                }
+            with(workflow.out.reads_catted.get(0)) {
+                assert size() == 2
+                assert get(1) ==~ /^.*\/SRR1066657_R1.fastq.gz/
+                assert path(get(1)).linesGzip.size() == 400000
             }
-            assert snapshot(workflow.out.reads_pre_align).match()
 
-            // test read trimming log
-            with(workflow.out.trim_log) {
-                assert size() == 1
-                assert get(0) ==~ /^.*\/SRR1066657_cutadapt-log.txt/
-            }
+            assert snapshot(workflow.out).match()
         }
 
     }
 
-    test("PROCESS_READS concatenates and trims reads by default -- PE reads.") {
+    test("Cat_Reads concatenates reads for PE reads") {
 
         when {
             params {
@@ -105,61 +95,53 @@ nextflow_workflow {
         }
 
         then {
-            // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 2
 
-            // test read trimming and concatenation
-            with(workflow.out.reads_pre_align) {
-                assert size() == 1
-                with(get(0)) {
-                    assert size() == 2
-                    assert get(1).get(0) ==~ /^.*\/SRR6924569_trimmed_R1.fastq.gz/
-                    assert get(1).get(1) ==~ /^.*\/SRR6924569_trimmed_R2.fastq.gz/
-                }
+            with(workflow.out.reads_catted.get(0)) {
+                assert size() == 2
+                assert get(1).get(0) ==~ /^.*\/SRR6924569_R1.fastq.gz/
+                assert path(get(1).get(0)).linesGzip.size() == 400000
+                assert get(1).get(1) ==~ /^.*\/SRR6924569_R2.fastq.gz/
+                assert path(get(1).get(1)).linesGzip.size() == 400000
             }
-            assert snapshot(workflow.out.reads_pre_align).match()
 
-            // test read trimming log
-            with(workflow.out.trim_log) {
-                assert size() == 1
-                assert get(0) ==~ /^.*\/SRR6924569_cutadapt-log.txt/
-            }
+            assert snapshot(workflow.out).match()
         }
 
     }
 
-    test("PROCESS_READS only concatenates reads when `params.skipTrimReads = true` -- SE reads.") {
+    test("Cat_Reads concatenates reads for PE reads in lexicographic order") {
 
         when {
             params {
                 publishDirReports = "${outputDir}/reports"
                 publishDirData    = "${outputDir}/data"
-                skipTrimReads     = true
             }
             workflow {
                 """
                 input[0] = Channel.of(
                     [
                         [
-                            sampleName:   "SRR1066657",
-                            sampleNumber: "3",
-                            lane:         "001",
-                            readType:     "single"
+                            sampleName:   "SRR6924569",
+                            sampleNumber: "1",
+                            lane:         "002",
+                            readType:     "paired"
                         ],
                         [
-                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L001_R1_001.fastq.gz")
+                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L002_R1_001.fastq.gz"),
+                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L002_R2_001.fastq.gz")
                         ]
                     ],
                     [
                         [
-                            sampleName:   "SRR1066657",
-                            sampleNumber: "3",
-                            lane:         "002",
-                            readType:     "single"
+                            sampleName:   "SRR6924569",
+                            sampleNumber: "1",
+                            lane:         "001",
+                            readType:     "paired"
                         ],
                         [
-                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L002_R1_001.fastq.gz")
+                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L001_R1_001.fastq.gz"),
+                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L001_R2_001.fastq.gz")
                         ]
                     ]
                 )
@@ -168,24 +150,17 @@ nextflow_workflow {
         }
 
         then {
-            // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 1
 
-            // test read trimming and concatenation
-            with(workflow.out.reads_pre_align) {
-                assert size() == 1
-                with(get(0)) {
-                    assert size() == 2
-                    assert get(1) ==~ /^.*\/SRR1066657_R1.fastq.gz/
-                }
+            with(workflow.out.reads_catted.get(0)) {
+                assert size() == 2
+                assert get(1).get(0) ==~ /^.*\/SRR6924569_R1.fastq.gz/
+                assert path(get(1).get(0)).linesGzip.size() == 400000
+                assert get(1).get(1) ==~ /^.*\/SRR6924569_R2.fastq.gz/
+                assert path(get(1).get(1)).linesGzip.size() == 400000
             }
-            assert snapshot(workflow.out.reads_pre_align).match()
 
-            // test read trimming log
-            with(workflow.out.trim_log) {
-                assert get(0) == 'EMPTY'
-            }
+            assert snapshot(workflow.out).match()
         }
 
     }
