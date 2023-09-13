@@ -27,5 +27,5 @@ workflow PROCESS_READS {
 
     emit:
         reads_pre_align = ch_reads_post_trim
-        trim_log        = ch_trim_log .ifEmpty('EMPTY')
+        trim_log        = ch_trim_log
 }
