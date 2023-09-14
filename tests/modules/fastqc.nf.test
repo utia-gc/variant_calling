@@ -4,7 +4,9 @@ nextflow_process {
     script "modules/fastqc.nf"
     process "fastqc"
 
-    test("fastqc works for single-end reads.") {
+    test("fastqc runs QC on fastqs -- SE reads.") {
+        // instantiate helper objects
+        def readsLane1 = new ReadsSELane1()
 
         when {
             params {
@@ -14,9 +16,14 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [sampleName: "SRR1066657_GSM1299413_WT_NR_A"],
                     [
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz")
+                        sampleName:   "${readsLane1.getSampleName()}",
+                        sampleNumber: "${readsLane1.getSampleNumber()}",
+                        lane:         "${readsLane1.getLane()}",
+                        readType:     "${readsLane1.getReadType()}"
+                    ],
+                    [
+                        file("${readsLane1.getR1()}")
                     ]
                 ]
                 """
@@ -24,23 +31,26 @@ nextflow_process {
         }
 
         then {
+            // test process success
             assert process.success
 
-            //test html output
+            // test html output
             with(process.out.html) {
                 assert size() == 1
-                assert get(0) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.html/
+                assert get(0) ==~ /^.*\/${readsLane1.getR1SimpleName()}_fastqc.html/
             }
-            //test zip output
+            // test zip output
             with(process.out.zip) {
                 assert size() == 1
-                assert get(0) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.zip/
+                assert get(0) ==~ /^.*\/${readsLane1.getR1SimpleName()}_fastqc.zip/
             }
         }
 
     }
 
-    test("fastqc works for paired-end reads.") {
+    test("fastqc runs QC on fastqs -- PE reads.") {
+        // instantiate helper objects
+        def readsLane1 = new ReadsPELane1()
 
         when {
             params {
@@ -50,10 +60,15 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [sampleName: "SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1"],
                     [
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz"),
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz")
+                        sampleName:   "${readsLane1.getSampleName()}",
+                        sampleNumber: "${readsLane1.getSampleNumber()}",
+                        lane:         "${readsLane1.getLane()}",
+                        readType:     "${readsLane1.getReadType()}"
+                    ],
+                    [
+                        file("${readsLane1.getR1()}"),
+                        file("${readsLane1.getR2()}")
                     ]
                 ]
                 """
@@ -61,19 +76,20 @@ nextflow_process {
         }
 
         then {
+            // test process success
             assert process.success
 
             // test html output
             with(process.out.html.get(0)) {
                 assert size() == 2
-                assert get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.html/
-                assert get(1) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.html/
+                assert get(0) ==~ /^.*\/${readsLane1.getR1SimpleName()}_fastqc.html/
+                assert get(1) ==~ /^.*\/${readsLane1.getR2SimpleName()}_fastqc.html/
             }
             // test zip output
             with(process.out.zip.get(0)) {
                 assert size() == 2
-                assert get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.zip/
-                assert get(1) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.zip/
+                assert get(0) ==~ /^.*\/${readsLane1.getR1SimpleName()}_fastqc.zip/
+                assert get(1) ==~ /^.*\/${readsLane1.getR2SimpleName()}_fastqc.zip/
             }
         }
 

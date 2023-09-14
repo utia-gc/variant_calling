@@ -5,6 +5,8 @@ nextflow_workflow {
     workflow "Prepare_Refs"
 
     test("Prepare_Refs successfully unzips and emits GZIP-compressed genome and GTF files.") {
+        // instantiate helper objects
+        def refs = new RefsEnsembl()
 
         when {
             params {
@@ -13,36 +15,40 @@ nextflow_workflow {
             }
             workflow {
                 """
-                input[0] = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/genome_I.fa.gz"
-                input[1] = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/annotations_I.gtf.gz"
+                input[0] = file("${refs.getGenomeGzip()}")
+                input[1] = file("${refs.getGTFGzip()}")
                 """
             }
         }
 
         then {
+            // test workflow success
             assert workflow.success
             assert workflow.trace.succeeded().size() == 2
 
+            // test genome decompressed
             assert workflow.out.genome
             with(workflow.out.genome) {
                 assert size() == 1
                 assert get(0) ==~ /^.*\/genome_I.fa/
-                assert path(get(0)).md5 == "e050100d0a9a7d06a8accf8424ad0d98"
             }
 
+            // test annotations decompressed
             assert workflow.out.annotations
             with(workflow.out.annotations) {
                 assert size() == 1
                 assert get(0) ==~ /^.*\/annotations_I.gtf/
-                assert path(get(0)).md5 == "61525d86cb937e0fe5b349215c50498c"
             }
 
+            // test reproducibility
             assert snapshot(workflow.out).match()
         }
 
 
     }
     test("Prepare_Refs successfully emits uncompressed genome and GTF files when uncompressed inputs are given.") {
+        // instantiate helper objects
+        def refs = new RefsEnsembl()
 
         when {
             params {
@@ -51,28 +57,32 @@ nextflow_workflow {
             }
             workflow {
                 """
-                input[0] = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/genome_I.fa"
-                input[1] = "https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/references/R64-1-1/annotations_I.gtf"
+                input[0] = file("${refs.getGenome()}")
+                input[1] = file("${refs.getGTF()}")
                 """
             }
         }
 
         then {
+            // test workflow success
             assert workflow.success
             assert workflow.trace.succeeded().size() == 0
 
+            // test genome decompressed
             assert workflow.out.genome
             with(workflow.out.genome) {
                 assert size() == 1
                 assert get(0) ==~ /^.*\/genome_I.fa/
             }
 
+            // test annotations decompressed
             assert workflow.out.annotations
             with(workflow.out.annotations) {
                 assert size() == 1
                 assert get(0) ==~ /^.*\/annotations_I.gtf/
             }
 
+            // test reproducibility
             assert snapshot(workflow.out).match()
         }
 

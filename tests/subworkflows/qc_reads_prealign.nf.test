@@ -4,7 +4,9 @@ nextflow_workflow {
     script "subworkflows/qc_reads_prealign.nf"
     workflow "QC_Reads_Prealign"
 
-    test("QC_Reads_Prealign succeeds for single-end reads and cutadapt log with default params.") {
+    test("QC_Reads_Prealign succeeds for reads and cutadapt log -- SE reads.") {
+        // instantiate helper objects
+        def readsLane1 = new ReadsSELane1()
 
         when {
             params {
@@ -15,11 +17,13 @@ nextflow_workflow {
                 """
                 input[0] = [
                     [
-                        sampleName: "SRR1066657_GSM1299413_WT_NR_A",
-                        readType:   "single"
+                        sampleName:   "${readsLane1.getSampleName()}",
+                        sampleNumber: "${readsLane1.getSampleNumber()}",
+                        lane:         "${readsLane1.getLane()}",
+                        readType:     "${readsLane1.getReadType()}"
                     ],
                     [
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz")
+                        file("${readsLane1.getR1()}")
                     ]
                 ]
                 input[1] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log"))
@@ -36,14 +40,16 @@ nextflow_workflow {
             assert workflow.out.multiqc
             with(workflow.out.multiqc.get(0)) {
                 assert size() == 2
-                assert get(0) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.zip/
+                assert get(0) ==~ /^.*\/${readsLane1.getR1SimpleName()}_fastqc.zip/
                 assert get(1) ==~ /^.*\/SAMPLE3_SE.cutadapt.log/
             }
         }
 
     }
 
-    test("QC_Reads_Prealign succeeds for paired-end reads and cutadapt log with default params.") {
+    test("QC_Reads_Prealign succeeds for reads and cutadapt log -- PE reads.") {
+        // instantiate helper objects
+        def readsLane1 = new ReadsPELane1()
 
         when {
             params {
@@ -54,12 +60,14 @@ nextflow_workflow {
                 """
                 input[0] = [
                     [
-                        sampleName: "SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1",
-                        readType:   "paired"
+                        sampleName:   "${readsLane1.getSampleName()}",
+                        sampleNumber: "${readsLane1.getSampleNumber()}",
+                        lane:         "${readsLane1.getLane()}",
+                        readType:     "${readsLane1.getReadType()}"
                     ],
                     [
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz"),
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz")
+                        file("${readsLane1.getR1()}"),
+                        file("${readsLane1.getR2()}")
                     ]
                 ]
                 input[1] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log"))
@@ -76,8 +84,8 @@ nextflow_workflow {
             assert workflow.out.multiqc
             with(workflow.out.multiqc.get(0)) {
                 assert size() == 3
-                assert get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.zip/
-                assert get(1) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.zip/
+                assert get(0) ==~ /^.*\/${readsLane1.getR1SimpleName()}_fastqc.zip/
+                assert get(1) ==~ /^.*\/${readsLane1.getR2SimpleName()}_fastqc.zip/
                 assert get(2) ==~ /^.*\/SAMPLE3_SE.cutadapt.log/
             }
         }
