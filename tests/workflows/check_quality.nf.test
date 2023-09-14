@@ -4,7 +4,10 @@ nextflow_workflow {
     script "workflows/check_quality.nf"
     workflow "CHECK_QUALITY"
 
-    test("CHECK_QUALITY succeeds for single-end reads and cutadapt log with default params.") {
+    test("CHECK_QUALITY succeeds with default params -- cutadapt + SE reads.") {
+        // instantiate helper objects
+        def readsRaw      = new ReadsSELane1()
+        def readsPrealign = new ReadsSELane2()
 
         when {
             params {
@@ -15,20 +18,24 @@ nextflow_workflow {
                 """
                 input[0] = [
                     [
-                        sampleName: "SRR1066657_GSM1299413_WT_NR_A",
-                        readType:   "single"
+                        sampleName:   "${readsRaw.getSampleName()}",
+                        sampleNumber: "${readsRaw.getSampleNumber()}",
+                        lane:         "${readsRaw.getLane()}",
+                        readType:     "${readsRaw.getReadType()}"
                     ],
                     [
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz")
+                        file("${readsRaw.getR1()}")
                     ]
                 ]
                 input[1] = [
                     [
-                        sampleName: "SRR1066658_GSM1299414_WT_NR_B",
-                        readType:   "single"
+                        sampleName:   "${readsPrealign.getSampleName()}",
+                        sampleNumber: "${readsPrealign.getSampleNumber()}",
+                        lane:         "${readsPrealign.getLane()}",
+                        readType:     "${readsPrealign.getReadType()}"
                     ],
                     [
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz")
+                        file("${readsPrealign.getR1()}")
                     ]
                 ]
                 input[2] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log"))
@@ -42,13 +49,13 @@ nextflow_workflow {
             assert workflow.trace.succeeded().size() == 5
 
             // test FastQC html files get published to reports directory
-            def htmlRaw      = path("${params.publishDirReports}/fastqc/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.html")
-            def htmlPrealign = path("${params.publishDirReports}/fastqc/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.html")
+            def htmlRaw      = path("${params.publishDirReports}/fastqc/${readsRaw.getR1SimpleName()}_fastqc.html")
+            def htmlPrealign = path("${params.publishDirReports}/fastqc/${readsPrealign.getR1SimpleName()}_fastqc.html")
             assert htmlRaw.exists()
             assert htmlPrealign.exists()
             // test FastQC zip files get published to reports directory
-            def zipRaw       = path("${params.publishDirReports}/fastqc/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.zip")
-            def zipPrealign  = path("${params.publishDirReports}/fastqc/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000_fastqc.zip")
+            def zipRaw       = path("${params.publishDirReports}/fastqc/${readsRaw.getR1SimpleName()}_fastqc.zip")
+            def zipPrealign  = path("${params.publishDirReports}/fastqc/${readsPrealign.getR1SimpleName()}_fastqc.zip")
             assert zipRaw.exists()
             assert zipPrealign.exists()
             // test MultiQC html reports get published to reports directory
@@ -69,7 +76,10 @@ nextflow_workflow {
 
     }
 
-    test("CHECK_QUALITY succeeds for paired-end reads and cutadapt log with default params.") {
+    test("CHECK_QUALITY succeeds with default params -- cutadapt + PE reads.") {
+        // instantiate helper objects
+        def readsRaw      = new ReadsPELane1()
+        def readsPrealign = new ReadsPELane2()
 
         when {
             params {
@@ -80,22 +90,26 @@ nextflow_workflow {
                 """
                 input[0] = [
                     [
-                        sampleName: "SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2",
-                        readType:   "paired"
+                        sampleName:   "${readsRaw.getSampleName()}",
+                        sampleNumber: "${readsRaw.getSampleNumber()}",
+                        lane:         "${readsRaw.getLane()}",
+                        readType:     "${readsRaw.getReadType()}"
                     ],
                     [
-                        file("https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz"),
-                        file("https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz")
+                        file("${readsRaw.getR1()}"),
+                        file("${readsRaw.getR2()}")
                     ]
                 ]
                 input[1] = [
                     [
-                        sampleName: "SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1",
-                        readType:   "paired"
+                        sampleName:   "${readsPrealign.getSampleName()}",
+                        sampleNumber: "${readsPrealign.getSampleNumber()}",
+                        lane:         "${readsPrealign.getLane()}",
+                        readType:     "${readsPrealign.getReadType()}"
                     ],
                     [
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz"),
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz")
+                        file("${readsPrealign.getR1()}"),
+                        file("${readsPrealign.getR2()}")
                     ]
                 ]
                 input[2] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log"))
@@ -109,21 +123,21 @@ nextflow_workflow {
             assert workflow.trace.succeeded().size() == 5
 
             // test FastQC html files get published to reports directory
-            def htmlR1Raw      = path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.html")
-            def htmlR2Raw      = path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.html")
+            def htmlR1Raw      = path("${params.publishDirReports}/fastqc/${readsRaw.getR1SimpleName()}_fastqc.html")
+            def htmlR2Raw      = path("${params.publishDirReports}/fastqc/${readsRaw.getR2SimpleName()}_fastqc.html")
             assert htmlR1Raw.exists()
             assert htmlR2Raw.exists()
-            def htmlR1Prealign = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.html")
-            def htmlR2Prealign = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.html")
+            def htmlR1Prealign = path("${params.publishDirReports}/fastqc/${readsPrealign.getR1SimpleName()}_fastqc.html")
+            def htmlR2Prealign = path("${params.publishDirReports}/fastqc/${readsPrealign.getR2SimpleName()}_fastqc.html")
             assert htmlR1Prealign.exists()
             assert htmlR2Prealign.exists()
             // test FastQC zip files get published to reports directory
-            def zipR1Raw       = path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.zip")
-            def zipR2Raw       = path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.zip")
+            def zipR1Raw       = path("${params.publishDirReports}/fastqc/${readsRaw.getR1SimpleName()}_fastqc.zip")
+            def zipR2Raw       = path("${params.publishDirReports}/fastqc/${readsRaw.getR2SimpleName()}_fastqc.zip")
             assert zipR1Raw.exists()
             assert zipR2Raw.exists()
-            def zipR1Prealign  = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.zip")
-            def zipR2Prealign  = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.zip")
+            def zipR1Prealign  = path("${params.publishDirReports}/fastqc/${readsPrealign.getR1SimpleName()}_fastqc.zip")
+            def zipR2Prealign  = path("${params.publishDirReports}/fastqc/${readsPrealign.getR2SimpleName()}_fastqc.zip")
             assert zipR1Prealign.exists()
             assert zipR2Prealign.exists()
             // test MultiQC html reports get published to reports directory
@@ -144,7 +158,10 @@ nextflow_workflow {
 
     }
 
-    test("CHECK_QUALITY succeeds and skips raw reads QC for paired-end reads and cutadapt log with `params.skipRawReadsQC`.") {
+    test("CHECK_QUALITY succeeds and skips raw reads with `params.skipRawReadsQC` -- cutadapt + PE reads.") {
+        // instantiate helper objects
+        def readsRaw      = new ReadsPELane1()
+        def readsPrealign = new ReadsPELane2()
 
         when {
             params {
@@ -156,22 +173,26 @@ nextflow_workflow {
                 """
                 input[0] = [
                     [
-                        sampleName: "SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2",
-                        readType:   "paired"
+                        sampleName:   "${readsRaw.getSampleName()}",
+                        sampleNumber: "${readsRaw.getSampleNumber()}",
+                        lane:         "${readsRaw.getLane()}",
+                        readType:     "${readsRaw.getReadType()}"
                     ],
                     [
-                        file("https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz"),
-                        file("https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz")
+                        file("${readsRaw.getR1()}"),
+                        file("${readsRaw.getR2()}")
                     ]
                 ]
                 input[1] = [
                     [
-                        sampleName: "SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1",
-                        readType:   "paired"
+                        sampleName:   "${readsPrealign.getSampleName()}",
+                        sampleNumber: "${readsPrealign.getSampleNumber()}",
+                        lane:         "${readsPrealign.getLane()}",
+                        readType:     "${readsPrealign.getReadType()}"
                     ],
                     [
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz"),
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz")
+                        file("${readsPrealign.getR1()}"),
+                        file("${readsPrealign.getR2()}")
                     ]
                 ]
                 input[2] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log"))
@@ -185,13 +206,13 @@ nextflow_workflow {
             assert workflow.trace.succeeded().size() == 3
 
             // test FastQC html files get published to reports directory
-            def htmlR1Prealign = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.html")
-            def htmlR2Prealign = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.html")
+            def htmlR1Prealign = path("${params.publishDirReports}/fastqc/${readsPrealign.getR1SimpleName()}_fastqc.html")
+            def htmlR2Prealign = path("${params.publishDirReports}/fastqc/${readsPrealign.getR2SimpleName()}_fastqc.html")
             assert htmlR1Prealign.exists()
             assert htmlR2Prealign.exists()
             // test FastQC zip files get published to reports directory
-            def zipR1Prealign  = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.zip")
-            def zipR2Prealign  = path("${params.publishDirReports}/fastqc/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.zip")
+            def zipR1Prealign  = path("${params.publishDirReports}/fastqc/${readsPrealign.getR1SimpleName()}_fastqc.zip")
+            def zipR2Prealign  = path("${params.publishDirReports}/fastqc/${readsPrealign.getR2SimpleName()}_fastqc.zip")
             assert zipR1Prealign.exists()
             assert zipR2Prealign.exists()
             // test MultiQC html reports get published to reports directory
@@ -208,7 +229,10 @@ nextflow_workflow {
 
     }
 
-    test("CHECK_QUALITY succeeds and skips raw reads QC for paired-end reads and cutadapt log with `params.skipPrealignReadsQC`.") {
+    test("CHECK_QUALITY succeeds and skips raw reads QC with `params.skipPrealignReadsQC` -- cutadapt + PE reads.") {
+        // instantiate helper objects
+        def readsRaw      = new ReadsPELane1()
+        def readsPrealign = new ReadsPELane2()
 
         when {
             params {
@@ -220,22 +244,26 @@ nextflow_workflow {
                 """
                 input[0] = [
                     [
-                        sampleName: "SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2",
-                        readType:   "paired"
+                        sampleName:   "${readsRaw.getSampleName()}",
+                        sampleNumber: "${readsRaw.getSampleNumber()}",
+                        lane:         "${readsRaw.getLane()}",
+                        readType:     "${readsRaw.getReadType()}"
                     ],
                     [
-                        file("https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz"),
-                        file("https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz")
+                        file("${readsRaw.getR1()}"),
+                        file("${readsRaw.getR2()}")
                     ]
                 ]
                 input[1] = [
                     [
-                        sampleName: "SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1",
-                        readType:   "paired"
+                        sampleName:   "${readsPrealign.getSampleName()}",
+                        sampleNumber: "${readsPrealign.getSampleNumber()}",
+                        lane:         "${readsPrealign.getLane()}",
+                        readType:     "${readsPrealign.getReadType()}"
                     ],
                     [
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz"),
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz")
+                        file("${readsPrealign.getR1()}"),
+                        file("${readsPrealign.getR2()}")
                     ]
                 ]
                 input[2] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log"))
@@ -249,13 +277,13 @@ nextflow_workflow {
             assert workflow.trace.succeeded().size() == 3
 
             // test FastQC html files get published to reports directory
-            def htmlR1Raw      = path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.html")
-            def htmlR2Raw      = path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.html")
+            def htmlR1Raw      = path("${params.publishDirReports}/fastqc/${readsRaw.getR1SimpleName()}_fastqc.html")
+            def htmlR2Raw      = path("${params.publishDirReports}/fastqc/${readsRaw.getR2SimpleName()}_fastqc.html")
             assert htmlR1Raw.exists()
             assert htmlR2Raw.exists()
             // test FastQC zip files get published to reports directory
-            def zipR1Raw       = path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000_fastqc.zip")
-            def zipR2Raw       = path("${params.publishDirReports}/fastqc/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000_fastqc.zip")
+            def zipR1Raw       = path("${params.publishDirReports}/fastqc/${readsRaw.getR1SimpleName()}_fastqc.zip")
+            def zipR2Raw       = path("${params.publishDirReports}/fastqc/${readsRaw.getR2SimpleName()}_fastqc.zip")
             assert zipR1Raw.exists()
             assert zipR2Raw.exists()
             // test MultiQC html reports get published to reports directory
@@ -272,7 +300,10 @@ nextflow_workflow {
 
     }
 
-    test("CHECK_QUALITY succeeds and skips raw reads QC for paired-end reads and cutadapt log with `params.skipRawReadsQC` and `params.skipPrealignReadsQC`.") {
+    test("CHECK_QUALITY succeeds and skips raw and prealign reads QC with `params.skipRawReadsQC` and `params.skipPrealignReadsQC` -- cutadapt + PE reads.") {
+        // instantiate helper objects
+        def readsRaw      = new ReadsPELane1()
+        def readsPrealign = new ReadsPELane2()
 
         when {
             params {
@@ -285,22 +316,26 @@ nextflow_workflow {
                 """
                 input[0] = [
                     [
-                        sampleName: "SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2",
-                        readType:   "paired"
+                        sampleName:   "${readsRaw.getSampleName()}",
+                        sampleNumber: "${readsRaw.getSampleNumber()}",
+                        lane:         "${readsRaw.getLane()}",
+                        readType:     "${readsRaw.getReadType()}"
                     ],
                     [
-                        file("https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz"),
-                        file("https://github.com/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz")
+                        file("${readsRaw.getR1()}"),
+                        file("${readsRaw.getR2()}")
                     ]
                 ]
                 input[1] = [
                     [
-                        sampleName: "SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1",
-                        readType:   "paired"
+                        sampleName:   "${readsPrealign.getSampleName()}",
+                        sampleNumber: "${readsPrealign.getSampleNumber()}",
+                        lane:         "${readsPrealign.getLane()}",
+                        readType:     "${readsPrealign.getReadType()}"
                     ],
                     [
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz"),
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz")
+                        file("${readsPrealign.getR1()}"),
+                        file("${readsPrealign.getR2()}")
                     ]
                 ]
                 input[2] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log"))

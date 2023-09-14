@@ -11,7 +11,26 @@
                 ]
             ]
         ],
-        "timestamp": "2023-08-17T20:03:28+0000"
+        "timestamp": "2023-09-13T19:13:07+0000"
+    },
+    "cutadapt trims reads -- PE reads.": {
+        "content": [
+            [
+                [
+                    {
+                        "sampleName": "SRR6924569",
+                        "sampleNumber": "1",
+                        "lane": "001",
+                        "readType": "paired"
+                    },
+                    [
+                        "SRR6924569_trimmed_R1.fastq.gz:md5,1025b1a273fee2b51bd597f519ebbe86",
+                        "SRR6924569_trimmed_R2.fastq.gz:md5,3c3451e122dcf82b1be4a4526519fcc7"
+                    ]
+                ]
+            ]
+        ],
+        "timestamp": "2023-09-13T19:13:07+0000"
     },
     "CUTADAPT works for single-end reads.": {
         "content": [
@@ -25,7 +44,7 @@
                 ]
             ]
         ],
-        "timestamp": "2023-08-17T20:03:28+0000"
+        "timestamp": "2023-09-13T19:13:07+0000"
     },
     "CUTADAPT works for paired-end reads.": {
         "content": [
@@ -42,7 +61,7 @@
                 ]
             ]
         ],
-        "timestamp": "2023-08-17T20:03:28+0000"
+        "timestamp": "2023-09-13T19:13:07+0000"
     },
     "cutadapt works for paired-end reads.": {
         "content": [
@@ -59,7 +78,23 @@
                 ]
             ]
         ],
-        "timestamp": "2023-08-17T20:03:28+0000"
+        "timestamp": "2023-09-13T19:13:07+0000"
+    },
+    "cutadapt trims reads -- SE reads.": {
+        "content": [
+            [
+                [
+                    {
+                        "sampleName": "SRR1066657",
+                        "sampleNumber": "3",
+                        "lane": "001",
+                        "readType": "single"
+                    },
+                    "SRR1066657_trimmed_R1.fastq.gz:md5,0cf552582764f49d0eb969ffb0950ed4"
+                ]
+            ]
+        ],
+        "timestamp": "2023-09-13T19:13:07+0000"
     },
     "cutadapt works for single-end reads.": {
         "content": [
@@ -73,7 +108,7 @@
                 ]
             ]
         ],
-        "timestamp": "2023-08-17T20:03:28+0000"
+        "timestamp": "2023-09-13T19:13:07+0000"
     },
     "cutadapt works for SE reads.": {
         "content": [
@@ -87,7 +122,7 @@
                 ]
             ]
         ],
-        "timestamp": "2023-08-17T20:03:28+0000"
+        "timestamp": "2023-09-13T19:13:07+0000"
     },
     "cutadapt works for PE reads.": {
         "content": [
@@ -104,6 +139,6 @@
                 ]
             ]
         ],
-        "timestamp": "2023-08-17T20:03:28+0000"
+        "timestamp": "2023-09-13T19:13:07+0000"
     }
 }

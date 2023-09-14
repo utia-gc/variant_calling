@@ -4,7 +4,10 @@ nextflow_workflow {
     script "subworkflows/cat_reads.nf"
     workflow "Cat_Reads"
 
-    test("Cat_Reads concatenates reads for SE reads") {
+    test("Cat_Reads concatenates reads -- SE reads.") {
+        // instantiate helper objects
+        def readsLane1 = new ReadsSELane1()
+        def readsLane2 = new ReadsSELane2()
 
         when {
             params {
@@ -16,24 +19,24 @@ nextflow_workflow {
                 input[0] = Channel.of(
                     [
                         [
-                            sampleName:   "SRR1066657",
-                            sampleNumber: "3",
-                            lane:         "001",
-                            readType:     "single"
+                            sampleName:   "${readsLane1.getSampleName()}",
+                            sampleNumber: "${readsLane1.getSampleNumber()}",
+                            lane:         "${readsLane1.getLane()}",
+                            readType:     "${readsLane1.getReadType()}"
                         ],
                         [
-                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L001_R1_001.fastq.gz")
+                            file("${readsLane1.getR1()}")
                         ]
                     ],
                     [
                         [
-                            sampleName:   "SRR1066657",
-                            sampleNumber: "3",
-                            lane:         "002",
-                            readType:     "single"
+                            sampleName:   "${readsLane2.getSampleName()}",
+                            sampleNumber: "${readsLane2.getSampleNumber()}",
+                            lane:         "${readsLane2.getLane()}",
+                            readType:     "${readsLane2.getReadType()}"
                         ],
                         [
-                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L002_R1_001.fastq.gz")
+                            file("${readsLane2.getR1()}")
                         ]
                     ]
                 )
@@ -42,20 +45,26 @@ nextflow_workflow {
         }
 
         then {
+            // test workflow success
             assert workflow.success
 
+            // test reads fastq files concatenated
             with(workflow.out.reads_catted.get(0)) {
                 assert size() == 2
-                assert get(1) ==~ /^.*\/SRR1066657_R1.fastq.gz/
+                assert get(1) ==~ /^.*\/${readsLane1.getSampleName()}_R1.fastq.gz/
                 assert path(get(1)).linesGzip.size() == 400000
             }
 
+            // test reproducibility
             assert snapshot(workflow.out).match()
         }
 
     }
 
-    test("Cat_Reads concatenates reads for PE reads") {
+    test("Cat_Reads concatenates reads -- PE reads.") {
+        // instantiate helper objects
+        def readsLane1 = new ReadsPELane1()
+        def readsLane2 = new ReadsPELane2()
 
         when {
             params {
@@ -67,26 +76,26 @@ nextflow_workflow {
                 input[0] = Channel.of(
                     [
                         [
-                            sampleName:   "SRR6924569",
-                            sampleNumber: "1",
-                            lane:         "001",
-                            readType:     "paired"
+                            sampleName:   "${readsLane1.getSampleName()}",
+                            sampleNumber: "${readsLane1.getSampleNumber()}",
+                            lane:         "${readsLane1.getLane()}",
+                            readType:     "${readsLane1.getReadType()}"
                         ],
                         [
-                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L001_R1_001.fastq.gz"),
-                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L001_R2_001.fastq.gz")
+                            file("${readsLane1.getR1()}"),
+                            file("${readsLane1.getR2()}")
                         ]
                     ],
                     [
                         [
-                            sampleName:   "SRR6924569",
-                            sampleNumber: "1",
-                            lane:         "002",
-                            readType:     "paired"
+                            sampleName:   "${readsLane2.getSampleName()}",
+                            sampleNumber: "${readsLane2.getSampleNumber()}",
+                            lane:         "${readsLane2.getLane()}",
+                            readType:     "${readsLane2.getReadType()}"
                         ],
                         [
-                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L002_R1_001.fastq.gz"),
-                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L002_R2_001.fastq.gz")
+                            file("${readsLane2.getR1()}"),
+                            file("${readsLane2.getR2()}")
                         ]
                     ]
                 )
@@ -95,22 +104,28 @@ nextflow_workflow {
         }
 
         then {
+            // test workflow success
             assert workflow.success
 
+            // test reads fastq files concatenated
             with(workflow.out.reads_catted.get(0)) {
                 assert size() == 2
-                assert get(1).get(0) ==~ /^.*\/SRR6924569_R1.fastq.gz/
+                assert get(1).get(0) ==~ /^.*\/${readsLane1.getSampleName()}_R1.fastq.gz/
                 assert path(get(1).get(0)).linesGzip.size() == 400000
-                assert get(1).get(1) ==~ /^.*\/SRR6924569_R2.fastq.gz/
+                assert get(1).get(1) ==~ /^.*\/${readsLane1.getSampleName()}_R2.fastq.gz/
                 assert path(get(1).get(1)).linesGzip.size() == 400000
             }
 
+            // test reproducibility
             assert snapshot(workflow.out).match()
         }
 
     }
 
-    test("Cat_Reads concatenates reads for PE reads in lexicographic order") {
+    test("Cat_Reads concatenates reads in lexicographic order -- PE reads.") {
+        // instantiate helper objects
+        def readsLane1 = new ReadsPELane1()
+        def readsLane2 = new ReadsPELane2()
 
         when {
             params {
@@ -122,26 +137,26 @@ nextflow_workflow {
                 input[0] = Channel.of(
                     [
                         [
-                            sampleName:   "SRR6924569",
-                            sampleNumber: "1",
-                            lane:         "002",
-                            readType:     "paired"
+                            sampleName:   "${readsLane1.getSampleName()}",
+                            sampleNumber: "${readsLane1.getSampleNumber()}",
+                            lane:         "${readsLane1.getLane()}",
+                            readType:     "${readsLane1.getReadType()}"
                         ],
                         [
-                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L002_R1_001.fastq.gz"),
-                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L002_R2_001.fastq.gz")
+                            file("${readsLane1.getR1()}"),
+                            file("${readsLane1.getR2()}")
                         ]
                     ],
                     [
                         [
-                            sampleName:   "SRR6924569",
-                            sampleNumber: "1",
-                            lane:         "001",
-                            readType:     "paired"
+                            sampleName:   "${readsLane2.getSampleName()}",
+                            sampleNumber: "${readsLane2.getSampleNumber()}",
+                            lane:         "${readsLane2.getLane()}",
+                            readType:     "${readsLane2.getReadType()}"
                         ],
                         [
-                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L001_R1_001.fastq.gz"),
-                            file("https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L001_R2_001.fastq.gz")
+                            file("${readsLane2.getR1()}"),
+                            file("${readsLane2.getR2()}")
                         ]
                     ]
                 )
@@ -150,16 +165,19 @@ nextflow_workflow {
         }
 
         then {
+            // test workflow success
             assert workflow.success
 
+            // test reads fastq files concatenated
             with(workflow.out.reads_catted.get(0)) {
                 assert size() == 2
-                assert get(1).get(0) ==~ /^.*\/SRR6924569_R1.fastq.gz/
+                assert get(1).get(0) ==~ /^.*\/${readsLane1.getSampleName()}_R1.fastq.gz/
                 assert path(get(1).get(0)).linesGzip.size() == 400000
-                assert get(1).get(1) ==~ /^.*\/SRR6924569_R2.fastq.gz/
+                assert get(1).get(1) ==~ /^.*\/${readsLane1.getSampleName()}_R2.fastq.gz/
                 assert path(get(1).get(1)).linesGzip.size() == 400000
             }
 
+            // test reproducibility
             assert snapshot(workflow.out).match()
         }
 

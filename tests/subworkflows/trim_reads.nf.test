@@ -4,7 +4,9 @@ nextflow_workflow {
     script "subworkflows/trim_reads.nf"
     workflow "Trim_Reads"
 
-    test("Trim_Reads with cutadapt succeeds -- SE reads.") {
+    test("Trim_Reads succeeds -- cutadapt + SE reads.") {
+        // instantiate helper objects
+        def readsLane1 = new ReadsSELane1()
 
         when {
             params {
@@ -15,11 +17,13 @@ nextflow_workflow {
                 """
                 input[0] = [
                     [
-                        sampleName: "SRR1066657_GSM1299413_WT_NR_A",
-                        readType:   "single"
+                        sampleName:   "${readsLane1.getSampleName()}",
+                        sampleNumber: "${readsLane1.getSampleNumber()}",
+                        lane:         "${readsLane1.getLane()}",
+                        readType:     "${readsLane1.getReadType()}"
                     ],
                     [
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz")
+                        file("${readsLane1.getR1()}")
                     ]
                 ]
                 input[1] = "cutadapt"
@@ -36,7 +40,7 @@ nextflow_workflow {
             assert workflow.out.reads_trim
             with(workflow.out.reads_trim) {
                 assert size() == 1
-                assert get(0).get(1) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_trimmed_R1.fastq.gz/
+                assert get(0).get(1) ==~ /^.*\/${readsLane1.getSampleName()}_trimmed_R1.fastq.gz/
             }
 
             // test read trimming log
@@ -45,7 +49,9 @@ nextflow_workflow {
 
     }
 
-    test("Trim_Reads with cutadapt succeeds -- PE reads.") {
+    test("Trim_Reads succeeds -- cutadapt + PE reads.") {
+        // instantiate helper objects
+        def readsLane1 = new ReadsPELane1()
 
         when {
             params {
@@ -56,12 +62,14 @@ nextflow_workflow {
                 """
                 input[0] = [
                     [
-                        sampleName: "SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1",
-                        readType:   "paired"
+                        sampleName:   "${readsLane1.getSampleName()}",
+                        sampleNumber: "${readsLane1.getSampleNumber()}",
+                        lane:         "${readsLane1.getLane()}",
+                        readType:     "${readsLane1.getReadType()}"
                     ],
                     [
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000.fastq.gz"),
-                        file("https://github.com/utia-gc/ngs-test/raw/rnaseq/data/reads/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000.fastq.gz")
+                        file("${readsLane1.getR1()}"),
+                        file("${readsLane1.getR2()}")
                     ]
                 ]
                 input[1] = "cutadapt"
@@ -78,8 +86,8 @@ nextflow_workflow {
             assert workflow.out.reads_trim
             with(workflow.out.reads_trim) {
                 assert size() == 1
-                assert get(0).get(1).get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_trimmed_R1.fastq.gz/
-                assert get(0).get(1).get(1) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_trimmed_R2.fastq.gz/
+                assert get(0).get(1).get(0) ==~ /^.*\/${readsLane1.getSampleName()}_trimmed_R1.fastq.gz/
+                assert get(0).get(1).get(1) ==~ /^.*\/${readsLane1.getSampleName()}_trimmed_R2.fastq.gz/
             }
 
             // test read trimming log
