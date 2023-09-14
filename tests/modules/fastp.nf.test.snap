@@ -1,0 +1,18 @@
+{
+    "fastp trims reads -- SE reads": {
+        "content": [
+            [
+                [
+                    {
+                        "sampleName": "SRR1066657",
+                        "sampleNumber": "3",
+                        "lane": "001",
+                        "readType": "single"
+                    },
+                    "SRR1066657_trimmed_R1.fastq.gz:md5,8b2b5da31a1d3fc3482f3998741c4a96"
+                ]
+            ]
+        ],
+        "timestamp": "2023-09-14T20:12:26+0000"
+    }
+}
