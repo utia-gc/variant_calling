@@ -13,6 +13,25 @@
                 ]
             ]
         ],
-        "timestamp": "2023-09-14T20:12:26+0000"
+        "timestamp": "2023-09-14T20:19:20+0000"
+    },
+    "fastp trims reads -- PE reads": {
+        "content": [
+            [
+                [
+                    {
+                        "sampleName": "SRR6924569",
+                        "sampleNumber": "1",
+                        "lane": "001",
+                        "readType": "paired"
+                    },
+                    [
+                        "SRR6924569_trimmed_R1.fastq.gz:md5,35deef2a325540a00e1f24d8caf3d8b6",
+                        "SRR6924569_trimmed_R2.fastq.gz:md5,6ed67e7615213a26056471e08ae14806"
+                    ]
+                ]
+            ]
+        ],
+        "timestamp": "2023-09-14T20:19:20+0000"
     }
 }
