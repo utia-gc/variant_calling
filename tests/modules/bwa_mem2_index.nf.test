@@ -1,0 +1,43 @@
+nextflow_process {
+
+    name "Test Process bwa_mem2_index"
+    script "modules/bwa_mem2_index.nf"
+    process "bwa_mem2_index"
+
+    test("bwa_mem2_index indexes genome fasta") {
+        // instantiate helper objects
+        def refs = new RefsEnsembl()
+
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
+            process {
+                """
+                input[0] = file("${refs.getGenome()}")
+                """
+            }
+        }
+
+        then {
+            // test process success
+            assert process.success
+
+            // test expected index files made
+            with(process.out.index.get(0)) {
+                assert size() == 5
+                assert get(0) ==~ /^.*\/genome_I\.fa\.0123/
+                assert get(1) ==~ /^.*\/genome_I\.fa\.amb/
+                assert get(2) ==~ /^.*\/genome_I\.fa\.ann/
+                assert get(3) ==~ /^.*\/genome_I\.fa\.bwt\.2bit\.64/
+                assert get(4) ==~ /^.*\/genome_I\.fa\.pac/
+            }
+
+            // test reproducibility
+            assert snapshot(process.out).match()
+        }
+
+    }
+
+}

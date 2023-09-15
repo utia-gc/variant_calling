@@ -1,0 +1,27 @@
+{
+    "bwa_mem2_index indexes genome fasta": {
+        "content": [
+            {
+                "0": [
+                    [
+                        "genome_I.fa.0123:md5,8fef53cfd6a59fc348dc1eeef099fd2c",
+                        "genome_I.fa.amb:md5,fdf44d27fc933100024e62c9ca63ef90",
+                        "genome_I.fa.ann:md5,07c3b7eab2cec1d4a025e73ffb9e4ff4",
+                        "genome_I.fa.bwt.2bit.64:md5,40fd109ede948e5339605261b9ce17d2",
+                        "genome_I.fa.pac:md5,efa6a6851a259e029a8ca89b501b4ccf"
+                    ]
+                ],
+                "index": [
+                    [
+                        "genome_I.fa.0123:md5,8fef53cfd6a59fc348dc1eeef099fd2c",
+                        "genome_I.fa.amb:md5,fdf44d27fc933100024e62c9ca63ef90",
+                        "genome_I.fa.ann:md5,07c3b7eab2cec1d4a025e73ffb9e4ff4",
+                        "genome_I.fa.bwt.2bit.64:md5,40fd109ede948e5339605261b9ce17d2",
+                        "genome_I.fa.pac:md5,efa6a6851a259e029a8ca89b501b4ccf"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-09-15T19:09:05+0000"
+    }
+}
