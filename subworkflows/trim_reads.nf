@@ -1,4 +1,5 @@
 include { cutadapt } from "../modules/cutadapt.nf"
+include { fastp    } from "../modules/fastp.nf"
 
 /**
  * Workflow to process reads.
@@ -21,6 +22,12 @@ workflow Trim_Reads {
                 )
                 ch_reads_trim = cutadapt.out.reads
                 ch_trim_log   = cutadapt.out.log
+                break
+
+            case "FASTP":
+                fastp(reads_raw)
+                ch_reads_trim = fastp.out.reads
+                ch_trim_log   = fastp.out.log
                 break
         }
 

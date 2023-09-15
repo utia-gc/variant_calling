@@ -96,4 +96,110 @@ nextflow_workflow {
 
     }
 
+    test("Trim_Reads succeeds -- fastp + SE reads.") {
+        // instantiate helper objects
+        def readsLane1 = new ReadsSELane1()
+
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
+            workflow {
+                """
+                input[0] = [
+                    [
+                        sampleName:   "${readsLane1.getSampleName()}",
+                        sampleNumber: "${readsLane1.getSampleNumber()}",
+                        lane:         "${readsLane1.getLane()}",
+                        readType:     "${readsLane1.getReadType()}"
+                    ],
+                    [
+                        file("${readsLane1.getR1()}"),
+                    ]
+                ]
+                input[1] = "fastp"
+                """
+            }
+        }
+
+        then {
+            // test workflow status
+            assert workflow.success
+            assert workflow.trace.succeeded().size() == 1
+
+            // test read trimming
+            assert workflow.out.reads_trim
+            with(workflow.out.reads_trim) {
+                assert size() == 1
+                assert get(0).get(1) ==~ /^.*\/${readsLane1.getSampleName()}_trimmed_R1.fastq.gz/
+            }
+
+            // test read trimming log
+            assert workflow.out.trim_log
+            with(workflow.out.trim_log) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/${readsLane1.getSampleName()}_fastp-log.json/
+            }
+
+            // test trimmed fastq reproducibility
+            assert snapshot(workflow.out.reads_trim).match()
+        }
+
+    }
+
+    test("Trim_Reads succeeds -- fastp + PE reads.") {
+        // instantiate helper objects
+        def readsLane1 = new ReadsPELane1()
+
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
+            workflow {
+                """
+                input[0] = [
+                    [
+                        sampleName:   "${readsLane1.getSampleName()}",
+                        sampleNumber: "${readsLane1.getSampleNumber()}",
+                        lane:         "${readsLane1.getLane()}",
+                        readType:     "${readsLane1.getReadType()}"
+                    ],
+                    [
+                        file("${readsLane1.getR1()}"),
+                        file("${readsLane1.getR2()}"),
+                    ]
+                ]
+                input[1] = "fastp"
+                """
+            }
+        }
+
+        then {
+            // test workflow status
+            assert workflow.success
+            assert workflow.trace.succeeded().size() == 1
+
+            // test read trimming
+            assert workflow.out.reads_trim
+            with(workflow.out.reads_trim) {
+                assert size() == 1
+                assert get(0).get(1).get(0) ==~ /^.*\/${readsLane1.getSampleName()}_trimmed_R1.fastq.gz/
+                assert get(0).get(1).get(1) ==~ /^.*\/${readsLane1.getSampleName()}_trimmed_R2.fastq.gz/
+            }
+
+            // test read trimming log
+            assert workflow.out.trim_log
+            with(workflow.out.trim_log) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/${readsLane1.getSampleName()}_fastp-log.json/
+            }
+
+            // test trimmed fastq reproducibility
+            assert snapshot(workflow.out.reads_trim).match()
+        }
+
+    }
+
 }
