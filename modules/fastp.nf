@@ -4,6 +4,12 @@ process fastp {
     label 'fastp'
     label 'lil_mem'
 
+    publishDir(
+        path:    "${params.publishDirReports}/reads/trim",
+        mode:    "${params.publishMode}",
+        pattern: '*_fastp-log.json'
+    )
+
     input:
         tuple val(metadata), path(reads)
 
