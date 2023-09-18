@@ -1,3 +1,13 @@
+/**
+ * Process to run bwa-mem2 mem.
+ * 
+ * Align reads to reference genome using bwa-mem2.
+ * @see https://github.com/bwa-mem2/bwa-mem2
+ * 
+ * @input reads the reads channel of format [metadata, [R1, R2]] where R2 is optional.
+ * @input index the reference index built by bwa-mem2 index.
+ * @emit alignments the aligned/mapped reads channel of format [metadata, alignments] where the alignments are in unsorted SAM format and metadata has additional fields to reflect this.
+ */
 process bwa_mem2_mem {
     tag "${metadata.sampleName}"
 
