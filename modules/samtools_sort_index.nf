@@ -9,6 +9,12 @@ process samtools_sort_index {
 
     label 'samtools'
 
+    publishDir(
+        path:    "${params.publishDirData}/alignments",
+        mode:    "${params.publishMode}",
+        pattern: "${metadata.sampleName}_sorted.bam*"
+    )
+
     input:
         tuple val(metadata), path(alignments)
 
