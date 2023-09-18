@@ -1,0 +1,115 @@
+nextflow_workflow {
+
+    name "Test Workflow MAP_READS"
+    script "workflows/map_reads.nf"
+    workflow "MAP_READS"
+
+    test("MAP_READS maps reads to a reference genome and outputs sorted BAMs -- bwa-mem2 + SE reads.") {
+        // instantiate helper objects
+        def readsLane1 = new ReadsSELane1()
+        def refs       = new RefsEnsembl()
+
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
+            workflow {
+                """
+                input[0] = [
+                    [
+                        sampleName:   "${readsLane1.getSampleName()}",
+                        sampleNumber: "${readsLane1.getSampleNumber()}",
+                        readType:     "${readsLane1.getReadType()}"
+                    ],
+                    [
+                        file("${readsLane1.getR1()}"),
+                    ]
+                ]
+                input[1] = file("${refs.getGenome()}")
+                input[2] = "bwa-mem2"
+                """
+            }
+        }
+
+        then {
+            // test workflow status
+            assert workflow.success
+
+            // test alignments
+            with(workflow.out.alignments.get(0)) {
+                assert size() == 3
+                // test alignments metadata
+                assert get(0).format == 'BAM'
+                assert get(0).sorted == true
+                // test alignments file
+                assert get(1) ==~ /^.*\/${readsLane1.getSampleName()}_sorted\.bam/
+                // test indexed alignments file
+                assert get(2) ==~ /^.*\/${readsLane1.getSampleName()}_sorted\.bam\.bai/
+            }
+            // test map log
+            // with(workflow.out.map_log) {
+            //     assert isEmpty()
+            // }
+
+            // test reproducibility
+            assert snapshot(workflow.out).match()
+        }
+
+    }
+
+    test("MAP_READS maps reads to a reference genome and outputs sorted BAMs -- bwa-mem2 + PE reads.") {
+        // instantiate helper objects
+        def readsLane1 = new ReadsPELane1()
+        def refs       = new RefsEnsembl()
+
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
+            workflow {
+                """
+                input[0] = [
+                    [
+                        sampleName:   "${readsLane1.getSampleName()}",
+                        sampleNumber: "${readsLane1.getSampleNumber()}",
+                        readType:     "${readsLane1.getReadType()}"
+                    ],
+                    [
+                        file("${readsLane1.getR1()}"),
+                    ]
+                ]
+                input[1] = file("${refs.getGenome()}")
+                input[2] = "bwa-mem2"
+                """
+            }
+        }
+
+        then {
+            // test workflow status
+            assert workflow.success
+
+            // test alignments
+            with(workflow.out.alignments.get(0)) {
+                assert size() == 3
+                // test alignments metadata
+                assert get(0).format == 'BAM'
+                assert get(0).sorted == true
+                // test alignments file
+                assert get(1) ==~ /^.*\/${readsLane1.getSampleName()}_sorted\.bam/
+                // test indexed alignments file
+                assert get(2) ==~ /^.*\/${readsLane1.getSampleName()}_sorted\.bam\.bai/
+            }
+            // test map log
+            // with(workflow.out.map_log) {
+            //     assert isEmpty()
+            // }
+
+            // test reproducibility
+            assert snapshot(workflow.out).match()
+        }
+
+    }
+
+}
