@@ -1,0 +1,64 @@
+{
+    "Bwa_Mem2 builds index and aligns reads -- SE reads.": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "readType": "single",
+                            "format": "SAM",
+                            "sorted": false
+                        },
+                        "SRR1066657.sam:md5,9251c079303fa850c7a825d7b79177cd"
+                    ]
+                ],
+                "alignments": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "readType": "single",
+                            "format": "SAM",
+                            "sorted": false
+                        },
+                        "SRR1066657.sam:md5,9251c079303fa850c7a825d7b79177cd"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-09-18T14:13:33+0000"
+    },
+    "Bwa_Mem2 builds index and aligns reads -- PE reads.": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "readType": "paired",
+                            "format": "SAM",
+                            "sorted": false
+                        },
+                        "SRR6924569.sam:md5,bb65b910ecb5bce5cb30f0ba515bfd21"
+                    ]
+                ],
+                "alignments": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "readType": "paired",
+                            "format": "SAM",
+                            "sorted": false
+                        },
+                        "SRR6924569.sam:md5,bb65b910ecb5bce5cb30f0ba515bfd21"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-09-18T14:13:33+0000"
+    }
+}

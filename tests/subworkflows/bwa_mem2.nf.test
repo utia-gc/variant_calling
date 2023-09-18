@@ -1,0 +1,102 @@
+nextflow_workflow {
+
+    name "Test Workflow Bwa_Mem2"
+    script "subworkflows/bwa_mem2.nf"
+    workflow "Bwa_Mem2"
+
+    test("Bwa_Mem2 builds index and aligns reads -- SE reads.") {
+        // instantiate helper objects
+        def readsLane1 = new ReadsSELane1()
+        def refs       = new RefsEnsembl()
+
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
+            workflow {
+                """
+                input[0] = [
+                    [
+                        sampleName:   "${readsLane1.getSampleName()}",
+                        sampleNumber: "${readsLane1.getSampleNumber()}",
+                        readType:     "${readsLane1.getReadType()}"
+                    ],
+                    [
+                        file("${readsLane1.getR1()}"),
+                    ]
+                ]
+                input[1] = file("${refs.getGenome()}")
+                """
+            }
+        }
+
+        then {
+            // test workflow status
+            assert workflow.success
+
+            // test SAM
+            with(workflow.out.alignments.get(0)) {
+                assert size() == 2
+                // test SAM metadata
+                assert get(0).format == 'SAM'
+                assert get(0).sorted == false
+                // test SAM file
+                assert get(1) ==~ /^.*\/${readsLane1.getSampleName()}\.sam/
+            }
+
+            // test reproducibility
+            assert snapshot(workflow.out).match()
+        }
+
+    }
+
+    test("Bwa_Mem2 builds index and aligns reads -- PE reads.") {
+        // instantiate helper objects
+        def readsLane1 = new ReadsPELane1()
+        def refs       = new RefsEnsembl()
+
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
+            workflow {
+                """
+                input[0] = [
+                    [
+                        sampleName:   "${readsLane1.getSampleName()}",
+                        sampleNumber: "${readsLane1.getSampleNumber()}",
+                        readType:     "${readsLane1.getReadType()}"
+                    ],
+                    [
+                        file("${readsLane1.getR1()}"),
+                        file("${readsLane1.getR2()}"),
+                    ]
+                ]
+                input[1] = file("${refs.getGenome()}")
+                """
+            }
+        }
+
+        then {
+            // test workflow status
+            assert workflow.success
+
+            // test SAM
+            with(workflow.out.alignments.get(0)) {
+                assert size() == 2
+                // test SAM metadata
+                assert get(0).format == 'SAM'
+                assert get(0).sorted == false
+                // test SAM file
+                assert get(1) ==~ /^.*\/${readsLane1.getSampleName()}\.sam/
+            }
+
+            // test reproducibility
+            assert snapshot(workflow.out).match()
+        }
+
+    }
+
+}
