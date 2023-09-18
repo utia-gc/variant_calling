@@ -62,8 +62,8 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign_data/").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments.html").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments_data/").exists()
-            assert path("${params.publishDirReports}/multiqc/ngs/ngs.html").exists()
-            assert path("${params.publishDirReports}/multiqc/ngs/ngs_data/").exists()
+            assert path("${params.publishDirReports}/multiqc/variant_calling/variant_calling.html").exists()
+            assert path("${params.publishDirReports}/multiqc/variant_calling/variant_calling_data/").exists()
         }
 
     }
@@ -130,8 +130,8 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign_data/").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments.html").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments_data/").exists()
-            assert path("${params.publishDirReports}/multiqc/ngs/ngs.html").exists()
-            assert path("${params.publishDirReports}/multiqc/ngs/ngs_data/").exists()
+            assert path("${params.publishDirReports}/multiqc/variant_calling/variant_calling.html").exists()
+            assert path("${params.publishDirReports}/multiqc/variant_calling/variant_calling_data/").exists()
         }
 
     }
@@ -196,8 +196,8 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/multiqc/reads_prealign/reads_prealign_data/").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments.html").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments_data/").exists()
-            assert path("${params.publishDirReports}/multiqc/ngs/ngs.html").exists()
-            assert path("${params.publishDirReports}/multiqc/ngs/ngs_data/").exists()
+            assert path("${params.publishDirReports}/multiqc/variant_calling/variant_calling.html").exists()
+            assert path("${params.publishDirReports}/multiqc/variant_calling/variant_calling_data/").exists()
         }
 
     }
