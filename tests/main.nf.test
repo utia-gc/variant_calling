@@ -20,7 +20,7 @@ nextflow_pipeline {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 15
+            assert workflow.trace.succeeded().size() == 20
 
             // test raw FastQC html reports and zip files published to reports dir
             assert path("${params.publishDirReports}/fastqc/${readsSELane1.getR1SimpleName()}_fastqc.html").exists()
@@ -35,7 +35,7 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/fastqc/${readsPELane2.getR1SimpleName()}_fastqc.zip").exists()
             assert path("${params.publishDirReports}/fastqc/${readsPELane2.getR2SimpleName()}_fastqc.html").exists()
             assert path("${params.publishDirReports}/fastqc/${readsPELane2.getR2SimpleName()}_fastqc.zip").exists()
-            // test trimmed reads logs published to data dir
+            // test trimmed reads logs published to reports dir
             assert path("${params.publishDirReports}/reads/trim/${readsSELane1.getSampleName()}_cutadapt-log.txt").exists()
             assert path("${params.publishDirReports}/reads/trim/${readsPELane1.getSampleName()}_cutadapt-log.txt").exists()
             // test prealign FastQC html reports and zip files published to reports dir
@@ -45,6 +45,11 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/fastqc/${readsPELane1.getSampleName()}_trimmed_R1_fastqc.zip").exists()
             assert path("${params.publishDirReports}/fastqc/${readsPELane1.getSampleName()}_trimmed_R2_fastqc.html").exists()
             assert path("${params.publishDirReports}/fastqc/${readsPELane1.getSampleName()}_trimmed_R2_fastqc.zip").exists()
+            // test BAM and BAM.BAI alignment and index files published to data dir
+            assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}_sorted.bam").exists()
+            assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}_sorted.bam.bai").exists()
+            assert path("${params.publishDirData}/alignments/${readsPELane1.getSampleName()}_sorted.bam").exists()
+            assert path("${params.publishDirData}/alignments/${readsPELane1.getSampleName()}_sorted.bam.bai").exists()
             // test MultiQC reports and data published to reports dir
             assert path("${params.publishDirReports}/multiqc/reads_raw/reads_raw.html").exists()
             assert path("${params.publishDirReports}/multiqc/reads_raw/reads_raw_data/").exists()
@@ -76,7 +81,7 @@ nextflow_pipeline {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 13
+            assert workflow.trace.succeeded().size() == 18
 
             // test raw FastQC html reports and zip files published to reports dir
             assert path("${params.publishDirReports}/fastqc/${readsSELane1.getR1SimpleName()}_fastqc.html").exists()
@@ -91,7 +96,7 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/fastqc/${readsPELane2.getR1SimpleName()}_fastqc.zip").exists()
             assert path("${params.publishDirReports}/fastqc/${readsPELane2.getR2SimpleName()}_fastqc.html").exists()
             assert path("${params.publishDirReports}/fastqc/${readsPELane2.getR2SimpleName()}_fastqc.zip").exists()
-            // test trimmed reads logs published to data dir
+            // test trimmed reads logs published to reports dir
             assert path("${params.publishDirReports}/reads/trim/${readsSELane1.getSampleName()}_cutadapt-log.txt").exists()
             assert path("${params.publishDirReports}/reads/trim/${readsPELane1.getSampleName()}_cutadapt-log.txt").exists()
             // test prealign FastQC html reports and zip files published to reports dir
@@ -101,6 +106,11 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/fastqc/${readsPELane1.getSampleName()}_trimmed_R1_fastqc.zip").exists()
             assert path("${params.publishDirReports}/fastqc/${readsPELane1.getSampleName()}_trimmed_R2_fastqc.html").exists()
             assert path("${params.publishDirReports}/fastqc/${readsPELane1.getSampleName()}_trimmed_R2_fastqc.zip").exists()
+            // test BAM and BAM.BAI alignment and index files published to data dir
+            assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}_sorted.bam").exists()
+            assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}_sorted.bam.bai").exists()
+            assert path("${params.publishDirData}/alignments/${readsPELane1.getSampleName()}_sorted.bam").exists()
+            assert path("${params.publishDirData}/alignments/${readsPELane1.getSampleName()}_sorted.bam.bai").exists()
             // test MultiQC reports and data published to reports dir
             assert path("${params.publishDirReports}/multiqc/reads_raw/reads_raw.html").exists()
             assert path("${params.publishDirReports}/multiqc/reads_raw/reads_raw_data/").exists()
@@ -130,7 +140,7 @@ nextflow_pipeline {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 15
+            assert workflow.trace.succeeded().size() == 20
 
             // test raw FastQC html reports and zip files published to reports dir
             assert path("${params.publishDirReports}/fastqc/${readsSELane1.getR1SimpleName()}_fastqc.html").exists()
@@ -145,7 +155,7 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/fastqc/${readsPELane2.getR1SimpleName()}_fastqc.zip").exists()
             assert path("${params.publishDirReports}/fastqc/${readsPELane2.getR2SimpleName()}_fastqc.html").exists()
             assert path("${params.publishDirReports}/fastqc/${readsPELane2.getR2SimpleName()}_fastqc.zip").exists()
-            // test trimmed reads logs published to data dir
+            // test trimmed reads logs published to reports dir
             assert path("${params.publishDirReports}/reads/trim/${readsSELane1.getSampleName()}_fastp-log.json").exists()
             assert path("${params.publishDirReports}/reads/trim/${readsPELane1.getSampleName()}_fastp-log.json").exists()
             // test prealign FastQC html reports and zip files published to reports dir
@@ -155,6 +165,11 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/fastqc/${readsPELane1.getSampleName()}_trimmed_R1_fastqc.zip").exists()
             assert path("${params.publishDirReports}/fastqc/${readsPELane1.getSampleName()}_trimmed_R2_fastqc.html").exists()
             assert path("${params.publishDirReports}/fastqc/${readsPELane1.getSampleName()}_trimmed_R2_fastqc.zip").exists()
+            // test BAM and BAM.BAI alignment and index files published to data dir
+            assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}_sorted.bam").exists()
+            assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}_sorted.bam.bai").exists()
+            assert path("${params.publishDirData}/alignments/${readsPELane1.getSampleName()}_sorted.bam").exists()
+            assert path("${params.publishDirData}/alignments/${readsPELane1.getSampleName()}_sorted.bam.bai").exists()
             // test MultiQC reports and data published to reports dir
             assert path("${params.publishDirReports}/multiqc/reads_raw/reads_raw.html").exists()
             assert path("${params.publishDirReports}/multiqc/reads_raw/reads_raw_data/").exists()
