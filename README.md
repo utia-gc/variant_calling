@@ -1,9 +1,9 @@
-# variant_calling
+# ngs
 
 ## Introduction
 
-`variant_calling` is a [Nextflow](https://www.nextflow.io/) pipeline built on [utia-gc/ngs](htpps://github.com/utia-gc/ngs) for variant calling analysis on whole genome sequencing.
-While `variant_calling` can be run on any platform supported by Nextflow, it is developed for use in HPC environments and specifically [ISAAC Next Generation] at the University of Tennessee, Knoxville.
+`ngs` is a [Nextflow](https://www.nextflow.io/) pipeline built on [utia-gc/ngs](htpps://github.com/utia-gc/ngs) for base NGS analysis.
+While `ngs` can be run on any platform supported by Nextflow, it is developed for use in HPC environments and specifically [ISAAC Next Generation] at the University of Tennessee, Knoxville.
 
 ## Quick start
 
@@ -19,33 +19,33 @@ While `variant_calling` can be run on any platform supported by Nextflow, it is 
 
 3. [Singularity](https://sylabs.io)
 
-### Get or update `variant_calling`
+### Get or update `ngs`
 
-1. Download or update `variant_calling`:
+1. Download or update `ngs`:
 
     ```bash
-    nextflow pull utia-gc/variant_calling
+    nextflow pull utia-gc/ngs
     ```
 
 2. Show project info:
 
     ```bash
-    nextflow info utia-gc/variant_calling
+    nextflow info utia-gc/ngs
     ```
 
-### Test `variant_calling`
+### Test `ngs`
 
-1. Check that `variant_calling` works on your system:
+1. Check that `ngs` works on your system:
 
-   - `-profile nf_test` uses preconfigured test parameters to run `variant_calling` in full on a small test dataset stored in a remote GitHub repository.
+   - `-profile nf_test` uses preconfigured test parameters to run `ngs` in full on a small test dataset stored in a remote GitHub repository.
    - Because these test files are stored in a remote repository, internet access is required to run the test.
    - For more information, see the `profiles` section of the [nextflow config file](nextflow.config).
 
    ```bash
-   nextflow run utia-gc/variant_calling -profile nf_test 
+   nextflow run utia-gc/ngs -profile nf_test 
    ```
 
-### Run `variant_calling`
+### Run `ngs`
 
 TODO
 
@@ -70,13 +70,13 @@ This serves the dual purpose of saving time by not repeating logged tasks while 
 During exploratory analysis, iteratively make changes to parameters and run the pipeline with the `exploratory` profile:
 
 ```bash
-nextflow run utia-gc/variant_calling -profile exploratory
+nextflow run utia-gc/ngs -profile exploratory
 ```
 
 Once you have settled on an optimal set of parameters, rerun the pipeline without the `exploratory` profile:
 
 ```bash
-nextflow run utia-gc/variant_calling -resume
+nextflow run utia-gc/ngs -resume
 ```
 
 Useful tip --- if a specific previous run contained the user's optimal set of parameter, or more generally if for some reason it would be advantageous to resume from some run of the pipeline other than the most recent run, then the pipeline can be resumed from any previous cached run using the RUN NAME or SESSION ID of the desired run.
@@ -84,5 +84,5 @@ Use `nextflow log` to view information about previous runs.
 For example, to resume from a run named 'boring_euler':
 
 ```bash
-nextflow run utia-gc/variant_calling -resume boring_euler
+nextflow run utia-gc/ngs -resume boring_euler
 ```
