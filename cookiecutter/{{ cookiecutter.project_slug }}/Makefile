@@ -14,8 +14,8 @@ endif
 run: pipeline
 .PHONY: run pipeline
 
-pipeline: src/batch/run_ngs.bash nextflow.config data/samplesheets/samplesheet.csv
-> sbatch src/batch/run_ngs.bash
+pipeline: src/batch/run_variant_calling.bash nextflow.config data/samplesheets/samplesheet.csv
+> sbatch src/batch/run_variant_calling.bash
 
 nextflow.config: src/nextflow/args.config src/nextflow/params.config src/nextflow/profiles.config
 > touch $@

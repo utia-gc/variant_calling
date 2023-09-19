@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name={{ cookiecutter.project_slug }}_ngs
+#SBATCH --job-name={{ cookiecutter.project_slug }}_variant-calling
 #SBATCH --error=job_logs/%x.e%j
 #SBATCH --output=job_logs/%x.o%j
 #SBATCH --mail-user={{ cookiecutter.email }}
@@ -17,7 +17,7 @@ export NXF_OPTS="-Xms500M -Xmx2G"
 export NXF_ANSI_LOG=false
 
 # run pipeline
-nextflow run utia-gc/ngs \
+nextflow run utia-gc/variant_calling \
     -latest \                           #update nf pipeline
     -revision v0.0.0.9000 \
     -profile isaac_tff,exploratory

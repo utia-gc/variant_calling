@@ -1,7 +1,7 @@
 {
-    "project_name": "NGS analysis",
+    "project_name": "Variant calling analysis",
     "project_slug": "{{ cookiecutter.project_name|lower|replace(' ', '-') }}",
-    "project_purpose": "Analyze NGS data.",
+    "project_purpose": "Analyze variant calling data.",
     "raw_reads_dir": "",
     "email": "",
     "author": "",
