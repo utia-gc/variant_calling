@@ -1,0 +1,8 @@
+{
+    "project_name": "NGS analysis",
+    "project_slug": "{{ cookiecutter.project_name|lower|replace(' ', '-') }}",
+    "project_purpose": "Analyze NGS data.",
+    "raw_reads_dir": "",
+    "email": "",
+    "author": ""
+}
