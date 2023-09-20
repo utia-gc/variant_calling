@@ -12,6 +12,9 @@ process bwa_mem2_index {
 
     label 'bwa_mem2'
 
+    label 'sup_mem'
+    label 'big_time'
+
     input:
         path genome
 
