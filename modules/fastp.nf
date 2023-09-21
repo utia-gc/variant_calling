@@ -2,7 +2,9 @@ process fastp {
     tag "${metadata.sampleName}"
 
     label 'fastp'
-    label 'lil_mem'
+
+    label 'med_cpu'
+    label 'med_mem'
 
     publishDir(
         path:    "${params.publishDirReports}/reads/trim",
