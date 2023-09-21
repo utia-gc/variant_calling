@@ -2,7 +2,8 @@ process multiqc {
     tag "${fileName}"
     
     label 'multiqc'
-    label 'lil_mem'
+
+    label 'med_mem'
 
     publishDir(
         path:    "${params.publishDirReports}/multiqc/${fileName}",

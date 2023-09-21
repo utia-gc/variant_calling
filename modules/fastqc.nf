@@ -2,6 +2,7 @@ process fastqc {
     tag "${metadata.sampleName}"
     
     label 'fastqc'
+
     label 'lil_mem'
 
     publishDir(
@@ -20,7 +21,8 @@ process fastqc {
     script:
         """
         fastqc \
-            -q \
+            --quiet \
+            --threads ${task.cpus} \
             ${reads}
         """
 }
