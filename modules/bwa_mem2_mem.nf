@@ -6,7 +6,7 @@
  * 
  * @input reads the reads channel of format [metadata, [R1, R2]] where R2 is optional.
  * @input index the reference index built by bwa-mem2 index.
- * @emit alignments the aligned/mapped reads channel of format [metadata, alignments] where the alignments are in unsorted SAM format and metadata has additional fields to reflect this.
+ * @emit alignments the aligned/mapped reads channel of format [metadata, alignments] where the alignments are in unsorted SAM format.
  */
 process bwa_mem2_mem {
     tag "${metadata.sampleName}"
@@ -25,10 +25,6 @@ process bwa_mem2_mem {
         tuple val(metadata), file('*.sam'), emit: alignments
 
     script:
-        // update alignments metadata
-        metadata.put('format', 'SAM')
-        metadata.put('sorted', false)
-
         // get index prefix
         def indexPrefix = index[0].toString() - ~/\.0123/
 
