@@ -38,9 +38,6 @@ nextflow_workflow {
             // test SAM
             with(workflow.out.alignments.get(0)) {
                 assert size() == 2
-                // test SAM metadata
-                assert get(0).format == 'SAM'
-                assert get(0).sorted == false
                 // test SAM file
                 assert get(1) ==~ /^.*\/${readsLane1.getSampleName()}\.sam/
             }
@@ -86,9 +83,6 @@ nextflow_workflow {
             // test SAM
             with(workflow.out.alignments.get(0)) {
                 assert size() == 2
-                // test SAM metadata
-                assert get(0).format == 'SAM'
-                assert get(0).sorted == false
                 // test SAM file
                 assert get(1) ==~ /^.*\/${readsLane1.getSampleName()}\.sam/
             }

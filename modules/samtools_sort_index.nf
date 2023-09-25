@@ -7,6 +7,8 @@
 process samtools_sort_index {
     tag "${metadata.sampleName}"
 
+    shell '/bin/bash', '-uo', 'pipefail'
+
     label 'samtools'
 
     publishDir(
@@ -21,33 +23,50 @@ process samtools_sort_index {
     output:
         tuple val(metadata), path("${metadata.sampleName}_sorted.bam"), path("${metadata.sampleName}_sorted.bam.bai"), emit: bamIndexed
 
-    script:
-        if(!metadata.sorted) {
-            // update alignments metadata
-            metadata.put('format', 'BAM')
-            metadata.put('sorted', true)
-            // sort alignments if not sorted, then index BAM.
-            // writes a BAM regardless of input format.
-            """
+    
+    shell:
+        '''
+        # detect if alignments is in BAM or SAM format
+        # this is based on whether the file is BGZIP compressed
+        # detect if a file has thh BGZIP header based on the first 16 bytes of the file
+        hexdump -n 16 -C !{alignments} \
+            | head -n 1 \
+            | grep -q '1f 8b 08 04'
+        if [[ $? -eq 0 ]]; then
+            is_bam="true"
+        else
+            is_bam="false"
+        fi
+
+        # detect if alignments is coordinated sorted
+        # this is based on whether SO:coordinate is set in the SAM/BAM header
+        samtools head !{alignments} \
+            | grep -Eq '^@HD\s.*SO:coordinate.*'
+        if [[ $? -eq 0 ]]; then
+            is_sorted="true"
+        else
+            is_sorted="false"
+        fi
+
+        # sort and index the alignment file if it's unsorted
+        # this will write a sorted BAM regardless if the input is in SAM or BAM format
+        if [[ $is_sorted == "false" ]]; then 
             samtools sort \
-                -@ ${task.cpus} \
+                -@ !{task.cpus} \
                 -O bam \
-                -o ${metadata.sampleName}_sorted.bam \
-                ${alignments}
+                -o !{metadata.sampleName}_sorted.bam \
+                !{alignments}
 
             samtools index \
-                -@ ${task.cpus} \
-                ${metadata.sampleName}_sorted.bam \
-            """
-        } else if(metadata.format == 'BAM' && metadata.sorted) {
-            // index BAM
-            """
+                -@ !{task.cpus} \
+                !{metadata.sampleName}_sorted.bam
+        elif [[ $is_bam == "true" && $is_sorted == "true" ]]; then
             # produce file with stereotypical name for output
-            mv -f ${alignments} ${metadata.sampleName}_sorted.bam
+            mv -f !{alignments} !{metadata.sampleName}_sorted.bam
 
             samtools index \
-                -@ ${task.cpus} \
-                ${metadata.sampleName}_sorted.bam
-            """
-        }
+                -@ !{task.cpus} \
+                !{metadata.sampleName}_sorted.bam
+        fi
+        '''
 }
