@@ -39,9 +39,6 @@ nextflow_workflow {
             // test alignments
             with(workflow.out.alignments.get(0)) {
                 assert size() == 3
-                // test alignments metadata
-                assert get(0).format == 'BAM'
-                assert get(0).sorted == true
                 // test alignments file
                 assert get(1) ==~ /^.*\/${readsLane1.getSampleName()}_sorted\.bam/
                 // test indexed alignments file
@@ -93,9 +90,6 @@ nextflow_workflow {
             // test alignments
             with(workflow.out.alignments.get(0)) {
                 assert size() == 3
-                // test alignments metadata
-                assert get(0).format == 'BAM'
-                assert get(0).sorted == true
                 // test alignments file
                 assert get(1) ==~ /^.*\/${readsLane1.getSampleName()}_sorted\.bam/
                 // test indexed alignments file

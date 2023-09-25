@@ -10,7 +10,7 @@ include { bwa_mem2_mem   } from '../modules/bwa_mem2_mem.nf'
  * 
  * @take reads the reads channel of format [metadata, [R1, R2]] where R2 is optional.
  * @take genome the uncompressed reference genome sequence in fasta format.
- * @emit alignments the aligned/mapped reads channel of format [metadata, alignments] where the alignments are in unsorted SAM format and metadata has additional fields to reflect this.
+ * @emit alignments the aligned/mapped reads channel of format [metadata, alignments] where the alignments are in unsorted SAM format.
  */
 workflow Bwa_Mem2 {
     take:
