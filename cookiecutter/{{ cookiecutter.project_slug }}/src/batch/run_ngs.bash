@@ -18,6 +18,7 @@ export NXF_ANSI_LOG=false
 
 # run pipeline
 nextflow run utia-gc/ngs \
-    -latest \                           #update nf pipeline
-    -revision v0.0.0.9000 \
+    -latest \                
+    # uncomment the line below for forked pipelines since a specific revision should always be used
+    # -revision v0.0.0.9000 \
     -profile isaac_tff,exploratory

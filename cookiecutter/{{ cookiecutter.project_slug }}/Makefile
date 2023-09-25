@@ -12,10 +12,11 @@ endif
 
 # Run the most "up-to-date" rule
 run: pipeline
-.PHONY: run pipeline
+.PHONY: run
 
 pipeline: src/batch/run_ngs.bash nextflow.config data/samplesheets/samplesheet.csv
 > sbatch src/batch/run_ngs.bash
+.PHONY: pipeline
 
 nextflow.config: src/nextflow/args.config src/nextflow/params.config src/nextflow/profiles.config
 > touch $@
@@ -23,10 +24,16 @@ nextflow.config: src/nextflow/args.config src/nextflow/params.config src/nextflo
 data/samplesheets/samplesheet.csv: data/reads/raw/%.fastq.gz
 > bash src/bash/construct_samplesheet.bash > $@
 
+data/samplesheet/decode_samplesheet.csv: /lustre/isaac/proj/UTK0204/decode_samplesheets/{{ cookiecutter.decode_samplesheet }}
+> cp --update --preserve=all $< $@
+
+readsdir = {{ cookiecutter.raw_reads_dir }}
+
 data/reads/raw/%.fastq.gz :
 > find \
->   {{ cookiecutter.raw_reads_dir }} \
+>   $(readsdir) \
 >   -maxdepth 1 \
->   -name *.fastq.gz
->   -exec ln -s {} $(@D) \
+>   -regextype egrep \
+>   -regex '^/.*/.*\.fastq\.gz' \
+>   -exec cp --update --preserve=all {} $(@D) \
 >   \;
