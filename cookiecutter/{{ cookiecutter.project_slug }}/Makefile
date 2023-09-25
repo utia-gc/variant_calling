@@ -24,6 +24,9 @@ nextflow.config: src/nextflow/args.config src/nextflow/params.config src/nextflo
 data/samplesheets/samplesheet.csv: data/reads/raw/%.fastq.gz
 > bash src/bash/construct_samplesheet.bash > $@
 
+data/samplesheet/decode_samplesheet.csv: /lustre/isaac/proj/UTK0204/decode_samplesheets/{{ cookiecutter.decode_samplesheet }}
+> cp --update --preserve=all $< $@
+
 readsdir = {{ cookiecutter.raw_reads_dir }}
 
 data/reads/raw/%.fastq.gz :

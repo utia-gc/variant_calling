@@ -20,6 +20,7 @@ def main():
     """
     dirs_to_make = [
         "data/reads/raw",
+        "data/samplesheets",
         "job_logs"
     ]
     make_paths(dirs_to_make)
