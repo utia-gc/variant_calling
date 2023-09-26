@@ -16,6 +16,7 @@ workflow QC_Alignments {
             .concat(samtools_idxstats.out.idxstat)
             .concat(samtools_stats.out.samtools_stats)
             .concat(samtools_stats.out.samtools_IS)
+            .concat(samtools_stats.out.samtools_COV)
             // .concat(map_log)
             .collect( sort: true )
 
