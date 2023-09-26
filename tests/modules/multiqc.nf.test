@@ -17,7 +17,8 @@ nextflow_process {
                     file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/fastqc/v0.11.2/SRR1067505_1_fastqc.zip"),
                     file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/samtools/stats/SRR1067503_1.fastq.gz_bowtie_srtd.bam_dedup.bam_samtools_stats.txt")
                 ]
-                input[1] = "multiqc"
+                input[1] = "https://github.com/ewels/MultiQC_TestData/raw/aa2ddaa24a061922e86f9d2295956b1d2a4c19ab/data/custom_content/embedded_config/test_YAML_table_mqc.yaml"
+                input[2] = "multiqc"
                 """
             }
         }
@@ -32,14 +33,15 @@ nextflow_process {
             }
             // test multiqc data output
             with(process.out.data.get(0)) {
-                assert size() == 7
+                assert size() == 8
                 assert get(0) ==~ /^.*\/multiqc_data\/multiqc[.]log/
                 assert get(1) ==~ /^.*\/multiqc_data\/multiqc_citations[.]txt/
-                assert get(2) ==~ /^.*\/multiqc_data\/multiqc_data[.]json/
-                assert get(3) ==~ /^.*\/multiqc_data\/multiqc_fastqc[.]txt/
-                assert get(4) ==~ /^.*\/multiqc_data\/multiqc_general_stats[.]txt/
-                assert get(5) ==~ /^.*\/multiqc_data\/multiqc_samtools_stats[.]txt/
-                assert get(6) ==~ /^.*\/multiqc_data\/multiqc_sources[.]txt/
+                assert get(2) ==~ /^.*\/multiqc_data\/multiqc_custom_data_yaml_table_table[.]txt/
+                assert get(3) ==~ /^.*\/multiqc_data\/multiqc_data[.]json/
+                assert get(4) ==~ /^.*\/multiqc_data\/multiqc_fastqc[.]txt/
+                assert get(5) ==~ /^.*\/multiqc_data\/multiqc_general_stats[.]txt/
+                assert get(6) ==~ /^.*\/multiqc_data\/multiqc_samtools_stats[.]txt/
+                assert get(7) ==~ /^.*\/multiqc_data\/multiqc_sources[.]txt/
             }
         }
 

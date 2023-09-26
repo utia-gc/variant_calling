@@ -15,11 +15,13 @@ workflow QC_Alignments {
         ch_multiqc_alignments = Channel.empty()
             .concat(samtools_idxstats.out.idxstat)
             .concat(samtools_stats.out.samtools_stats)
+            .concat(samtools_stats.out.samtools_IS)
             // .concat(map_log)
             .collect( sort: true )
 
         multiqc_alignments(
             ch_multiqc_alignments,
+            file(params.multiqcConfig),
             'alignments'
         )
 

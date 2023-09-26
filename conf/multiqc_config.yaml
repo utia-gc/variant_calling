@@ -1,0 +1,10 @@
+ignore_images: false
+
+custom_data:
+  insert_size:
+    section_name: "Insert size"
+    file_format: "tsv"
+    plot_type: "linegraph"
+sp:
+  insert_size:
+    fn: "*_samtools-IS.txt"

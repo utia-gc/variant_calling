@@ -16,6 +16,7 @@ workflow QC_Reads_Prealign {
 
         multiqc_prealign(
             ch_multiqc_reads_prealign,
+            file(params.multiqcConfig),
             "reads_prealign"
         )
 
