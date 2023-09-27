@@ -1,0 +1,41 @@
+{
+    "sequencing_depth writes file of sequencing depth -- SE reads": {
+        "content": [
+            {
+                "0": [
+                    "SRR1066657_S3_L001_seq-depth.txt:md5,087c8fe4f2350e615849a924883244aa"
+                ],
+                "depth": [
+                    "SRR1066657_S3_L001_seq-depth.txt:md5,087c8fe4f2350e615849a924883244aa"
+                ]
+            }
+        ],
+        "timestamp": "2023-09-27T14:45:56+0000"
+    },
+    "sequencing_depth writes file of sequencing depth -- SE reads no lane info": {
+        "content": [
+            {
+                "0": [
+                    "SRR1066657_seq-depth.txt:md5,087c8fe4f2350e615849a924883244aa"
+                ],
+                "depth": [
+                    "SRR1066657_seq-depth.txt:md5,087c8fe4f2350e615849a924883244aa"
+                ]
+            }
+        ],
+        "timestamp": "2023-09-27T14:45:56+0000"
+    },
+    "sequencing_depth writes file of sequencing depth -- PE reads": {
+        "content": [
+            {
+                "0": [
+                    "SRR6924569_S1_L001_seq-depth.txt:md5,92a76ba93ac18f01dcb7d7a47466be9a"
+                ],
+                "depth": [
+                    "SRR6924569_S1_L001_seq-depth.txt:md5,92a76ba93ac18f01dcb7d7a47466be9a"
+                ]
+            }
+        ],
+        "timestamp": "2023-09-27T14:45:56+0000"
+    }
+}
