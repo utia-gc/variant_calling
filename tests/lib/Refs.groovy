@@ -7,6 +7,10 @@ abstract class Refs {
         this.sequences.genome.gzip
     }
 
+    public getGenomeIndex() {
+        this.sequences.genome.index
+    }
+
     public getGTF() {
         this.annotations.gtf.decomp
     }
