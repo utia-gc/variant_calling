@@ -14,7 +14,7 @@
                 ]
             ]
         ],
-        "timestamp": "2023-09-14T21:19:14+0000"
+        "timestamp": "2023-09-28T16:08:29+0000"
     },
     "PROCESS_READS only concatenates reads when `params.skipTrimReads = true` -- SE reads.": {
         "content": [
@@ -28,7 +28,7 @@
                 ]
             ]
         ],
-        "timestamp": "2023-09-14T21:19:14+0000"
+        "timestamp": "2023-09-28T16:08:29+0000"
     },
     "PROCESS_READS concatenates and trims reads by default -- cutadapt + SE reads.": {
         "content": [
@@ -36,13 +36,14 @@
                 [
                     {
                         "sampleName": "SRR1066657",
+                        "sampleNumber": "3",
                         "readType": "single"
                     },
                     "SRR1066657_trimmed_R1.fastq.gz:md5,98f53500019dd1bdff84a8255e5bf975"
                 ]
             ]
         ],
-        "timestamp": "2023-09-14T21:19:14+0000"
+        "timestamp": "2023-09-28T16:08:29+0000"
     },
     "PROCESS_READS concatenates and trims reads by default -- fastp +  PE reads.": {
         "content": [
@@ -50,6 +51,7 @@
                 [
                     {
                         "sampleName": "SRR6924569",
+                        "sampleNumber": "1",
                         "readType": "paired"
                     },
                     [
@@ -59,7 +61,7 @@
                 ]
             ]
         ],
-        "timestamp": "2023-09-14T21:19:14+0000"
+        "timestamp": "2023-09-28T16:08:29+0000"
     },
     "PROCESS_READS concatenates and trims reads by default -- SE reads.": {
         "content": [
@@ -73,7 +75,7 @@
                 ]
             ]
         ],
-        "timestamp": "2023-09-14T21:19:14+0000"
+        "timestamp": "2023-09-28T16:08:29+0000"
     },
     "PROCESS_READS concatenates and trims reads by default -- fastp + SE reads.": {
         "content": [
@@ -81,13 +83,14 @@
                 [
                     {
                         "sampleName": "SRR1066657",
+                        "sampleNumber": "3",
                         "readType": "single"
                     },
                     "SRR1066657_trimmed_R1.fastq.gz:md5,54c9aaec4a46ccf0568ec51ad74fc038"
                 ]
             ]
         ],
-        "timestamp": "2023-09-14T21:19:14+0000"
+        "timestamp": "2023-09-28T16:08:29+0000"
     },
     "PROCESS_READS concatenates and trims reads by default -- cutadapt + PE reads.": {
         "content": [
@@ -95,6 +98,7 @@
                 [
                     {
                         "sampleName": "SRR6924569",
+                        "sampleNumber": "1",
                         "readType": "paired"
                     },
                     [
@@ -104,6 +108,6 @@
                 ]
             ]
         ],
-        "timestamp": "2023-09-14T21:19:14+0000"
+        "timestamp": "2023-09-28T16:08:29+0000"
     }
 }
