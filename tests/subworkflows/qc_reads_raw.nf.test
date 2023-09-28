@@ -7,6 +7,7 @@ nextflow_workflow {
     test("QC_Reads_Raw succeeds -- SE reads.") {
         // instantiate helper objects
         def readsLane1 = new ReadsSELane1()
+        def refs       = new RefsEnsembl()
 
         when {
             params {
@@ -26,6 +27,7 @@ nextflow_workflow {
                         file("${readsLane1.getR1()}")
                     ]
                 ]
+                input[1] = file("${refs.getGenome()}")
                 """
             }
         }
@@ -33,13 +35,14 @@ nextflow_workflow {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 2
+            assert workflow.trace.succeeded().size() == 3
 
             // test output for full MultiQC
             assert workflow.out.multiqc
             with(workflow.out.multiqc.get(0)) {
-                assert size() == 1
+                assert size() == 2
                 assert get(0) ==~ /^.*\/${readsLane1.getR1SimpleName()}_fastqc.zip/
+                assert get(1) ==~ /^.*\/${readsLane1.getStemName()}_seq-depth.txt/
             }
         }
 
@@ -48,6 +51,7 @@ nextflow_workflow {
     test("QC_Reads_Raw succeeds -- PE reads.") {
         // instantiate helper objects
         def readsLane1 = new ReadsPELane1()
+        def refs       = new RefsEnsembl()
 
         when {
             params {
@@ -68,6 +72,7 @@ nextflow_workflow {
                         file("${readsLane1.getR2()}")
                     ]
                 ]
+                input[1] = file("${refs.getGenome()}")
                 """
             }
         }
@@ -75,14 +80,15 @@ nextflow_workflow {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 2
+            assert workflow.trace.succeeded().size() == 3
 
             // test output for full MultiQC
             assert workflow.out.multiqc
             with(workflow.out.multiqc.get(0)) {
-                assert size() == 2
+                assert size() == 3
                 assert get(0) ==~ /^.*\/${readsLane1.getR1SimpleName()}_fastqc.zip/
                 assert get(1) ==~ /^.*\/${readsLane1.getR2SimpleName()}_fastqc.zip/
+                assert get(2) ==~ /^.*\/${readsLane1.getStemName()}_seq-depth.txt/
             }
         }
 

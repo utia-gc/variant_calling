@@ -9,10 +9,14 @@ workflow CHECK_QUALITY {
         reads_prealign
         trim_log
         alignments
+        genome_index
 
     main:
         if(!params.skipRawReadsQC) {
-            QC_Reads_Raw(reads_raw)
+            QC_Reads_Raw(
+                reads_raw,
+                genome_index
+            )
             ch_multiqc_reads_raw = QC_Reads_Raw.out.multiqc
         } else {
             ch_multiqc_reads_raw = Channel.empty()

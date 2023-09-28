@@ -24,9 +24,11 @@ workflow {
         params.genome,
         params.annotations
     )
-    ch_reads_raw   = PREPARE_INPUTS.out.samples
-    ch_genome      = PREPARE_INPUTS.out.genome
-    ch_annotations = PREPARE_INPUTS.out.annotations
+    ch_reads_raw    = PREPARE_INPUTS.out.samples
+    ch_reads_raw.dump(tag: "ch_reads_raw", pretty: true)
+    ch_genome       = PREPARE_INPUTS.out.genome
+    ch_genome_index = PREPARE_INPUTS.out.genome_index
+    ch_annotations  = PREPARE_INPUTS.out.annotations
 
     PROCESS_READS(ch_reads_raw)
     ch_reads_pre_align = PROCESS_READS.out.reads_pre_align
@@ -43,6 +45,7 @@ workflow {
         ch_reads_raw,
         ch_reads_pre_align,
         ch_trim_log,
-        ch_alignments
+        ch_alignments,
+        ch_genome_index
     )
 }

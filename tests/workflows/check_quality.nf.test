@@ -8,6 +8,7 @@ nextflow_workflow {
         // instantiate helper objects
         def readsRaw      = new ReadsSELane1()
         def readsPrealign = new ReadsSELane2()
+        def refs          = new RefsEnsembl()
 
         when {
             params {
@@ -39,6 +40,7 @@ nextflow_workflow {
                     ]
                 ]
                 input[2] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log"))
+                input[4] = file("${refs.getGenomeIndex()}")
                 """
             }
         }
@@ -46,7 +48,7 @@ nextflow_workflow {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 5
+            assert workflow.trace.succeeded().size() == 6
 
             // test FastQC html files get published to reports directory
             def htmlRaw      = path("${params.publishDirReports}/fastqc/${readsRaw.getR1SimpleName()}_fastqc.html")
@@ -80,6 +82,7 @@ nextflow_workflow {
         // instantiate helper objects
         def readsRaw      = new ReadsPELane1()
         def readsPrealign = new ReadsPELane2()
+        def refs          = new RefsEnsembl()
 
         when {
             params {
@@ -113,6 +116,7 @@ nextflow_workflow {
                     ]
                 ]
                 input[2] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log"))
+                input[4] = file("${refs.getGenomeIndex()}")
                 """
             }
         }
@@ -120,7 +124,7 @@ nextflow_workflow {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 5
+            assert workflow.trace.succeeded().size() == 6
 
             // test FastQC html files get published to reports directory
             def htmlR1Raw      = path("${params.publishDirReports}/fastqc/${readsRaw.getR1SimpleName()}_fastqc.html")
@@ -162,6 +166,7 @@ nextflow_workflow {
         // instantiate helper objects
         def readsRaw      = new ReadsPELane1()
         def readsPrealign = new ReadsPELane2()
+        def refs          = new RefsEnsembl()
 
         when {
             params {
@@ -196,6 +201,7 @@ nextflow_workflow {
                     ]
                 ]
                 input[2] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log"))
+                input[4] = file("${refs.getGenomeIndex()}")
                 """
             }
         }
@@ -233,6 +239,7 @@ nextflow_workflow {
         // instantiate helper objects
         def readsRaw      = new ReadsPELane1()
         def readsPrealign = new ReadsPELane2()
+        def refs          = new RefsEnsembl()
 
         when {
             params {
@@ -267,6 +274,7 @@ nextflow_workflow {
                     ]
                 ]
                 input[2] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log"))
+                input[4] = file("${refs.getGenomeIndex()}")
                 """
             }
         }
@@ -274,7 +282,7 @@ nextflow_workflow {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 3
+            assert workflow.trace.succeeded().size() == 4
 
             // test FastQC html files get published to reports directory
             def htmlR1Raw      = path("${params.publishDirReports}/fastqc/${readsRaw.getR1SimpleName()}_fastqc.html")
@@ -304,6 +312,7 @@ nextflow_workflow {
         // instantiate helper objects
         def readsRaw      = new ReadsPELane1()
         def readsPrealign = new ReadsPELane2()
+        def refs          = new RefsEnsembl()
 
         when {
             params {
@@ -339,6 +348,7 @@ nextflow_workflow {
                     ]
                 ]
                 input[2] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log"))
+                input[4] = file("${refs.getGenomeIndex()}")
                 """
             }
         }
