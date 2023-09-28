@@ -4,7 +4,10 @@ workflow Group_Reads {
 
     main:
         reads
-            .map { selectReadsMetadataMerging(it) }
+            .map { metadata, reads ->
+                def metadataForMerging = dropMetadataLane(metadata) 
+                [ metadataForMerging, reads ]
+            }
             .groupTuple()
             .map { reshapeGroupedLaneReads(it) }
             .dump(tag: "ch_reads_grouped", pretty: true)
@@ -14,14 +17,10 @@ workflow Group_Reads {
         reads_grouped = ch_reads_grouped
 }
 
-def selectReadsMetadataMerging(ArrayList reads) {
-    def metadata = [:]
-    metadata.put("sampleName", reads[0].get("sampleName"))
-    metadata.put("readType", reads[0].get("readType"))
+def dropMetadataLane(LinkedHashMap metadata) {
+    def metadataLaneDropped = metadata.lane ? metadata - ['lane': metadata.get('lane')] : metadata.clone()
 
-    reads[0] = metadata
-
-    return reads
+    return metadataLaneDropped
 }
 
 def reshapeGroupedLaneReads(groupedReads) {

@@ -24,13 +24,20 @@ nextflow_workflow {
         then {
             // test workflow success
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 2
+            assert workflow.trace.succeeded().size() == 3
 
             // test genome decompressed
             assert workflow.out.genome
             with(workflow.out.genome) {
                 assert size() == 1
                 assert get(0) ==~ /^.*\/genome_I.fa/
+            }
+
+            // test genome fasta indexed
+            assert workflow.out.genome_index
+            with(workflow.out.genome_index) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/genome_I.fa.fai/
             }
 
             // test annotations decompressed
@@ -66,13 +73,20 @@ nextflow_workflow {
         then {
             // test workflow success
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 0
+            assert workflow.trace.succeeded().size() == 1
 
             // test genome decompressed
             assert workflow.out.genome
             with(workflow.out.genome) {
                 assert size() == 1
                 assert get(0) ==~ /^.*\/genome_I.fa/
+            }
+
+            // test genome fasta indexed
+            assert workflow.out.genome_index
+            with(workflow.out.genome_index) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/genome_I.fa.fai/
             }
 
             // test annotations decompressed

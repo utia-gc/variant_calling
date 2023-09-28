@@ -6,7 +6,8 @@ class RefsEnsembl extends Refs {
     LinkedHashMap sequences = [
         genome: [
             decomp: 'https://github.com/utia-gc/ngs-test/raw/ngs/data/references/R64-1-1/genome_I.fa',
-            gzip:   'https://github.com/utia-gc/ngs-test/raw/ngs/data/references/R64-1-1/genome_I.fa.gz'
+            gzip:   'https://github.com/utia-gc/ngs-test/raw/ngs/data/references/R64-1-1/genome_I.fa.gz',
+            index:  'https://github.com/utia-gc/ngs-test/raw/ngs/data/references/R64-1-1/genome_I.fa.fai'
         ]
     ]
     LinkedHashMap annotations = [
