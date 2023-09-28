@@ -25,7 +25,8 @@ workflow CHECK_QUALITY {
         if(!params.skipPrealignReadsQC) {
             QC_Reads_Prealign(
                 reads_prealign,
-                trim_log
+                trim_log,
+                genome_index
             )
             ch_multiqc_reads_prealign = QC_Reads_Prealign.out.multiqc
         } else {

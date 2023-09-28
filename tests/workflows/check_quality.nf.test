@@ -48,7 +48,7 @@ nextflow_workflow {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 6
+            assert workflow.trace.succeeded().size() == 7
 
             // test FastQC html files get published to reports directory
             def htmlRaw      = path("${params.publishDirReports}/fastqc/${readsRaw.getR1SimpleName()}_fastqc.html")
@@ -124,7 +124,7 @@ nextflow_workflow {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 6
+            assert workflow.trace.succeeded().size() == 7
 
             // test FastQC html files get published to reports directory
             def htmlR1Raw      = path("${params.publishDirReports}/fastqc/${readsRaw.getR1SimpleName()}_fastqc.html")
@@ -209,7 +209,7 @@ nextflow_workflow {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 3
+            assert workflow.trace.succeeded().size() == 4
 
             // test FastQC html files get published to reports directory
             def htmlR1Prealign = path("${params.publishDirReports}/fastqc/${readsPrealign.getR1SimpleName()}_fastqc.html")
