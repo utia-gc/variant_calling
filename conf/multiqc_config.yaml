@@ -9,8 +9,23 @@ custom_data:
     section_name: "Coverage"
     file_format: "tsv"
     plot_type: "linegraph"
+  sequencing_depth:
+    section_name: "Sequencing depth"
+    description: "Average sequencing depth computed as total number of bases in reads divided by total number of bases in reference contigs."
+    file_format: "tsv"
+    plot_type: "bargraph"
+    pconfig:
+      id: "custom_sequencing_depth"
+      title: "Custom: Average Sequencing Depth"
+      cpswitch: False
+      use_legend: False
+      tt_decimals: 2
+      tt_suffix: " X coverage"
+      tt_percentages: False
 sp:
   insert_size:
     fn: "*_samtools-IS.txt"
   coverage:
     fn: "*_samtools-COV.txt"
+  sequencing_depth:
+    fn: "*_seq-depth.txt"

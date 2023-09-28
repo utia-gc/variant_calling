@@ -37,10 +37,12 @@ process sequencing_depth {
         n_bases_haploid_genome=\$(awk '{s+=\$2}END{print s}' ${fai})
 
         # compute sequencing depth
-        awk \
+        depth=\$(awk \
             -v n_reads_bases=\$n_reads_bases \
             -v n_genome_bases=\$n_bases_haploid_genome \
-            'BEGIN { print( n_reads_bases / n_genome_bases )}' \
-            > ${stemName}_seq-depth.txt
+            'BEGIN { print( n_reads_bases / n_genome_bases )}')
+
+        # write file
+        echo -e "Sequencing_depth\t\$depth" > ${stemName}_seq-depth.txt
         """
 }
