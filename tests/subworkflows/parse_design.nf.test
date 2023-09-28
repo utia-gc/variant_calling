@@ -70,4 +70,31 @@ nextflow_workflow {
 
     }
 
+    test("Parse_Design successfully creates read channels with lanes and sample numbers -- SE + PE reads.") {
+
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
+            workflow {
+                """
+                input[0] = 'https://github.com/utia-gc/ngs-test/raw/ngs/samplesheets/samplesheet_lanes_mix.csv'
+                """
+            }
+        }
+
+        then {
+            // test workflow success
+            assert workflow.success
+
+            // test expected number samples
+            assert workflow.out.samples.size() == 4
+
+            // test reproducibility
+            assert snapshot(workflow.out).match()
+        }
+
+    }
+
 }

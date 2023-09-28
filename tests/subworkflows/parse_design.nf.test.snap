@@ -44,7 +44,110 @@
                 ]
             }
         ],
-        "timestamp": "2023-08-01T21:26:04+0000"
+        "timestamp": "2023-09-27T18:20:27+0000"
+    },
+    "Parse_Design successfully creates read channels with lanes and sample numbers -- SE + PE reads.": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "lane": "001",
+                            "readType": "paired"
+                        },
+                        [
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L001_R1_001.fastq.gz",
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L001_R2_001.fastq.gz"
+                        ]
+                    ],
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "lane": "002",
+                            "readType": "paired"
+                        },
+                        [
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L002_R1_001.fastq.gz",
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L002_R2_001.fastq.gz"
+                        ]
+                    ],
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "lane": "001",
+                            "readType": "single"
+                        },
+                        [
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L001_R1_001.fastq.gz"
+                        ]
+                    ],
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "lane": "002",
+                            "readType": "single"
+                        },
+                        [
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L002_R1_001.fastq.gz"
+                        ]
+                    ]
+                ],
+                "samples": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "lane": "001",
+                            "readType": "paired"
+                        },
+                        [
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L001_R1_001.fastq.gz",
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L001_R2_001.fastq.gz"
+                        ]
+                    ],
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "lane": "002",
+                            "readType": "paired"
+                        },
+                        [
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L002_R1_001.fastq.gz",
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR6924569_S1_L002_R2_001.fastq.gz"
+                        ]
+                    ],
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "lane": "001",
+                            "readType": "single"
+                        },
+                        [
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L001_R1_001.fastq.gz"
+                        ]
+                    ],
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "lane": "002",
+                            "readType": "single"
+                        },
+                        [
+                            "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L002_R1_001.fastq.gz"
+                        ]
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-09-27T18:20:27+0000"
     },
     "successfully creates read channels from single-end samplesheet.": {
         "content": [
@@ -91,7 +194,7 @@
                 ]
             }
         ],
-        "timestamp": "2023-08-01T21:26:04+0000"
+        "timestamp": "2023-09-27T18:20:27+0000"
     },
     "Parse_Design successfully creates read channels from single-end samplesheet.": {
         "content": [
@@ -138,7 +241,7 @@
                 ]
             }
         ],
-        "timestamp": "2023-08-01T21:26:04+0000"
+        "timestamp": "2023-09-27T18:20:27+0000"
     },
     "Parse_Design successfully creates read channels from mixed single-end and paired-end samplesheet.": {
         "content": [
@@ -225,7 +328,7 @@
                 ]
             }
         ],
-        "timestamp": "2023-08-01T21:26:04+0000"
+        "timestamp": "2023-09-27T18:20:27+0000"
     },
     "successfully creates read channels from paired-end samplesheet.": {
         "content": [
@@ -276,7 +379,7 @@
                 ]
             }
         ],
-        "timestamp": "2023-08-01T21:26:04+0000"
+        "timestamp": "2023-09-27T18:20:27+0000"
     },
     "successfully creates read channels from mixed single-end and paired-end samplesheet.": {
         "content": [
@@ -363,7 +466,7 @@
                 ]
             }
         ],
-        "timestamp": "2023-08-01T21:26:04+0000"
+        "timestamp": "2023-09-27T18:20:27+0000"
     },
     "Parse_Design successfully creates read channels from paired-end samplesheet.": {
         "content": [
@@ -414,6 +517,6 @@
                 ]
             }
         ],
-        "timestamp": "2023-08-01T21:26:04+0000"
+        "timestamp": "2023-09-27T18:20:27+0000"
     }
 }
