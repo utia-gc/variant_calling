@@ -1,6 +1,5 @@
 import logging
 import os
-import shutil
 
 
 def make_paths(paths):
@@ -26,9 +25,6 @@ def main():
     ]
     make_paths(dirs_to_make)
 
-    decode = '{% cookiecutter.decode_samplesheet_path %}'
-
-    shutil.copy(decode, 'data/samplesheets/decode.csv')
 
 if __name__ == "__main__":
     main()
