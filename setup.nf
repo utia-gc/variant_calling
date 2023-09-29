@@ -29,7 +29,8 @@ workflow {
 
     WRITE_SAMPLESHEET(
         readsDest,
-        samplesheet
+        samplesheet,
+        decodeTable
     )
 }
 
@@ -59,6 +60,7 @@ workflow WRITE_SAMPLESHEET {
     take:
         reads_dir
         samplesheet
+        decode_table
 
     main:
         // create channel of read pairs
@@ -71,7 +73,7 @@ workflow WRITE_SAMPLESHEET {
         ch_readPairs
             .map { stemName, reads ->
                 def stemNameInfo = captureFastqStemNameInfo(stemName)
-                "${stemNameInfo.sampleName},${stemNameInfo.sampleNumber},${stemNameInfo.lane},${reads[0]},${reads[1] ?: ''}"
+                "${decode_table.get(stemNameInfo.sampleName) ?: stemNameInfo.sampleName},${stemNameInfo.sampleNumber},${stemNameInfo.lane},${reads[0]},${reads[1] ?: ''}"
             }
             .collectFile(
                 name: samplesheet.name,
