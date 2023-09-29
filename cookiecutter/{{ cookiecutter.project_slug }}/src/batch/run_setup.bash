@@ -19,7 +19,7 @@ export NXF_ANSI_LOG=false
 # run pipeline
 nextflow run utia-gc/variant_calling \
     -latest \
-    -revision v0.0.0.9000 \
+    -revision v0.0.0.9001 \
     -main-script setup.nf \
     -profile isaac_tff \
     -params-file src/nextflow/setup_params.yaml

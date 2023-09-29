@@ -19,5 +19,5 @@ export NXF_ANSI_LOG=false
 # run pipeline
 nextflow run utia-gc/variant_calling \
     -latest \
-    -revision v0.0.0.9000 \
+    -revision v0.0.0.9001 \
     -profile isaac_tff,exploratory
