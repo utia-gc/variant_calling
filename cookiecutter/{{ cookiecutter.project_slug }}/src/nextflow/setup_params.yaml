@@ -1,0 +1,3 @@
+readsSource: "{{ cookiecutter.raw_reads_dir }}"
+readsDest: "data/reads/raw"
+project: "{{ cookiecutter.project_brief }}"
