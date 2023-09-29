@@ -1,30 +1,26 @@
+workflow COPY_READS {
+    take:
+        source_reads_dir
+        destination_reads_dir
+
+    main:
+        // make the destination directory
+        destination_reads_dir.mkdirs()
+
+        // iterate through all fastq.gz files in source directory
+        source_reads_dir.eachFileMatch(~/.*\.fastq\.gz/) { fastq ->
+            // copy files to copy dir
+            fastq.copyTo(destination_reads_dir)
+        }
+        
+}
+
 workflow {
-    /*
-    * Work with directory that currently has reads
-    */
-    println "Reads directory: ${params.readsDir}"
-    def readsDir = file(params.readsDir)
+    readsSource = file(params.readsSource)
+    readsDest   = file(params.readsDest)
 
-    // define list of patterns to match
-    def patterns = [
-        /.*/
-    ]
-    // combine patterns into single regex
-    def combinedPattern = patterns.join('|')
-
-    /*
-    * Work with directory to copy reads to
-    */
-    println "Copy directory: ${params.copyDir}"
-    def copyDir = file(params.copyDir)
-
-    // make the copy dir
-    copyDir.mkdirs()
-
-    // iterate through files in directory that match combined regex
-    readsDir.eachFileMatch(~combinedPattern) { fastq ->
-        println "Matching File: ${fastq}"
-        // copy files to copy dir
-        fastq.copyTo(copyDir)
-    }
+    COPY_READS(
+        readsSource,
+        readsDest
+    )
 }
