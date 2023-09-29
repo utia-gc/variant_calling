@@ -12,6 +12,7 @@ process multiqc {
 
     input:
         path('*')
+        path config
         val fileName
 
     output:
@@ -22,6 +23,7 @@ process multiqc {
         """
         multiqc \
             --filename ${fileName} \
+            --config ${config} \
             .
         """
 }

@@ -7,6 +7,7 @@ nextflow_workflow {
     test("QC_Reads_Prealign succeeds for reads and cutadapt log -- SE reads.") {
         // instantiate helper objects
         def readsLane1 = new ReadsSELane1()
+        def refs       = new RefsEnsembl()
 
         when {
             params {
@@ -27,6 +28,7 @@ nextflow_workflow {
                     ]
                 ]
                 input[1] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log"))
+                input[2] = file("${refs.getGenomeIndex()}")
                 """
             }
         }
@@ -34,14 +36,15 @@ nextflow_workflow {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 2
+            assert workflow.trace.succeeded().size() == 3
 
             // test output for full MultiQC
             assert workflow.out.multiqc
             with(workflow.out.multiqc.get(0)) {
-                assert size() == 2
+                assert size() == 3
                 assert get(0) ==~ /^.*\/${readsLane1.getR1SimpleName()}_fastqc.zip/
-                assert get(1) ==~ /^.*\/SAMPLE3_SE.cutadapt.log/
+                assert get(1) ==~ /^.*\/${readsLane1.getStemName()}_seq-depth.txt/
+                assert get(2) ==~ /^.*\/SAMPLE3_SE.cutadapt.log/
             }
         }
 
@@ -50,6 +53,7 @@ nextflow_workflow {
     test("QC_Reads_Prealign succeeds for reads and cutadapt log -- PE reads.") {
         // instantiate helper objects
         def readsLane1 = new ReadsPELane1()
+        def refs       = new RefsEnsembl()
 
         when {
             params {
@@ -71,6 +75,7 @@ nextflow_workflow {
                     ]
                 ]
                 input[1] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log"))
+                input[2] = file("${refs.getGenomeIndex()}")
                 """
             }
         }
@@ -78,15 +83,16 @@ nextflow_workflow {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 2
+            assert workflow.trace.succeeded().size() == 3
 
             // test output for full MultiQC
             assert workflow.out.multiqc
             with(workflow.out.multiqc.get(0)) {
-                assert size() == 3
+                assert size() == 4
                 assert get(0) ==~ /^.*\/${readsLane1.getR1SimpleName()}_fastqc.zip/
                 assert get(1) ==~ /^.*\/${readsLane1.getR2SimpleName()}_fastqc.zip/
-                assert get(2) ==~ /^.*\/SAMPLE3_SE.cutadapt.log/
+                assert get(2) ==~ /^.*\/${readsLane1.getStemName()}_seq-depth.txt/
+                assert get(3) ==~ /^.*\/SAMPLE3_SE.cutadapt.log/
             }
         }
 

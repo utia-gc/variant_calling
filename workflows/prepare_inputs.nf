@@ -22,7 +22,8 @@ workflow PREPARE_INPUTS {
         )
     
     emit:
-        samples     = Parse_Design.out.samples
-        genome      = Prepare_Refs.out.genome
-        annotations = Prepare_Refs.out.annotations
+        samples      = Parse_Design.out.samples
+        genome       = Prepare_Refs.out.genome
+        genome_index = Prepare_Refs.out.genome_index
+        annotations  = Prepare_Refs.out.annotations
 }
