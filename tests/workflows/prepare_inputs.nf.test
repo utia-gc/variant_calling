@@ -25,7 +25,7 @@ nextflow_workflow {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 2
+            assert workflow.trace.succeeded().size() == 3
 
             // test samplesheet parsing
             assert workflow.out.samples.size() == 4
@@ -35,6 +35,13 @@ nextflow_workflow {
             with(workflow.out.genome) {
                 assert size() == 1
                 assert get(0) ==~ /^.*\/genome_I.fa/
+            }
+
+            // test genome fasta indexed
+            assert workflow.out.genome_index
+            with(workflow.out.genome_index) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/genome_I.fa.fai/
             }
 
             // test reference annotations prep

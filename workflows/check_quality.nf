@@ -9,10 +9,14 @@ workflow CHECK_QUALITY {
         reads_prealign
         trim_log
         alignments
+        genome_index
 
     main:
         if(!params.skipRawReadsQC) {
-            QC_Reads_Raw(reads_raw)
+            QC_Reads_Raw(
+                reads_raw,
+                genome_index
+            )
             ch_multiqc_reads_raw = QC_Reads_Raw.out.multiqc
         } else {
             ch_multiqc_reads_raw = Channel.empty()
@@ -21,7 +25,8 @@ workflow CHECK_QUALITY {
         if(!params.skipPrealignReadsQC) {
             QC_Reads_Prealign(
                 reads_prealign,
-                trim_log
+                trim_log,
+                genome_index
             )
             ch_multiqc_reads_prealign = QC_Reads_Prealign.out.multiqc
         } else {
@@ -42,6 +47,7 @@ workflow CHECK_QUALITY {
             .collect( sort: true )
         multiqc_full(
             ch_multiqc_full,
+            file(params.multiqcConfig),
             params.projectTitle
         )
 }

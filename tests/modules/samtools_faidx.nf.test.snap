@@ -1,0 +1,15 @@
+{
+    "samtools_faidx generates fasta index for genome fasta": {
+        "content": [
+            {
+                "0": [
+                    "genome_I.fa.fai:md5,2cd76d936cbfa386b14154506c2041b2"
+                ],
+                "fai": [
+                    "genome_I.fa.fai:md5,2cd76d936cbfa386b14154506c2041b2"
+                ]
+            }
+        ],
+        "timestamp": "2023-09-27T15:36:50+0000"
+    }
+}

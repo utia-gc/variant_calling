@@ -18,8 +18,16 @@ workflow Parse_Design {
 def createSampleReadsChannel(LinkedHashMap row) {
     // store metadata in a Map
     def metadata = [:]
-    metadata.sampleName = row.sampleName
-    metadata.readType   = row.reads2 ? "paired" : "single"
+    // fill in required metadata
+    metadata.sampleName   = row.sampleName
+    metadata.readType     = row.reads2 ? "paired" : "single"
+    // add optional metadata
+    if (row.sampleNumber) {
+        metadata.sampleNumber = row.sampleNumber
+    }
+    if (row.lane) {
+        metadata.lane = row.lane
+    }
 
     // store reads in a list
     def reads = []

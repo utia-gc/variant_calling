@@ -1,0 +1,39 @@
+nextflow_process {
+
+    name "Test Process samtools_faidx"
+    script "modules/samtools_faidx.nf"
+    process "samtools_faidx"
+
+    test("samtools_faidx generates fasta index for genome fasta") {
+        // instantiate helper objects
+        def refs = new RefsEnsembl()
+
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
+            process {
+                """
+                input[0] = file("${refs.getGenome()}")
+                """
+            }
+        }
+
+        then {
+            // test process.success
+            assert process.success
+
+            // test fasta index produced
+            with(process.out.fai) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/genome_I.fa.fai/
+            }
+
+            // test reproducibility
+            assert snapshot(process.out).match()
+        }
+
+    }
+
+}

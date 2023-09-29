@@ -1,5 +1,6 @@
-include { gunzip as gunzip_genome      } from "../modules/gunzip.nf"
-include { gunzip as gunzip_annotations } from "../modules/gunzip.nf"
+include { gunzip         as gunzip_genome      } from "../modules/gunzip.nf"
+include { gunzip         as gunzip_annotations } from "../modules/gunzip.nf"
+include { samtools_faidx                       } from '../modules/samtools_faidx.nf'
 
 
 workflow Prepare_Refs {
@@ -16,6 +17,8 @@ workflow Prepare_Refs {
         } else {
             ch_genome = Channel.value(file(genome))
         }
+        samtools_faidx(ch_genome)
+        ch_genome_index = samtools_faidx.out.fai
 
         if(annotations.toString().endsWith(".gz")) {
             gunzip_annotations(
@@ -27,6 +30,7 @@ workflow Prepare_Refs {
         }
 
     emit:
-        genome      = ch_genome
-        annotations = ch_annotations
+        genome       = ch_genome
+        genome_index = ch_genome_index
+        annotations  = ch_annotations
 }
