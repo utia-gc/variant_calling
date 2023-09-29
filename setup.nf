@@ -1,10 +1,28 @@
 workflow {
+    // make translation table of read names to sample name
+    decode = file(params.decode)
+    decodeTable = [:]
+    decode.eachLine { line, number ->
+        // skip first line since it's header
+        if (number == 1) {
+            return
+        }
+
+        def splitLine = line.split(',')
+        if (splitLine[0] == params.project) {
+            def readsName = splitLine[1]
+            def sampleName = (splitLine.size() == 3) ? splitLine[2] : ''
+            decodeTable.put(readsName, sampleName)
+        }
+    }
+
     readsSource = file(params.readsSource)
     readsDest   = file(params.readsDest)
 
     COPY_READS(
         readsSource,
-        readsDest
+        readsDest,
+        decodeTable
     )
 
     samplesheet = file(params.samplesheet)
@@ -19,15 +37,21 @@ workflow COPY_READS {
     take:
         source_reads_dir
         destination_reads_dir
+        decode_table
 
     main:
         // make the destination directory
         destination_reads_dir.mkdirs()
 
+        // combine patterns to match
+        def combinedPatterns = decode_table.keySet().toList().join('|')
+        log.debug "Patterns to search for matches: ${combinedPatterns}"
+
         // iterate through all fastq.gz files in source directory
-        source_reads_dir.eachFileMatch(~/.*\.fastq\.gz/) { fastq ->
+        source_reads_dir.eachFileMatch(~/.*(${combinedPatterns}).*\.fastq\.gz/) { fastq ->
             // copy files to copy dir
-            fastq.copyTo(destination_reads_dir)
+            def fastqDestPath = fastq.copyTo(destination_reads_dir)
+            log.debug "Copied fastq file ${fastq} --> ${fastqDestPath}"
         }
 }
 
