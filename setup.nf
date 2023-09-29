@@ -46,13 +46,30 @@ workflow WRITE_SAMPLESHEET {
         // cast ch_readPairs to a map and write to a file
         ch_readPairs
             .map { stemName, reads ->
-                "${stemName},${reads[0]},${reads[1]}"
+                def stemNameInfo = captureFastqStemNameInfo(stemName)
+                "${stemNameInfo.sampleName},${stemNameInfo.sampleNumber},${stemNameInfo.lane},${reads[0]},${reads[1] ?: ''}"
             }
             .collectFile(
                 name: samplesheet.name,
                 newLine: true,
                 storeDir: samplesheet.parent,
                 sort: true,
-                seed: 'sampleName,reads1,reads2'
+                seed: 'sampleName,sampleNumber,lane,reads1,reads2'
             )
+}
+
+def captureFastqStemNameInfo(String stemName) {
+    def capturePattern = /(.*)_S(\d+)_L(\d{3})/
+    def fastqMatcher = (stemName =~ capturePattern)
+
+    if (fastqMatcher.find()) {
+        stemNameInfo = [:]
+        stemNameInfo.put('sampleName', fastqMatcher.group(1))
+        stemNameInfo.put('sampleNumber', fastqMatcher.group(2))
+        stemNameInfo.put('lane', fastqMatcher.group(3))
+
+        return stemNameInfo
+    } else {
+        log.error "fastq file stem manes do not "
+    }
 }
