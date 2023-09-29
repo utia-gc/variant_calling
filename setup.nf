@@ -1,3 +1,20 @@
+workflow {
+    readsSource = file(params.readsSource)
+    readsDest   = file(params.readsDest)
+
+    COPY_READS(
+        readsSource,
+        readsDest
+    )
+
+    samplesheet = file(params.samplesheet)
+
+    WRITE_SAMPLESHEET(
+        readsDest,
+        samplesheet
+    )
+}
+
 workflow COPY_READS {
     take:
         source_reads_dir
@@ -38,21 +55,4 @@ workflow WRITE_SAMPLESHEET {
                 sort: true,
                 seed: 'sampleName,reads1,reads2'
             )
-}
-
-workflow {
-    readsSource = file(params.readsSource)
-    readsDest   = file(params.readsDest)
-
-    COPY_READS(
-        readsSource,
-        readsDest
-    )
-
-    samplesheet = file(params.samplesheet)
-
-    WRITE_SAMPLESHEET(
-        readsDest,
-        samplesheet
-    )
 }
