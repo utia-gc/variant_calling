@@ -1,4 +1,4 @@
-workflow Parse_Design {
+workflow Parse_Samplesheet {
     take:
         samplesheet
 

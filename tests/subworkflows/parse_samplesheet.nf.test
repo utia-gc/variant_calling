@@ -1,10 +1,10 @@
 nextflow_workflow {
 
-    name "Test Workflow Parse_Design"
-    script "subworkflows/parse_design.nf"
-    workflow "Parse_Design"
+    name "Test Workflow Parse_Samplesheet"
+    script "subworkflows/parse_samplesheet.nf"
+    workflow "Parse_Samplesheet"
 
-    test("Parse_Design successfully creates read channels from single-end samplesheet.") {
+    test("Parse_Samplesheet successfully creates read channels from single-end samplesheet.") {
 
         when {
             params {
@@ -57,7 +57,7 @@ nextflow_workflow {
 
     }
 
-    test("Parse_Design successfully creates read channels from paired-end samplesheet.") {
+    test("Parse_Samplesheet successfully creates read channels from paired-end samplesheet.") {
 
         when {
             params {
@@ -110,7 +110,7 @@ nextflow_workflow {
 
     }
 
-    test("Parse_Design successfully creates read channels from mixed single-end and paired-end samplesheet.") {
+    test("Parse_Samplesheet successfully creates read channels from mixed single-end and paired-end samplesheet.") {
 
         when {
             params {
@@ -185,7 +185,7 @@ nextflow_workflow {
 
     }
 
-    test("Parse_Design successfully creates read channels with lanes and sample numbers -- SE + PE reads.") {
+    test("Parse_Samplesheet successfully creates read channels with lanes and sample numbers -- SE + PE reads.") {
 
         when {
             params {

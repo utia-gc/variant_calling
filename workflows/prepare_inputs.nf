@@ -1,4 +1,4 @@
-include { Parse_Design } from "../subworkflows/parse_design.nf"
+include { Parse_Samplesheet } from "../subworkflows/parse_samplesheet.nf"
 include { Prepare_Refs } from "../subworkflows/prepare_refs.nf"
 
 /**
@@ -14,7 +14,7 @@ workflow PREPARE_INPUTS {
         annotations
 
     main:
-        Parse_Design(samplesheet)
+        Parse_Samplesheet(samplesheet)
 
         Prepare_Refs(
             genome,
@@ -22,7 +22,7 @@ workflow PREPARE_INPUTS {
         )
     
     emit:
-        samples      = Parse_Design.out.samples
+        samples      = Parse_Samplesheet.out.samples
         genome       = Prepare_Refs.out.genome
         genome_index = Prepare_Refs.out.genome_index
         annotations  = Prepare_Refs.out.annotations
