@@ -13,10 +13,10 @@ process fastp {
     )
 
     input:
-        tuple val(metadata), path(reads)
+        tuple val(metadata), path(reads1), path(reads2)
 
     output:
-        tuple val(metadata), path("*_trimmed_R{1,2}.fastq.gz"), emit: reads
+        tuple val(metadata), path("*_trimmed_R1.fastq.gz"), path("*_trimmed_R2{.fastq.gz,.NOFILE}"), emit: reads
         path("*_fastp-log.json"), emit: log
 
     script:
@@ -24,16 +24,18 @@ process fastp {
             """
             fastp \
                 --thread ${task.cpus} \
-                --in1 ${reads[0]} \
+                --in1 ${reads1} \
                 --out1 ${metadata.sampleName}_trimmed_R1.fastq.gz \
                 --json ${metadata.sampleName}_fastp-log.json
+
+            cp ${reads2} ${metadata.sampleName}_trimmed_R2.NOFILE
             """
         } else if(metadata.readType == 'paired') {
             """
             fastp \
                 --thread ${task.cpus} \
-                --in1 ${reads[0]} \
-                --in2 ${reads[1]} \
+                --in1 ${reads1} \
+                --in2 ${reads2} \
                 --out1 ${metadata.sampleName}_trimmed_R1.fastq.gz \
                 --out2 ${metadata.sampleName}_trimmed_R2.fastq.gz \
                 --json ${metadata.sampleName}_fastp-log.json

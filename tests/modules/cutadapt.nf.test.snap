@@ -23,14 +23,12 @@
                         "lane": "001",
                         "readType": "paired"
                     },
-                    [
-                        "SRR6924569_trimmed_R1.fastq.gz:md5,1025b1a273fee2b51bd597f519ebbe86",
-                        "SRR6924569_trimmed_R2.fastq.gz:md5,3c3451e122dcf82b1be4a4526519fcc7"
-                    ]
+                    "SRR6924569_trimmed_R1.fastq.gz:md5,1025b1a273fee2b51bd597f519ebbe86",
+                    "SRR6924569_trimmed_R2.fastq.gz:md5,3c3451e122dcf82b1be4a4526519fcc7"
                 ]
             ]
         ],
-        "timestamp": "2023-09-13T19:13:07+0000"
+        "timestamp": "2023-10-11T04:17:30.624006828"
     },
     "CUTADAPT works for single-end reads.": {
         "content": [
@@ -90,11 +88,12 @@
                         "lane": "001",
                         "readType": "single"
                     },
-                    "SRR1066657_trimmed_R1.fastq.gz:md5,0cf552582764f49d0eb969ffb0950ed4"
+                    "SRR1066657_trimmed_R1.fastq.gz:md5,0cf552582764f49d0eb969ffb0950ed4",
+                    "SRR1066657_trimmed_R2.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                 ]
             ]
         ],
-        "timestamp": "2023-09-13T19:13:07+0000"
+        "timestamp": "2023-10-11T04:17:21.53785435"
     },
     "cutadapt works for single-end reads.": {
         "content": [
