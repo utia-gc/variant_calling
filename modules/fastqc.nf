@@ -12,17 +12,27 @@ process fastqc {
     )
 
     input:
-        tuple val(metadata), path(reads)
+        tuple val(metadata), path(reads1), path(reads2)
 
     output:
         path('*.html'), emit: html
         path('*.zip'),  emit: zip
 
     script:
-        """
-        fastqc \
-            --quiet \
-            --threads ${task.cpus} \
-            ${reads}
-        """
+        if(metadata.readType == 'single') {
+            """
+            fastqc \
+                --quiet \
+                --threads ${task.cpus} \
+                ${reads1}
+            """
+        } else if(metadata.readType == 'paired') {
+            """
+            fastqc \
+                --quiet \
+                --threads ${task.cpus} \
+                ${reads1} \
+                ${reads2}
+            """
+        }
 }
