@@ -10,7 +10,7 @@ workflow Group_Reads {
             }
             .groupTuple()
             .map { reshapeGroupedLaneReads(it) }
-            .dump(tag: "ch_reads_grouped", pretty: true)
+            .dump(tag: "ch_reads_grouped")
             .set { ch_reads_grouped }
 
     emit:
