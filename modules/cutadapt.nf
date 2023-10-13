@@ -18,17 +18,19 @@ process cutadapt {
 
     output:
         tuple val(metadata), path("*_trimmed_R1.fastq.gz"), path("*_trimmed_R2{.fastq.gz,.NOFILE}"), emit: reads
-        path("${metadata.sampleName}_cutadapt-log.txt"), emit: log
+        path("*_cutadapt-log.txt"), emit: log
 
     script:
+        String stemName = MetadataUtils.buildStemName(metadata)
+
         if(metadata.readType == 'single') {
             """
             cutadapt \
                 -a ${r1_adapter} \
                 -m ${minimum_length} \
-                -o ${metadata.sampleName}_trimmed_R1.fastq.gz \
+                -o ${stemName}_trimmed_R1.fastq.gz \
                 ${reads1} \
-                > ${metadata.sampleName}_cutadapt-log.txt
+                > ${stemName}_cutadapt-log.txt
 
             cp ${reads2} ${metadata.sampleName}_trimmed_R2.NOFILE
             """
@@ -38,10 +40,10 @@ process cutadapt {
                 -a ${r1_adapter} \
                 -A ${r2_adapter} \
                 -m ${minimum_length} \
-                -o ${metadata.sampleName}_trimmed_R1.fastq.gz \
-                -p ${metadata.sampleName}_trimmed_R2.fastq.gz \
+                -o ${stemName}_trimmed_R1.fastq.gz \
+                -p ${stemName}_trimmed_R2.fastq.gz \
                 ${reads1} ${reads2} \
-                > ${metadata.sampleName}_cutadapt-log.txt
+                > ${stemName}_cutadapt-log.txt
             """
         }
 }

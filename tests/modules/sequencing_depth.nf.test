@@ -42,7 +42,7 @@ nextflow_process {
             // test expected sequencing depth file made
             with(process.out.depth) {
                 assert size() == 1
-                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_seq-depth.txt/
+                assert get(0) ==~ /^.*\/${readsLane1.getSampleName()}_L${readsLane1.getLane()}_seq-depth.txt/
             }
 
             // test reproducibility
@@ -135,7 +135,7 @@ nextflow_process {
             // test expected sequencing depth file made
             with(process.out.depth) {
                 assert size() == 1
-                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_seq-depth.txt/
+                assert get(0) ==~ /^.*\/${readsLane1.getSampleName()}_L${readsLane1.getLane()}_seq-depth.txt/
             }
 
             // test reproducibility

@@ -20,13 +20,15 @@ process fastp {
         path("*_fastp-log.json"), emit: log
 
     script:
+        String stemName = MetadataUtils.buildStemName(metadata)
+
         if(metadata.readType == 'single') {
             """
             fastp \
                 --thread ${task.cpus} \
                 --in1 ${reads1} \
-                --out1 ${metadata.sampleName}_trimmed_R1.fastq.gz \
-                --json ${metadata.sampleName}_fastp-log.json
+                --out1 ${stemName}_trimmed_R1.fastq.gz \
+                --json ${stemName}_fastp-log.json
 
             cp ${reads2} ${metadata.sampleName}_trimmed_R2.NOFILE
             """
@@ -36,9 +38,9 @@ process fastp {
                 --thread ${task.cpus} \
                 --in1 ${reads1} \
                 --in2 ${reads2} \
-                --out1 ${metadata.sampleName}_trimmed_R1.fastq.gz \
-                --out2 ${metadata.sampleName}_trimmed_R2.fastq.gz \
-                --json ${metadata.sampleName}_fastp-log.json
+                --out1 ${stemName}_trimmed_R1.fastq.gz \
+                --out2 ${stemName}_trimmed_R2.fastq.gz \
+                --json ${stemName}_fastp-log.json
             """
         }
 }

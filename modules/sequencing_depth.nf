@@ -20,7 +20,7 @@ process sequencing_depth {
         path '*_seq-depth.txt', emit: depth
 
     script:
-        String stemName = metadata.lane ? "${metadata.sampleName}_S${metadata.sampleNumber}_L${metadata.lane}" : "${metadata.sampleName}"
+        String stemName = MetadataUtils.buildStemName(metadata)
         def reads = (metadata.readType == 'single') ? "${reads1}" : "${reads1} ${reads2}"
 
         """
