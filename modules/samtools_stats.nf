@@ -18,19 +18,21 @@ process samtools_stats {
         path '*_samtools-COV.txt',   emit: samtools_COV
 
     script:
+        String stemName = MetadataUtils.buildStemName(metadata)
+
         """
         samtools stats \
             ${bam} \
-            > ${metadata.sampleName}_samtools-stats.txt
+            > ${stemName}_samtools-stats.txt
 
         # extract insert sizes
-        grep ^IS ${metadata.sampleName}_samtools-stats.txt \
+        grep ^IS ${stemName}_samtools-stats.txt \
             | cut -f 2,3 \
-            > ${metadata.sampleName}_samtools-IS.txt
+            > ${stemName}_samtools-IS.txt
 
         # extract coverages
-        grep ^COV ${metadata.sampleName}_samtools-stats.txt \
+        grep ^COV ${stemName}_samtools-stats.txt \
             | cut -f 3,4 \
-            > ${metadata.sampleName}_samtools-COV.txt
+            > ${stemName}_samtools-COV.txt
         """
 }

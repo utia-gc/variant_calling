@@ -4,7 +4,7 @@ nextflow_process {
     script "modules/fastqc.nf"
     process "fastqc"
 
-    test("fastqc runs QC on fastqs -- SE reads.") {
+    test("fastqc runs QC on fastqs -- SE reads raw.") {
         // instantiate helper objects
         def readsLane1 = new ReadsSELane1()
 
@@ -20,10 +20,14 @@ nextflow_process {
                         sampleName:   "${readsLane1.getSampleName()}",
                         sampleNumber: "${readsLane1.getSampleNumber()}",
                         lane:         "${readsLane1.getLane()}",
-                        readType:     "${readsLane1.getReadType()}"
+                        readType:     "${readsLane1.getReadType()}",
+                        trimStatus:   "raw"
                     ],
                     [
-                        file("${readsLane1.getR1()}")
+                        file("${readsLane1.getR1()}"),
+                    ],
+                    [
+                        file("${readsLane1.getR2()}"),
                     ]
                 ]
                 """
@@ -37,18 +41,18 @@ nextflow_process {
             // test html output
             with(process.out.html) {
                 assert size() == 1
-                assert get(0) ==~ /^.*\/${readsLane1.getR1SimpleName()}_fastqc.html/
+                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_raw_R1_fastqc.html/
             }
             // test zip output
             with(process.out.zip) {
                 assert size() == 1
-                assert get(0) ==~ /^.*\/${readsLane1.getR1SimpleName()}_fastqc.zip/
+                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_raw_R1_fastqc.zip/
             }
         }
 
     }
 
-    test("fastqc runs QC on fastqs -- PE reads.") {
+    test("fastqc runs QC on fastqs -- PE reads raw.") {
         // instantiate helper objects
         def readsLane1 = new ReadsPELane1()
 
@@ -64,11 +68,14 @@ nextflow_process {
                         sampleName:   "${readsLane1.getSampleName()}",
                         sampleNumber: "${readsLane1.getSampleNumber()}",
                         lane:         "${readsLane1.getLane()}",
-                        readType:     "${readsLane1.getReadType()}"
+                        readType:     "${readsLane1.getReadType()}",
+                        trimStatus:   "raw"
                     ],
                     [
                         file("${readsLane1.getR1()}"),
-                        file("${readsLane1.getR2()}")
+                    ],
+                    [
+                        file("${readsLane1.getR2()}"),
                     ]
                 ]
                 """
@@ -82,14 +89,112 @@ nextflow_process {
             // test html output
             with(process.out.html.get(0)) {
                 assert size() == 2
-                assert get(0) ==~ /^.*\/${readsLane1.getR1SimpleName()}_fastqc.html/
-                assert get(1) ==~ /^.*\/${readsLane1.getR2SimpleName()}_fastqc.html/
+                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_raw_R1_fastqc.html/
+                assert get(1) ==~ /^.*\/${readsLane1.getStemName()}_raw_R2_fastqc.html/
             }
             // test zip output
             with(process.out.zip.get(0)) {
                 assert size() == 2
-                assert get(0) ==~ /^.*\/${readsLane1.getR1SimpleName()}_fastqc.zip/
-                assert get(1) ==~ /^.*\/${readsLane1.getR2SimpleName()}_fastqc.zip/
+                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_raw_R1_fastqc.zip/
+                assert get(1) ==~ /^.*\/${readsLane1.getStemName()}_raw_R2_fastqc.zip/
+            }
+        }
+
+    }
+
+    test("fastqc runs QC on fastqs -- SE reads trimmed.") {
+        // instantiate helper objects
+        def readsLane1 = new ReadsSELane1()
+
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
+            process {
+                """
+                input[0] = [
+                    [
+                        sampleName:   "${readsLane1.getSampleName()}",
+                        sampleNumber: "${readsLane1.getSampleNumber()}",
+                        lane:         "${readsLane1.getLane()}",
+                        readType:     "${readsLane1.getReadType()}",
+                        trimStatus:   "trimmed"
+                    ],
+                    [
+                        file("${readsLane1.getR1()}"),
+                    ],
+                    [
+                        file("${readsLane1.getR2()}"),
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            // test process success
+            assert process.success
+
+            // test html output
+            with(process.out.html) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R1_fastqc.html/
+            }
+            // test zip output
+            with(process.out.zip) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R1_fastqc.zip/
+            }
+        }
+
+    }
+
+    test("fastqc runs QC on fastqs -- PE reads trimmed.") {
+        // instantiate helper objects
+        def readsLane1 = new ReadsPELane1()
+
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
+            process {
+                """
+                input[0] = [
+                    [
+                        sampleName:   "${readsLane1.getSampleName()}",
+                        sampleNumber: "${readsLane1.getSampleNumber()}",
+                        lane:         "${readsLane1.getLane()}",
+                        readType:     "${readsLane1.getReadType()}",
+                        trimStatus:   "trimmed"
+                    ],
+                    [
+                        file("${readsLane1.getR1()}"),
+                    ],
+                    [
+                        file("${readsLane1.getR2()}"),
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            // test process success
+            assert process.success
+
+            // test html output
+            with(process.out.html.get(0)) {
+                assert size() == 2
+                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R1_fastqc.html/
+                assert get(1) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R2_fastqc.html/
+            }
+            // test zip output
+            with(process.out.zip.get(0)) {
+                assert size() == 2
+                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R1_fastqc.zip/
+                assert get(1) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R2_fastqc.zip/
             }
         }
 

@@ -1,0 +1,271 @@
+nextflow_workflow {
+
+    name "Test Workflow Parse_Samplesheet"
+    script "subworkflows/parse_samplesheet.nf"
+    workflow "Parse_Samplesheet"
+
+    test("Parse_Samplesheet successfully creates read channels from single-end samplesheet.") {
+
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
+            workflow {
+                """
+                input[0] = "https://github.com/utia-gc/ngs-test/raw/ngs/samplesheets/samplesheet_se.csv"
+                """
+            }
+        }
+
+        then {
+            // test workflow success
+            assert workflow.success
+
+            // test expected number samples
+            assert workflow.out.samples.size() == 2
+
+            // test expected samples
+            with(workflow.out.samples) {
+                with(get(0)) {
+                    // test metadata
+                    with(get(0)) {
+                        assert sampleName == 'SRR1066657_GSM1299413_WT_NR_A'
+                        assert readType   == 'single'
+                    }
+                    // test R1
+                    assert get(1).get(0) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz/
+                    // test R2
+                    assert get(2).get(0) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz\.NOFILE/
+                }
+                with(get(1)) {
+                    // test metadata
+                    with(get(0)) {
+                        assert sampleName == 'SRR1066658_GSM1299414_WT_NR_B'
+                        assert readType   == 'single'
+                    }
+                    // test R1
+                    assert get(1).get(0) ==~ /^.*\/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz/
+                    // test R2
+                    assert get(2).get(0) ==~ /^.*\/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz\.NOFILE/
+                }
+            }
+
+            // test reproducibility
+            assert snapshot(workflow.out).match()
+        }
+
+    }
+
+    test("Parse_Samplesheet successfully creates read channels from paired-end samplesheet.") {
+
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
+            workflow {
+                """
+                input[0] = "https://github.com/utia-gc/ngs-test/raw/ngs/samplesheets/samplesheet_pe.csv"
+                """
+            }
+        }
+
+        then {
+            // test workflow success
+            assert workflow.success
+
+            // test expected number samples
+            assert workflow.out.samples.size() == 2
+
+            // test expected samples
+            with(workflow.out.samples) {
+                with(get(0)) {
+                    // test metadata
+                    with(get(0)) {
+                        assert sampleName == 'SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2'
+                        assert readType   == 'paired'
+                    }
+                    // test R1
+                    assert get(1).get(0) ==~ /^.*\/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000\.fastq\.gz/
+                    // test R2
+                    assert get(2).get(0) ==~ /^.*\/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000\.fastq\.gz/
+                }
+                with(get(1)) {
+                    // test metadata
+                    with(get(0)) {
+                        assert sampleName == 'SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1'
+                        assert readType   == 'paired'
+                    }
+                    // test R1
+                    assert get(1).get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000\.fastq\.gz/
+                    // test R2
+                    assert get(2).get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000\.fastq\.gz/
+                }
+            }
+
+            // test reproducibility
+            assert snapshot(workflow.out).match()
+        }
+
+    }
+
+    test("Parse_Samplesheet successfully creates read channels from mixed single-end and paired-end samplesheet.") {
+
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
+            workflow {
+                """
+                input[0] = "https://github.com/utia-gc/ngs-test/raw/ngs/samplesheets/samplesheet_mix.csv"
+                """
+            }
+        }
+
+        then {
+            // test workflow success
+            assert workflow.success
+
+            // test expected number samples
+            assert workflow.out.samples.size() == 4
+
+            // test expected samples
+            with(workflow.out.samples) {
+                with(get(0)) {
+                    // test metadata
+                    with(get(0)) {
+                        assert sampleName == 'SRR1066657_GSM1299413_WT_NR_A'
+                        assert readType   == 'single'
+                    }
+                    // test R1
+                    assert get(1).get(0) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz/
+                    // test R2
+                    assert get(2).get(0) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz\.NOFILE/
+                }
+                with(get(1)) {
+                    // test metadata
+                    with(get(0)) {
+                        assert sampleName == 'SRR1066658_GSM1299414_WT_NR_B'
+                        assert readType   == 'single'
+                    }
+                    // test R1
+                    assert get(1).get(0) ==~ /^.*\/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz/
+                    // test R2
+                    assert get(2).get(0) ==~ /^.*\/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz\.NOFILE/
+                }
+                with(get(2)) {
+                    // test metadata
+                    with(get(0)) {
+                        assert sampleName == 'SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2'
+                        assert readType   == 'paired'
+                    }
+                    // test R1
+                    assert get(1).get(0) ==~ /^.*\/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000\.fastq\.gz/
+                    // test R2
+                    assert get(2).get(0) ==~ /^.*\/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000\.fastq\.gz/
+                }
+                with(get(3)) {
+                    // test metadata
+                    with(get(0)) {
+                        assert sampleName == 'SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1'
+                        assert readType   == 'paired'
+                    }
+                    // test R1
+                    assert get(1).get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000\.fastq\.gz/
+                    // test R2
+                    assert get(2).get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000\.fastq\.gz/
+                }
+            }
+
+            // test reproducibility
+            assert snapshot(workflow.out).match()
+        }
+
+    }
+
+    test("Parse_Samplesheet successfully creates read channels with lanes and sample numbers -- SE + PE reads.") {
+
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
+            workflow {
+                """
+                input[0] = "https://github.com/utia-gc/ngs-test/raw/ngs/samplesheets/samplesheet_lanes_mix.csv"
+                """
+            }
+        }
+
+        then {
+            // test workflow success
+            assert workflow.success
+
+            // test expected number samples
+            assert workflow.out.samples.size() == 4
+
+            // test expected samples
+            with(workflow.out.samples) {
+                with(get(0)) {
+                    // test metadata
+                    with(get(0)) {
+                        assert sampleName   == 'SRR1066657'
+                        assert readType     == 'single'
+                        assert sampleNumber == '3'
+                        assert lane         == '001'
+                    }
+                    // test R1
+                    assert get(1).get(0) ==~ /^.*\/SRR1066657_S3_L001_R1_001\.fastq\.gz/
+                    // test R2
+                    assert get(2).get(0) ==~ /^.*\/SRR1066657_S3_L001_R1_001\.fastq\.gz\.NOFILE/
+                }
+                with(get(1)) {
+                    // test metadata
+                    with(get(0)) {
+                        assert sampleName   == 'SRR1066657'
+                        assert readType     == 'single'
+                        assert sampleNumber == '3'
+                        assert lane         == '002'
+                    }
+                    // test R1
+                    assert get(1).get(0) ==~ /^.*\/SRR1066657_S3_L002_R1_001\.fastq\.gz/
+                    // test R2
+                    assert get(2).get(0) ==~ /^.*\/SRR1066657_S3_L002_R1_001\.fastq\.gz\.NOFILE/
+                }
+                with(get(2)) {
+                    // test metadata
+                    with(get(0)) {
+                        assert sampleName   == 'SRR6924569'
+                        assert readType     == 'paired'
+                        assert sampleNumber == '1'
+                        assert lane         == '001'
+                    }
+                    // test R1
+                    assert get(1).get(0) ==~ /^.*\/SRR6924569_S1_L001_R1_001\.fastq\.gz/
+                    // test R2
+                    assert get(2).get(0) ==~ /^.*\/SRR6924569_S1_L001_R2_001\.fastq\.gz/
+                }
+                with(get(3)) {
+                    // test metadata
+                    with(get(0)) {
+                        assert sampleName   == 'SRR6924569'
+                        assert readType     == 'paired'
+                        assert sampleNumber == '1'
+                        assert lane         == '002'
+                    }
+                    // test R1
+                    assert get(1).get(0) ==~ /^.*\/SRR6924569_S1_L002_R1_001\.fastq\.gz/
+                    // test R2
+                    assert get(2).get(0) ==~ /^.*\/SRR6924569_S1_L002_R2_001\.fastq\.gz/
+                }
+            }
+
+            // test reproducibility
+            assert snapshot(workflow.out).match()
+        }
+
+    }
+
+}

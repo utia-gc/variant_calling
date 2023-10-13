@@ -9,13 +9,11 @@ workflow CHECK_QUALITY {
         reads_prealign
         trim_log
         alignments
-        genome_index
 
     main:
         if(!params.skipRawReadsQC) {
             QC_Reads_Raw(
-                reads_raw,
-                genome_index
+                reads_raw
             )
             ch_multiqc_reads_raw = QC_Reads_Raw.out.multiqc
         } else {
@@ -25,8 +23,7 @@ workflow CHECK_QUALITY {
         if(!params.skipPrealignReadsQC) {
             QC_Reads_Prealign(
                 reads_prealign,
-                trim_log,
-                genome_index
+                trim_log
             )
             ch_multiqc_reads_prealign = QC_Reads_Prealign.out.multiqc
         } else {

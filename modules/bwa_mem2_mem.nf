@@ -18,7 +18,7 @@ process bwa_mem2_mem {
     label 'sup_time'
 
     input:
-        tuple val(metadata), path(reads)
+        tuple val(metadata), path(reads1), path(reads2)
         path  index
 
     output:
@@ -28,11 +28,16 @@ process bwa_mem2_mem {
         // get index prefix
         def indexPrefix = index[0].toString() - ~/\.0123/
 
+        // set reads
+        def reads = (metadata.readType == 'single') ? "${reads1}" : "${reads1} ${reads2}"
+
+        String stemName = MetadataUtils.buildStemName(metadata)
+
         """
         bwa-mem2 mem \
             -t ${task.cpus} \
             ${indexPrefix} \
             ${reads} \
-            > ${metadata.sampleName}.sam
+            > ${stemName}.sam
         """
 }
