@@ -5,7 +5,6 @@ include { fastp    } from "../modules/fastp.nf"
  * Workflow to process reads.
  * Reads should be trimmed and concatenated here, if necessary.
  */
-
 workflow Trim_Reads {
     take:
         reads_raw
@@ -31,7 +30,16 @@ workflow Trim_Reads {
                 break
         }
 
+        // update trim status in metadat
+        ch_reads_trim
+            .map { metadata, reads1, reads2 ->
+                def meta = metadata.clone()
+                meta.put('trimStatus', 'trimmed')
+                [ meta, reads1, reads2 ]
+            }
+            .set { ch_reads_trim_updated }
+
     emit:
-        reads_trim = ch_reads_trim
+        reads_trim = ch_reads_trim_updated
         trim_log   = ch_trim_log
 }

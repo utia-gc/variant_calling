@@ -20,6 +20,7 @@ def createSampleReadsChannel(LinkedHashMap row) {
     def metadata = [:]
     // fill in required metadata
     metadata.sampleName = row.sampleName
+    metadata.trimStatus = "raw"
     metadata.readType   = row.reads2 ? "paired" : "single"
     // add optional metadata
     if (row.sampleNumber) {
