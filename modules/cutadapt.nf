@@ -32,7 +32,7 @@ process cutadapt {
                 ${reads1} \
                 > ${stemName}_cutadapt-log.txt
 
-            cp ${reads2} ${metadata.sampleName}_trimmed_R2.NOFILE
+            cp ${reads2} ${stemName}_trimmed_R2.NOFILE
             """
         } else if(metadata.readType == 'paired') {
             """

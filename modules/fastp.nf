@@ -30,7 +30,7 @@ process fastp {
                 --out1 ${stemName}_trimmed_R1.fastq.gz \
                 --json ${stemName}_fastp-log.json
 
-            cp ${reads2} ${metadata.sampleName}_trimmed_R2.NOFILE
+            cp ${reads2} ${stemName}_trimmed_R2.NOFILE
             """
         } else if(metadata.readType == 'paired') {
             """

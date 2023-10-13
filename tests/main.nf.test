@@ -49,8 +49,10 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.html").exists()
             assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.zip").exists()
             // test trimmed reads logs published to reports dir
-            assert path("${params.publishDirReports}/reads/trim/${readsSELane1.getSampleName()}_cutadapt-log.txt").exists()
-            assert path("${params.publishDirReports}/reads/trim/${readsPELane1.getSampleName()}_cutadapt-log.txt").exists()
+            assert path("${params.publishDirReports}/reads/trim/${readsSELane1.getStemName()}_cutadapt-log.txt").exists()
+            assert path("${params.publishDirReports}/reads/trim/${readsSELane2.getStemName()}_cutadapt-log.txt").exists()
+            assert path("${params.publishDirReports}/reads/trim/${readsPELane1.getStemName()}_cutadapt-log.txt").exists()
+            assert path("${params.publishDirReports}/reads/trim/${readsPELane2.getStemName()}_cutadapt-log.txt").exists()
             // test BAM and BAM.BAI alignment and index files published to data dir
             assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}_sorted.bam").exists()
             assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}_sorted.bam.bai").exists()
@@ -123,8 +125,10 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.html").exists()
             assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.zip").exists()
             // test trimmed reads logs published to reports dir
-            assert path("${params.publishDirReports}/reads/trim/${readsSELane1.getSampleName()}_cutadapt-log.txt").exists()
-            assert path("${params.publishDirReports}/reads/trim/${readsPELane1.getSampleName()}_cutadapt-log.txt").exists()
+            assert path("${params.publishDirReports}/reads/trim/${readsSELane1.getStemName()}_cutadapt-log.txt").exists()
+            assert path("${params.publishDirReports}/reads/trim/${readsSELane2.getStemName()}_cutadapt-log.txt").exists()
+            assert path("${params.publishDirReports}/reads/trim/${readsPELane1.getStemName()}_cutadapt-log.txt").exists()
+            assert path("${params.publishDirReports}/reads/trim/${readsPELane2.getStemName()}_cutadapt-log.txt").exists()
             // test BAM and BAM.BAI alignment and index files published to data dir
             assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}_sorted.bam").exists()
             assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}_sorted.bam.bai").exists()
@@ -195,8 +199,10 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.html").exists()
             assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.zip").exists()
             // test trimmed reads logs published to reports dir
-            assert path("${params.publishDirReports}/reads/trim/${readsSELane1.getSampleName()}_fastp-log.json").exists()
-            assert path("${params.publishDirReports}/reads/trim/${readsPELane1.getSampleName()}_fastp-log.json").exists()
+            assert path("${params.publishDirReports}/reads/trim/${readsSELane1.getStemName()}_fastp-log.json").exists()
+            assert path("${params.publishDirReports}/reads/trim/${readsSELane2.getStemName()}_fastp-log.json").exists()
+            assert path("${params.publishDirReports}/reads/trim/${readsPELane1.getStemName()}_fastp-log.json").exists()
+            assert path("${params.publishDirReports}/reads/trim/${readsPELane2.getStemName()}_fastp-log.json").exists()
             // test BAM and BAM.BAI alignment and index files published to data dir
             assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}_sorted.bam").exists()
             assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}_sorted.bam.bai").exists()

@@ -9,12 +9,12 @@
                         "lane": "001",
                         "readType": "single"
                     },
-                    "SRR1066657_trimmed_R1.fastq.gz:md5,8b2b5da31a1d3fc3482f3998741c4a96",
-                    "SRR1066657_trimmed_R2.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    "SRR1066657_L001_trimmed_R1.fastq.gz:md5,8b2b5da31a1d3fc3482f3998741c4a96",
+                    "SRR1066657_L001_trimmed_R2.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                 ]
             ]
         ],
-        "timestamp": "2023-10-11T04:17:06.270005897"
+        "timestamp": "2023-10-13T10:55:50.023178143"
     },
     "fastp trims reads -- PE reads": {
         "content": [
@@ -26,11 +26,11 @@
                         "lane": "001",
                         "readType": "paired"
                     },
-                    "SRR6924569_trimmed_R1.fastq.gz:md5,35deef2a325540a00e1f24d8caf3d8b6",
-                    "SRR6924569_trimmed_R2.fastq.gz:md5,6ed67e7615213a26056471e08ae14806"
+                    "SRR6924569_L001_trimmed_R1.fastq.gz:md5,35deef2a325540a00e1f24d8caf3d8b6",
+                    "SRR6924569_L001_trimmed_R2.fastq.gz:md5,6ed67e7615213a26056471e08ae14806"
                 ]
             ]
         ],
-        "timestamp": "2023-10-11T04:17:13.893435186"
+        "timestamp": "2023-10-13T10:55:57.533948047"
     }
 }
