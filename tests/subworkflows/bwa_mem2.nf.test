@@ -20,10 +20,14 @@ nextflow_workflow {
                     [
                         sampleName:   "${readsLane1.getSampleName()}",
                         sampleNumber: "${readsLane1.getSampleNumber()}",
+                        lane:         "${readsLane1.getLane()}",
                         readType:     "${readsLane1.getReadType()}"
                     ],
                     [
                         file("${readsLane1.getR1()}"),
+                    ],
+                    [
+                        file("${readsLane1.getR2()}"),
                     ]
                 ]
                 input[1] = file("${refs.getGenome()}")
@@ -39,7 +43,7 @@ nextflow_workflow {
             with(workflow.out.alignments.get(0)) {
                 assert size() == 2
                 // test SAM file
-                assert get(1) ==~ /^.*\/${readsLane1.getSampleName()}\.sam/
+                assert get(1) ==~ /^.*\/${readsLane1.getStemName()}\.sam/
             }
 
             // test reproducibility
@@ -64,10 +68,13 @@ nextflow_workflow {
                     [
                         sampleName:   "${readsLane1.getSampleName()}",
                         sampleNumber: "${readsLane1.getSampleNumber()}",
+                        lane:         "${readsLane1.getLane()}",
                         readType:     "${readsLane1.getReadType()}"
                     ],
                     [
                         file("${readsLane1.getR1()}"),
+                    ],
+                    [
                         file("${readsLane1.getR2()}"),
                     ]
                 ]
@@ -84,7 +91,7 @@ nextflow_workflow {
             with(workflow.out.alignments.get(0)) {
                 assert size() == 2
                 // test SAM file
-                assert get(1) ==~ /^.*\/${readsLane1.getSampleName()}\.sam/
+                assert get(1) ==~ /^.*\/${readsLane1.getStemName()}\.sam/
             }
 
             // test reproducibility

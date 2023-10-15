@@ -7,9 +7,10 @@
                         {
                             "sampleName": "SRR1066657",
                             "sampleNumber": "3",
+                            "lane": "001",
                             "readType": "single"
                         },
-                        "SRR1066657.sam:md5,9251c079303fa850c7a825d7b79177cd"
+                        "SRR1066657_L001.sam:md5,9251c079303fa850c7a825d7b79177cd"
                     ]
                 ],
                 "alignments": [
@@ -17,14 +18,15 @@
                         {
                             "sampleName": "SRR1066657",
                             "sampleNumber": "3",
+                            "lane": "001",
                             "readType": "single"
                         },
-                        "SRR1066657.sam:md5,9251c079303fa850c7a825d7b79177cd"
+                        "SRR1066657_L001.sam:md5,9251c079303fa850c7a825d7b79177cd"
                     ]
                 ]
             }
         ],
-        "timestamp": "2023-09-25T19:22:53+0000"
+        "timestamp": "2023-10-15T13:07:07.642064664"
     },
     "Bwa_Mem2 builds index and aligns reads -- PE reads.": {
         "content": [
@@ -34,9 +36,10 @@
                         {
                             "sampleName": "SRR6924569",
                             "sampleNumber": "1",
+                            "lane": "001",
                             "readType": "paired"
                         },
-                        "SRR6924569.sam:md5,bb65b910ecb5bce5cb30f0ba515bfd21"
+                        "SRR6924569_L001.sam:md5,bb65b910ecb5bce5cb30f0ba515bfd21"
                     ]
                 ],
                 "alignments": [
@@ -44,13 +47,14 @@
                         {
                             "sampleName": "SRR6924569",
                             "sampleNumber": "1",
+                            "lane": "001",
                             "readType": "paired"
                         },
-                        "SRR6924569.sam:md5,bb65b910ecb5bce5cb30f0ba515bfd21"
+                        "SRR6924569_L001.sam:md5,bb65b910ecb5bce5cb30f0ba515bfd21"
                     ]
                 ]
             }
         ],
-        "timestamp": "2023-09-25T19:22:53+0000"
+        "timestamp": "2023-10-15T13:10:40.667556838"
     }
 }
