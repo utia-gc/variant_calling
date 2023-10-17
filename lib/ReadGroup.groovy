@@ -18,13 +18,13 @@ static String buildRGLine(metadata, matcher) {
     // add dynamically determined read group fields
     // this includes ID and PU
     if(matcher.find()) {
-        rgID = "${metadata.sampleName}_${matcher.group('instrument')}_${matcher.group('runNumber')}_${matcher.group('flowcellID')}.${matcher.group('lane')}"
-        rgPU = rgID
+        rgID = "${matcher.group('instrument')}_${matcher.group('runNumber')}_${matcher.group('flowcellID')}.${matcher.group('lane')}"
+        rgPU = "${matcher.group('flowcellID')}.${matcher.group('lane')}.${matcher.group('index')}"
     } else {
         rgID = "${metadata.sampleName}.${metadata.lane}"
     }
     rgFields += "ID:${rgID}"
-    rgPU ? rgFields += "PU:${rgPU}" : null
+    if(rgPU) rgFields += "PU:${rgPU}"
 
     // add more straightforwardly determined fields
     rgFields += "SM:${metadata.sampleName}"
