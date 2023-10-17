@@ -31,10 +31,12 @@ process bwa_mem2_mem {
         // set reads
         def reads = (metadata.readType == 'single') ? "${reads1}" : "${reads1} ${reads2}"
 
+        // set stem name
         String stemName = MetadataUtils.buildStemName(metadata)
 
         """
         bwa-mem2 mem \
+            -R "${metadata.rgLine}" \
             -t ${task.cpus} \
             ${indexPrefix} \
             ${reads} \

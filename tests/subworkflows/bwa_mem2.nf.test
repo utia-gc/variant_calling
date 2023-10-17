@@ -21,7 +21,8 @@ nextflow_workflow {
                         sampleName:   "${readsLane1.getSampleName()}",
                         sampleNumber: "${readsLane1.getSampleNumber()}",
                         lane:         "${readsLane1.getLane()}",
-                        readType:     "${readsLane1.getReadType()}"
+                        readType:     "${readsLane1.getReadType()}",
+                        rgLine:       "${readsLane1.getRGLine()}"
                     ],
                     [
                         file("${readsLane1.getR1()}"),
@@ -44,6 +45,9 @@ nextflow_workflow {
                 assert size() == 2
                 // test SAM file
                 assert get(1) ==~ /^.*\/${readsLane1.getStemName()}\.sam/
+                // test SAM contains read group line
+                assert FileHelpers.grepq(path(get(1)), '@RG')
+                assert FileHelpers.grepq(path(get(1)), readsLane1.getRGLine())
             }
 
             // test reproducibility
@@ -69,7 +73,8 @@ nextflow_workflow {
                         sampleName:   "${readsLane1.getSampleName()}",
                         sampleNumber: "${readsLane1.getSampleNumber()}",
                         lane:         "${readsLane1.getLane()}",
-                        readType:     "${readsLane1.getReadType()}"
+                        readType:     "${readsLane1.getReadType()}",
+                        rgLine:       "${readsLane1.getRGLine()}"
                     ],
                     [
                         file("${readsLane1.getR1()}"),
@@ -92,6 +97,10 @@ nextflow_workflow {
                 assert size() == 2
                 // test SAM file
                 assert get(1) ==~ /^.*\/${readsLane1.getStemName()}\.sam/
+                // test SAM contains read group line
+                def rgLine = "@RG\tID:${readsLane1.getSampleName()}.${readsLane1.getLane()}\tSM:${readsLane1.getSampleName()}\tLB:${readsLane1.getSampleName()}\tPL:ILLUMINA"
+                assert FileHelpers.grepq(path(get(1)), '@RG')
+                assert FileHelpers.grepq(path(get(1)), readsLane1.getRGLine())
             }
 
             // test reproducibility
