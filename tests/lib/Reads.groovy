@@ -27,14 +27,17 @@ abstract class Reads {
      * Get the stem name of a fastq file.
      * 
      * Get the stem name of a fastq file. 
-     * This is the part of the fastq file preceding '_R1_001'.
-     * For fastq files that follow Illumina naming conventions this should be the same as '<SampleName>_S<SampleNumber>_L<LaneNumber>'.
+     * For fastq files that follow Illumina naming conventions this should be the same as '<SampleName>_L<LaneNumber>'.
      * @see https://support.illumina.com/help/BaseSpace_OLH_009008/Content/Source/Informatics/BS/NamingConvention_FASTQ-files-swBS.htm
      *
      * @return String fastq stem name.
      */
     public getStemName() {
-        file(this.getR1()).getName() - ~/_R1_001.*/
+        "${this.getSampleName()}_L${this.getLane()}"
+    }
+
+    public getRGLine() {
+        "@RG\tID:${this.getSampleName()}.${this.getLane()}\tSM:${this.getSampleName()}\tLB:${this.getSampleName()}\tPL:ILLUMINA"
     }
 
     public getR1SimpleName() {

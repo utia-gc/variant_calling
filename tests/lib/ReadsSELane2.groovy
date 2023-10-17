@@ -9,6 +9,7 @@ class ReadsSELane2 extends Reads {
         readType:     'single'
     ]
     List reads = [
-        'https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L002_R1_001.fastq.gz'
+        'https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L002_R1_001.fastq.gz',
+        'https://github.com/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L002_R1_001.fastq.gz.NOFILE'
     ]
 }
