@@ -23,7 +23,10 @@ nextflow_process {
                         readType:     "${readsLane1.getReadType()}"
                     ],
                     [
-                        file("${readsLane1.getR1()}")
+                        file("${readsLane1.getR1()}"),
+                    ],
+                    [
+                        file("${readsLane1.getR2()}"),
                     ]
                 ]
                 """
@@ -37,12 +40,15 @@ nextflow_process {
             // test trimmed fastqs
             with(process.out.reads) {
                 assert size() == 1
-                assert get(0).get(1) ==~ /^.*\/${readsLane1.getSampleName()}_trimmed_R1.fastq.gz/
+                with(get(0)) {
+                    assert get(1) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R1\.fastq\.gz/
+                    assert get(2) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R2\.NOFILE/
+                }
             }
             // test trim log
             with(process.out.log) {
                 assert size() == 1
-                assert get(0) ==~ /^.*\/${readsLane1.getSampleName()}_fastp-log.json/
+                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_fastp-log.json/
             }
 
             // test trimmed fastq reproducibility
@@ -71,7 +77,9 @@ nextflow_process {
                     ],
                     [
                         file("${readsLane1.getR1()}"),
-                        file("${readsLane1.getR2()}")
+                    ],
+                    [
+                        file("${readsLane1.getR2()}"),
                     ]
                 ]
                 """
@@ -85,13 +93,15 @@ nextflow_process {
             // test trimmed fastqs
             with(process.out.reads) {
                 assert size() == 1
-                assert get(0).get(1).get(0) ==~ /^.*\/${readsLane1.getSampleName()}_trimmed_R1.fastq.gz/
-                assert get(0).get(1).get(1) ==~ /^.*\/${readsLane1.getSampleName()}_trimmed_R2.fastq.gz/
+                with(get(0)) {
+                    assert get(1) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R1.fastq.gz/
+                    assert get(2) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R2.fastq.gz/
+                }
             }
             // test trim log
             with(process.out.log) {
                 assert size() == 1
-                assert get(0) ==~ /^.*\/${readsLane1.getSampleName()}_fastp-log.json/
+                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_fastp-log.json/
             }
 
             // test trimmed fastq reproducibility

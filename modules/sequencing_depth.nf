@@ -13,14 +13,15 @@ process sequencing_depth {
     label 'base'
 
     input:
-        tuple val(metadata), path(reads)
+        tuple val(metadata), path(reads1), path(reads2)
         path fai
 
     output:
         path '*_seq-depth.txt', emit: depth
 
     script:
-        String stemName = metadata.lane ? "${metadata.sampleName}_S${metadata.sampleNumber}_L${metadata.lane}" : "${metadata.sampleName}"
+        String stemName = MetadataUtils.buildStemName(metadata)
+        def reads = (metadata.readType == 'single') ? "${reads1}" : "${reads1} ${reads2}"
 
         """
         # initialize array of reads

@@ -11,20 +11,16 @@ process samtools_sort_index {
 
     label 'samtools'
 
-    publishDir(
-        path:    "${params.publishDirData}/alignments",
-        mode:    "${params.publishMode}",
-        pattern: "${metadata.sampleName}_sorted.bam*"
-    )
-
     input:
         tuple val(metadata), path(alignments)
 
     output:
-        tuple val(metadata), path("${metadata.sampleName}_sorted.bam"), path("${metadata.sampleName}_sorted.bam.bai"), emit: bamIndexed
+        tuple val(metadata), path("*_sorted.bam"), path("*_sorted.bam.bai"), emit: bamIndexed
 
     
     shell:
+        stemName = MetadataUtils.buildStemName(metadata)
+
         '''
         # detect if alignments is in BAM or SAM format
         # this is based on whether the file is BGZIP compressed
@@ -54,19 +50,19 @@ process samtools_sort_index {
             samtools sort \
                 -@ !{task.cpus} \
                 -O bam \
-                -o !{metadata.sampleName}_sorted.bam \
+                -o !{stemName}_sorted.bam \
                 !{alignments}
 
             samtools index \
                 -@ !{task.cpus} \
-                !{metadata.sampleName}_sorted.bam
+                !{stemName}_sorted.bam
         elif [[ $is_bam == "true" && $is_sorted == "true" ]]; then
             # produce file with stereotypical name for output
-            mv -f !{alignments} !{metadata.sampleName}_sorted.bam
+            mv -f !{alignments} !{stemName}_sorted.bam
 
             samtools index \
                 -@ !{task.cpus} \
-                !{metadata.sampleName}_sorted.bam
+                !{stemName}_sorted.bam
         fi
         '''
 }

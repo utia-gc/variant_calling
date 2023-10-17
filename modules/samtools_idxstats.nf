@@ -16,9 +16,11 @@ process samtools_idxstats {
         path '*_idxstat.txt', emit: idxstat
 
     script:
+        String stemName = MetadataUtils.buildStemName(metadata)
+
         """
         samtools idxstats \
             ${bam} \
-            > ${metadata.sampleName}_idxstat.txt
+            > ${stemName}_idxstat.txt
         """
 }

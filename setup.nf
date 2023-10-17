@@ -67,7 +67,7 @@ workflow WRITE_SAMPLESHEET {
         Channel
             .fromFilePairs("${reads_dir}/*_R{1,2}_001.fastq.gz", size: -1, checkIfExists: true)
             .set { ch_readPairs }
-        ch_readPairs.dump(tag: "ch_readPairs", pretty: true)
+        ch_readPairs.dump(tag: "ch_readPairs")
 
         // cast ch_readPairs to a map and write to a file
         ch_readPairs
