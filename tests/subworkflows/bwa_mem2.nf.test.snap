@@ -7,9 +7,11 @@
                         {
                             "sampleName": "SRR1066657",
                             "sampleNumber": "3",
-                            "readType": "single"
+                            "lane": "001",
+                            "readType": "single",
+                            "rgLine": "@RG\tID:SRR1066657.001\tSM:SRR1066657\tLB:SRR1066657\tPL:ILLUMINA"
                         },
-                        "SRR1066657.sam:md5,9251c079303fa850c7a825d7b79177cd"
+                        "SRR1066657_L001.sam:md5,7111ddc8b9797a0e4d04bffaa5c5be34"
                     ]
                 ],
                 "alignments": [
@@ -17,14 +19,16 @@
                         {
                             "sampleName": "SRR1066657",
                             "sampleNumber": "3",
-                            "readType": "single"
+                            "lane": "001",
+                            "readType": "single",
+                            "rgLine": "@RG\tID:SRR1066657.001\tSM:SRR1066657\tLB:SRR1066657\tPL:ILLUMINA"
                         },
-                        "SRR1066657.sam:md5,9251c079303fa850c7a825d7b79177cd"
+                        "SRR1066657_L001.sam:md5,7111ddc8b9797a0e4d04bffaa5c5be34"
                     ]
                 ]
             }
         ],
-        "timestamp": "2023-09-25T19:22:53+0000"
+        "timestamp": "2023-10-17T09:33:52.618514402"
     },
     "Bwa_Mem2 builds index and aligns reads -- PE reads.": {
         "content": [
@@ -34,9 +38,11 @@
                         {
                             "sampleName": "SRR6924569",
                             "sampleNumber": "1",
-                            "readType": "paired"
+                            "lane": "001",
+                            "readType": "paired",
+                            "rgLine": "@RG\tID:SRR6924569.001\tSM:SRR6924569\tLB:SRR6924569\tPL:ILLUMINA"
                         },
-                        "SRR6924569.sam:md5,bb65b910ecb5bce5cb30f0ba515bfd21"
+                        "SRR6924569_L001.sam:md5,1c13b95ac563b45f8d2b7f3789ce8bd4"
                     ]
                 ],
                 "alignments": [
@@ -44,13 +50,15 @@
                         {
                             "sampleName": "SRR6924569",
                             "sampleNumber": "1",
-                            "readType": "paired"
+                            "lane": "001",
+                            "readType": "paired",
+                            "rgLine": "@RG\tID:SRR6924569.001\tSM:SRR6924569\tLB:SRR6924569\tPL:ILLUMINA"
                         },
-                        "SRR6924569.sam:md5,bb65b910ecb5bce5cb30f0ba515bfd21"
+                        "SRR6924569_L001.sam:md5,1c13b95ac563b45f8d2b7f3789ce8bd4"
                     ]
                 ]
             }
         ],
-        "timestamp": "2023-09-25T19:22:53+0000"
+        "timestamp": "2023-10-17T09:34:04.173682776"
     }
 }

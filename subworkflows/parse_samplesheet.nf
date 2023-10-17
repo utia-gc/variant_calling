@@ -40,5 +40,11 @@ def createSampleReadsChannel(LinkedHashMap row) {
         reads2 = file(row.reads2)
     }
 
+    // build read group line
+    // get sequence ID line from fastq.gz
+    def sequenceIdentifier = ReadGroup.readFastqFirstSequenceIdentifier(reads1)
+    def sequenceIdentifierMatcher = ReadGroup.matchSequenceIdentifier(sequenceIdentifier)
+    metadata.rgLine = ReadGroup.buildRGLine(metadata, sequenceIdentifierMatcher)
+
     return [metadata, [reads1], [reads2]]
 }

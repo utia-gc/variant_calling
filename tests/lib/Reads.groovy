@@ -36,6 +36,10 @@ abstract class Reads {
         "${this.getSampleName()}_L${this.getLane()}"
     }
 
+    public getRGLine() {
+        "@RG\tID:${this.getSampleName()}.${this.getLane()}\tSM:${this.getSampleName()}\tLB:${this.getSampleName()}\tPL:ILLUMINA"
+    }
+
     public getR1SimpleName() {
         // regexp pattern that matches common fastq filename endings
         // matches: fastq.gz, fq.gz, fastq, fq
