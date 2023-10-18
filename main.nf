@@ -39,12 +39,13 @@ workflow {
         ch_genome,
         params.tools.map
     )
-    ch_alignments = MAP_READS.out.alignments
+    ch_alignmentsSampleLane = MAP_READS.out.alignmentsSampleLane
+    ch_alignmentsSample     = MAP_READS.out.alignmentsSample
 
     CHECK_QUALITY(
         ch_reads_raw,
         ch_reads_pre_align,
         ch_trim_log,
-        ch_alignments
+        ch_alignmentsSampleLane
     )
 }

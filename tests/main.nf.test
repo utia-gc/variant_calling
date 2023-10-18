@@ -20,7 +20,7 @@ nextflow_pipeline {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 36
+            assert workflow.trace.succeeded().size() == 40
 
             // test raw FastQC html reports and zip files published to reports dir
             assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.html").exists()
@@ -62,6 +62,11 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/alignments/${readsSELane2.getStemName()}_samtools-stats.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsPELane1.getStemName()}_samtools-stats.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsPELane2.getStemName()}_samtools-stats.txt").exists()
+            // test BAM and BAM.BAI alignment and index files published to data dir
+            assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}.bam").exists()
+            assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}.bam.bai").exists()
+            assert path("${params.publishDirData}/alignments/${readsPELane1.getSampleName()}.bam").exists()
+            assert path("${params.publishDirData}/alignments/${readsPELane1.getSampleName()}.bam.bai").exists()
             // test MultiQC reports and data published to reports dir
             assert path("${params.publishDirReports}/multiqc/reads_raw/reads_raw.html").exists()
             assert path("${params.publishDirReports}/multiqc/reads_raw/reads_raw_data/").exists()
@@ -95,7 +100,7 @@ nextflow_pipeline {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 34
+            assert workflow.trace.succeeded().size() == 38
 
             // test raw FastQC html reports and zip files published to reports dir
             assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.html").exists()
@@ -137,6 +142,11 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/alignments/${readsSELane2.getStemName()}_samtools-stats.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsPELane1.getStemName()}_samtools-stats.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsPELane2.getStemName()}_samtools-stats.txt").exists()
+            // test BAM and BAM.BAI alignment and index files published to data dir
+            assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}.bam").exists()
+            assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}.bam.bai").exists()
+            assert path("${params.publishDirData}/alignments/${readsPELane1.getSampleName()}.bam").exists()
+            assert path("${params.publishDirData}/alignments/${readsPELane1.getSampleName()}.bam.bai").exists()
             // test MultiQC reports and data published to reports dir
             assert path("${params.publishDirReports}/multiqc/reads_raw/reads_raw.html").exists()
             assert path("${params.publishDirReports}/multiqc/reads_raw/reads_raw_data/").exists()
@@ -168,7 +178,7 @@ nextflow_pipeline {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 36
+            assert workflow.trace.succeeded().size() == 40
 
             // test raw FastQC html reports and zip files published to reports dir
             assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.html").exists()
@@ -210,6 +220,11 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/alignments/${readsSELane2.getStemName()}_samtools-stats.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsPELane1.getStemName()}_samtools-stats.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsPELane2.getStemName()}_samtools-stats.txt").exists()
+            // test BAM and BAM.BAI alignment and index files published to data dir
+            assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}.bam").exists()
+            assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}.bam.bai").exists()
+            assert path("${params.publishDirData}/alignments/${readsPELane1.getSampleName()}.bam").exists()
+            assert path("${params.publishDirData}/alignments/${readsPELane1.getSampleName()}.bam.bai").exists()
             // test MultiQC reports and data published to reports dir
             assert path("${params.publishDirReports}/multiqc/reads_raw/reads_raw.html").exists()
             assert path("${params.publishDirReports}/multiqc/reads_raw/reads_raw_data/").exists()
