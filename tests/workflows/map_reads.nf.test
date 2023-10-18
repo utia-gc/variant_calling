@@ -7,6 +7,7 @@ nextflow_workflow {
     test("MAP_READS maps reads to a reference genome and outputs sorted BAMs -- bwa-mem2 + SE reads.") {
         // instantiate helper objects
         def readsLane1 = new ReadsSELane1()
+        def readsLane2 = new ReadsSELane2()
         def refs       = new RefsEnsembl()
 
         when {
@@ -16,16 +17,38 @@ nextflow_workflow {
             }
             workflow {
                 """
-                input[0] = [
+                input[0] = Channel.of(
                     [
-                        sampleName:   "${readsLane1.getSampleName()}",
-                        sampleNumber: "${readsLane1.getSampleNumber()}",
-                        readType:     "${readsLane1.getReadType()}"
+                        [
+                            sampleName:   "${readsLane1.getSampleName()}",
+                            sampleNumber: "${readsLane1.getSampleNumber()}",
+                            lane:         "${readsLane1.getLane()}",
+                            readType:     "${readsLane1.getReadType()}",
+                            rgLine:       "${readsLane1.getRGLine()}"
+                        ],
+                        [
+                            file("${readsLane1.getR1()}"),
+                        ],
+                        [
+                            file("${readsLane1.getR2()}"),
+                        ]
                     ],
                     [
-                        file("${readsLane1.getR1()}"),
+                        [
+                            sampleName:   "${readsLane2.getSampleName()}",
+                            sampleNumber: "${readsLane2.getSampleNumber()}",
+                            lane:         "${readsLane2.getLane()}",
+                            readType:     "${readsLane2.getReadType()}",
+                            rgLine:       "${readsLane2.getRGLine()}"
+                        ],
+                        [
+                            file("${readsLane2.getR1()}"),
+                        ],
+                        [
+                            file("${readsLane2.getR2()}"),
+                        ]
                     ]
-                ]
+                )
                 input[1] = file("${refs.getGenome()}")
                 input[2] = "bwa-mem2"
                 """
@@ -36,13 +59,34 @@ nextflow_workflow {
             // test workflow status
             assert workflow.success
 
-            // test alignments
-            with(workflow.out.alignments.get(0)) {
-                assert size() == 3
-                // test alignments file
-                assert get(1) ==~ /^.*\/${readsLane1.getSampleName()}_sorted\.bam/
-                // test indexed alignments file
-                assert get(2) ==~ /^.*\/${readsLane1.getSampleName()}_sorted\.bam\.bai/
+            // test alignments for each individual sample-lane
+            with(workflow.out.alignmentsSampleLane) {
+                assert size() == 2
+                with(get(0)) {
+                    assert size() == 3
+                    // test alignments file
+                    assert get(1) ==~ /^.*\/${readsLane1.getStemName()}\.bam/
+                    // test indexed alignments file
+                    assert get(2) ==~ /^.*\/${readsLane1.getStemName()}\.bam\.bai/
+                }
+                with(get(1)) {
+                    assert size() == 3
+                    // test alignments file
+                    assert get(1) ==~ /^.*\/${readsLane2.getStemName()}\.bam/
+                    // test indexed alignments file
+                    assert get(2) ==~ /^.*\/${readsLane2.getStemName()}\.bam\.bai/
+                }
+            }
+            // test alignments for each merged sample
+            with(workflow.out.alignmentsSample) {
+                assert size() == 1
+                with(get(0)) {
+                    assert size() == 3
+                    // test alignments file
+                    assert get(1) ==~ /^.*\/${readsLane1.getSampleName()}\.bam/
+                    // test indexed alignments file
+                    assert get(2) ==~ /^.*\/${readsLane1.getSampleName()}\.bam\.bai/
+                }
             }
             // test map log
             // with(workflow.out.map_log) {
@@ -58,6 +102,7 @@ nextflow_workflow {
     test("MAP_READS maps reads to a reference genome and outputs sorted BAMs -- bwa-mem2 + PE reads.") {
         // instantiate helper objects
         def readsLane1 = new ReadsPELane1()
+        def readsLane2 = new ReadsPELane2()
         def refs       = new RefsEnsembl()
 
         when {
@@ -67,16 +112,38 @@ nextflow_workflow {
             }
             workflow {
                 """
-                input[0] = [
+                input[0] = Channel.of(
                     [
-                        sampleName:   "${readsLane1.getSampleName()}",
-                        sampleNumber: "${readsLane1.getSampleNumber()}",
-                        readType:     "${readsLane1.getReadType()}"
+                        [
+                            sampleName:   "${readsLane1.getSampleName()}",
+                            sampleNumber: "${readsLane1.getSampleNumber()}",
+                            lane:         "${readsLane1.getLane()}",
+                            readType:     "${readsLane1.getReadType()}",
+                            rgLine:       "${readsLane1.getRGLine()}"
+                        ],
+                        [
+                            file("${readsLane1.getR1()}"),
+                        ],
+                        [
+                            file("${readsLane1.getR2()}"),
+                        ]
                     ],
                     [
-                        file("${readsLane1.getR1()}"),
+                        [
+                            sampleName:   "${readsLane2.getSampleName()}",
+                            sampleNumber: "${readsLane2.getSampleNumber()}",
+                            lane:         "${readsLane2.getLane()}",
+                            readType:     "${readsLane2.getReadType()}",
+                            rgLine:       "${readsLane2.getRGLine()}"
+                        ],
+                        [
+                            file("${readsLane2.getR1()}"),
+                        ],
+                        [
+                            file("${readsLane2.getR2()}"),
+                        ]
                     ]
-                ]
+                )
                 input[1] = file("${refs.getGenome()}")
                 input[2] = "bwa-mem2"
                 """
@@ -87,13 +154,34 @@ nextflow_workflow {
             // test workflow status
             assert workflow.success
 
-            // test alignments
-            with(workflow.out.alignments.get(0)) {
-                assert size() == 3
-                // test alignments file
-                assert get(1) ==~ /^.*\/${readsLane1.getSampleName()}_sorted\.bam/
-                // test indexed alignments file
-                assert get(2) ==~ /^.*\/${readsLane1.getSampleName()}_sorted\.bam\.bai/
+            // test alignments for each individual sample-lane
+            with(workflow.out.alignmentsSampleLane) {
+                assert size() == 2
+                with(get(0)) {
+                    assert size() == 3
+                    // test alignments file
+                    assert get(1) ==~ /^.*\/${readsLane1.getStemName()}\.bam/
+                    // test indexed alignments file
+                    assert get(2) ==~ /^.*\/${readsLane1.getStemName()}\.bam\.bai/
+                }
+                with(get(1)) {
+                    assert size() == 3
+                    // test alignments file
+                    assert get(1) ==~ /^.*\/${readsLane2.getStemName()}\.bam/
+                    // test indexed alignments file
+                    assert get(2) ==~ /^.*\/${readsLane2.getStemName()}\.bam\.bai/
+                }
+            }
+            // test alignments for each merged sample
+            with(workflow.out.alignmentsSample) {
+                assert size() == 1
+                with(get(0)) {
+                    assert size() == 3
+                    // test alignments file
+                    assert get(1) ==~ /^.*\/${readsLane1.getSampleName()}\.bam/
+                    // test indexed alignments file
+                    assert get(2) ==~ /^.*\/${readsLane1.getSampleName()}\.bam\.bai/
+                }
             }
             // test map log
             // with(workflow.out.map_log) {

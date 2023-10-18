@@ -7,26 +7,74 @@
                         {
                             "sampleName": "SRR1066657",
                             "sampleNumber": "3",
-                            "readType": "single"
+                            "lane": "001",
+                            "readType": "single",
+                            "rgLine": "@RG\tID:SRR1066657.001\tSM:SRR1066657\tLB:SRR1066657\tPL:ILLUMINA"
                         },
-                        "SRR1066657_sorted.bam:md5,7714ba0359a7ee81188527413e95a085",
-                        "SRR1066657_sorted.bam.bai:md5,b84e9453531a33ca4c05ec65637a21de"
+                        "SRR1066657_L001.bam:md5,4127b2dd883040a440d62b90ca52cf65",
+                        "SRR1066657_L001.bam.bai:md5,310e773f12ef2ee2041417625519058c"
+                    ],
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "lane": "002",
+                            "readType": "single",
+                            "rgLine": "@RG\tID:SRR1066657.002\tSM:SRR1066657\tLB:SRR1066657\tPL:ILLUMINA"
+                        },
+                        "SRR1066657_L002.bam:md5,cf4a89405d61a82c011e17533ac22116",
+                        "SRR1066657_L002.bam.bai:md5,feed2c18a1adcc626a92d3f25d6c8fdb"
                     ]
                 ],
-                "alignments": [
+                "1": [
                     [
                         {
                             "sampleName": "SRR1066657",
                             "sampleNumber": "3",
                             "readType": "single"
                         },
-                        "SRR1066657_sorted.bam:md5,7714ba0359a7ee81188527413e95a085",
-                        "SRR1066657_sorted.bam.bai:md5,b84e9453531a33ca4c05ec65637a21de"
+                        "SRR1066657.bam:md5,f796f09e1aade2ccbee590e37a04dc85",
+                        "SRR1066657.bam.bai:md5,fdb249a777ad2393900428c6a15d24a7"
+                    ]
+                ],
+                "alignmentsSample": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "readType": "single"
+                        },
+                        "SRR1066657.bam:md5,f796f09e1aade2ccbee590e37a04dc85",
+                        "SRR1066657.bam.bai:md5,fdb249a777ad2393900428c6a15d24a7"
+                    ]
+                ],
+                "alignmentsSampleLane": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "lane": "001",
+                            "readType": "single",
+                            "rgLine": "@RG\tID:SRR1066657.001\tSM:SRR1066657\tLB:SRR1066657\tPL:ILLUMINA"
+                        },
+                        "SRR1066657_L001.bam:md5,4127b2dd883040a440d62b90ca52cf65",
+                        "SRR1066657_L001.bam.bai:md5,310e773f12ef2ee2041417625519058c"
+                    ],
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "lane": "002",
+                            "readType": "single",
+                            "rgLine": "@RG\tID:SRR1066657.002\tSM:SRR1066657\tLB:SRR1066657\tPL:ILLUMINA"
+                        },
+                        "SRR1066657_L002.bam:md5,cf4a89405d61a82c011e17533ac22116",
+                        "SRR1066657_L002.bam.bai:md5,feed2c18a1adcc626a92d3f25d6c8fdb"
                     ]
                 ]
             }
         ],
-        "timestamp": "2023-09-25T19:03:47+0000"
+        "timestamp": "2023-10-18T11:55:20.060649832"
     },
     "MAP_READS maps reads to a reference genome and outputs sorted BAMs -- bwa-mem2 + PE reads.": {
         "content": [
@@ -36,25 +84,73 @@
                         {
                             "sampleName": "SRR6924569",
                             "sampleNumber": "1",
-                            "readType": "paired"
+                            "lane": "001",
+                            "readType": "paired",
+                            "rgLine": "@RG\tID:SRR6924569.001\tSM:SRR6924569\tLB:SRR6924569\tPL:ILLUMINA"
                         },
-                        "SRR6924569_sorted.bam:md5,17906e3b45c20534269939c7cdae044c",
-                        "SRR6924569_sorted.bam.bai:md5,3fffc82ecc2424f07ef81e35f51028f6"
+                        "SRR6924569_L001.bam:md5,34739d31119b05ae752e830d60a1a211",
+                        "SRR6924569_L001.bam.bai:md5,1e9ba5912083c49a1cd61a4556b3b7e4"
+                    ],
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "lane": "002",
+                            "readType": "paired",
+                            "rgLine": "@RG\tID:SRR6924569.002\tSM:SRR6924569\tLB:SRR6924569\tPL:ILLUMINA"
+                        },
+                        "SRR6924569_L002.bam:md5,91ffdeef04cc4e98d935e0ddf58c9575",
+                        "SRR6924569_L002.bam.bai:md5,70e5ded34544598a2f21ca31ad56179b"
                     ]
                 ],
-                "alignments": [
+                "1": [
                     [
                         {
                             "sampleName": "SRR6924569",
                             "sampleNumber": "1",
                             "readType": "paired"
                         },
-                        "SRR6924569_sorted.bam:md5,17906e3b45c20534269939c7cdae044c",
-                        "SRR6924569_sorted.bam.bai:md5,3fffc82ecc2424f07ef81e35f51028f6"
+                        "SRR6924569.bam:md5,679a529a65bf7c8d478ac97480036a91",
+                        "SRR6924569.bam.bai:md5,2d750f867e25d63e2aac36846add5ef5"
+                    ]
+                ],
+                "alignmentsSample": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "readType": "paired"
+                        },
+                        "SRR6924569.bam:md5,679a529a65bf7c8d478ac97480036a91",
+                        "SRR6924569.bam.bai:md5,2d750f867e25d63e2aac36846add5ef5"
+                    ]
+                ],
+                "alignmentsSampleLane": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "lane": "001",
+                            "readType": "paired",
+                            "rgLine": "@RG\tID:SRR6924569.001\tSM:SRR6924569\tLB:SRR6924569\tPL:ILLUMINA"
+                        },
+                        "SRR6924569_L001.bam:md5,34739d31119b05ae752e830d60a1a211",
+                        "SRR6924569_L001.bam.bai:md5,1e9ba5912083c49a1cd61a4556b3b7e4"
+                    ],
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "lane": "002",
+                            "readType": "paired",
+                            "rgLine": "@RG\tID:SRR6924569.002\tSM:SRR6924569\tLB:SRR6924569\tPL:ILLUMINA"
+                        },
+                        "SRR6924569_L002.bam:md5,91ffdeef04cc4e98d935e0ddf58c9575",
+                        "SRR6924569_L002.bam.bai:md5,70e5ded34544598a2f21ca31ad56179b"
                     ]
                 ]
             }
         ],
-        "timestamp": "2023-09-25T19:03:47+0000"
+        "timestamp": "2023-10-18T11:55:44.05363449"
     }
 }
