@@ -35,7 +35,7 @@ workflow MAP_READS {
           | view
 
     emit:
-        alignmentsSampleLane = samtools_sort_index.out.bamIndexed
+        alignmentsSampleLane = samtools_sort_index.out.bamSortedIndexed
         alignmentsSample     = gatk_MarkDuplicates.out.bamMarkDupIndexed
         // map_log    = ch_map_log
 }
