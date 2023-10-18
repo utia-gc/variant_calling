@@ -1,5 +1,6 @@
 include { Bwa_Mem2            } from '../subworkflows/bwa_mem2.nf'
 include { Group_Alignments    } from '../subworkflows/group_alignments.nf'
+include { gatk_MarkDuplicates } from '../modules/gatk_MarkDuplicates.nf'
 include { samtools_merge      } from '../modules/samtools_merge.nf'
 include { samtools_sort_index } from '../modules/samtools_sort_index.nf'
 
@@ -30,9 +31,11 @@ workflow MAP_READS {
         samtools_sort_index(ch_alignments)
           | Group_Alignments
           | samtools_merge
+          | gatk_MarkDuplicates
           | view
 
     emit:
-        alignments = samtools_sort_index.out.bamIndexed
+        alignmentsSampleLane = samtools_sort_index.out.bamIndexed
+        alignmentsSample     = gatk_MarkDuplicates.out.bamMarkDupIndexed
         // map_log    = ch_map_log
 }
