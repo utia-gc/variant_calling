@@ -33,8 +33,8 @@
                             "sampleNumber": "3",
                             "readType": "single"
                         },
-                        "SRR1066657.bam:md5,f796f09e1aade2ccbee590e37a04dc85",
-                        "SRR1066657.bam.bai:md5,fdb249a777ad2393900428c6a15d24a7"
+                        "SRR1066657.bam:md5,7415272eb7f796a117b58462ff861e5c",
+                        "SRR1066657.bam.bai:md5,fa6dd61379ba11a66edf9ac5562d5f54"
                     ]
                 ],
                 "alignmentsSample": [
@@ -44,8 +44,8 @@
                             "sampleNumber": "3",
                             "readType": "single"
                         },
-                        "SRR1066657.bam:md5,f796f09e1aade2ccbee590e37a04dc85",
-                        "SRR1066657.bam.bai:md5,fdb249a777ad2393900428c6a15d24a7"
+                        "SRR1066657.bam:md5,7415272eb7f796a117b58462ff861e5c",
+                        "SRR1066657.bam.bai:md5,fa6dd61379ba11a66edf9ac5562d5f54"
                     ]
                 ],
                 "alignmentsSampleLane": [
@@ -74,7 +74,7 @@
                 ]
             }
         ],
-        "timestamp": "2023-10-18T11:55:20.060649832"
+        "timestamp": "2023-10-18T12:47:56.871135375"
     },
     "MAP_READS maps reads to a reference genome and outputs sorted BAMs -- bwa-mem2 + PE reads.": {
         "content": [
@@ -110,8 +110,8 @@
                             "sampleNumber": "1",
                             "readType": "paired"
                         },
-                        "SRR6924569.bam:md5,679a529a65bf7c8d478ac97480036a91",
-                        "SRR6924569.bam.bai:md5,2d750f867e25d63e2aac36846add5ef5"
+                        "SRR6924569.bam:md5,0674319f12f061e530e5d45e067f9ec2",
+                        "SRR6924569.bam.bai:md5,ebbe9b216c037fa11fb51a0b1598cb0a"
                     ]
                 ],
                 "alignmentsSample": [
@@ -121,8 +121,8 @@
                             "sampleNumber": "1",
                             "readType": "paired"
                         },
-                        "SRR6924569.bam:md5,679a529a65bf7c8d478ac97480036a91",
-                        "SRR6924569.bam.bai:md5,2d750f867e25d63e2aac36846add5ef5"
+                        "SRR6924569.bam:md5,0674319f12f061e530e5d45e067f9ec2",
+                        "SRR6924569.bam.bai:md5,ebbe9b216c037fa11fb51a0b1598cb0a"
                     ]
                 ],
                 "alignmentsSampleLane": [
@@ -151,6 +151,6 @@
                 ]
             }
         ],
-        "timestamp": "2023-10-18T11:55:44.05363449"
+        "timestamp": "2023-10-18T12:48:21.088225457"
     }
 }
