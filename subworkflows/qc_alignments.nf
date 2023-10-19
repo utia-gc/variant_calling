@@ -6,13 +6,15 @@ include { samtools_stats                } from '../modules/samtools_stats.nf'
 
 workflow QC_Alignments {
     take:
-        alignments
+        alignmentsIndividual
+        alignmentsMerged
         // map_log
 
     main:
-        samtools_idxstats(alignments)
-        samtools_flagstat(alignments)
-        samtools_stats(alignments)
+        samtools_idxstats(alignmentsIndividual)
+        samtools_flagstat(alignmentsIndividual)
+
+        samtools_stats(alignmentsMerged)
 
         ch_multiqc_alignments = Channel.empty()
             .concat(samtools_idxstats.out.idxstat)

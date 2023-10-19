@@ -60,7 +60,7 @@ nextflow_workflow {
             assert workflow.success
 
             // test alignments for each individual sample-lane
-            with(workflow.out.alignmentsSampleLane) {
+            with(workflow.out.alignmentsIndividual) {
                 assert size() == 2
                 with(get(0)) {
                     assert size() == 3
@@ -78,7 +78,7 @@ nextflow_workflow {
                 }
             }
             // test alignments for each merged sample
-            with(workflow.out.alignmentsSample) {
+            with(workflow.out.alignmentsMerged) {
                 assert size() == 1
                 with(get(0)) {
                     assert size() == 3
@@ -155,7 +155,7 @@ nextflow_workflow {
             assert workflow.success
 
             // test alignments for each individual sample-lane
-            with(workflow.out.alignmentsSampleLane) {
+            with(workflow.out.alignmentsIndividual) {
                 assert size() == 2
                 with(get(0)) {
                     assert size() == 3
@@ -173,7 +173,7 @@ nextflow_workflow {
                 }
             }
             // test alignments for each merged sample
-            with(workflow.out.alignmentsSample) {
+            with(workflow.out.alignmentsMerged) {
                 assert size() == 1
                 with(get(0)) {
                     assert size() == 3
