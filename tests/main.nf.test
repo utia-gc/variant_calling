@@ -20,7 +20,7 @@ nextflow_pipeline {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 40
+            assert workflow.trace.succeeded().size() == 44
 
             // test raw FastQC html reports and zip files published to reports dir
             assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.html").exists()
@@ -58,6 +58,10 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/alignments/${readsSELane2.getStemName()}_idxstat.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsPELane1.getStemName()}_idxstat.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsPELane2.getStemName()}_idxstat.txt").exists()
+            assert path("${params.publishDirReports}/alignments/${readsSELane1.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/alignments/${readsSELane2.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/alignments/${readsPELane1.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/alignments/${readsPELane2.getStemName()}_samtools-flagstat.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsSELane1.getStemName()}_samtools-stats.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsSELane2.getStemName()}_samtools-stats.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsPELane1.getStemName()}_samtools-stats.txt").exists()
@@ -100,7 +104,7 @@ nextflow_pipeline {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 38
+            assert workflow.trace.succeeded().size() == 42
 
             // test raw FastQC html reports and zip files published to reports dir
             assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.html").exists()
@@ -138,6 +142,10 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/alignments/${readsSELane2.getStemName()}_idxstat.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsPELane1.getStemName()}_idxstat.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsPELane2.getStemName()}_idxstat.txt").exists()
+            assert path("${params.publishDirReports}/alignments/${readsSELane1.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/alignments/${readsSELane2.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/alignments/${readsPELane1.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/alignments/${readsPELane2.getStemName()}_samtools-flagstat.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsSELane1.getStemName()}_samtools-stats.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsSELane2.getStemName()}_samtools-stats.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsPELane1.getStemName()}_samtools-stats.txt").exists()
@@ -178,7 +186,7 @@ nextflow_pipeline {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 40
+            assert workflow.trace.succeeded().size() == 44
 
             // test raw FastQC html reports and zip files published to reports dir
             assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.html").exists()
@@ -216,6 +224,10 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/alignments/${readsSELane2.getStemName()}_idxstat.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsPELane1.getStemName()}_idxstat.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsPELane2.getStemName()}_idxstat.txt").exists()
+            assert path("${params.publishDirReports}/alignments/${readsSELane1.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/alignments/${readsSELane2.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/alignments/${readsPELane1.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/alignments/${readsPELane2.getStemName()}_samtools-flagstat.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsSELane1.getStemName()}_samtools-stats.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsSELane2.getStemName()}_samtools-stats.txt").exists()
             assert path("${params.publishDirReports}/alignments/${readsPELane1.getStemName()}_samtools-stats.txt").exists()
