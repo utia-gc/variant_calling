@@ -60,13 +60,13 @@ nextflow_workflow {
                 assert size() == 2
                 with(get(0)) {
                     assert size() == 3
-                    assert get(1) ==~ /^.*\/${readsLane1.getSampleName()}_trimmed_R1\.fastq\.gz/
-                    assert get(2) ==~ /^.*\/${readsLane1.getSampleName()}_trimmed_R2\.NOFILE/
+                    assert get(1) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R1\.fastq\.gz/
+                    assert get(2) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R2\.NOFILE/
                 }
                 with(get(1)) {
                     assert size() == 3
-                    assert get(1) ==~ /^.*\/${readsLane2.getSampleName()}_trimmed_R1\.fastq\.gz/
-                    assert get(2) ==~ /^.*\/${readsLane2.getSampleName()}_trimmed_R2\.NOFILE/
+                    assert get(1) ==~ /^.*\/${readsLane2.getStemName()}_trimmed_R1\.fastq\.gz/
+                    assert get(2) ==~ /^.*\/${readsLane2.getStemName()}_trimmed_R2\.NOFILE/
                 }
             }
             assert snapshot(workflow.out.reads_pre_align).match()
@@ -74,8 +74,8 @@ nextflow_workflow {
             // test read trimming log
             with(workflow.out.trim_log) {
                 assert size() == 2
-                assert get(0) ==~ /^.*\/${readsLane1.getSampleName()}_cutadapt-log\.txt/
-                assert get(1) ==~ /^.*\/${readsLane2.getSampleName()}_cutadapt-log\.txt/
+                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_cutadapt-log\.txt/
+                assert get(1) ==~ /^.*\/${readsLane2.getStemName()}_cutadapt-log\.txt/
             }
         }
 
@@ -137,13 +137,13 @@ nextflow_workflow {
                 assert size() == 2
                 with(get(0)) {
                     assert size() == 3
-                    assert get(1) ==~ /^.*\/${readsLane1.getSampleName()}_trimmed_R1\.fastq\.gz/
-                    assert get(2) ==~ /^.*\/${readsLane1.getSampleName()}_trimmed_R2\.fastq\.gz/
+                    assert get(1) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R1\.fastq\.gz/
+                    assert get(2) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R2\.fastq\.gz/
                 }
                 with(get(1)) {
                     assert size() == 3
-                    assert get(1) ==~ /^.*\/${readsLane2.getSampleName()}_trimmed_R1\.fastq\.gz/
-                    assert get(2) ==~ /^.*\/${readsLane2.getSampleName()}_trimmed_R2\.fastq\.gz/
+                    assert get(1) ==~ /^.*\/${readsLane2.getStemName()}_trimmed_R1\.fastq\.gz/
+                    assert get(2) ==~ /^.*\/${readsLane2.getStemName()}_trimmed_R2\.fastq\.gz/
                 }
             }
             assert snapshot(workflow.out.reads_pre_align).match()
@@ -151,8 +151,8 @@ nextflow_workflow {
             // test read trimming log
             with(workflow.out.trim_log) {
                 assert size() == 2
-                assert get(0) ==~ /^.*\/${readsLane1.getSampleName()}_cutadapt-log.txt/
-                assert get(1) ==~ /^.*\/${readsLane2.getSampleName()}_cutadapt-log.txt/
+                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_cutadapt-log.txt/
+                assert get(1) ==~ /^.*\/${readsLane2.getStemName()}_cutadapt-log.txt/
             }
         }
 
@@ -215,13 +215,13 @@ nextflow_workflow {
                 assert size() == 2
                 with(get(0)) {
                     assert size() == 3
-                    assert get(1) ==~ /^.*\/${readsLane1.getSampleName()}_trimmed_R1\.fastq\.gz/
-                    assert get(2) ==~ /^.*\/${readsLane1.getSampleName()}_trimmed_R2\.NOFILE/
+                    assert get(1) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R1\.fastq\.gz/
+                    assert get(2) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R2\.NOFILE/
                 }
                 with(get(1)) {
                     assert size() == 3
-                    assert get(1) ==~ /^.*\/${readsLane2.getSampleName()}_trimmed_R1\.fastq\.gz/
-                    assert get(2) ==~ /^.*\/${readsLane2.getSampleName()}_trimmed_R2\.NOFILE/
+                    assert get(1) ==~ /^.*\/${readsLane2.getStemName()}_trimmed_R1\.fastq\.gz/
+                    assert get(2) ==~ /^.*\/${readsLane2.getStemName()}_trimmed_R2\.NOFILE/
                 }
             }
             assert snapshot(workflow.out.reads_pre_align).match()
@@ -229,8 +229,8 @@ nextflow_workflow {
             // test read trimming log
             with(workflow.out.trim_log) {
                 assert size() == 2
-                assert get(0) ==~ /^.*\/${readsLane1.getSampleName()}_fastp-log.json/
-                assert get(1) ==~ /^.*\/${readsLane2.getSampleName()}_fastp-log.json/
+                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_fastp-log.json/
+                assert get(1) ==~ /^.*\/${readsLane2.getStemName()}_fastp-log.json/
             }
         }
 
@@ -293,13 +293,13 @@ nextflow_workflow {
                 assert size() == 2
                 with(get(0)) {
                     assert size() == 3
-                    assert get(1) ==~ /^.*\/${readsLane1.getSampleName()}_trimmed_R1.fastq.gz/
-                    assert get(2) ==~ /^.*\/${readsLane1.getSampleName()}_trimmed_R2.fastq.gz/
+                    assert get(1) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R1.fastq.gz/
+                    assert get(2) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R2.fastq.gz/
                 }
                 with(get(1)) {
                     assert size() == 3
-                    assert get(1) ==~ /^.*\/${readsLane2.getSampleName()}_trimmed_R1.fastq.gz/
-                    assert get(2) ==~ /^.*\/${readsLane2.getSampleName()}_trimmed_R2.fastq.gz/
+                    assert get(1) ==~ /^.*\/${readsLane2.getStemName()}_trimmed_R1.fastq.gz/
+                    assert get(2) ==~ /^.*\/${readsLane2.getStemName()}_trimmed_R2.fastq.gz/
                 }
             }
             assert snapshot(workflow.out.reads_pre_align).match()
@@ -307,8 +307,8 @@ nextflow_workflow {
             // test read trimming log
             with(workflow.out.trim_log) {
                 assert size() == 2
-                assert get(0) ==~ /^.*\/${readsLane1.getSampleName()}_fastp-log.json/
-                assert get(1) ==~ /^.*\/${readsLane2.getSampleName()}_fastp-log.json/
+                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_fastp-log.json/
+                assert get(1) ==~ /^.*\/${readsLane2.getStemName()}_fastp-log.json/
             }
         }
 

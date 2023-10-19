@@ -14,3 +14,20 @@ static String buildStemName(LinkedHashMap metadata) {
 
     return stemNameComponents.join('_')
 }
+
+/**
+ * Find the intersection of a list of metadata maps.
+ *
+ * @params metadataList A list of metadata maps.
+ *
+ * @return LinkedHashMap A map of the consensus metadata, i.e. the intersection of all key:value pairs from the list of metadata maps.
+ */
+static LinkedHashMap intersectListOfMetadata(metadataList) {
+    def metadataIntersection = metadataList[0]
+
+    metadataList.each { metadata ->
+        metadataIntersection = metadataIntersection.intersect(metadata)
+    }
+
+    return metadataIntersection
+}

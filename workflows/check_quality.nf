@@ -8,7 +8,8 @@ workflow CHECK_QUALITY {
         reads_raw
         reads_prealign
         trim_log
-        alignments
+        alignmentsIndividual
+        alignmentsMerged
 
     main:
         if(!params.skipRawReadsQC) {
@@ -31,7 +32,10 @@ workflow CHECK_QUALITY {
         }
 
         if(!params.skipAlignmentsQC) {
-            QC_Alignments(alignments)
+            QC_Alignments(
+                alignmentsIndividual,
+                alignmentsMerged
+            )
             ch_multiqc_alignments = QC_Alignments.out.multiqc
         } else {
             ch_multiqc_alignments = Channel.empty()
