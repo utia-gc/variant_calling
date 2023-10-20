@@ -27,7 +27,7 @@ workflow QC_Alignments {
 
         multiqc_alignments(
             ch_multiqc_alignments,
-            file(params.multiqcConfig),
+            file("${projectDir}/assets/multiqc_config.yaml"),
             'alignments'
         )
 

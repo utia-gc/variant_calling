@@ -14,7 +14,7 @@ workflow QC_Reads_Raw {
 
         multiqc_raw(
             ch_multiqc_reads_raw,
-            file(params.multiqcConfig),
+            file("${projectDir}/assets/multiqc_config.yaml"),
             "reads_raw"
         )
 

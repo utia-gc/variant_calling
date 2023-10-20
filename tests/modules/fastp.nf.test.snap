@@ -7,14 +7,15 @@
                         "sampleName": "SRR1066657",
                         "sampleNumber": "3",
                         "lane": "001",
-                        "readType": "single"
+                        "readType": "single",
+                        "trimStatus": "raw"
                     },
                     "SRR1066657_L001_trimmed_R1.fastq.gz:md5,8b2b5da31a1d3fc3482f3998741c4a96",
                     "SRR1066657_L001_trimmed_R2.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                 ]
             ]
         ],
-        "timestamp": "2023-10-13T10:55:50.023178143"
+        "timestamp": "2023-10-20T10:03:22.449374036"
     },
     "fastp trims reads -- PE reads": {
         "content": [
@@ -24,13 +25,14 @@
                         "sampleName": "SRR6924569",
                         "sampleNumber": "1",
                         "lane": "001",
-                        "readType": "paired"
+                        "readType": "paired",
+                        "trimStatus": "raw"
                     },
                     "SRR6924569_L001_trimmed_R1.fastq.gz:md5,35deef2a325540a00e1f24d8caf3d8b6",
                     "SRR6924569_L001_trimmed_R2.fastq.gz:md5,6ed67e7615213a26056471e08ae14806"
                 ]
             ]
         ],
-        "timestamp": "2023-10-13T10:55:57.533948047"
+        "timestamp": "2023-10-20T10:03:31.654775779"
     }
 }

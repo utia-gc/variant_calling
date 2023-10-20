@@ -17,7 +17,7 @@ workflow QC_Reads_Prealign {
 
         multiqc_prealign(
             ch_multiqc_reads_prealign,
-            file(params.multiqcConfig),
+            file("${projectDir}/assets/multiqc_config.yaml"),
             "reads_prealign"
         )
 

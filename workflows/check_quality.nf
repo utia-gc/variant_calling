@@ -48,7 +48,7 @@ workflow CHECK_QUALITY {
             .collect( sort: true )
         multiqc_full(
             ch_multiqc_full,
-            file(params.multiqcConfig),
+            file("${projectDir}/assets/multiqc_config.yaml"),
             params.projectTitle
         )
 }
