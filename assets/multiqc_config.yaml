@@ -1,5 +1,20 @@
 ignore_images: false
 
+module_order:
+  - fastqc:
+      name: "FastQC (trimmed)"
+      anchor: "fastqc_trimmed"
+      info: "This section of the report shows FastQC results after adapter trimming."
+      path_filters:
+        - "*_trimmed_R[12]_fastqc.zip"
+  - cutadapt
+  - fastp
+  - fastqc:
+      name: "FastQC (raw)"
+      anchor: "fastqc_raw"
+      path_filters:
+        - "*_raw_R[12]_fastqc.zip"
+
 custom_data:
   insert_size:
     section_name: "Insert size"
