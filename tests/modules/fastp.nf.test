@@ -20,7 +20,8 @@ nextflow_process {
                         sampleName:   "${readsLane1.getSampleName()}",
                         sampleNumber: "${readsLane1.getSampleNumber()}",
                         lane:         "${readsLane1.getLane()}",
-                        readType:     "${readsLane1.getReadType()}"
+                        readType:     "${readsLane1.getReadType()}",
+                        trimStatus:   "raw",
                     ],
                     [
                         file("${readsLane1.getR1()}"),
@@ -73,7 +74,8 @@ nextflow_process {
                         sampleName:   "${readsLane1.getSampleName()}",
                         sampleNumber: "${readsLane1.getSampleNumber()}",
                         lane:         "${readsLane1.getLane()}",
-                        readType:     "${readsLane1.getReadType()}"
+                        readType:     "${readsLane1.getReadType()}",
+                        trimStatus:   "raw",
                     ],
                     [
                         file("${readsLane1.getR1()}"),

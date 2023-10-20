@@ -21,23 +21,31 @@ process fastp {
 
     script:
         String stemName = MetadataUtils.buildStemName(metadata)
+        String reads1NewName = "${stemName}_${metadata.trimStatus}_R1.fastq.gz"
 
         if(metadata.readType == 'single') {
             """
+            mv ${reads1} ${reads1NewName}
+
             fastp \
                 --thread ${task.cpus} \
-                --in1 ${reads1} \
+                --in1 ${reads1NewName} \
                 --out1 ${stemName}_trimmed_R1.fastq.gz \
                 --json ${stemName}_fastp-log.json
 
             cp ${reads2} ${stemName}_trimmed_R2.NOFILE
             """
         } else if(metadata.readType == 'paired') {
+            String reads2NewName = "${stemName}_${metadata.trimStatus}_R2.fastq.gz"
+
             """
+            mv ${reads1} ${reads1NewName}
+            mv ${reads2} ${reads2NewName}
+
             fastp \
                 --thread ${task.cpus} \
-                --in1 ${reads1} \
-                --in2 ${reads2} \
+                --in1 ${reads1NewName} \
+                --in2 ${reads2NewName} \
                 --out1 ${stemName}_trimmed_R1.fastq.gz \
                 --out2 ${stemName}_trimmed_R2.fastq.gz \
                 --json ${stemName}_fastp-log.json
