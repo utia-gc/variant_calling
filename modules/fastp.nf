@@ -9,7 +9,7 @@ process fastp {
     publishDir(
         path:    "${params.publishDirReports}/reads/trim",
         mode:    "${params.publishMode}",
-        pattern: '*_fastp-log.json'
+        pattern: '*_fastp.json'
     )
 
     input:
@@ -17,7 +17,7 @@ process fastp {
 
     output:
         tuple val(metadata), path("*_trimmed_R1.fastq.gz"), path("*_trimmed_R2{.fastq.gz,.NOFILE}"), emit: reads
-        path("*_fastp-log.json"), emit: log
+        path("*_fastp.json"), emit: log
 
     script:
         String stemName = MetadataUtils.buildStemName(metadata)
@@ -31,7 +31,7 @@ process fastp {
                 --thread ${task.cpus} \
                 --in1 ${reads1NewName} \
                 --out1 ${stemName}_trimmed_R1.fastq.gz \
-                --json ${stemName}_fastp-log.json
+                --json ${stemName}_fastp.json
 
             cp ${reads2} ${stemName}_trimmed_R2.NOFILE
             """
@@ -48,7 +48,7 @@ process fastp {
                 --in2 ${reads2NewName} \
                 --out1 ${stemName}_trimmed_R1.fastq.gz \
                 --out2 ${stemName}_trimmed_R2.fastq.gz \
-                --json ${stemName}_fastp-log.json
+                --json ${stemName}_fastp.json
             """
         }
 }

@@ -49,7 +49,7 @@ nextflow_process {
             // test trim log
             with(process.out.log) {
                 assert size() == 1
-                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_fastp-log.json/
+                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_fastp.json/
             }
 
             // test trimmed fastq reproducibility
@@ -103,7 +103,7 @@ nextflow_process {
             // test trim log
             with(process.out.log) {
                 assert size() == 1
-                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_fastp-log.json/
+                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_fastp.json/
             }
 
             // test trimmed fastq reproducibility
