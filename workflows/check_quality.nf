@@ -12,34 +12,22 @@ workflow CHECK_QUALITY {
         alignmentsMerged
 
     main:
-        if(!params.skipRawReadsQC) {
-            QC_Reads_Raw(
-                reads_raw
-            )
-            ch_multiqc_reads_raw = QC_Reads_Raw.out.multiqc
-        } else {
-            ch_multiqc_reads_raw = Channel.empty()
-        }
+        QC_Reads_Raw(
+            reads_raw
+        )
+        ch_multiqc_reads_raw = QC_Reads_Raw.out.multiqc
 
-        if(!params.skipPrealignReadsQC) {
-            QC_Reads_Prealign(
-                reads_prealign,
-                trim_log
-            )
-            ch_multiqc_reads_prealign = QC_Reads_Prealign.out.multiqc
-        } else {
-            ch_multiqc_reads_prealign = Channel.empty()
-        }
+        QC_Reads_Prealign(
+            reads_prealign,
+            trim_log
+        )
+        ch_multiqc_reads_prealign = QC_Reads_Prealign.out.multiqc
 
-        if(!params.skipAlignmentsQC) {
-            QC_Alignments(
-                alignmentsIndividual,
-                alignmentsMerged
-            )
-            ch_multiqc_alignments = QC_Alignments.out.multiqc
-        } else {
-            ch_multiqc_alignments = Channel.empty()
-        }
+        QC_Alignments(
+            alignmentsIndividual,
+            alignmentsMerged
+        )
+        ch_multiqc_alignments = QC_Alignments.out.multiqc
 
         ch_multiqc_full = Channel.empty()
             .concat(ch_multiqc_reads_raw)
