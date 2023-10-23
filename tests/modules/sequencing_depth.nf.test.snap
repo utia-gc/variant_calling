@@ -12,6 +12,33 @@
         ],
         "timestamp": "2023-09-28T19:33:40+0000"
     },
+    "sequencing_depth writes file of sequencing depth -- PE reads; multiple read-pairs": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "readType": "paired",
+                            "trimStatus": "raw"
+                        },
+                        "65.58554934887802"
+                    ]
+                ],
+                "depth": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "readType": "paired",
+                            "trimStatus": "raw"
+                        },
+                        "65.58554934887802"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-10-23T13:16:09.08156087"
+    },
     "sequencing_depth writes file of sequencing depth -- SE reads no lane info": {
         "content": [
             {
@@ -24,6 +51,87 @@
             }
         ],
         "timestamp": "2023-09-28T19:33:40+0000"
+    },
+    "sequencing_depth writes file of sequencing depth -- SE reads; one read": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "readType": "single",
+                            "trimStatus": "raw"
+                        },
+                        "10.859272515615634"
+                    ]
+                ],
+                "depth": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "readType": "single",
+                            "trimStatus": "raw"
+                        },
+                        "10.859272515615634"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-10-23T13:15:26.539233539"
+    },
+    "sequencing_depth writes file of sequencing depth -- SE reads; multiple reads": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "readType": "single",
+                            "trimStatus": "raw"
+                        },
+                        "21.71854503123127"
+                    ]
+                ],
+                "depth": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "readType": "single",
+                            "trimStatus": "raw"
+                        },
+                        "21.71854503123127"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-10-23T13:15:40.307217848"
+    },
+    "sequencing_depth writes file of sequencing depth -- PE reads; one read-pair": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "readType": "paired",
+                            "trimStatus": "raw"
+                        },
+                        "32.79331763806479"
+                    ]
+                ],
+                "depth": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "readType": "paired",
+                            "trimStatus": "raw"
+                        },
+                        "32.79331763806479"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-10-23T13:15:54.160903315"
     },
     "sequencing_depth writes file of sequencing depth -- PE reads": {
         "content": [
