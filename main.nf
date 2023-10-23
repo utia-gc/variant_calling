@@ -46,6 +46,7 @@ workflow {
         ch_reads_raw,
         ch_reads_pre_align,
         ch_trim_log,
+        ch_genome_index,
         ch_alignmentsIndividual,
         ch_alignmentsMerged
     )

@@ -7,6 +7,7 @@ workflow CHECK_QUALITY {
         reads_raw
         reads_prealign
         trim_log
+        genome_index
         alignmentsIndividual
         alignmentsMerged
 
@@ -14,7 +15,8 @@ workflow CHECK_QUALITY {
         QC_Reads(
             reads_raw,
             reads_prealign,
-            trim_log
+            trim_log,
+            genome_index
         )
         ch_multiqc_reads = QC_Reads.out.multiqc
 

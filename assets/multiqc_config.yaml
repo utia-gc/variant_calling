@@ -40,23 +40,31 @@ custom_data:
     section_name: "Coverage"
     file_format: "tsv"
     plot_type: "linegraph"
-  sequencing_depth:
-    section_name: "Sequencing depth"
-    description: "Average sequencing depth computed as total number of bases in reads divided by total number of bases in reference contigs."
+  sequencing_depth_raw:
     file_format: "tsv"
-    plot_type: "bargraph"
+    plot_type: "generalstats"
     pconfig:
-      id: "custom_sequencing_depth"
-      title: "Custom: Average Sequencing Depth"
-      cpswitch: False
-      use_legend: False
-      tt_decimals: 2
-      tt_suffix: " X coverage"
-      tt_percentages: False
+      - Depth:
+          title: "Depth (raw)"
+          description: "Count of bases in prealigned reads divided by count of bases in reference genome."
+          suffix: " X"
+  sequencing_depth_prealign:
+    file_format: "tsv"
+    plot_type: "generalstats"
+    pconfig:
+      - Depth:
+          title: "Depth (prealign)"
+          description: "Count of bases in prealigned reads divided by count of bases in reference genome."
+          suffix: " X"
+  my_genstats:
+    plot_type: "generalstats"
+    file_format: "tsv"
 sp:
   insert_size:
     fn: "*_samtools-IS.txt"
   coverage:
     fn: "*_samtools-COV.txt"
-  sequencing_depth:
-    fn: "*_seq-depth.txt"
+  sequencing_depth_raw:
+    fn: "*_raw_seq-depth.tsv"
+  sequencing_depth_prealign:
+    fn: "*_prealign_seq-depth.tsv"
