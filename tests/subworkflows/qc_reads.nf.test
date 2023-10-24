@@ -4,6 +4,8 @@ nextflow_workflow {
     script "subworkflows/qc_reads.nf"
     workflow "QC_Reads"
 
+    def refs = new RefsEnsembl()
+
     test("QC_Reads reports QC for raw and prealigned reads -- cutadapt + SE reads.") {
         // instantiate helper objects
         def readsLane1 = new ReadsSELane1()
@@ -15,37 +17,34 @@ nextflow_workflow {
             }
             workflow {
                 """
-                input[0] = [
+                input[0] = Channel.of(
                     [
-                        sampleName:   "${readsLane1.getSampleName()}",
-                        sampleNumber: "${readsLane1.getSampleNumber()}",
-                        lane:         "${readsLane1.getLane()}",
-                        readType:     "${readsLane1.getReadType()}",
-                        trimStatus:   "raw",
-                    ],
-                    [
+                        [
+                            sampleName:   "${readsLane1.getSampleName()}",
+                            sampleNumber: "${readsLane1.getSampleNumber()}",
+                            lane:         "${readsLane1.getLane()}",
+                            readType:     "${readsLane1.getReadType()}",
+                            trimStatus:   "raw",
+                        ],
                         file("${readsLane1.getR1()}"),
-                    ],
-                    [
-                        file("${readsLane1.getR2()}"),
+                        file("${readsLane1.getR2()}")
                     ]
-                ]
-                input[1] = [
+                )
+                input[1] = Channel.of(
                     [
-                        sampleName:   "${readsLane1.getSampleName()}",
-                        sampleNumber: "${readsLane1.getSampleNumber()}",
-                        lane:         "${readsLane1.getLane()}",
-                        readType:     "${readsLane1.getReadType()}",
-                        trimStatus:   "trimmed",
-                    ],
-                    [
+                        [
+                            sampleName:   "${readsLane1.getSampleName()}",
+                            sampleNumber: "${readsLane1.getSampleNumber()}",
+                            lane:         "${readsLane1.getLane()}",
+                            readType:     "${readsLane1.getReadType()}",
+                            trimStatus:   "trimmed",
+                        ],
                         file("${readsLane1.getR1()}"),
-                    ],
-                    [
-                        file("${readsLane1.getR2()}"),
+                        file("${readsLane1.getR2()}")
                     ]
-                ]
-                input[2] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log"))
+                )
+                input[2] = Channel.of( file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log") )
+                input[3] = Channel.of( file("${refs.getGenomeIndex()}") )
                 """
             }
         }
@@ -53,15 +52,17 @@ nextflow_workflow {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 3
+            assert workflow.trace.succeeded().size() == 5
 
             // test output for full MultiQC
             assert workflow.out.multiqc
             with(workflow.out.multiqc.get(0)) {
-                assert size() == 3
+                assert size() == 5
                 assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_raw_R1_fastqc.zip/
                 assert get(1) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R1_fastqc.zip/
                 assert get(2) ==~ /^.*\/SAMPLE3_SE.cutadapt.log/
+                assert get(3) ==~ /^.*\/${readsLane1.getSampleName()}_raw_seq-depth.tsv/
+                assert get(4) ==~ /^.*\/${readsLane1.getSampleName()}_prealign_seq-depth.tsv/
             }
         }
 
@@ -78,37 +79,34 @@ nextflow_workflow {
             }
             workflow {
                 """
-                input[0] = [
+                input[0] = Channel.of(
                     [
-                        sampleName:   "${readsLane1.getSampleName()}",
-                        sampleNumber: "${readsLane1.getSampleNumber()}",
-                        lane:         "${readsLane1.getLane()}",
-                        readType:     "${readsLane1.getReadType()}",
-                        trimStatus:   "raw",
-                    ],
-                    [
+                        [
+                            sampleName:   "${readsLane1.getSampleName()}",
+                            sampleNumber: "${readsLane1.getSampleNumber()}",
+                            lane:         "${readsLane1.getLane()}",
+                            readType:     "${readsLane1.getReadType()}",
+                            trimStatus:   "raw",
+                        ],
                         file("${readsLane1.getR1()}"),
-                    ],
-                    [
-                        file("${readsLane1.getR2()}"),
+                        file("${readsLane1.getR2()}")
                     ]
-                ]
-                input[1] = [
+                )
+                input[1] = Channel.of(
                     [
-                        sampleName:   "${readsLane1.getSampleName()}",
-                        sampleNumber: "${readsLane1.getSampleNumber()}",
-                        lane:         "${readsLane1.getLane()}",
-                        readType:     "${readsLane1.getReadType()}",
-                        trimStatus:   "trimmed",
-                    ],
-                    [
+                        [
+                            sampleName:   "${readsLane1.getSampleName()}",
+                            sampleNumber: "${readsLane1.getSampleNumber()}",
+                            lane:         "${readsLane1.getLane()}",
+                            readType:     "${readsLane1.getReadType()}",
+                            trimStatus:   "trimmed",
+                        ],
                         file("${readsLane1.getR1()}"),
-                    ],
-                    [
-                        file("${readsLane1.getR2()}"),
+                        file("${readsLane1.getR2()}")
                     ]
-                ]
-                input[2] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log"))
+                )
+                input[2] = Channel.of( file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/cutadapt/v2.10/SAMPLE3_SE.cutadapt.log") )
+                input[3] = Channel.of( file("${refs.getGenomeIndex()}") )
                 """
             }
         }
@@ -116,17 +114,19 @@ nextflow_workflow {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 3
+            assert workflow.trace.succeeded().size() == 5
 
             // test output for full MultiQC
             assert workflow.out.multiqc
             with(workflow.out.multiqc.get(0)) {
-                assert size() == 5
+                assert size() == 7
                 assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_raw_R1_fastqc.zip/
                 assert get(1) ==~ /^.*\/${readsLane1.getStemName()}_raw_R2_fastqc.zip/
                 assert get(2) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R1_fastqc.zip/
                 assert get(3) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R2_fastqc.zip/
                 assert get(4) ==~ /^.*\/SAMPLE3_SE.cutadapt.log/
+                assert get(5) ==~ /^.*\/${readsLane1.getSampleName()}_raw_seq-depth.tsv/
+                assert get(6) ==~ /^.*\/${readsLane1.getSampleName()}_prealign_seq-depth.tsv/
             }
         }
 
@@ -143,37 +143,34 @@ nextflow_workflow {
             }
             workflow {
                 """
-                input[0] = [
+                input[0] = Channel.of(
                     [
-                        sampleName:   "${readsLane1.getSampleName()}",
-                        sampleNumber: "${readsLane1.getSampleNumber()}",
-                        lane:         "${readsLane1.getLane()}",
-                        readType:     "${readsLane1.getReadType()}",
-                        trimStatus:   "raw",
-                    ],
-                    [
+                        [
+                            sampleName:   "${readsLane1.getSampleName()}",
+                            sampleNumber: "${readsLane1.getSampleNumber()}",
+                            lane:         "${readsLane1.getLane()}",
+                            readType:     "${readsLane1.getReadType()}",
+                            trimStatus:   "raw",
+                        ],
                         file("${readsLane1.getR1()}"),
-                    ],
-                    [
-                        file("${readsLane1.getR2()}"),
+                        file("${readsLane1.getR2()}")
                     ]
-                ]
-                input[1] = [
+                )
+                input[1] = Channel.of(
                     [
-                        sampleName:   "${readsLane1.getSampleName()}",
-                        sampleNumber: "${readsLane1.getSampleNumber()}",
-                        lane:         "${readsLane1.getLane()}",
-                        readType:     "${readsLane1.getReadType()}",
-                        trimStatus:   "trimmed",
-                    ],
-                    [
+                        [
+                            sampleName:   "${readsLane1.getSampleName()}",
+                            sampleNumber: "${readsLane1.getSampleNumber()}",
+                            lane:         "${readsLane1.getLane()}",
+                            readType:     "${readsLane1.getReadType()}",
+                            trimStatus:   "trimmed",
+                        ],
                         file("${readsLane1.getR1()}"),
-                    ],
-                    [
-                        file("${readsLane1.getR2()}"),
+                        file("${readsLane1.getR2()}")
                     ]
-                ]
-                input[2] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/fastp/fastp.json"))
+                )
+                input[2] = Channel.of( file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/fastp/fastp.json") )
+                input[3] = Channel.of( file("${refs.getGenomeIndex()}") )
                 """
             }
         }
@@ -181,15 +178,17 @@ nextflow_workflow {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 3
+            assert workflow.trace.succeeded().size() == 5
 
             // test output for full MultiQC
             assert workflow.out.multiqc
             with(workflow.out.multiqc.get(0)) {
-                assert size() == 3
+                assert size() == 5
                 assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_raw_R1_fastqc.zip/
                 assert get(1) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R1_fastqc.zip/
                 assert get(2) ==~ /^.*\/fastp.json/
+                assert get(3) ==~ /^.*\/${readsLane1.getSampleName()}_raw_seq-depth.tsv/
+                assert get(4) ==~ /^.*\/${readsLane1.getSampleName()}_prealign_seq-depth.tsv/
             }
         }
 
@@ -206,37 +205,34 @@ nextflow_workflow {
             }
             workflow {
                 """
-                input[0] = [
+                input[0] = Channel.of(
                     [
-                        sampleName:   "${readsLane1.getSampleName()}",
-                        sampleNumber: "${readsLane1.getSampleNumber()}",
-                        lane:         "${readsLane1.getLane()}",
-                        readType:     "${readsLane1.getReadType()}",
-                        trimStatus:   "raw",
-                    ],
-                    [
+                        [
+                            sampleName:   "${readsLane1.getSampleName()}",
+                            sampleNumber: "${readsLane1.getSampleNumber()}",
+                            lane:         "${readsLane1.getLane()}",
+                            readType:     "${readsLane1.getReadType()}",
+                            trimStatus:   "raw",
+                        ],
                         file("${readsLane1.getR1()}"),
-                    ],
-                    [
-                        file("${readsLane1.getR2()}"),
+                        file("${readsLane1.getR2()}")
                     ]
-                ]
-                input[1] = [
+                )
+                input[1] = Channel.of(
                     [
-                        sampleName:   "${readsLane1.getSampleName()}",
-                        sampleNumber: "${readsLane1.getSampleNumber()}",
-                        lane:         "${readsLane1.getLane()}",
-                        readType:     "${readsLane1.getReadType()}",
-                        trimStatus:   "trimmed",
-                    ],
-                    [
+                        [
+                            sampleName:   "${readsLane1.getSampleName()}",
+                            sampleNumber: "${readsLane1.getSampleNumber()}",
+                            lane:         "${readsLane1.getLane()}",
+                            readType:     "${readsLane1.getReadType()}",
+                            trimStatus:   "trimmed",
+                        ],
                         file("${readsLane1.getR1()}"),
-                    ],
-                    [
-                        file("${readsLane1.getR2()}"),
+                        file("${readsLane1.getR2()}")
                     ]
-                ]
-                input[2] = Channel.of(file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/fastp/fastp.json"))
+                )
+                input[2] = Channel.of( file("https://github.com/ewels/MultiQC_TestData/raw/master/data/modules/fastp/fastp.json") )
+                input[3] = Channel.of( file("${refs.getGenomeIndex()}") )
                 """
             }
         }
@@ -244,17 +240,19 @@ nextflow_workflow {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 3
+            assert workflow.trace.succeeded().size() == 5
 
             // test output for full MultiQC
             assert workflow.out.multiqc
             with(workflow.out.multiqc.get(0)) {
-                assert size() == 5
+                assert size() == 7
                 assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_raw_R1_fastqc.zip/
                 assert get(1) ==~ /^.*\/${readsLane1.getStemName()}_raw_R2_fastqc.zip/
                 assert get(2) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R1_fastqc.zip/
                 assert get(3) ==~ /^.*\/${readsLane1.getStemName()}_trimmed_R2_fastqc.zip/
                 assert get(4) ==~ /^.*\/fastp.json/
+                assert get(5) ==~ /^.*\/${readsLane1.getSampleName()}_raw_seq-depth.tsv/
+                assert get(6) ==~ /^.*\/${readsLane1.getSampleName()}_prealign_seq-depth.tsv/
             }
         }
 

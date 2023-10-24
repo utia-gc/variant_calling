@@ -24,12 +24,8 @@ nextflow_workflow {
                             lane:         "${readsLane1.getLane()}",
                             readType:     "${readsLane1.getReadType()}"
                         ],
-                        [
-                            file("${readsLane1.getR1()}"),
-                        ],
-                        [
-                            file("${readsLane1.getR2()}"),
-                        ]
+                        file("${readsLane1.getR1()}"),
+                        file("${readsLane1.getR2()}")
                     ],
                     [
                         [
@@ -38,12 +34,8 @@ nextflow_workflow {
                             lane:         "${readsLane2.getLane()}",
                             readType:     "${readsLane2.getReadType()}"
                         ],
-                        [
-                            file("${readsLane2.getR1()}"),
-                        ],
-                        [
-                            file("${readsLane2.getR2()}"),
-                        ]
+                        file("${readsLane2.getR1()}"),
+                        file("${readsLane2.getR2()}")
                     ]
                 )
                 """
@@ -101,12 +93,8 @@ nextflow_workflow {
                             lane:         "${readsLane1.getLane()}",
                             readType:     "${readsLane1.getReadType()}"
                         ],
-                        [
-                            file("${readsLane1.getR1()}"),
-                        ],
-                        [
-                            file("${readsLane1.getR2()}"),
-                        ]
+                        file("${readsLane1.getR1()}"),
+                        file("${readsLane1.getR2()}")
                     ],
                     [
                         [
@@ -115,12 +103,8 @@ nextflow_workflow {
                             lane:         "${readsLane2.getLane()}",
                             readType:     "${readsLane2.getReadType()}"
                         ],
-                        [
-                            file("${readsLane2.getR1()}"),
-                        ],
-                        [
-                            file("${readsLane2.getR2()}"),
-                        ]
+                        file("${readsLane2.getR1()}"),
+                        file("${readsLane2.getR2()}")
                     ]
                 )
                 """
@@ -179,12 +163,8 @@ nextflow_workflow {
                             lane:         "${readsLane1.getLane()}",
                             readType:     "${readsLane1.getReadType()}"
                         ],
-                        [
-                            file("${readsLane1.getR1()}"),
-                        ],
-                        [
-                            file("${readsLane1.getR2()}"),
-                        ]
+                        file("${readsLane1.getR1()}"),
+                        file("${readsLane1.getR2()}")
                     ],
                     [
                         [
@@ -193,12 +173,8 @@ nextflow_workflow {
                             lane:         "${readsLane2.getLane()}",
                             readType:     "${readsLane2.getReadType()}"
                         ],
-                        [
-                            file("${readsLane2.getR1()}"),
-                        ],
-                        [
-                            file("${readsLane2.getR2()}"),
-                        ]
+                        file("${readsLane2.getR1()}"),
+                        file("${readsLane2.getR2()}")
                     ]
                 )
                 """
@@ -229,8 +205,8 @@ nextflow_workflow {
             // test read trimming log
             with(workflow.out.trim_log) {
                 assert size() == 2
-                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_fastp-log.json/
-                assert get(1) ==~ /^.*\/${readsLane2.getStemName()}_fastp-log.json/
+                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_fastp.json/
+                assert get(1) ==~ /^.*\/${readsLane2.getStemName()}_fastp.json/
             }
         }
 
@@ -257,12 +233,8 @@ nextflow_workflow {
                             lane:         "${readsLane1.getLane()}",
                             readType:     "${readsLane1.getReadType()}"
                         ],
-                        [
-                            file("${readsLane1.getR1()}"),
-                        ],
-                        [
-                            file("${readsLane1.getR2()}"),
-                        ]
+                        file("${readsLane1.getR1()}"),
+                        file("${readsLane1.getR2()}")
                     ],
                     [
                         [
@@ -271,12 +243,8 @@ nextflow_workflow {
                             lane:         "${readsLane2.getLane()}",
                             readType:     "${readsLane2.getReadType()}"
                         ],
-                        [
-                            file("${readsLane2.getR1()}"),
-                        ],
-                        [
-                            file("${readsLane2.getR2()}"),
-                        ]
+                        file("${readsLane2.getR1()}"),
+                        file("${readsLane2.getR2()}")
                     ]
                 )
                 """
@@ -307,8 +275,8 @@ nextflow_workflow {
             // test read trimming log
             with(workflow.out.trim_log) {
                 assert size() == 2
-                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_fastp-log.json/
-                assert get(1) ==~ /^.*\/${readsLane2.getStemName()}_fastp-log.json/
+                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_fastp.json/
+                assert get(1) ==~ /^.*\/${readsLane2.getStemName()}_fastp.json/
             }
         }
 

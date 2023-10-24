@@ -23,12 +23,8 @@ nextflow_process {
                         readType:     "${readsLane1.getReadType()}",
                         trimStatus:   "raw"
                     ],
-                    [
-                        file("${readsLane1.getR1()}"),
-                    ],
-                    [
-                        file("${readsLane1.getR2()}"),
-                    ]
+                    file("${readsLane1.getR1()}"),
+                    file("${readsLane1.getR2()}")
                 ]
                 """
             }
@@ -71,12 +67,8 @@ nextflow_process {
                         readType:     "${readsLane1.getReadType()}",
                         trimStatus:   "raw"
                     ],
-                    [
-                        file("${readsLane1.getR1()}"),
-                    ],
-                    [
-                        file("${readsLane1.getR2()}"),
-                    ]
+                    file("${readsLane1.getR1()}"),
+                    file("${readsLane1.getR2()}")
                 ]
                 """
             }
@@ -121,12 +113,8 @@ nextflow_process {
                         readType:     "${readsLane1.getReadType()}",
                         trimStatus:   "trimmed"
                     ],
-                    [
-                        file("${readsLane1.getR1()}"),
-                    ],
-                    [
-                        file("${readsLane1.getR2()}"),
-                    ]
+                    file("${readsLane1.getR1()}"),
+                    file("${readsLane1.getR2()}")
                 ]
                 """
             }
@@ -169,12 +157,8 @@ nextflow_process {
                         readType:     "${readsLane1.getReadType()}",
                         trimStatus:   "trimmed"
                     ],
-                    [
-                        file("${readsLane1.getR1()}"),
-                    ],
-                    [
-                        file("${readsLane1.getR2()}"),
-                    ]
+                    file("${readsLane1.getR1()}"),
+                    file("${readsLane1.getR2()}")
                 ]
                 """
             }

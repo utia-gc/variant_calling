@@ -23,12 +23,8 @@ nextflow_process {
                         readType:     "${readsLane1.getReadType()}",
                         trimStatus:   "raw"
                     ],
-                    [
-                        file("${readsLane1.getR1()}"),
-                    ],
-                    [
-                        file("${readsLane1.getR2()}"),
-                    ]
+                    file("${readsLane1.getR1()}"),
+                    file("${readsLane1.getR2()}")
                 ]
                 input[1] = "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"
                 input[2] = "AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC"
@@ -80,12 +76,8 @@ nextflow_process {
                         readType:     "${readsLane1.getReadType()}",
                         trimStatus:   "raw"
                     ],
-                    [
-                        file("${readsLane1.getR1()}"),
-                    ],
-                    [
-                        file("${readsLane1.getR2()}"),
-                    ]
+                    file("${readsLane1.getR1()}"),
+                    file("${readsLane1.getR2()}")
                 ]
                 input[1] = "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"
                 input[2] = "AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC"
