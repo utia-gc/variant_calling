@@ -3,7 +3,7 @@ include { fastp    } from "../modules/fastp.nf"
 
 /**
  * Workflow to process reads.
- * Reads should be trimmed and concatenated here, if necessary.
+ * Reads should be trimmed here, if necessary.
  */
 workflow Trim_Reads {
     take:

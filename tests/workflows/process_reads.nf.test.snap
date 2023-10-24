@@ -24,24 +24,26 @@
                         "sampleName": "SRR6924569",
                         "sampleNumber": "1",
                         "lane": "001",
-                        "readType": "paired"
+                        "readType": "paired",
+                        "trimStatus": "trimmed"
                     },
-                    "SRR6924569_trimmed_R1.fastq.gz:md5,1025b1a273fee2b51bd597f519ebbe86",
-                    "SRR6924569_trimmed_R2.fastq.gz:md5,3c3451e122dcf82b1be4a4526519fcc7"
+                    "SRR6924569_L001_trimmed_R1.fastq.gz:md5,1025b1a273fee2b51bd597f519ebbe86",
+                    "SRR6924569_L001_trimmed_R2.fastq.gz:md5,3c3451e122dcf82b1be4a4526519fcc7"
                 ],
                 [
                     {
                         "sampleName": "SRR6924569",
                         "sampleNumber": "1",
                         "lane": "002",
-                        "readType": "paired"
+                        "readType": "paired",
+                        "trimStatus": "trimmed"
                     },
-                    "SRR6924569_trimmed_R1.fastq.gz:md5,0a8a869af34fd3f2c45b01d29b031c8f",
-                    "SRR6924569_trimmed_R2.fastq.gz:md5,5308d8b5e743b06434c3fa27776d34b6"
+                    "SRR6924569_L002_trimmed_R1.fastq.gz:md5,0a8a869af34fd3f2c45b01d29b031c8f",
+                    "SRR6924569_L002_trimmed_R2.fastq.gz:md5,5308d8b5e743b06434c3fa27776d34b6"
                 ]
             ]
         ],
-        "timestamp": "2023-10-11T05:44:02.69274838"
+        "timestamp": "2023-10-19T13:29:30.171909727"
     },
     "PROCESS_READS only concatenates reads when `params.skipTrimReads = true` -- SE reads.": {
         "content": [
@@ -112,24 +114,26 @@
                         "sampleName": "SRR1066657",
                         "sampleNumber": "3",
                         "lane": "001",
-                        "readType": "single"
+                        "readType": "single",
+                        "trimStatus": "trimmed"
                     },
-                    "SRR1066657_trimmed_R1.fastq.gz:md5,0cf552582764f49d0eb969ffb0950ed4",
-                    "SRR1066657_trimmed_R2.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    "SRR1066657_L001_trimmed_R1.fastq.gz:md5,0cf552582764f49d0eb969ffb0950ed4",
+                    "SRR1066657_L001_trimmed_R2.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                 ],
                 [
                     {
                         "sampleName": "SRR1066657",
                         "sampleNumber": "3",
                         "lane": "002",
-                        "readType": "single"
+                        "readType": "single",
+                        "trimStatus": "trimmed"
                     },
-                    "SRR1066657_trimmed_R1.fastq.gz:md5,c1ea5e2cbe17ba4c407d653af99fe2e9",
-                    "SRR1066657_trimmed_R2.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    "SRR1066657_L002_trimmed_R1.fastq.gz:md5,c1ea5e2cbe17ba4c407d653af99fe2e9",
+                    "SRR1066657_L002_trimmed_R2.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                 ]
             ]
         ],
-        "timestamp": "2023-10-11T05:43:49.69468065"
+        "timestamp": "2023-10-19T13:29:18.699389544"
     },
     "PROCESS_READS concatenates and trims reads by default -- fastp + SE reads.": {
         "content": [
@@ -172,24 +176,26 @@
                         "sampleName": "SRR6924569",
                         "sampleNumber": "1",
                         "lane": "001",
-                        "readType": "paired"
+                        "readType": "paired",
+                        "trimStatus": "trimmed"
                     },
-                    "SRR6924569_trimmed_R1.fastq.gz:md5,35deef2a325540a00e1f24d8caf3d8b6",
-                    "SRR6924569_trimmed_R2.fastq.gz:md5,6ed67e7615213a26056471e08ae14806"
+                    "SRR6924569_L001_trimmed_R1.fastq.gz:md5,35deef2a325540a00e1f24d8caf3d8b6",
+                    "SRR6924569_L001_trimmed_R2.fastq.gz:md5,6ed67e7615213a26056471e08ae14806"
                 ],
                 [
                     {
                         "sampleName": "SRR6924569",
                         "sampleNumber": "1",
                         "lane": "002",
-                        "readType": "paired"
+                        "readType": "paired",
+                        "trimStatus": "trimmed"
                     },
-                    "SRR6924569_trimmed_R1.fastq.gz:md5,6e9cc4c3af2af7aec902cfe72f502141",
-                    "SRR6924569_trimmed_R2.fastq.gz:md5,5099ffdda6ebcbbb0ae09614c54bc374"
+                    "SRR6924569_L002_trimmed_R1.fastq.gz:md5,6e9cc4c3af2af7aec902cfe72f502141",
+                    "SRR6924569_L002_trimmed_R2.fastq.gz:md5,5099ffdda6ebcbbb0ae09614c54bc374"
                 ]
             ]
         ],
-        "timestamp": "2023-10-11T05:48:11.478186457"
+        "timestamp": "2023-10-19T13:29:48.471846822"
     },
     "PROCESS_READS trims reads by default -- fastp + SE reads.": {
         "content": [
@@ -199,23 +205,25 @@
                         "sampleName": "SRR1066657",
                         "sampleNumber": "3",
                         "lane": "001",
-                        "readType": "single"
+                        "readType": "single",
+                        "trimStatus": "trimmed"
                     },
-                    "SRR1066657_trimmed_R1.fastq.gz:md5,8b2b5da31a1d3fc3482f3998741c4a96",
-                    "SRR1066657_trimmed_R2.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    "SRR1066657_L001_trimmed_R1.fastq.gz:md5,8b2b5da31a1d3fc3482f3998741c4a96",
+                    "SRR1066657_L001_trimmed_R2.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                 ],
                 [
                     {
                         "sampleName": "SRR1066657",
                         "sampleNumber": "3",
                         "lane": "002",
-                        "readType": "single"
+                        "readType": "single",
+                        "trimStatus": "trimmed"
                     },
-                    "SRR1066657_trimmed_R1.fastq.gz:md5,450f10949d14764d502384fdc415f8e1",
-                    "SRR1066657_trimmed_R2.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    "SRR1066657_L002_trimmed_R1.fastq.gz:md5,450f10949d14764d502384fdc415f8e1",
+                    "SRR1066657_L002_trimmed_R2.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                 ]
             ]
         ],
-        "timestamp": "2023-10-11T05:44:13.500153434"
+        "timestamp": "2023-10-19T13:29:39.341593655"
     }
 }

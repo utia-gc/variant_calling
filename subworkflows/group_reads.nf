@@ -4,34 +4,23 @@ workflow Group_Reads {
 
     main:
         reads
-            .map { metadata, reads ->
-                def metadataForMerging = dropMetadataLane(metadata) 
-                [ metadataForMerging, reads ]
+            .map { metadata, reads1, reads2 ->
+                [ metadata.sampleName, metadata, reads1, reads2 ]
             }
             .groupTuple()
-            .map { reshapeGroupedLaneReads(it) }
-            .dump(tag: "ch_reads_grouped")
+            .map { sampleNameKey, metadata, reads1, reads2 ->
+                def metadataIntersection = MetadataUtils.intersectListOfMetadata(metadata)
+                def reads1Sorted = reads1.sort { a, b ->
+                    a.name.compareTo(b.name)
+                }
+                def reads2Sorted = reads2.sort { a, b ->
+                    a.name.compareTo(b.name)
+                }
+
+                [ metadataIntersection, reads1Sorted, reads2Sorted ]
+            }
             .set { ch_reads_grouped }
 
     emit:
         reads_grouped = ch_reads_grouped
-}
-
-def dropMetadataLane(LinkedHashMap metadata) {
-    def metadataLaneDropped = metadata.lane ? metadata - ['lane': metadata.get('lane')] : metadata.clone()
-
-    return metadataLaneDropped
-}
-
-def reshapeGroupedLaneReads(groupedReads) {
-    // make empty lists for R1 and R2
-    def reads1 = []
-    def reads2 = []
-
-    groupedReads[1].eachWithIndex { it, index ->
-        reads1.add(it[0])
-        reads2.add(it[1] ?: "${projectDir}/assets/NO_FILE${index}")
-    }
-
-    return [groupedReads[0], reads1.sort(), reads2.sort()]
 }
