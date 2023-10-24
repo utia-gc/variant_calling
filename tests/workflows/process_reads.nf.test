@@ -205,8 +205,8 @@ nextflow_workflow {
             // test read trimming log
             with(workflow.out.trim_log) {
                 assert size() == 2
-                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_fastp-log.json/
-                assert get(1) ==~ /^.*\/${readsLane2.getStemName()}_fastp-log.json/
+                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_fastp.json/
+                assert get(1) ==~ /^.*\/${readsLane2.getStemName()}_fastp.json/
             }
         }
 
@@ -275,8 +275,8 @@ nextflow_workflow {
             // test read trimming log
             with(workflow.out.trim_log) {
                 assert size() == 2
-                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_fastp-log.json/
-                assert get(1) ==~ /^.*\/${readsLane2.getStemName()}_fastp-log.json/
+                assert get(0) ==~ /^.*\/${readsLane1.getStemName()}_fastp.json/
+                assert get(1) ==~ /^.*\/${readsLane2.getStemName()}_fastp.json/
             }
         }
 
