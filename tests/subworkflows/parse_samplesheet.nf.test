@@ -34,9 +34,9 @@ nextflow_workflow {
                         assert readType   == 'single'
                     }
                     // test R1
-                    assert get(1).get(0) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz/
+                    assert get(1) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz/
                     // test R2
-                    assert get(2).get(0) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz\.NOFILE/
+                    assert get(2) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz\.NOFILE/
                 }
                 with(get(1)) {
                     // test metadata
@@ -45,9 +45,9 @@ nextflow_workflow {
                         assert readType   == 'single'
                     }
                     // test R1
-                    assert get(1).get(0) ==~ /^.*\/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz/
+                    assert get(1) ==~ /^.*\/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz/
                     // test R2
-                    assert get(2).get(0) ==~ /^.*\/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz\.NOFILE/
+                    assert get(2) ==~ /^.*\/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz\.NOFILE/
                 }
             }
 
@@ -87,9 +87,9 @@ nextflow_workflow {
                         assert readType   == 'paired'
                     }
                     // test R1
-                    assert get(1).get(0) ==~ /^.*\/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000\.fastq\.gz/
+                    assert get(1) ==~ /^.*\/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000\.fastq\.gz/
                     // test R2
-                    assert get(2).get(0) ==~ /^.*\/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000\.fastq\.gz/
+                    assert get(2) ==~ /^.*\/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000\.fastq\.gz/
                 }
                 with(get(1)) {
                     // test metadata
@@ -98,9 +98,9 @@ nextflow_workflow {
                         assert readType   == 'paired'
                     }
                     // test R1
-                    assert get(1).get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000\.fastq\.gz/
+                    assert get(1) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000\.fastq\.gz/
                     // test R2
-                    assert get(2).get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000\.fastq\.gz/
+                    assert get(2) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000\.fastq\.gz/
                 }
             }
 
@@ -140,9 +140,9 @@ nextflow_workflow {
                         assert readType   == 'single'
                     }
                     // test R1
-                    assert get(1).get(0) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz/
+                    assert get(1) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz/
                     // test R2
-                    assert get(2).get(0) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz\.NOFILE/
+                    assert get(2) ==~ /^.*\/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz\.NOFILE/
                 }
                 with(get(1)) {
                     // test metadata
@@ -151,9 +151,9 @@ nextflow_workflow {
                         assert readType   == 'single'
                     }
                     // test R1
-                    assert get(1).get(0) ==~ /^.*\/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz/
+                    assert get(1) ==~ /^.*\/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz/
                     // test R2
-                    assert get(2).get(0) ==~ /^.*\/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz\.NOFILE/
+                    assert get(2) ==~ /^.*\/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000\.fastq\.gz\.NOFILE/
                 }
                 with(get(2)) {
                     // test metadata
@@ -162,9 +162,9 @@ nextflow_workflow {
                         assert readType   == 'paired'
                     }
                     // test R1
-                    assert get(1).get(0) ==~ /^.*\/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000\.fastq\.gz/
+                    assert get(1) ==~ /^.*\/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_1_50000\.fastq\.gz/
                     // test R2
-                    assert get(2).get(0) ==~ /^.*\/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000\.fastq\.gz/
+                    assert get(2) ==~ /^.*\/SRR6924569_GSM3073206_Saccharomyces_cerevisiae-AR_Biological_Repeat-2_Saccharomyces_cerevisiae_RNA-Seq_2_50000\.fastq\.gz/
                 }
                 with(get(3)) {
                     // test metadata
@@ -173,9 +173,9 @@ nextflow_workflow {
                         assert readType   == 'paired'
                     }
                     // test R1
-                    assert get(1).get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000\.fastq\.gz/
+                    assert get(1) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_1_50000\.fastq\.gz/
                     // test R2
-                    assert get(2).get(0) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000\.fastq\.gz/
+                    assert get(2) ==~ /^.*\/SRR6924589_GSM3073211_Saccharomyces_cerevisiae-AN_Biological_Repeat-1_Saccharomyces_cerevisiae_RNA-Seq_2_50000\.fastq\.gz/
                 }
             }
 
@@ -223,9 +223,9 @@ nextflow_workflow {
                         assert rgLine       == readsSELane1.getRGLine()
                     }
                     // test R1
-                    assert get(1).get(0) ==~ /^.*\/SRR1066657_S3_L001_R1_001\.fastq\.gz/
+                    assert get(1) ==~ /^.*\/SRR1066657_S3_L001_R1_001\.fastq\.gz/
                     // test R2
-                    assert get(2).get(0) ==~ /^.*\/SRR1066657_S3_L001_R1_001\.fastq\.gz\.NOFILE/
+                    assert get(2) ==~ /^.*\/SRR1066657_S3_L001_R1_001\.fastq\.gz\.NOFILE/
                 }
                 with(get(1)) {
                     // test metadata
@@ -237,9 +237,9 @@ nextflow_workflow {
                         assert rgLine       == readsSELane2.getRGLine()
                     }
                     // test R1
-                    assert get(1).get(0) ==~ /^.*\/SRR1066657_S3_L002_R1_001\.fastq\.gz/
+                    assert get(1) ==~ /^.*\/SRR1066657_S3_L002_R1_001\.fastq\.gz/
                     // test R2
-                    assert get(2).get(0) ==~ /^.*\/SRR1066657_S3_L002_R1_001\.fastq\.gz\.NOFILE/
+                    assert get(2) ==~ /^.*\/SRR1066657_S3_L002_R1_001\.fastq\.gz\.NOFILE/
                 }
                 with(get(2)) {
                     // test metadata
@@ -251,9 +251,9 @@ nextflow_workflow {
                         assert rgLine       == readsPELane1.getRGLine()
                     }
                     // test R1
-                    assert get(1).get(0) ==~ /^.*\/SRR6924569_S1_L001_R1_001\.fastq\.gz/
+                    assert get(1) ==~ /^.*\/SRR6924569_S1_L001_R1_001\.fastq\.gz/
                     // test R2
-                    assert get(2).get(0) ==~ /^.*\/SRR6924569_S1_L001_R2_001\.fastq\.gz/
+                    assert get(2) ==~ /^.*\/SRR6924569_S1_L001_R2_001\.fastq\.gz/
                 }
                 with(get(3)) {
                     // test metadata
@@ -265,9 +265,9 @@ nextflow_workflow {
                         assert rgLine       == readsPELane2.getRGLine()
                     }
                     // test R1
-                    assert get(1).get(0) ==~ /^.*\/SRR6924569_S1_L002_R1_001\.fastq\.gz/
+                    assert get(1) ==~ /^.*\/SRR6924569_S1_L002_R1_001\.fastq\.gz/
                     // test R2
-                    assert get(2).get(0) ==~ /^.*\/SRR6924569_S1_L002_R2_001\.fastq\.gz/
+                    assert get(2) ==~ /^.*\/SRR6924569_S1_L002_R2_001\.fastq\.gz/
                 }
             }
 
