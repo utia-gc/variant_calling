@@ -1,0 +1,70 @@
+ignore_images: false
+
+module_order:
+  - fastqc:
+      name: "FastQC (trimmed)"
+      anchor: "fastqc_trimmed"
+      info: "This section of the report shows FastQC results after adapter trimming."
+      path_filters:
+        - "*_trimmed_R[12]_fastqc.zip"
+  - cutadapt
+  - fastp
+  - fastqc:
+      name: "FastQC (raw)"
+      anchor: "fastqc_raw"
+      path_filters:
+        - "*_raw_R[12]_fastqc.zip"
+extra_fn_clean_exts:
+  - type: regex
+    pattern: "_raw_R[12]"
+  - type: regex
+    pattern: "_trimmed_R[12]"
+  - type: regex
+    pattern: "_fastp"
+  - type: regex
+    pattern: "_samtools-COV"
+  - type: regex
+    pattern: "_samtools-flagstat"
+  - type: regex
+    pattern: "_idxstat"
+  - type: regex
+    pattern: "_samtools-IS"
+  - type: regex
+    pattern: "_samtools-stats"
+custom_data:
+  insert_size:
+    section_name: "Insert size"
+    file_format: "tsv"
+    plot_type: "linegraph"
+  coverage:
+    section_name: "Coverage"
+    file_format: "tsv"
+    plot_type: "linegraph"
+  sequencing_depth_raw:
+    file_format: "tsv"
+    plot_type: "generalstats"
+    pconfig:
+      - Depth:
+          title: "Depth (raw)"
+          description: "Count of bases in prealigned reads divided by count of bases in reference genome."
+          suffix: " X"
+  sequencing_depth_prealign:
+    file_format: "tsv"
+    plot_type: "generalstats"
+    pconfig:
+      - Depth:
+          title: "Depth (prealign)"
+          description: "Count of bases in prealigned reads divided by count of bases in reference genome."
+          suffix: " X"
+  my_genstats:
+    plot_type: "generalstats"
+    file_format: "tsv"
+sp:
+  insert_size:
+    fn: "*_samtools-IS.txt"
+  coverage:
+    fn: "*_samtools-COV.txt"
+  sequencing_depth_raw:
+    fn: "*_raw_seq-depth.tsv"
+  sequencing_depth_prealign:
+    fn: "*_prealign_seq-depth.tsv"

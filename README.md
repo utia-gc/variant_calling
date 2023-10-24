@@ -1,5 +1,7 @@
 # variant_calling
 
+[![nf-test](https://img.shields.io/badge/tested_with-nf--test-337ab7.svg)](https://code.askimed.com/nf-test)
+
 ## Introduction
 
 `variant_calling` is a [Nextflow](https://www.nextflow.io/) pipeline built on [utia-gc/ngs](htpps://github.com/utia-gc/ngs) for variant calling analysis.

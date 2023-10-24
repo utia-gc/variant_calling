@@ -15,7 +15,7 @@ process samtools_sort_index {
         tuple val(metadata), path(alignments)
 
     output:
-        tuple val(metadata), path("*_sorted.bam"), path("*_sorted.bam.bai"), emit: bamIndexed
+        tuple val(metadata), path("*.bam"), path("*.bam.bai"), emit: bamSortedIndexed
 
     
     shell:
@@ -50,19 +50,19 @@ process samtools_sort_index {
             samtools sort \
                 -@ !{task.cpus} \
                 -O bam \
-                -o !{stemName}_sorted.bam \
+                -o !{stemName}.bam \
                 !{alignments}
 
             samtools index \
                 -@ !{task.cpus} \
-                !{stemName}_sorted.bam
+                !{stemName}.bam
         elif [[ $is_bam == "true" && $is_sorted == "true" ]]; then
             # produce file with stereotypical name for output
-            mv -f !{alignments} !{stemName}_sorted.bam
+            mv -f !{alignments} !{stemName}.bam
 
             samtools index \
                 -@ !{task.cpus} \
-                !{stemName}_sorted.bam
+                !{stemName}.bam
         fi
         '''
 }

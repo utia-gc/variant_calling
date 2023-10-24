@@ -46,5 +46,5 @@ def createSampleReadsChannel(LinkedHashMap row) {
     def sequenceIdentifierMatcher = ReadGroup.matchSequenceIdentifier(sequenceIdentifier)
     metadata.rgLine = ReadGroup.buildRGLine(metadata, sequenceIdentifierMatcher)
 
-    return [metadata, [reads1], [reads2]]
+    return [ metadata, reads1, reads2 ]
 }
