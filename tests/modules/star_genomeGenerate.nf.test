@@ -1,0 +1,37 @@
+nextflow_process {
+
+    name "Test Process star_genomeGenerate"
+    script "modules/star_genomeGenerate.nf"
+    process "star_genomeGenerate"
+
+    test("star_genomeGenerate indexes genome fasta and GTF") {
+        // instantiate helper objects
+        def refs = new RefsEnsembl()
+
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
+            process {
+                """
+                input[0] = file("${refs.getGenome()}")
+                input[1] = file("${refs.getGTF()}")
+                """
+            }
+        }
+
+        then {
+            // test process success
+            assert process.success
+
+            // test expected index files made
+            with(process.out.index) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/STAR/
+            }
+        }
+
+    }
+
+}
