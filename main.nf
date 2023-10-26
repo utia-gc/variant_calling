@@ -37,6 +37,7 @@ workflow {
     MAP_READS(
         ch_reads_pre_align,
         ch_genome,
+        ch_annotations,
         params.tools.map
     )
     ch_alignmentsIndividual = MAP_READS.out.alignmentsIndividual
