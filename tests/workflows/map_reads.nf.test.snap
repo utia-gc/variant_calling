@@ -1,4 +1,81 @@
 {
+    "MAP_READS maps reads to a reference genome and outputs sorted BAMs -- STAR + SE reads.": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "lane": "001",
+                            "readType": "single",
+                            "rgLine": "@RG\tID:SRR1066657.001\tSM:SRR1066657\tLB:SRR1066657\tPL:ILLUMINA"
+                        },
+                        "SRR1066657_L001.bam:md5,84a6259469927439f1c1b120e77fa5d8",
+                        "SRR1066657_L001.bam.bai:md5,fa09355ba8126b7666351838eff70751"
+                    ],
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "lane": "002",
+                            "readType": "single",
+                            "rgLine": "@RG\tID:SRR1066657.002\tSM:SRR1066657\tLB:SRR1066657\tPL:ILLUMINA"
+                        },
+                        "SRR1066657_L002.bam:md5,7abeac9fe62740928701db106d5a8f80",
+                        "SRR1066657_L002.bam.bai:md5,6151f3a8699b203e24e92daf69af0d7e"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "readType": "single"
+                        },
+                        "SRR1066657.bam:md5,a5a9b9341624ec5b1f8afccf1976a969",
+                        "SRR1066657.bam.bai:md5,edd817815f98bcba5fdc6ecc17049a53"
+                    ]
+                ],
+                "alignmentsIndividual": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "lane": "001",
+                            "readType": "single",
+                            "rgLine": "@RG\tID:SRR1066657.001\tSM:SRR1066657\tLB:SRR1066657\tPL:ILLUMINA"
+                        },
+                        "SRR1066657_L001.bam:md5,84a6259469927439f1c1b120e77fa5d8",
+                        "SRR1066657_L001.bam.bai:md5,fa09355ba8126b7666351838eff70751"
+                    ],
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "lane": "002",
+                            "readType": "single",
+                            "rgLine": "@RG\tID:SRR1066657.002\tSM:SRR1066657\tLB:SRR1066657\tPL:ILLUMINA"
+                        },
+                        "SRR1066657_L002.bam:md5,7abeac9fe62740928701db106d5a8f80",
+                        "SRR1066657_L002.bam.bai:md5,6151f3a8699b203e24e92daf69af0d7e"
+                    ]
+                ],
+                "alignmentsMerged": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "readType": "single"
+                        },
+                        "SRR1066657.bam:md5,a5a9b9341624ec5b1f8afccf1976a969",
+                        "SRR1066657.bam.bai:md5,edd817815f98bcba5fdc6ecc17049a53"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-10-26T15:23:20.514849266"
+    },
     "MAP_READS maps reads to a reference genome and outputs sorted BAMs -- bwa-mem2 + SE reads.": {
         "content": [
             {
@@ -152,5 +229,82 @@
             }
         ],
         "timestamp": "2023-10-19T11:42:52.826305658"
+    },
+    "MAP_READS maps reads to a reference genome and outputs sorted BAMs -- STAR + PE reads.": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "lane": "001",
+                            "readType": "paired",
+                            "rgLine": "@RG\tID:SRR6924569.001\tSM:SRR6924569\tLB:SRR6924569\tPL:ILLUMINA"
+                        },
+                        "SRR6924569_L001.bam:md5,6c15cc278e607bb09f3755fe928c659e",
+                        "SRR6924569_L001.bam.bai:md5,3ae744447ddbb4ed67235d29dcaa6b64"
+                    ],
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "lane": "002",
+                            "readType": "paired",
+                            "rgLine": "@RG\tID:SRR6924569.002\tSM:SRR6924569\tLB:SRR6924569\tPL:ILLUMINA"
+                        },
+                        "SRR6924569_L002.bam:md5,3f8d51e4ff0e5ac57c88d5832503f2ef",
+                        "SRR6924569_L002.bam.bai:md5,e9d7771744655c8ecc5b1c64b454c765"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "readType": "paired"
+                        },
+                        "SRR6924569.bam:md5,690ddb080db6ac3a98f7f7d1aa5beb29",
+                        "SRR6924569.bam.bai:md5,a1e7c2f7b656dc36a8a0145f5668c05b"
+                    ]
+                ],
+                "alignmentsIndividual": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "lane": "001",
+                            "readType": "paired",
+                            "rgLine": "@RG\tID:SRR6924569.001\tSM:SRR6924569\tLB:SRR6924569\tPL:ILLUMINA"
+                        },
+                        "SRR6924569_L001.bam:md5,6c15cc278e607bb09f3755fe928c659e",
+                        "SRR6924569_L001.bam.bai:md5,3ae744447ddbb4ed67235d29dcaa6b64"
+                    ],
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "lane": "002",
+                            "readType": "paired",
+                            "rgLine": "@RG\tID:SRR6924569.002\tSM:SRR6924569\tLB:SRR6924569\tPL:ILLUMINA"
+                        },
+                        "SRR6924569_L002.bam:md5,3f8d51e4ff0e5ac57c88d5832503f2ef",
+                        "SRR6924569_L002.bam.bai:md5,e9d7771744655c8ecc5b1c64b454c765"
+                    ]
+                ],
+                "alignmentsMerged": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "readType": "paired"
+                        },
+                        "SRR6924569.bam:md5,690ddb080db6ac3a98f7f7d1aa5beb29",
+                        "SRR6924569.bam.bai:md5,a1e7c2f7b656dc36a8a0145f5668c05b"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-10-26T15:27:15.113179426"
     }
 }

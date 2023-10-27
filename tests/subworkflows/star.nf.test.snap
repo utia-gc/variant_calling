@@ -1,0 +1,64 @@
+{
+    "Star builds index and aligns reads -- PE reads.": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "lane": "001",
+                            "readType": "paired",
+                            "rgLine": "@RG\tID:SRR6924569.001\tSM:SRR6924569\tLB:SRR6924569\tPL:ILLUMINA"
+                        },
+                        "SRR6924569_L001_Aligned.out.sam:md5,9da9e8e690cec3daed1f984d1d3077c4"
+                    ]
+                ],
+                "alignments": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "sampleNumber": "1",
+                            "lane": "001",
+                            "readType": "paired",
+                            "rgLine": "@RG\tID:SRR6924569.001\tSM:SRR6924569\tLB:SRR6924569\tPL:ILLUMINA"
+                        },
+                        "SRR6924569_L001_Aligned.out.sam:md5,9da9e8e690cec3daed1f984d1d3077c4"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-10-26T15:09:55.546441715"
+    },
+    "Star builds index and aligns reads -- SE reads.": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "lane": "001",
+                            "readType": "single",
+                            "rgLine": "@RG\tID:SRR1066657.001\tSM:SRR1066657\tLB:SRR1066657\tPL:ILLUMINA"
+                        },
+                        "SRR1066657_L001_Aligned.out.sam:md5,368220688fe7cec495fede5748e075c4"
+                    ]
+                ],
+                "alignments": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "sampleNumber": "3",
+                            "lane": "001",
+                            "readType": "single",
+                            "rgLine": "@RG\tID:SRR1066657.001\tSM:SRR1066657\tLB:SRR1066657\tPL:ILLUMINA"
+                        },
+                        "SRR1066657_L001_Aligned.out.sam:md5,368220688fe7cec495fede5748e075c4"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2023-10-26T15:06:42.559846502"
+    }
+}
