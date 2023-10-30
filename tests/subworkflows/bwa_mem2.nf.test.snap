@@ -9,7 +9,12 @@
                             "sampleNumber": "3",
                             "lane": "001",
                             "readType": "single",
-                            "rgLine": "@RG\tID:SRR1066657.001\tSM:SRR1066657\tLB:SRR1066657\tPL:ILLUMINA"
+                            "rgFields": {
+                                "ID": "SRR1066657.001",
+                                "SM": "SRR1066657",
+                                "LB": "SRR1066657",
+                                "PL": "ILLUMINA"
+                            }
                         },
                         "SRR1066657_L001.sam:md5,7111ddc8b9797a0e4d04bffaa5c5be34"
                     ]
@@ -21,14 +26,19 @@
                             "sampleNumber": "3",
                             "lane": "001",
                             "readType": "single",
-                            "rgLine": "@RG\tID:SRR1066657.001\tSM:SRR1066657\tLB:SRR1066657\tPL:ILLUMINA"
+                            "rgFields": {
+                                "ID": "SRR1066657.001",
+                                "SM": "SRR1066657",
+                                "LB": "SRR1066657",
+                                "PL": "ILLUMINA"
+                            }
                         },
                         "SRR1066657_L001.sam:md5,7111ddc8b9797a0e4d04bffaa5c5be34"
                     ]
                 ]
             }
         ],
-        "timestamp": "2023-10-17T09:33:52.618514402"
+        "timestamp": "2023-10-30T11:32:27.697108492"
     },
     "Bwa_Mem2 builds index and aligns reads -- PE reads.": {
         "content": [
@@ -40,7 +50,12 @@
                             "sampleNumber": "1",
                             "lane": "001",
                             "readType": "paired",
-                            "rgLine": "@RG\tID:SRR6924569.001\tSM:SRR6924569\tLB:SRR6924569\tPL:ILLUMINA"
+                            "rgFields": {
+                                "ID": "SRR6924569.001",
+                                "SM": "SRR6924569",
+                                "LB": "SRR6924569",
+                                "PL": "ILLUMINA"
+                            }
                         },
                         "SRR6924569_L001.sam:md5,1c13b95ac563b45f8d2b7f3789ce8bd4"
                     ]
@@ -52,13 +67,18 @@
                             "sampleNumber": "1",
                             "lane": "001",
                             "readType": "paired",
-                            "rgLine": "@RG\tID:SRR6924569.001\tSM:SRR6924569\tLB:SRR6924569\tPL:ILLUMINA"
+                            "rgFields": {
+                                "ID": "SRR6924569.001",
+                                "SM": "SRR6924569",
+                                "LB": "SRR6924569",
+                                "PL": "ILLUMINA"
+                            }
                         },
                         "SRR6924569_L001.sam:md5,1c13b95ac563b45f8d2b7f3789ce8bd4"
                     ]
                 ]
             }
         ],
-        "timestamp": "2023-10-17T09:34:04.173682776"
+        "timestamp": "2023-10-30T11:32:38.961222639"
     }
 }

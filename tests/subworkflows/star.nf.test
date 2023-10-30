@@ -1,13 +1,14 @@
 nextflow_workflow {
 
-    name "Test Workflow Bwa_Mem2"
-    script "subworkflows/bwa_mem2.nf"
-    workflow "Bwa_Mem2"
+    name "Test Workflow Star"
+    script "subworkflows/star.nf"
+    workflow "Star"
 
-    test("Bwa_Mem2 builds index and aligns reads -- SE reads.") {
+    def refs = new RefsEnsembl()
+
+    test("Star builds index and aligns reads -- SE reads.") {
         // instantiate helper objects
         def readsLane1 = new ReadsSELane1()
-        def refs       = new RefsEnsembl()
 
         when {
             params {
@@ -33,6 +34,7 @@ nextflow_workflow {
                     file("${readsLane1.getR2()}")
                 ]
                 input[1] = file("${refs.getGenome()}")
+                input[2] = file("${refs.getGTF()}")
                 """
             }
         }
@@ -41,11 +43,11 @@ nextflow_workflow {
             // test workflow status
             assert workflow.success
 
-            // test SAM
+            // test BAM
             with(workflow.out.alignments.get(0)) {
                 assert size() == 2
-                // test SAM file
-                assert get(1) ==~ /^.*\/${readsLane1.getStemName()}\.sam/
+                // test BAM file
+                assert get(1) ==~ /^.*\/${readsLane1.getStemName()}_Aligned\.out\.sam/
                 // test SAM contains read group line
                 assert FileHelpers.grepq(path(get(1)), '@RG')
                 assert FileHelpers.grepq(path(get(1)), readsLane1.getRGLine())
@@ -57,10 +59,9 @@ nextflow_workflow {
 
     }
 
-    test("Bwa_Mem2 builds index and aligns reads -- PE reads.") {
+    test("Star builds index and aligns reads -- PE reads.") {
         // instantiate helper objects
         def readsLane1 = new ReadsPELane1()
-        def refs       = new RefsEnsembl()
 
         when {
             params {
@@ -86,6 +87,7 @@ nextflow_workflow {
                     file("${readsLane1.getR2()}")
                 ]
                 input[1] = file("${refs.getGenome()}")
+                input[2] = file("${refs.getGTF()}")
                 """
             }
         }
@@ -94,13 +96,12 @@ nextflow_workflow {
             // test workflow status
             assert workflow.success
 
-            // test SAM
+            // test BAM
             with(workflow.out.alignments.get(0)) {
                 assert size() == 2
-                // test SAM file
-                assert get(1) ==~ /^.*\/${readsLane1.getStemName()}\.sam/
+                // test BAM file
+                assert get(1) ==~ /^.*\/${readsLane1.getStemName()}_Aligned\.out\.sam/
                 // test SAM contains read group line
-                def rgLine = "@RG\tID:${readsLane1.getSampleName()}.${readsLane1.getLane()}\tSM:${readsLane1.getSampleName()}\tLB:${readsLane1.getSampleName()}\tPL:ILLUMINA"
                 assert FileHelpers.grepq(path(get(1)), '@RG')
                 assert FileHelpers.grepq(path(get(1)), readsLane1.getRGLine())
             }
