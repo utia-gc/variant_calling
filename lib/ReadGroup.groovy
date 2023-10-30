@@ -12,6 +12,16 @@ static def buildBwaMem2RGLine(rgFields) {
     return rgLineElements.join('\t')
 }
 
+static String buildSTARRGLine(rgFields) {
+    ArrayList rgLineElements = []
+
+    rgFields.each { tag, value ->
+        rgLineElements += "${tag}:${value}"
+    }
+
+    return rgLineElements.join(' ')
+}
+
 /**
  * Build the read group fields from sample metadata and matcher data from the sequence identifier.
  *
