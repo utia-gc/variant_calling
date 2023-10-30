@@ -24,7 +24,12 @@ nextflow_workflow {
                             sampleNumber: "${readsLane1.getSampleNumber()}",
                             lane:         "${readsLane1.getLane()}",
                             readType:     "${readsLane1.getReadType()}",
-                            rgLine:       "${readsLane1.getRGLine()}"
+                            rgFields:     [
+                                ID: "${readsLane1.getRGFields().get('ID')}",
+                                SM: "${readsLane1.getRGFields().get('SM')}",
+                                LB: "${readsLane1.getRGFields().get('LB')}",
+                                PL: "${readsLane1.getRGFields().get('PL')}",
+                            ]
                         ],
                         file("${readsLane1.getR1()}"),
                         file("${readsLane1.getR2()}")
@@ -35,7 +40,12 @@ nextflow_workflow {
                             sampleNumber: "${readsLane2.getSampleNumber()}",
                             lane:         "${readsLane2.getLane()}",
                             readType:     "${readsLane2.getReadType()}",
-                            rgLine:       "${readsLane2.getRGLine()}"
+                            rgFields:     [
+                                ID: "${readsLane2.getRGFields().get('ID')}",
+                                SM: "${readsLane2.getRGFields().get('SM')}",
+                                LB: "${readsLane2.getRGFields().get('LB')}",
+                                PL: "${readsLane2.getRGFields().get('PL')}",
+                            ]
                         ],
                         file("${readsLane2.getR1()}"),
                         file("${readsLane2.getR2()}")
@@ -112,7 +122,12 @@ nextflow_workflow {
                             sampleNumber: "${readsLane1.getSampleNumber()}",
                             lane:         "${readsLane1.getLane()}",
                             readType:     "${readsLane1.getReadType()}",
-                            rgLine:       "${readsLane1.getRGLine()}"
+                            rgFields:     [
+                                ID: "${readsLane1.getRGFields().get('ID')}",
+                                SM: "${readsLane1.getRGFields().get('SM')}",
+                                LB: "${readsLane1.getRGFields().get('LB')}",
+                                PL: "${readsLane1.getRGFields().get('PL')}",
+                            ]
                         ],
                         file("${readsLane1.getR1()}"),
                         file("${readsLane1.getR2()}")
@@ -123,7 +138,12 @@ nextflow_workflow {
                             sampleNumber: "${readsLane2.getSampleNumber()}",
                             lane:         "${readsLane2.getLane()}",
                             readType:     "${readsLane2.getReadType()}",
-                            rgLine:       "${readsLane2.getRGLine()}"
+                            rgFields:     [
+                                ID: "${readsLane2.getRGFields().get('ID')}",
+                                SM: "${readsLane2.getRGFields().get('SM')}",
+                                LB: "${readsLane2.getRGFields().get('LB')}",
+                                PL: "${readsLane2.getRGFields().get('PL')}",
+                            ]
                         ],
                         file("${readsLane2.getR1()}"),
                         file("${readsLane2.getR2()}")
@@ -200,7 +220,12 @@ nextflow_workflow {
                             sampleNumber: "${readsLane1.getSampleNumber()}",
                             lane:         "${readsLane1.getLane()}",
                             readType:     "${readsLane1.getReadType()}",
-                            rgLine:       "${readsLane1.getRGLine()}"
+                            rgFields:     [
+                                ID: "${readsLane1.getRGFields().get('ID')}",
+                                SM: "${readsLane1.getRGFields().get('SM')}",
+                                LB: "${readsLane1.getRGFields().get('LB')}",
+                                PL: "${readsLane1.getRGFields().get('PL')}",
+                            ]
                         ],
                         file("${readsLane1.getR1()}"),
                         file("${readsLane1.getR2()}")
@@ -211,7 +236,12 @@ nextflow_workflow {
                             sampleNumber: "${readsLane2.getSampleNumber()}",
                             lane:         "${readsLane2.getLane()}",
                             readType:     "${readsLane2.getReadType()}",
-                            rgLine:       "${readsLane2.getRGLine()}"
+                            rgFields:     [
+                                ID: "${readsLane2.getRGFields().get('ID')}",
+                                SM: "${readsLane2.getRGFields().get('SM')}",
+                                LB: "${readsLane2.getRGFields().get('LB')}",
+                                PL: "${readsLane2.getRGFields().get('PL')}",
+                            ]
                         ],
                         file("${readsLane2.getR1()}"),
                         file("${readsLane2.getR2()}")
@@ -288,7 +318,12 @@ nextflow_workflow {
                             sampleNumber: "${readsLane1.getSampleNumber()}",
                             lane:         "${readsLane1.getLane()}",
                             readType:     "${readsLane1.getReadType()}",
-                            rgLine:       "${readsLane1.getRGLine()}"
+                            rgFields:     [
+                                ID: "${readsLane1.getRGFields().get('ID')}",
+                                SM: "${readsLane1.getRGFields().get('SM')}",
+                                LB: "${readsLane1.getRGFields().get('LB')}",
+                                PL: "${readsLane1.getRGFields().get('PL')}",
+                            ]
                         ],
                         file("${readsLane1.getR1()}"),
                         file("${readsLane1.getR2()}")
@@ -299,7 +334,12 @@ nextflow_workflow {
                             sampleNumber: "${readsLane2.getSampleNumber()}",
                             lane:         "${readsLane2.getLane()}",
                             readType:     "${readsLane2.getReadType()}",
-                            rgLine:       "${readsLane2.getRGLine()}"
+                            rgFields:     [
+                                ID: "${readsLane2.getRGFields().get('ID')}",
+                                SM: "${readsLane2.getRGFields().get('SM')}",
+                                LB: "${readsLane2.getRGFields().get('LB')}",
+                                PL: "${readsLane2.getRGFields().get('PL')}",
+                            ]
                         ],
                         file("${readsLane2.getR1()}"),
                         file("${readsLane2.getR2()}")
