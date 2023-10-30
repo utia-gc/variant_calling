@@ -32,7 +32,7 @@ process star_runMapping {
         String stemName = MetadataUtils.buildStemName(metadata)
 
         // build read group line
-        String rgLine = ReadGroup.buildSTARRGLine(metadata.rgFields)
+        String rgLine = ReadGroup.buildRGLine(metadata.rgFields, 'star')
         
         """
         STAR \
