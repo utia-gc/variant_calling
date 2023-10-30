@@ -36,8 +36,13 @@ abstract class Reads {
         "${this.getSampleName()}_L${this.getLane()}"
     }
 
-    public getRGLine() {
-        "@RG\tID:${this.getSampleName()}.${this.getLane()}\tSM:${this.getSampleName()}\tLB:${this.getSampleName()}\tPL:ILLUMINA"
+    public getRGFields() {
+        [
+            'ID': "${this.getSampleName()}.${this.getLane()}",
+            'SM': "${this.getSampleName()}",
+            'LB': "${this.getSampleName()}",
+            'PL': 'ILLUMINA'
+        ]
     }
 
     public getR1SimpleName() {

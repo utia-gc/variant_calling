@@ -3,37 +3,32 @@ import java.io.InputStreamReader
 import java.util.zip.GZIPInputStream
 
 /**
- * Build the read group line from sample metadata and matcher data from the sequence identifier.
+ * Build the read group fields from sample metadata and matcher data from the sequence identifier.
  *
  * @params LinkedHashMap metadata A metadata map.
  * @params Matcher matcher A matcher object of sequence identifier.
  *
- * @return String A tab-separated formatted RG line
+ * @return LinkedHashMap Read group fields containing at least ID, SM, LB, and PL fields.
  */
-static String buildRGLine(metadata, matcher) {
-    ArrayList rgFields = ['@RG']
-    def rgID = ''
-    def rgPU = ''
+static LinkedHashMap buildRGFields(metadata, matcher) {
+    def rgFields = [:]
 
-    // add dynamically determined read group fields
-    // this includes ID and PU
+    // add dynamically determined read group fields -- ID and PU
     if(matcher.find()) {
-        rgID = "${matcher.group('instrument')}_${matcher.group('runNumber')}_${matcher.group('flowcellID')}.${matcher.group('lane')}"
-        rgPU = "${matcher.group('flowcellID')}.${matcher.group('lane')}.${matcher.group('index')}"
+        rgFields += ['ID': "${matcher.group('instrument')}_${matcher.group('runNumber')}_${matcher.group('flowcellID')}.${matcher.group('lane')}"]
+        rgFields += ['PU': "${matcher.group('flowcellID')}.${matcher.group('lane')}.${matcher.group('index')}"]
     } else {
-        rgID = "${metadata.sampleName}.${metadata.lane}"
+        rgFields += ['ID': "${metadata.sampleName}.${metadata.lane}"]
     }
-    rgFields += "ID:${rgID}"
-    if(rgPU) rgFields += "PU:${rgPU}"
 
-    // add more straightforwardly determined fields
-    rgFields += "SM:${metadata.sampleName}"
-    rgFields += "LB:${metadata.sampleName}"
+    // add more straightforwardly determined dynamic fields
+    rgFields += ['SM': "${metadata.sampleName}"]
+    rgFields += ['LB': "${metadata.sampleName}"]
 
     // add static fields
-    rgFields += "PL:ILLUMINA"
+    rgFields += ['PL': "ILLUMINA"]
 
-    return rgFields.join('\t')
+    return rgFields
 }
 
 /**
