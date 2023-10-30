@@ -45,6 +45,13 @@ abstract class Reads {
         ]
     }
 
+    public getRGLine() {
+        def rgFields = this.getRGFields()
+
+
+        "@RG\tID:${rgFields.get('ID')}\tSM:${rgFields.get('SM')}\tLB:${rgFields.get('LB')}\tPL:${rgFields.get('PL')}"
+    }
+
     public getR1SimpleName() {
         // regexp pattern that matches common fastq filename endings
         // matches: fastq.gz, fq.gz, fastq, fq

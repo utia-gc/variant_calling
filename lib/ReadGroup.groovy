@@ -2,6 +2,16 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.zip.GZIPInputStream
 
+static def buildBwaMem2RGLine(rgFields) {
+    ArrayList rgLineElements = ['@RG']
+
+    rgFields.each { tag, value ->
+        rgLineElements += "${tag}:${value}"
+    }
+
+    return rgLineElements.join('\t')
+}
+
 /**
  * Build the read group fields from sample metadata and matcher data from the sequence identifier.
  *
