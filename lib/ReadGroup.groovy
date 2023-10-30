@@ -3,37 +3,93 @@ import java.io.InputStreamReader
 import java.util.zip.GZIPInputStream
 
 /**
- * Build the read group line from sample metadata and matcher data from the sequence identifier.
+ * Build the read group line for the specified tool from a map of read group fields.
+ *
+ * Most tools (typically mapping tools but I'm not making any assumptions here) have the ability to add read group information that is specified as a command line argument.
+ * Most of these tools expect the read group argument to be in slightly different formats.
+ * The purpose of this method is to build the read group line of argument for a specific command line tool.
+ *
+ * @params LinkedHashMap rgFields A map of read group fields as tag:value pairs. First field must be ID.
+ * @params String tool The tool to build a read group line for.
+ *
+ * @return String Read group line.
+ */
+public static String buildRGLine(rgFields, tool) {
+    String rgLine = ''
+    switch (tool) {
+        case 'bwa-mem2':
+            rgLine = buildBwaMem2RGLine(rgFields)
+            break
+
+        case 'star':
+            rgLine = buildSTARRGLine(rgFields)
+            break
+    }
+
+    return rgLine
+}
+
+/**
+ * Build the read group line for bwa-mem2 from a map of read group fields.
+ *
+ * @params LinkedHashMap rgFields A map of read group fields as tag:value pairs. First field must be ID.
+ *
+ * @return String Read group line for bwa-mem2.
+ */
+private static String buildBwaMem2RGLine(rgFields) {
+    ArrayList rgLineElements = ['@RG']
+
+    rgFields.each { tag, value ->
+        rgLineElements += "${tag}:${value}"
+    }
+
+    return rgLineElements.join('\t')
+}
+
+/**
+ * Build the read group line for STAR from a map of read group fields.
+ *
+ * @params LinkedHashMap rgFields A map of read group fields as tag:value pairs. First field must be ID.
+ *
+ * @return String Read group line for STAR.
+ */
+private static String buildSTARRGLine(rgFields) {
+    ArrayList rgLineElements = []
+
+    rgFields.each { tag, value ->
+        rgLineElements += "${tag}:${value}"
+    }
+
+    return rgLineElements.join(' ')
+}
+
+/**
+ * Build the read group fields from sample metadata and matcher data from the sequence identifier.
  *
  * @params LinkedHashMap metadata A metadata map.
  * @params Matcher matcher A matcher object of sequence identifier.
  *
- * @return String A tab-separated formatted RG line
+ * @return LinkedHashMap Read group fields containing at least ID, SM, LB, and PL fields.
  */
-static String buildRGLine(metadata, matcher) {
-    ArrayList rgFields = ['@RG']
-    def rgID = ''
-    def rgPU = ''
+static LinkedHashMap buildRGFields(metadata, matcher) {
+    def rgFields = [:]
 
-    // add dynamically determined read group fields
-    // this includes ID and PU
+    // add dynamically determined read group fields -- ID and PU
     if(matcher.find()) {
-        rgID = "${matcher.group('instrument')}_${matcher.group('runNumber')}_${matcher.group('flowcellID')}.${matcher.group('lane')}"
-        rgPU = "${matcher.group('flowcellID')}.${matcher.group('lane')}.${matcher.group('index')}"
+        rgFields += ['ID': "${matcher.group('instrument')}_${matcher.group('runNumber')}_${matcher.group('flowcellID')}.${matcher.group('lane')}"]
+        rgFields += ['PU': "${matcher.group('flowcellID')}.${matcher.group('lane')}.${matcher.group('index')}"]
     } else {
-        rgID = "${metadata.sampleName}.${metadata.lane}"
+        rgFields += ['ID': "${metadata.sampleName}.${metadata.lane}"]
     }
-    rgFields += "ID:${rgID}"
-    if(rgPU) rgFields += "PU:${rgPU}"
 
-    // add more straightforwardly determined fields
-    rgFields += "SM:${metadata.sampleName}"
-    rgFields += "LB:${metadata.sampleName}"
+    // add more straightforwardly determined dynamic fields
+    rgFields += ['SM': "${metadata.sampleName}"]
+    rgFields += ['LB': "${metadata.sampleName}"]
 
     // add static fields
-    rgFields += "PL:ILLUMINA"
+    rgFields += ['PL': "ILLUMINA"]
 
-    return rgFields.join('\t')
+    return rgFields
 }
 
 /**

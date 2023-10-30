@@ -220,7 +220,7 @@ nextflow_workflow {
                         assert readType     == 'single'
                         assert sampleNumber == '3'
                         assert lane         == '001'
-                        assert rgLine       == readsSELane1.getRGLine()
+                        assert rgFields       == readsSELane1.getRGFields()
                     }
                     // test R1
                     assert get(1) ==~ /^.*\/SRR1066657_S3_L001_R1_001\.fastq\.gz/
@@ -234,7 +234,7 @@ nextflow_workflow {
                         assert readType     == 'single'
                         assert sampleNumber == '3'
                         assert lane         == '002'
-                        assert rgLine       == readsSELane2.getRGLine()
+                        assert rgFields       == readsSELane2.getRGFields()
                     }
                     // test R1
                     assert get(1) ==~ /^.*\/SRR1066657_S3_L002_R1_001\.fastq\.gz/
@@ -248,7 +248,7 @@ nextflow_workflow {
                         assert readType     == 'paired'
                         assert sampleNumber == '1'
                         assert lane         == '001'
-                        assert rgLine       == readsPELane1.getRGLine()
+                        assert rgFields       == readsPELane1.getRGFields()
                     }
                     // test R1
                     assert get(1) ==~ /^.*\/SRR6924569_S1_L001_R1_001\.fastq\.gz/
@@ -262,7 +262,7 @@ nextflow_workflow {
                         assert readType     == 'paired'
                         assert sampleNumber == '1'
                         assert lane         == '002'
-                        assert rgLine       == readsPELane2.getRGLine()
+                        assert rgFields       == readsPELane2.getRGFields()
                     }
                     // test R1
                     assert get(1) ==~ /^.*\/SRR6924569_S1_L002_R1_001\.fastq\.gz/
