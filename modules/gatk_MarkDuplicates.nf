@@ -16,13 +16,15 @@ process gatk_MarkDuplicates {
         tuple val(metadata), path('*.bam'), path('*.bam.bai'), emit: bamMarkDupIndexed
 
     script:
+        String args = new Args(task.ext).buildArgsString()
+
         """
         gatk MarkDuplicates \
             --INPUT ${bam} \
             --METRICS_FILE ${metadata.sampleName}_MarkDuplicates-metrics.txt \
             --OUTPUT ${metadata.sampleName}.bam \
             --CREATE_INDEX \
-            --VALIDATION_STRINGENCY SILENT
+            ${args}
 
         mv ${metadata.sampleName}.bai ${metadata.sampleName}.bam.bai
         """
