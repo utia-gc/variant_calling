@@ -20,10 +20,13 @@ process multiqc {
         path("${fileName}_data/*"), emit: data
 
     script:
+        String args = new Args(task.ext).buildArgsString()
+
         """
         multiqc \
             --filename ${fileName} \
             --config ${config} \
+            ${args} \
             .
         """
 }
