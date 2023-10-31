@@ -16,7 +16,7 @@
                             }
                         },
                         "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz",
-                        "SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -31,7 +31,7 @@
                             }
                         },
                         "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz",
-                        "SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -78,7 +78,7 @@
                             }
                         },
                         "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz",
-                        "SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -93,7 +93,7 @@
                             }
                         },
                         "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz",
-                        "SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -128,7 +128,7 @@
                 ]
             }
         ],
-        "timestamp": "2023-10-30T10:27:15.076039967"
+        "timestamp": "2023-10-31T16:21:33.082790437"
     },
     "successfully creates channels from single-end samplesheet.": {
         "content": [
@@ -194,7 +194,7 @@
                             }
                         },
                         "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz",
-                        "SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -209,7 +209,7 @@
                             }
                         },
                         "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz",
-                        "SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "samples": [
@@ -226,7 +226,7 @@
                             }
                         },
                         "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz",
-                        "SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -241,12 +241,12 @@
                             }
                         },
                         "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz",
-                        "SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ]
             }
         ],
-        "timestamp": "2023-10-30T10:27:04.730077808"
+        "timestamp": "2023-10-31T16:21:18.641760871"
     },
     "Parse_Design successfully creates read channels with lanes and sample numbers -- SE + PE reads.": {
         "content": [
@@ -390,7 +390,7 @@
                             }
                         },
                         "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L001_R1_001.fastq.gz",
-                        "SRR1066657_S3_L001_R1_001.fastq.gz.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "SRR1066657_S3_L001_R1_001.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -407,7 +407,7 @@
                             }
                         },
                         "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L002_R1_001.fastq.gz",
-                        "SRR1066657_S3_L002_R1_001.fastq.gz.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "SRR1066657_S3_L002_R1_001.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -460,7 +460,7 @@
                             }
                         },
                         "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L001_R1_001.fastq.gz",
-                        "SRR1066657_S3_L001_R1_001.fastq.gz.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "SRR1066657_S3_L001_R1_001.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -477,7 +477,7 @@
                             }
                         },
                         "/utia-gc/ngs-test/raw/ngs/data/reads/raw/SRR1066657_S3_L002_R1_001.fastq.gz",
-                        "SRR1066657_S3_L002_R1_001.fastq.gz.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "SRR1066657_S3_L002_R1_001.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -516,7 +516,7 @@
                 ]
             }
         ],
-        "timestamp": "2023-10-30T10:27:21.843160652"
+        "timestamp": "2023-10-31T16:21:41.315493625"
     },
     "successfully creates read channels from single-end samplesheet.": {
         "content": [
