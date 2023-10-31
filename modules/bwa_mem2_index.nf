@@ -22,7 +22,11 @@ process bwa_mem2_index {
         path "${genome.name}*", emit: index
 
     script:
+        String args = new Args(task.ext).buildArgsString()
+
         """
-        bwa-mem2 index ${genome}
+        bwa-mem2 index \
+            ${args} \
+            ${genome}
         """
 }
