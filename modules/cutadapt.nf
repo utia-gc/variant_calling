@@ -24,14 +24,18 @@ process cutadapt {
         String stemName = MetadataUtils.buildStemName(metadata)
         String reads1NewName = "${stemName}_${metadata.trimStatus}_R1.fastq.gz"
 
+        String args = new Args(task.ext).buildArgsString()
+
         if(metadata.readType == 'single') {
             """
             mv ${reads1} ${reads1NewName}
 
             cutadapt \
+                --cores ${task.cpus} \
                 -a ${r1_adapter} \
                 -m ${minimum_length} \
                 -o ${stemName}_trimmed_R1.fastq.gz \
+                ${args} \
                 ${reads1NewName} \
                 > ${stemName}_cutadapt-log.txt
 
@@ -45,11 +49,13 @@ process cutadapt {
             mv ${reads2} ${reads2NewName}
 
             cutadapt \
+                --cores ${task.cpus} \
                 -a ${r1_adapter} \
                 -A ${r2_adapter} \
                 -m ${minimum_length} \
                 -o ${stemName}_trimmed_R1.fastq.gz \
                 -p ${stemName}_trimmed_R2.fastq.gz \
+                ${args} \
                 ${reads1NewName} ${reads2NewName} \
                 > ${stemName}_cutadapt-log.txt
             """

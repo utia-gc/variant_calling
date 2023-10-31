@@ -179,8 +179,8 @@
                         "readType": "paired",
                         "trimStatus": "trimmed"
                     },
-                    "SRR6924569_L001_trimmed_R1.fastq.gz:md5,35deef2a325540a00e1f24d8caf3d8b6",
-                    "SRR6924569_L001_trimmed_R2.fastq.gz:md5,6ed67e7615213a26056471e08ae14806"
+                    "SRR6924569_L001_trimmed_R1.fastq.gz:md5,92338c4ea608209b461a6d747fc272bb",
+                    "SRR6924569_L001_trimmed_R2.fastq.gz:md5,ffc0f8521e55d3f76548fc0da8b2f728"
                 ],
                 [
                     {
@@ -190,12 +190,12 @@
                         "readType": "paired",
                         "trimStatus": "trimmed"
                     },
-                    "SRR6924569_L002_trimmed_R1.fastq.gz:md5,6e9cc4c3af2af7aec902cfe72f502141",
-                    "SRR6924569_L002_trimmed_R2.fastq.gz:md5,5099ffdda6ebcbbb0ae09614c54bc374"
+                    "SRR6924569_L002_trimmed_R1.fastq.gz:md5,9a0fa56bcd727f8b74e6be982dafe605",
+                    "SRR6924569_L002_trimmed_R2.fastq.gz:md5,4f4ff327daa6b0c6e2daa2679c9ef894"
                 ]
             ]
         ],
-        "timestamp": "2023-10-19T13:29:48.471846822"
+        "timestamp": "2023-10-31T13:44:10.791981151"
     },
     "PROCESS_READS trims reads by default -- fastp + SE reads.": {
         "content": [
@@ -208,7 +208,7 @@
                         "readType": "single",
                         "trimStatus": "trimmed"
                     },
-                    "SRR1066657_L001_trimmed_R1.fastq.gz:md5,8b2b5da31a1d3fc3482f3998741c4a96",
+                    "SRR1066657_L001_trimmed_R1.fastq.gz:md5,fd66b28bfdc8dbc6888912de7bcebd92",
                     "SRR1066657_L001_trimmed_R2.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                 ],
                 [
@@ -224,6 +224,6 @@
                 ]
             ]
         ],
-        "timestamp": "2023-10-19T13:29:39.341593655"
+        "timestamp": "2023-10-31T13:43:53.539783212"
     }
 }
