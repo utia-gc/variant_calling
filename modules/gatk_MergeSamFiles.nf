@@ -1,4 +1,4 @@
-process gatk_MergeSameFiles {
+process gatk_MergeSamFiles {
     tag "${metadata.sampleName}"
 
     label 'gatk'
@@ -17,10 +17,12 @@ process gatk_MergeSameFiles {
             "--INPUT ${bam}" 
         }.join(' ')
 
+        String args = new Args(task.ext).buildArgsString()
+
         """
         gatk MergeSamFiles \
             ${inputs} \
             --OUTPUT ${metadata.sampleName}_merged.bam \
-            --VALIDATION_STRINGENCY SILENT
+            ${args}
         """
 }

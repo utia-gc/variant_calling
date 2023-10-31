@@ -21,6 +21,8 @@ process fastqc {
     script:
         String reads1NewName = "${MetadataUtils.buildStemName(metadata)}_${metadata.trimStatus}_R1.fastq.gz"
 
+        String args = new Args(task.ext).buildArgsString()
+
         if(metadata.readType == 'single') {
             """
             mv ${reads1} ${reads1NewName}
@@ -28,6 +30,7 @@ process fastqc {
             fastqc \
                 --quiet \
                 --threads ${task.cpus} \
+                ${args} \
                 ${reads1NewName}
             """
         } else if(metadata.readType == 'paired') {
@@ -40,6 +43,7 @@ process fastqc {
             fastqc \
                 --quiet \
                 --threads ${task.cpus} \
+                ${args} \
                 ${reads1NewName} \
                 ${reads2NewName}
             """

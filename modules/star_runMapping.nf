@@ -33,6 +33,8 @@ process star_runMapping {
 
         // build read group line
         String rgLine = ReadGroup.buildRGLine(metadata.rgFields, 'star')
+
+        String args = new Args(task.ext).buildArgsString()
         
         """
         STAR \
@@ -41,6 +43,7 @@ process star_runMapping {
             --readFilesIn ${reads} \
             --readFilesCommand gunzip -c \
             --outFileNamePrefix ${stemName}_ \
-            --outSAMattrRGline ${rgLine}
+            --outSAMattrRGline ${rgLine} \
+            ${args}
         """
 }

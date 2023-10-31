@@ -15,6 +15,8 @@ process star_genomeGenerate {
         path 'STAR', emit: index
 
     script:
+        String args = new Args(task.ext).buildArgsString()
+
         """
         mkdir STAR
 
@@ -23,6 +25,7 @@ process star_genomeGenerate {
             --genomeFastaFiles ${genome} \
             --sjdbGTFfile ${annotationsGTF} \
             --genomeDir STAR \
-            --runThreadN ${task.cpus}
+            --runThreadN ${task.cpus} \
+            ${args}
         """
 }
