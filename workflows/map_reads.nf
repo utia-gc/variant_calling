@@ -2,7 +2,7 @@ include { Bwa_Mem2            } from '../subworkflows/bwa_mem2.nf'
 include { Group_Alignments    } from '../subworkflows/group_alignments.nf'
 include { Star                } from '../subworkflows/star.nf'
 include { gatk_MarkDuplicates } from '../modules/gatk_MarkDuplicates.nf'
-include { gatk_MergeSameFiles } from '../modules/gatk_MergeSamFiles.nf'
+include { gatk_MergeSamFiles  } from '../modules/gatk_MergeSamFiles.nf'
 include { samtools_sort_index } from '../modules/samtools_sort_index.nf'
 
 
@@ -40,7 +40,7 @@ workflow MAP_READS {
 
         samtools_sort_index(ch_alignments)
           | Group_Alignments
-          | gatk_MergeSameFiles
+          | gatk_MergeSamFiles
           | gatk_MarkDuplicates
 
     emit:
