@@ -16,7 +16,7 @@
                             }
                         },
                         "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz",
-                        "SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -31,7 +31,7 @@
                             }
                         },
                         "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz",
-                        "SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -96,7 +96,7 @@
                             }
                         },
                         "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz",
-                        "SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "SRR1066657_GSM1299413_WT_NR_A_Saccharomyces_cerevisiae_RNA-Seq_50000.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -111,7 +111,7 @@
                             }
                         },
                         "/trev-f/SRAlign-test/raw/rnaseq/data/reads/SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz",
-                        "SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.fastq.gz.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "SRR1066658_GSM1299414_WT_NR_B_Saccharomyces_cerevisiae_RNA-Seq_50000.NOFILE:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -146,6 +146,6 @@
                 ]
             }
         ],
-        "timestamp": "2023-10-30T13:46:02.432700881"
+        "timestamp": "2023-10-31T15:52:40.448480406"
     }
 }
