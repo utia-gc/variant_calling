@@ -33,9 +33,10 @@ def createSampleReadsChannel(LinkedHashMap row) {
     // store reads in lists
     def reads1 = file(row.reads1)
     if(metadata.readType == "single") {
-        def emptyFileName = "${reads1.name}.NOFILE"
-        file("${projectDir}/assets/NO_FILE").copyTo(emptyFileName)
-        reads2 = file(emptyFileName)
+        def emptyFileName = "${reads1.simpleName}.NOFILE"
+        def emptyFilePath = file("${workDir}").resolve(emptyFileName)
+        file("${projectDir}/assets/NO_FILE").copyTo(emptyFilePath)
+        reads2 = file(emptyFilePath)
     } else if(metadata.readType == 'paired') {
         reads2 = file(row.reads2)
     }
