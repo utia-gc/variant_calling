@@ -1,0 +1,36 @@
+nextflow_process {
+
+    name "Test Process gatk_CreateSequenceDictionary"
+    script "modules/gatk_CreateSequenceDictionary.nf"
+    process "gatk_CreateSequenceDictionary"
+
+    test("gatk_CreateSequenceDictionary creates .dict file for genome fasta") {
+        // instantiate helper objects
+        def refs = new RefsEnsembl()
+
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+            }
+            process {
+                """
+                input[0] = file("${refs.getGenome()}")
+                """
+            }
+        }
+
+        then {
+            // test process success
+            assert process.success
+
+            // test sequence dictionary file produced
+            with(process.out.dict) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/genome_I\.dict/
+            }
+        }
+
+    }
+
+}

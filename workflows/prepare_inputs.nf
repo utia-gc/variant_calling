@@ -25,5 +25,6 @@ workflow PREPARE_INPUTS {
         samples      = Parse_Samplesheet.out.samples
         genome       = Prepare_Refs.out.genome
         genome_index = Prepare_Refs.out.genome_index
+        genome_dict  = Prepare_Refs.out.genome_dict
         annotations  = Prepare_Refs.out.annotations
 }

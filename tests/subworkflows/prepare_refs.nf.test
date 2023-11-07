@@ -24,7 +24,7 @@ nextflow_workflow {
         then {
             // test workflow success
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 3
+            assert workflow.trace.succeeded().size() == 4
 
             // test genome decompressed
             assert workflow.out.genome
@@ -40,6 +40,12 @@ nextflow_workflow {
                 assert get(0) ==~ /^.*\/genome_I.fa.fai/
             }
 
+            // test sequence dictionary file produced
+            with(workflow.out.genome_dict) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/genome_I\.dict/
+            }
+
             // test annotations decompressed
             assert workflow.out.annotations
             with(workflow.out.annotations) {
@@ -48,7 +54,11 @@ nextflow_workflow {
             }
 
             // test reproducibility
-            assert snapshot(workflow.out).match()
+            assert snapshot(
+                workflow.out.genome,
+                workflow.out.genome_index,
+                workflow.out.annotations,
+            ).match()
         }
 
 
@@ -73,7 +83,7 @@ nextflow_workflow {
         then {
             // test workflow success
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 1
+            assert workflow.trace.succeeded().size() == 2
 
             // test genome decompressed
             assert workflow.out.genome
@@ -89,6 +99,12 @@ nextflow_workflow {
                 assert get(0) ==~ /^.*\/genome_I.fa.fai/
             }
 
+            // test sequence dictionary file produced
+            with(workflow.out.genome_dict) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/genome_I\.dict/
+            }
+
             // test annotations decompressed
             assert workflow.out.annotations
             with(workflow.out.annotations) {
@@ -97,7 +113,11 @@ nextflow_workflow {
             }
 
             // test reproducibility
-            assert snapshot(workflow.out).match()
+            assert snapshot(
+                workflow.out.genome,
+                workflow.out.genome_index,
+                workflow.out.annotations,
+            ).match()
         }
 
     }
