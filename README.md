@@ -4,6 +4,8 @@
 [![Lifecycle:Experimental](https://img.shields.io/badge/Lifecycle-Experimental-339999)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
 
+![utia-gc/ngs pipeline diagram][pipeline_diagram]
+
 ## Introduction
 
 `ngs` is a [Nextflow](https://www.nextflow.io/) pipeline built on [utia-gc/ngs](htpps://github.com/utia-gc/ngs) for base NGS analysis.
@@ -90,3 +92,5 @@ For example, to resume from a run named 'boring_euler':
 ```bash
 nextflow run utia-gc/ngs -resume boring_euler
 ```
+
+[pipeline_diagram]: docs/images/mermaid-diagram-2023-11-07-152502.png
