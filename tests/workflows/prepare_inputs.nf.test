@@ -25,7 +25,7 @@ nextflow_workflow {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 3
+            assert workflow.trace.succeeded().size() == 4
 
             // test samplesheet parsing
             assert workflow.out.samples.size() == 4
@@ -42,6 +42,12 @@ nextflow_workflow {
             with(workflow.out.genome_index) {
                 assert size() == 1
                 assert get(0) ==~ /^.*\/genome_I.fa.fai/
+            }
+
+            // test sequence dictionary file produced
+            with(workflow.out.genome_dict) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/genome_I\.dict/
             }
 
             // test reference annotations prep

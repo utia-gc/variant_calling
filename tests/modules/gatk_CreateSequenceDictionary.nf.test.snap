@@ -1,0 +1,15 @@
+{
+    "gatk_CreateSequenceDictionary creates .dict file for genome fasta": {
+        "content": [
+            {
+                "0": [
+                    "genome_I.dict:md5,212626bf1f545aef6d12b8876c86fff5"
+                ],
+                "dict": [
+                    "genome_I.dict:md5,212626bf1f545aef6d12b8876c86fff5"
+                ]
+            }
+        ],
+        "timestamp": "2023-11-07T13:09:16.805040798"
+    }
+}

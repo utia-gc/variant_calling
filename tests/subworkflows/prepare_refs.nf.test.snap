@@ -66,6 +66,9 @@
                     "genome_I.fa.fai:md5,2cd76d936cbfa386b14154506c2041b2"
                 ],
                 "2": [
+                    "genome_I.dict:md5,f0fd3ae8f4aadf472b9ab4ef2b28871b"
+                ],
+                "3": [
                     "annotations_I.gtf:md5,61525d86cb937e0fe5b349215c50498c"
                 ],
                 "annotations": [
@@ -74,12 +77,15 @@
                 "genome": [
                     "genome_I.fa:md5,e050100d0a9a7d06a8accf8424ad0d98"
                 ],
+                "genome_dict": [
+                    "genome_I.dict:md5,f0fd3ae8f4aadf472b9ab4ef2b28871b"
+                ],
                 "genome_index": [
                     "genome_I.fa.fai:md5,2cd76d936cbfa386b14154506c2041b2"
                 ]
             }
         ],
-        "timestamp": "2023-09-27T15:44:42+0000"
+        "timestamp": "2023-11-07T13:17:36.749282895"
     },
     "Prepare_Refs successfully emits uncompressed fasta and GTF files when uncompressed inputs are given.": {
         "content": [
@@ -110,6 +116,9 @@
                     "genome_I.fa.fai:md5,2cd76d936cbfa386b14154506c2041b2"
                 ],
                 "2": [
+                    "genome_I.dict:md5,6eea97e1d553ed7efb49a4dcae7105e7"
+                ],
+                "3": [
                     "/utia-gc/ngs-test/raw/ngs/data/references/R64-1-1/annotations_I.gtf"
                 ],
                 "annotations": [
@@ -118,11 +127,14 @@
                 "genome": [
                     "/utia-gc/ngs-test/raw/ngs/data/references/R64-1-1/genome_I.fa"
                 ],
+                "genome_dict": [
+                    "genome_I.dict:md5,6eea97e1d553ed7efb49a4dcae7105e7"
+                ],
                 "genome_index": [
                     "genome_I.fa.fai:md5,2cd76d936cbfa386b14154506c2041b2"
                 ]
             }
         ],
-        "timestamp": "2023-09-27T15:44:42+0000"
+        "timestamp": "2023-11-07T13:17:45.382849713"
     }
 }

@@ -24,7 +24,7 @@ nextflow_workflow {
         then {
             // test workflow success
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 3
+            assert workflow.trace.succeeded().size() == 4
 
             // test genome decompressed
             assert workflow.out.genome
@@ -38,6 +38,12 @@ nextflow_workflow {
             with(workflow.out.genome_index) {
                 assert size() == 1
                 assert get(0) ==~ /^.*\/genome_I.fa.fai/
+            }
+
+            // test sequence dictionary file produced
+            with(workflow.out.genome_dict) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/genome_I\.dict/
             }
 
             // test annotations decompressed
@@ -73,7 +79,7 @@ nextflow_workflow {
         then {
             // test workflow success
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 1
+            assert workflow.trace.succeeded().size() == 2
 
             // test genome decompressed
             assert workflow.out.genome
@@ -87,6 +93,12 @@ nextflow_workflow {
             with(workflow.out.genome_index) {
                 assert size() == 1
                 assert get(0) ==~ /^.*\/genome_I.fa.fai/
+            }
+
+            // test sequence dictionary file produced
+            with(workflow.out.genome_dict) {
+                assert size() == 1
+                assert get(0) ==~ /^.*\/genome_I\.dict/
             }
 
             // test annotations decompressed
