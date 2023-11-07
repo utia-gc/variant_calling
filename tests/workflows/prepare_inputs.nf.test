@@ -58,7 +58,12 @@ nextflow_workflow {
             }
 
             // test workflow stability
-            assert snapshot(workflow.out).match()
+            assert snapshot(
+                workflow.out.samples,
+                workflow.out.genome,
+                workflow.out.genome_index,
+                workflow.out.annotations,
+            ).match()
         }
 
     }

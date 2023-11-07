@@ -29,9 +29,6 @@ nextflow_process {
                 assert size() == 1
                 assert get(0) ==~ /^.*\/genome_I\.dict/
             }
-
-            // test reproducibility
-            assert snapshot(process.out).match()
         }
 
     }

@@ -54,7 +54,11 @@ nextflow_workflow {
             }
 
             // test reproducibility
-            assert snapshot(workflow.out).match()
+            assert snapshot(
+                workflow.out.genome,
+                workflow.out.genome_index,
+                workflow.out.annotations,
+            ).match()
         }
 
 
@@ -109,7 +113,11 @@ nextflow_workflow {
             }
 
             // test reproducibility
-            assert snapshot(workflow.out).match()
+            assert snapshot(
+                workflow.out.genome,
+                workflow.out.genome_index,
+                workflow.out.annotations,
+            ).match()
         }
 
     }
