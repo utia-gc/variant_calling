@@ -6,7 +6,7 @@
  *
  * @input gvcfs a channel of a collection of GVCF files.
  * @input reference the reference sequence file channel of format [fasta, fai, dict].
- * @emit genomicsDB the GenomicsDB of merged GVCF files.
+ * @emit genomicsDB the GenomicsDB of merged GVCF files and interval used of foramt [interval, GenomicsDB].
  */
 process gatk_GenomicsDBImport {
     label 'gatk'
@@ -18,7 +18,7 @@ process gatk_GenomicsDBImport {
         val interval
 
     output:
-        path '*gdb', emit: genomicsDB
+        tuple val(interval), path('*gdb'), emit: genomicsDB
 
     script:
         // create the string of INPUT arguments
