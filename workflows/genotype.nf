@@ -1,4 +1,5 @@
 include { gatk_HaplotypeCaller } from '../modules/gatk_HaplotypeCaller.nf'
+include { gatk_IndexGVCF       } from '../modules/gatk_IndexGVCF.nf'
 
 
 workflow GENOTYPE {
@@ -11,4 +12,5 @@ workflow GENOTYPE {
             alignments,
             genome
         )
+          | gatk_IndexGVCF
 }
