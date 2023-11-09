@@ -1,6 +1,8 @@
 include { gatk_GenomicsDBImport } from '../modules/gatk_GenomicsDBImport.nf'
+include { gatk_GenotypeGVCFs    } from '../modules/gatk_GenotypeGVCFs.nf'
 include { gatk_HaplotypeCaller  } from '../modules/gatk_HaplotypeCaller.nf'
 include { gatk_IndexGVCF        } from '../modules/gatk_IndexGVCF.nf'
+include { gatk_MergeVcfs        } from '../modules/gatk_MergeVcfs.nf'
 
 
 workflow GENOTYPE {
@@ -50,4 +52,15 @@ workflow GENOTYPE {
             genome,
             ch_intervals
         )
+
+        gatk_GenotypeGVCFs(
+            gatk_GenomicsDBImport.out.genomicsDB,
+            genome
+        )
+
+        gatk_GenotypeGVCFs.out.vcf
+            .collect()
+            .set { ch_vcfs }
+
+        gatk_MergeVcfs( ch_vcfs )
 }
