@@ -235,5 +235,3 @@ For example, to resume from a run named 'boring_euler':
 ```bash
 nextflow run utia-gc/ngs -resume boring_euler
 ```
-
-[pipeline_diagram]: docs/images/mermaid-diagram-2023-11-07-152502.png
