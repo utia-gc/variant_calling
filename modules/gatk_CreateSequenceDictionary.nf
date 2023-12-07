@@ -12,6 +12,8 @@ process gatk_CreateSequenceDictionary {
 
     label 'gatk'
 
+    label 'mem_med'
+
     input:
         path genome
 
