@@ -199,8 +199,8 @@ flowchart LR
       -profile nf_test
    ```
 
-   > [!IMPORTANT]
-   > In accordance with best practices for reproducible analysis, always use the `-revision` option in `nextflow run` to specify a tagged and/or released version of the pipeline.
+> [!IMPORTANT]
+> In accordance with best practices for reproducible analysis, always use the `-revision` option in `nextflow run` to specify a tagged and/or released version of the pipeline.
 
 ### Run `utia-gc/ngs`
 
