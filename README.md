@@ -9,6 +9,9 @@
 `ngs` is a [Nextflow](https://www.nextflow.io/) pipeline built on [utia-gc/ngs](htpps://github.com/utia-gc/ngs) for base NGS analysis.
 While `ngs` can be run on any platform supported by Nextflow, it is developed for use in HPC environments and specifically [ISAAC Next Generation] at the University of Tennessee, Knoxville.
 
+> [!WARNING]
+> Do not directly run `utia-gc/ngs`. This pipeline is designed to be a starting point for pipelines dedicated to specific analyses. It is not meant to be run itself. It does not have any scheduled or tagged releases, and as such it cannot be used reproducibly.
+
 ### Pipeline overview
 
 ```mermaid
