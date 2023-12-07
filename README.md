@@ -205,5 +205,3 @@ flowchart LR
 ### Run `utia-gc/ngs`
 
 TODO
-
-## Recommended usage
