@@ -1,72 +1,72 @@
 flowchart LR
     %% list all the input files
-    samplesheet>Samplesheet]
-    genome_fasta>
+    samplesheet>"Samplesheet"]
+    genome_fasta>"
         Genome
         FASTA
-    ]
-    annotations_gtf>
+    "]
+    annotations_gtf>"
         Annotations
         GTF
-    ]
+    "]
 
     %% list all the internal Nextflow channels
-    raw_reads[(
+    raw_reads[("
         Raw
         reads
-    )]
-    prealign_reads[(
+    ")]
+    prealign_reads[("
         Prealign
         reads
-    )]
-    trim_log[(
+    ")]
+    trim_log[("
         Trim
         log
-    )]
-    individual_alignments[(
+    ")]
+    individual_alignments[("
         Individual
         alignments
-    )]
-    merged_alignments[(
+    ")]
+    merged_alignments[("
         Merged
         alignments
-    )]
+    ")]
 
     %% list all the Nextflow processes
-    fastp{fastp}
-    cutadapt{cutadapt}
-    fastqc{FastQC}
-    seq_depth{
+    fastp{"fastp"}
+    cutadapt{"cutadapt"}
+    fastqc{"FastQC"}
+    seq_depth{"
         Sequencing
         Depth
-    }
-    bwa_mem2{bwa-mem2}
-    STAR{STAR}
-    samtools_sort{
+    "}
+    bwa_mem2{"bwa-mem2"}
+    STAR{"STAR"}
+    samtools_sort{"
         samtools
         sort
         index
-    }
-    gatk_MergeSamFiles{
+    "}
+    gatk_MergeSamFiles{"
         gatk
         MergeSamFiles
-    }
-    gatk_MarkDuplicates{
+    "}
+    gatk_MarkDuplicates{"
         gatk
         MarkDuplicates
-    }
-    samtools_idxstats{
+    "}
+    samtools_idxstats{"
         samtools
         idxstats
-    }
-    samtools_flagstat{
+    "}
+    samtools_flagstat{"
         samtools
         flagstat
-    }
-    samtools_stats{
+    "}
+    samtools_stats{"
         samtools
         stats
-    }
+    "}
 
     %% list all subgraphs for Nextflow subworkflows/workflows with options
     subgraph inputs["Input Files"]
@@ -92,22 +92,22 @@ flowchart LR
     end
 
     %% list all the published reports files
-    reads_mqc(((
+    reads_mqc((("
         Reads
         MultiQC
-    )))
-    alignments_mqc(((
+    ")))
+    alignments_mqc((("
         Alignments
         MultiQC
-    )))
-    full_mqc(((
+    ")))
+    full_mqc((("
         Full MultiQC
-    )))
+    ")))
 
     %% list all the published data files
-    alignments[[
+    alignments[["
         Alignments
-    ]]
+    "]]
 
     %% reads processing workflow
     samplesheet --> raw_reads
