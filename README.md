@@ -194,8 +194,13 @@ flowchart LR
    - For more information, see the `profiles` section of the [nextflow config file](nextflow.config).
 
    ```bash
-   nextflow run utia-gc/ngs -profile nf_test 
+   nextflow run utia-gc/ngs \
+      -revision main \
+      -profile nf_test
    ```
+
+   > [!IMPORTANT]
+   > In accordance with best practices for reproducible analysis, always use the `-revision` option in `nextflow run` to specify a tagged and/or released version of the pipeline.
 
 ### Run `ngs`
 
@@ -222,13 +227,17 @@ This serves the dual purpose of saving time by not repeating logged tasks while 
 During exploratory analysis, iteratively make changes to parameters and run the pipeline with the `exploratory` profile:
 
 ```bash
-nextflow run utia-gc/ngs -profile exploratory
+nextflow run utia-gc/ngs \
+   -revision main \
+   -profile exploratory
 ```
 
 Once you have settled on an optimal set of parameters, rerun the pipeline without the `exploratory` profile:
 
 ```bash
-nextflow run utia-gc/ngs -resume
+nextflow run utia-gc/ngs \
+   -revision main \
+   -resume
 ```
 
 Useful tip --- if a specific previous run contained the user's optimal set of parameter, or more generally if for some reason it would be advantageous to resume from some run of the pipeline other than the most recent run, then the pipeline can be resumed from any previous cached run using the RUN NAME or SESSION ID of the desired run.
@@ -236,5 +245,7 @@ Use `nextflow log` to view information about previous runs.
 For example, to resume from a run named 'boring_euler':
 
 ```bash
-nextflow run utia-gc/ngs -resume boring_euler
+nextflow run utia-gc/ngs \
+   -revision main \
+   -resume boring_euler
 ```
