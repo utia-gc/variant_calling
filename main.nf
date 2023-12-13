@@ -23,24 +23,7 @@ include { PROCESS_READS  } from "./workflows/process_reads.nf"
     CHECK FOR REQUIRED PARAMETERS
 ---------------------------------------------------------------------
 */
-if (params.samplesheet) {
-    log.info "Using samplesheet '${params.samplesheet}'"
-} else {
-    log.error "Parameter 'samplesheet' is required but was not provided."
-    exit 64
-}
-if (params.genome) {
-    log.info "Using reference genome '${params.genome}'"
-} else {
-    log.error "Parameter 'genome' is required but was not provided."
-    exit 64
-}
-if (params.annotations) {
-    log.info "Using reference annotations '${params.annotations}'"
-} else {
-    log.error "Parameter 'annotations' is required but was not provided."
-    exit 64
-}
+PipelineValidator.validateRequiredParams(params, log)
 
 workflow {
     PREPARE_INPUTS(
