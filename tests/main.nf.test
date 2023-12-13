@@ -3,6 +3,57 @@ nextflow_pipeline {
     name "Test Workflow main.nf"
     script "main.nf"
 
+    test("main.nf fails -- no input samplesheet.") {
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+                samplesheet       = null
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.exitStatus == 64
+            assert workflow.stdout.contains("ERROR ~ Parameter 'samplesheet' is required but was not provided.")
+        }
+
+    }
+
+    test("main.nf fails -- no reference genome.") {
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+                genome            = null
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.exitStatus == 64
+            assert workflow.stdout.contains("ERROR ~ Parameter 'genome' is required but was not provided.")
+        }
+
+    }
+
+    test("main.nf fails -- no reference annotations.") {
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+                annotations       = null
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.exitStatus == 64
+            assert workflow.stdout.contains("ERROR ~ Parameter 'annotations' is required but was not provided.")
+        }
+
+    }
+
     test("main.nf succeeds with default `nf_test` params") {
         // instantiate helper objects
         def readsSELane1 = new ReadsSELane1()
