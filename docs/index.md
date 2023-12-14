@@ -4,33 +4,31 @@ layout: home
 nav_order: 1
 ---
 
-This is a *bare-minimum* template to create a Jekyll site that uses the [Just the Docs] theme. You can easily set the created site to be published on [GitHub Pages] – the [README] file explains how to do that, along with other details.
+# `utia-gc/ngs`
 
-If [Jekyll] is installed on your computer, you can also build and preview the created site *locally*. This lets you test changes before committing them, and avoids waiting for GitHub Pages.[^1] And you will be able to deploy your local build to a different platform than GitHub Pages.
+Welcome to the [utia-gc/ngs](https://github.com/utia-gc/ngs) documentation!
 
-More specifically, the created site:
+## Structure of the docs
 
-- uses a gem-based approach, i.e. uses a `Gemfile` and loads the `just-the-docs` gem
-- uses the [GitHub Pages / Actions workflow] to build and publish the site on GitHub Pages
+These docs are mainly setup in a question and answer format, typically from the perspective of a user who has decided to run the pipeline and is asking themself a question starting with "How do I... ?"
 
-Other than that, you're free to customize sites that you create with this template, however you like. You can easily change the versions of `just-the-docs` and Jekyll it uses, as well as adding further plugins.
+In order to properly answer these questions, we will take on each in turn and state why it is a problem that we felt the need to address in our pipeline.
+From there, we will describe the solution in as plain terms as possible so that the user has a mental model of what the pipeline is actually doing.
+Where possible, we will also point to a place in the pipeline code where the solution is implemented; this way the user can compare their mental model of the solution with the way the solution is actually written.
+Finally, we will give direction as to how the user can make use of our solution to ensure their pipeline run works as intended.
 
-[Browse our documentation][Just the Docs] to learn more about how to use this theme.
+## Questions
 
-To get started with creating a site, simply:
+[What params do I need to run the pipeline?](https://github.com/utia-gc/ngs/wiki/Required-params)
 
-1. click "[use this template]" to create a GitHub repository
-2. go to Settings > Pages > Build and deployment > Source, and select GitHub Actions
+[How do I format the input samplesheet?](https://github.com/utia-gc/ngs/wiki/Samplesheet-format)
 
-If you want to maintain your docs in the `docs` directory of an existing project repo, see [Hosting your docs from an existing project repo](https://github.com/just-the-docs/just-the-docs-template/blob/main/README.md#hosting-your-docs-from-an-existing-project-repo) in the template README.
+[How do I run a step of the pipeline with the command line arguments that I want to use?](https://github.com/utia-gc/ngs/wiki/Arguments-to-processes)
 
-----
+## Problems with code and docs
 
-[^1]: [It can take up to 10 minutes for changes to your site to publish after you push the changes to GitHub](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/creating-a-github-pages-site-with-jekyll#creating-your-site).
+Since these docs are written and maintained by the pipeline developers, there will be many great questions from the users that need answers but which we haven't thought of asking.
+In this case, please open a new issue in the [main repo issues page](https://github.com/utia-gc/ngs/issues) so that we can make sure the pipeline is useful to and usable by everyone.
+There is no such thing as a dumb question!
 
-[Just the Docs]: https://just-the-docs.github.io/just-the-docs/
-[GitHub Pages]: https://docs.github.com/en/pages
-[README]: https://github.com/just-the-docs/just-the-docs-template/blob/main/README.md
-[Jekyll]: https://jekyllrb.com
-[GitHub Pages / Actions workflow]: https://github.blog/changelog/2022-07-27-github-pages-custom-github-actions-workflows-beta/
-[use this template]: https://github.com/just-the-docs/just-the-docs-template/generate
+We also kindly ask that you report any bugs you may come across and make any feature requests in the issues page as well.
