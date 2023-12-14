@@ -1,9 +1,20 @@
 ---
 title: Arguments to processes
 layout: default
+parent: Pipeline Configuration
 ---
 
 # Arguments to processes
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
 
 ## Problem
 
