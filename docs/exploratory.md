@@ -1,3 +1,8 @@
+---
+title: Exploratory
+layout: default
+---
+
 # The `exploratory` profile
 
 Analysis of single cell RNA-seq data frequently requires an exploratory stage that involves iterating through various parameter options and scrutinizing their effects on important QC metrics before settling on a final set of parameters.

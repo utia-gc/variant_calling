@@ -1,3 +1,8 @@
+---
+title: Development
+layout: default
+---
+
 # Development
 
 ## Style conventions
