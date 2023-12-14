@@ -4,6 +4,8 @@
 [![Lifecycle:Experimental](https://img.shields.io/badge/Lifecycle-Experimental-339999)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
 
+[Full documentation on GitHub Pages]
+
 ## Introduction
 
 `utia-gc/ngs` is a [Nextflow](https://www.nextflow.io/) pipeline built on [utia-gc/ngs](htpps://github.com/utia-gc/ngs) for base NGS analysis.
@@ -205,3 +207,5 @@ flowchart LR
 ### Run `utia-gc/ngs`
 
 TODO
+
+[Full documentation on GitHub Pages]: https://utia-gc.github.io/ngs/
