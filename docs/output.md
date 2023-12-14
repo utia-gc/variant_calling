@@ -1,3 +1,8 @@
+---
+title: Output
+layout: default
+---
+
 # Output
 
 ## A note on terminology
