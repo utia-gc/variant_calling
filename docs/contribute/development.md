@@ -1,6 +1,7 @@
 ---
 title: Development
 layout: default
+parent: Contribute
 ---
 
 # Development

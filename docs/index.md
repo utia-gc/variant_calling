@@ -19,11 +19,23 @@ Finally, we will give direction as to how the user can make use of our solution 
 
 ## Questions
 
-[What params do I need to run the pipeline?](required_params.md)
+### [Input / Output](input_output/input_output.md)
 
-[How do I format the input samplesheet?](samplesheet_format.md)
+- [What params do I need to run the pipeline?](input_output/required_params.md)
 
-[How do I run a step of the pipeline with the command line arguments that I want to use?](arguments_to_processes.md)
+- [How do I format the input samplesheet?](input_output/samplesheet_format.md)
+
+- [What outputs will I get from the pipeline?](input_output/outputs.md)
+
+### [Pipeline Configuration](pipeline_config/pipeline_config.md)
+
+- [How do I run a step of the pipeline with the command line arguments that I want to use?](pipeline_config/arguments_to_processes.md)
+
+- [How do I make it easier to try out and evaluate new params or arguments?](pipeline_config/exploratory_profile.md)
+
+### [Contribute](contribute/contribute.md)
+
+- [How can I contribute to the pipeline code or documentation?](contribute/development.md)
 
 ## Problems with code and docs
 

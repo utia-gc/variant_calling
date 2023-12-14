@@ -1,6 +1,7 @@
 ---
 title: Exploratory
 layout: default
+parent: Pipeline Configuration
 ---
 
 # Exploratory

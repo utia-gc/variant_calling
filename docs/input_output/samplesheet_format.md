@@ -1,6 +1,7 @@
 ---
 title: Samplesheet format
 layout: default
+parent: Input / Output
 ---
 
 # Samplesheet format

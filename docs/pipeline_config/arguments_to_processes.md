@@ -1,6 +1,7 @@
 ---
 title: Arguments to processes
 layout: default
+parent: Pipeline Configuration
 ---
 
 # Arguments to processes

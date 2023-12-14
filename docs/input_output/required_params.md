@@ -1,6 +1,7 @@
 ---
 title: Required params
 layout: default
+parent: Input / Output
 ---
 
 # Required params

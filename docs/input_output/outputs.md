@@ -1,6 +1,7 @@
 ---
 title: Output
 layout: default
+parent: Input / Output
 ---
 
 # Output
