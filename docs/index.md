@@ -19,11 +19,11 @@ Finally, we will give direction as to how the user can make use of our solution 
 
 ## Questions
 
-[What params do I need to run the pipeline?](https://github.com/utia-gc/ngs/wiki/Required-params)
+[What params do I need to run the pipeline?](required_params.md)
 
-[How do I format the input samplesheet?](https://github.com/utia-gc/ngs/wiki/Samplesheet-format)
+[How do I format the input samplesheet?](samplesheet_format.md)
 
-[How do I run a step of the pipeline with the command line arguments that I want to use?](https://github.com/utia-gc/ngs/wiki/Arguments-to-processes)
+[How do I run a step of the pipeline with the command line arguments that I want to use?](arguments_to_processes.md)
 
 ## Problems with code and docs
 

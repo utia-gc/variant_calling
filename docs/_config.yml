@@ -6,3 +6,6 @@ url: https://utia-gc.github.io
 
 aux_links:
   utia-gc/ngs on GitHub: https://github.com/utia-gc/ngs
+
+plugins:
+  - jekyll-relative-links
