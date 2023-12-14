@@ -4,7 +4,7 @@
 [![Lifecycle:Experimental](https://img.shields.io/badge/Lifecycle-Experimental-339999)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
 
-[Full documentation on GitHub Pages]
+:book:[Full documentation on GitHub Pages]:book:
 
 ## Introduction
 
