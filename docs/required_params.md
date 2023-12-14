@@ -4,6 +4,16 @@ layout: default
 ---
 
 # Required params
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
 
 ## Problem
 

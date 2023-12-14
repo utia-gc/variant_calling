@@ -3,7 +3,19 @@ title: Exploratory
 layout: default
 ---
 
-# The `exploratory` profile
+# Exploratory
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
+## The `exploratory` profile
 
 Analysis of single cell RNA-seq data frequently requires an exploratory stage that involves iterating through various parameter options and scrutinizing their effects on important QC metrics before settling on a final set of parameters.
 To help facilitate this crucial process, we have included an `exploratory` profile option which implements the following features:
