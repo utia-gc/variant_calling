@@ -12,7 +12,7 @@
 While `utia-gc/ngs` can be run on any platform supported by Nextflow, it is developed for use in HPC environments and specifically [ISAAC Next Generation] at the University of Tennessee, Knoxville.
 
 > [!WARNING]
-> Do not directly run `utia-gc/ngs`. This pipeline is designed to be a starting point for pipelines dedicated to specific analyses. It is not meant to be run itself. It does not have any scheduled or tagged releases, and as such it cannot be used reproducibly.
+> It is usually not a good idea to directly run `utia-gc/ngs`. This pipeline is designed to be a starting point for pipelines dedicated to specific analyses. It is generally not meant to be run itself. It will not often have scheduled or tagged releases, and as such it cannot reliably be used reproducibly. In nearly all cases, users should check the forked repos to find a pipeline built from `utia-gc/ngs` that is more suited to their needs or fork the repo to create their own versioned releases of a pipeline built on `utia-gc/ngs`.
 
 ### Pipeline overview
 
