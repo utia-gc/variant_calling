@@ -3,6 +3,8 @@ process gatk_MarkDuplicates {
 
     label 'gatk'
 
+    label 'mem_med'
+
     publishDir(
         path:    "${params.publishDirData}/alignments",
         mode:    "${params.publishMode}",

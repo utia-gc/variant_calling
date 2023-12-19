@@ -18,6 +18,13 @@ include { MAP_READS      } from "./workflows/map_reads.nf"
 include { PREPARE_INPUTS } from "./workflows/prepare_inputs.nf"
 include { PROCESS_READS  } from "./workflows/process_reads.nf"
 
+/*
+---------------------------------------------------------------------
+    CHECK FOR REQUIRED PARAMETERS
+---------------------------------------------------------------------
+*/
+PipelineValidator.validateRequiredParams(params, log)
+
 workflow {
     PREPARE_INPUTS(
         params.samplesheet,
