@@ -54,6 +54,25 @@ nextflow_pipeline {
 
     }
 
+
+    test("main.nf fails -- no project title.") {
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+                projectTitle      = null
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.exitStatus == 64
+            assert workflow.stdout.contains("ERROR ~ Parameter 'projectTitle' is required but was not provided.")
+        }
+
+    }
+
+
     test("main.nf succeeds with default `nf_test` params") {
         // instantiate helper objects
         def readsSELane1 = new ReadsSELane1()
@@ -126,8 +145,8 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/multiqc/reads/reads_data/").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments.html").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments_data/").exists()
-            assert path("${params.publishDirReports}/multiqc/ngs/ngs.html").exists()
-            assert path("${params.publishDirReports}/multiqc/ngs/ngs_data/").exists()
+            assert path("${params.publishDirReports}/multiqc/ngs_nf-test/ngs_nf-test.html").exists()
+            assert path("${params.publishDirReports}/multiqc/ngs_nf-test/ngs_nf-test_data/").exists()
         }
 
     }
@@ -207,8 +226,8 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/multiqc/reads/reads_data/").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments.html").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments_data/").exists()
-            assert path("${params.publishDirReports}/multiqc/ngs/ngs.html").exists()
-            assert path("${params.publishDirReports}/multiqc/ngs/ngs_data/").exists()
+            assert path("${params.publishDirReports}/multiqc/ngs_nf-test/ngs_nf-test.html").exists()
+            assert path("${params.publishDirReports}/multiqc/ngs_nf-test/ngs_nf-test_data/").exists()
         }
 
     }
@@ -286,8 +305,8 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/multiqc/reads/reads_data/").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments.html").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments_data/").exists()
-            assert path("${params.publishDirReports}/multiqc/ngs/ngs.html").exists()
-            assert path("${params.publishDirReports}/multiqc/ngs/ngs_data/").exists()
+            assert path("${params.publishDirReports}/multiqc/ngs_nf-test/ngs_nf-test.html").exists()
+            assert path("${params.publishDirReports}/multiqc/ngs_nf-test/ngs_nf-test_data/").exists()
         }
 
     }
@@ -367,8 +386,8 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/multiqc/reads/reads_data/").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments.html").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments_data/").exists()
-            assert path("${params.publishDirReports}/multiqc/ngs/ngs.html").exists()
-            assert path("${params.publishDirReports}/multiqc/ngs/ngs_data/").exists()
+            assert path("${params.publishDirReports}/multiqc/ngs_nf-test/ngs_nf-test.html").exists()
+            assert path("${params.publishDirReports}/multiqc/ngs_nf-test/ngs_nf-test_data/").exists()
         }
 
     }
