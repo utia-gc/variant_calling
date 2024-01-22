@@ -1,0 +1,110 @@
+{
+    "compute_bases_reads computes the number of bases in reads -- PE reads; multiple reads": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "readType": "paired",
+                            "trimStatus": "raw"
+                        },
+                        "15098974"
+                    ]
+                ],
+                "bases": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "readType": "paired",
+                            "trimStatus": "raw"
+                        },
+                        "15098974"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2024-01-22T10:57:37.368338929"
+    },
+    "compute_bases_reads computes the number of bases in reads -- SE reads; one read": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "readType": "single",
+                            "trimStatus": "raw"
+                        },
+                        "2500000"
+                    ]
+                ],
+                "bases": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "readType": "single",
+                            "trimStatus": "raw"
+                        },
+                        "2500000"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2024-01-22T10:54:49.824916851"
+    },
+    "compute_bases_reads computes the number of bases in reads -- SE reads; multiple reads": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "readType": "single",
+                            "trimStatus": "raw"
+                        },
+                        "5000000"
+                    ]
+                ],
+                "bases": [
+                    [
+                        {
+                            "sampleName": "SRR1066657",
+                            "readType": "single",
+                            "trimStatus": "raw"
+                        },
+                        "5000000"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2024-01-22T10:57:13.298043403"
+    },
+    "compute_bases_reads computes the number of bases in reads -- PE reads; one read": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "readType": "paired",
+                            "trimStatus": "raw"
+                        },
+                        "7549612"
+                    ]
+                ],
+                "bases": [
+                    [
+                        {
+                            "sampleName": "SRR6924569",
+                            "readType": "paired",
+                            "trimStatus": "raw"
+                        },
+                        "7549612"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2024-01-22T10:57:25.2137076"
+    }
+}
