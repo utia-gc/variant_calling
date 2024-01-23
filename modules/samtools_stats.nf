@@ -3,8 +3,12 @@ process samtools_stats {
 
     label 'samtools'
 
+    label 'def_cpu'
+    label 'lil_mem'
+    label 'def_time'
+
     publishDir(
-        path:    "${params.publishDirReports}/alignments",
+        path:    "${params.publishDirReports}/.alignments",
         mode:    "${params.publishMode}",
         pattern: '*_samtools-stats.txt'
     )

@@ -1,0 +1,11 @@
+title: utia-gc/variant_calling
+description: A Nextflow pipeline for variant calling based on utia-gc/ngs.
+theme: just-the-docs
+
+url: https://utia-gc.github.io
+
+aux_links:
+  utia-gc/ngs on GitHub: https://github.com/utia-gc/variant_calling
+
+plugins:
+  - jekyll-relative-links

@@ -1,13 +1,12 @@
 nextflow_process {
 
-    name "Test Process sequencing_depth"
-    script "modules/sequencing_depth.nf"
-    process "sequencing_depth"
+    name "Test Process compute_bases_reads"
+    script "modules/compute_bases_reads.nf"
+    process "compute_bases_reads"
 
-    test("sequencing_depth writes file of sequencing depth -- SE reads; one read") {
+    test("compute_bases_reads computes the number of bases in reads -- SE reads; one read") {
         // instantiate helper objects
         def readsLane1 = new ReadsSELane1()
-        def refs       = new RefsEnsembl()
 
         when {
             params {
@@ -29,7 +28,6 @@ nextflow_process {
                         file("${readsLane1.getR2()}"),
                     ]
                 ]
-                input[1] = file("${refs.getGenomeIndex()}")
                 """
             }
         }
@@ -38,8 +36,8 @@ nextflow_process {
             // test process success
             assert process.success
 
-            // test expected sequencing depth file made
-            with(process.out.depth.get(0)) {
+            // test expected number bases
+            with(process.out.bases.get(0)) {
                 assert size() == 2
                 // test metadata
                 with(get(0)) {
@@ -47,9 +45,11 @@ nextflow_process {
                     assert readType   == "${readsLane1.getReadType()}"
                     assert trimStatus == "raw"
                 }
-                // test sequencing depth reported
-                assert get(1).isNumber()
-                assert get(1).toDouble() >= 0
+                // test number of bases
+                with(get(1)) {
+                    assert isNumber()
+                    assert toInteger() > 0
+                }
             }
 
             // test reproducibility
@@ -58,11 +58,11 @@ nextflow_process {
 
     }
 
-    test("sequencing_depth writes file of sequencing depth -- SE reads; multiple reads") {
+
+    test("compute_bases_reads computes the number of bases in reads -- SE reads; multiple reads") {
         // instantiate helper objects
         def readsLane1 = new ReadsSELane1()
         def readsLane2 = new ReadsSELane2()
-        def refs       = new RefsEnsembl()
 
         when {
             params {
@@ -86,7 +86,6 @@ nextflow_process {
                         file("${readsLane2.getR2()}"),
                     ]
                 ]
-                input[1] = file("${refs.getGenomeIndex()}")
                 """
             }
         }
@@ -95,8 +94,8 @@ nextflow_process {
             // test process success
             assert process.success
 
-            // test expected sequencing depth file made
-            with(process.out.depth.get(0)) {
+            // test expected number bases
+            with(process.out.bases.get(0)) {
                 assert size() == 2
                 // test metadata
                 with(get(0)) {
@@ -104,9 +103,11 @@ nextflow_process {
                     assert readType   == "${readsLane1.getReadType()}"
                     assert trimStatus == "raw"
                 }
-                // test sequencing depth reported
-                assert get(1).isNumber()
-                assert get(1).toDouble() >= 0
+                // test number of bases
+                with(get(1)) {
+                    assert isNumber()
+                    assert toInteger() > 0
+                }
             }
 
             // test reproducibility
@@ -115,10 +116,10 @@ nextflow_process {
 
     }
 
-    test("sequencing_depth writes file of sequencing depth -- PE reads; one read-pair") {
+
+    test("compute_bases_reads computes the number of bases in reads -- PE reads; one read") {
         // instantiate helper objects
         def readsLane1 = new ReadsPELane1()
-        def refs       = new RefsEnsembl()
 
         when {
             params {
@@ -140,7 +141,6 @@ nextflow_process {
                         file("${readsLane1.getR2()}"),
                     ]
                 ]
-                input[1] = file("${refs.getGenomeIndex()}")
                 """
             }
         }
@@ -149,8 +149,8 @@ nextflow_process {
             // test process success
             assert process.success
 
-            // test expected sequencing depth file made
-            with(process.out.depth.get(0)) {
+            // test expected number bases
+            with(process.out.bases.get(0)) {
                 assert size() == 2
                 // test metadata
                 with(get(0)) {
@@ -158,23 +158,24 @@ nextflow_process {
                     assert readType   == "${readsLane1.getReadType()}"
                     assert trimStatus == "raw"
                 }
-                // test sequencing depth reported
-                assert get(1).isNumber()
-                assert get(1).toDouble() >= 0
+                // test number of bases
+                with(get(1)) {
+                    assert isNumber()
+                    assert toInteger() > 0
+                }
             }
 
             // test reproducibility
             assert snapshot(process.out).match()
-
         }
 
     }
 
-    test("sequencing_depth writes file of sequencing depth -- PE reads; multiple read-pairs") {
+
+    test("compute_bases_reads computes the number of bases in reads -- PE reads; multiple reads") {
         // instantiate helper objects
         def readsLane1 = new ReadsPELane1()
         def readsLane2 = new ReadsPELane2()
-        def refs       = new RefsEnsembl()
 
         when {
             params {
@@ -198,7 +199,6 @@ nextflow_process {
                         file("${readsLane2.getR2()}"),
                     ]
                 ]
-                input[1] = file("${refs.getGenomeIndex()}")
                 """
             }
         }
@@ -207,8 +207,8 @@ nextflow_process {
             // test process success
             assert process.success
 
-            // test expected sequencing depth file made
-            with(process.out.depth.get(0)) {
+            // test expected number bases
+            with(process.out.bases.get(0)) {
                 assert size() == 2
                 // test metadata
                 with(get(0)) {
@@ -216,16 +216,18 @@ nextflow_process {
                     assert readType   == "${readsLane1.getReadType()}"
                     assert trimStatus == "raw"
                 }
-                // test sequencing depth reported
-                assert get(1).isNumber()
-                assert get(1).toDouble() >= 0
+                // test number of bases
+                with(get(1)) {
+                    assert isNumber()
+                    assert toInteger() > 0
+                }
             }
 
             // test reproducibility
             assert snapshot(process.out).match()
-
         }
 
     }
+
 
 }
