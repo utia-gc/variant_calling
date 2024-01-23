@@ -2,6 +2,7 @@ include { QC_Alignments           } from '../subworkflows/qc_alignments.nf'
 include { QC_Reads                } from '../subworkflows/qc_reads.nf'
 include { multiqc as multiqc_full } from "../modules/multiqc.nf"
 
+
 workflow CHECK_QUALITY {
     take:
         reads_raw

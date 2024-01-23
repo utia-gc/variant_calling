@@ -3,6 +3,78 @@ nextflow_pipeline {
     name "Test Workflow main.nf"
     script "main.nf"
 
+    test("main.nf fails -- no input samplesheet.") {
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+                samplesheet       = null
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.exitStatus == 64
+            assert workflow.stdout.contains("ERROR ~ Parameter 'samplesheet' is required but was not provided.")
+        }
+
+    }
+
+
+    test("main.nf fails -- no reference genome.") {
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+                genome            = null
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.exitStatus == 64
+            assert workflow.stdout.contains("ERROR ~ Parameter 'genome' is required but was not provided.")
+        }
+
+    }
+
+
+    test("main.nf fails -- no reference annotations.") {
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+                annotations       = null
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.exitStatus == 64
+            assert workflow.stdout.contains("ERROR ~ Parameter 'annotations' is required but was not provided.")
+        }
+
+    }
+
+
+    test("main.nf fails -- no project title.") {
+        when {
+            params {
+                publishDirReports = "${outputDir}/reports"
+                publishDirData    = "${outputDir}/data"
+                projectTitle      = null
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.exitStatus == 64
+            assert workflow.stdout.contains("ERROR ~ Parameter 'projectTitle' is required but was not provided.")
+        }
+
+    }
+
+
     test("main.nf succeeds with default `nf_test` params") {
         // instantiate helper objects
         def readsSELane1 = new ReadsSELane1()
@@ -20,51 +92,51 @@ nextflow_pipeline {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 53
+            assert workflow.trace.succeeded().size() == 56
 
             // test raw FastQC html reports and zip files published to reports dir
-            assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane2.getStemName()}_raw_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane2.getStemName()}_raw_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_raw_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_raw_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_raw_R2_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_raw_R2_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_raw_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_raw_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_raw_R2_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_raw_R2_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane2.getStemName()}_raw_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane2.getStemName()}_raw_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_raw_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_raw_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_raw_R2_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_raw_R2_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_raw_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_raw_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_raw_R2_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_raw_R2_fastqc.zip").exists()
             // test prealign FastQC html reports and zip files published to reports dir
-            assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_trimmed_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_trimmed_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane2.getStemName()}_trimmed_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane2.getStemName()}_trimmed_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_trimmed_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_trimmed_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_trimmed_R2_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_trimmed_R2_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane1.getStemName()}_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane1.getStemName()}_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane2.getStemName()}_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane2.getStemName()}_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_trimmed_R2_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_trimmed_R2_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.zip").exists()
             // test trimmed reads logs published to reports dir
-            assert path("${params.publishDirReports}/reads/trim/${readsSELane1.getStemName()}_cutadapt-log.txt").exists()
-            assert path("${params.publishDirReports}/reads/trim/${readsSELane2.getStemName()}_cutadapt-log.txt").exists()
-            assert path("${params.publishDirReports}/reads/trim/${readsPELane1.getStemName()}_cutadapt-log.txt").exists()
-            assert path("${params.publishDirReports}/reads/trim/${readsPELane2.getStemName()}_cutadapt-log.txt").exists()
+            assert path("${params.publishDirReports}/.reads/trim/${readsSELane1.getStemName()}_fastp.json").exists()
+            assert path("${params.publishDirReports}/.reads/trim/${readsSELane2.getStemName()}_fastp.json").exists()
+            assert path("${params.publishDirReports}/.reads/trim/${readsPELane1.getStemName()}_fastp.json").exists()
+            assert path("${params.publishDirReports}/.reads/trim/${readsPELane2.getStemName()}_fastp.json").exists()
             // test samtools flagstat and samtools idxstats for individual alignments files written to reports dir
-            assert path("${params.publishDirReports}/alignments/${readsSELane1.getStemName()}_idxstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsSELane2.getStemName()}_idxstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsPELane1.getStemName()}_idxstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsPELane2.getStemName()}_idxstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsSELane1.getStemName()}_samtools-flagstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsSELane2.getStemName()}_samtools-flagstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsPELane1.getStemName()}_samtools-flagstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsPELane2.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsSELane1.getStemName()}_idxstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsSELane2.getStemName()}_idxstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsPELane1.getStemName()}_idxstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsPELane2.getStemName()}_idxstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsSELane1.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsSELane2.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsPELane1.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsPELane2.getStemName()}_samtools-flagstat.txt").exists()
             // test samtools stats for merged alignments files written to reports dir
-            assert path("${params.publishDirReports}/alignments/${readsSELane1.getSampleName()}_samtools-stats.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsPELane1.getSampleName()}_samtools-stats.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsSELane1.getSampleName()}_samtools-stats.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsPELane1.getSampleName()}_samtools-stats.txt").exists()
             // test BAM and BAM.BAI alignment and index files published to data dir
             assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}.bam").exists()
             assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}.bam.bai").exists()
@@ -78,11 +150,12 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/multiqc/reads/reads_data/").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments.html").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments_data/").exists()
-            assert path("${params.publishDirReports}/multiqc/variant_calling/variant_calling.html").exists()
-            assert path("${params.publishDirReports}/multiqc/variant_calling/variant_calling_data/").exists()
+            assert path("${params.publishDirReports}/multiqc/variant_calling_nf-test/variant_calling_nf-test.html").exists()
+            assert path("${params.publishDirReports}/multiqc/variant_calling_nf-test/variant_calling_nf-test_data/").exists()
         }
 
     }
+
 
     test("main.nf succeeds with default `nf_test` params and uncompressed genome and annotation files.") {
         // instantiate helper objects
@@ -104,51 +177,51 @@ nextflow_pipeline {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 51
+            assert workflow.trace.succeeded().size() == 54
 
             // test raw FastQC html reports and zip files published to reports dir
-            assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane2.getStemName()}_raw_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane2.getStemName()}_raw_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_raw_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_raw_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_raw_R2_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_raw_R2_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_raw_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_raw_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_raw_R2_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_raw_R2_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane2.getStemName()}_raw_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane2.getStemName()}_raw_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_raw_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_raw_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_raw_R2_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_raw_R2_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_raw_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_raw_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_raw_R2_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_raw_R2_fastqc.zip").exists()
             // test prealign FastQC html reports and zip files published to reports dir
-            assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_trimmed_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_trimmed_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane2.getStemName()}_trimmed_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane2.getStemName()}_trimmed_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_trimmed_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_trimmed_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_trimmed_R2_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_trimmed_R2_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane1.getStemName()}_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane1.getStemName()}_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane2.getStemName()}_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane2.getStemName()}_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_trimmed_R2_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_trimmed_R2_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.zip").exists()
             // test trimmed reads logs published to reports dir
-            assert path("${params.publishDirReports}/reads/trim/${readsSELane1.getStemName()}_cutadapt-log.txt").exists()
-            assert path("${params.publishDirReports}/reads/trim/${readsSELane2.getStemName()}_cutadapt-log.txt").exists()
-            assert path("${params.publishDirReports}/reads/trim/${readsPELane1.getStemName()}_cutadapt-log.txt").exists()
-            assert path("${params.publishDirReports}/reads/trim/${readsPELane2.getStemName()}_cutadapt-log.txt").exists()
+            assert path("${params.publishDirReports}/.reads/trim/${readsSELane1.getStemName()}_fastp.json").exists()
+            assert path("${params.publishDirReports}/.reads/trim/${readsSELane2.getStemName()}_fastp.json").exists()
+            assert path("${params.publishDirReports}/.reads/trim/${readsPELane1.getStemName()}_fastp.json").exists()
+            assert path("${params.publishDirReports}/.reads/trim/${readsPELane2.getStemName()}_fastp.json").exists()
             // test samtools stats and samtools idxstats files written to reports dir
-            assert path("${params.publishDirReports}/alignments/${readsSELane1.getStemName()}_idxstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsSELane2.getStemName()}_idxstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsPELane1.getStemName()}_idxstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsPELane2.getStemName()}_idxstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsSELane1.getStemName()}_samtools-flagstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsSELane2.getStemName()}_samtools-flagstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsPELane1.getStemName()}_samtools-flagstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsPELane2.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsSELane1.getStemName()}_idxstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsSELane2.getStemName()}_idxstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsPELane1.getStemName()}_idxstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsPELane2.getStemName()}_idxstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsSELane1.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsSELane2.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsPELane1.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsPELane2.getStemName()}_samtools-flagstat.txt").exists()
             // test samtools stats for merged alignments files written to reports dir
-            assert path("${params.publishDirReports}/alignments/${readsSELane1.getSampleName()}_samtools-stats.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsPELane1.getSampleName()}_samtools-stats.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsSELane1.getSampleName()}_samtools-stats.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsPELane1.getSampleName()}_samtools-stats.txt").exists()
             // test BAM and BAM.BAI alignment and index files published to data dir
             assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}.bam").exists()
             assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}.bam.bai").exists()
@@ -159,13 +232,14 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/multiqc/reads/reads_data/").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments.html").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments_data/").exists()
-            assert path("${params.publishDirReports}/multiqc/variant_calling/variant_calling.html").exists()
-            assert path("${params.publishDirReports}/multiqc/variant_calling/variant_calling_data/").exists()
+            assert path("${params.publishDirReports}/multiqc/variant_calling_nf-test/variant_calling_nf-test.html").exists()
+            assert path("${params.publishDirReports}/multiqc/variant_calling_nf-test/variant_calling_nf-test_data/").exists()
         }
 
     }
 
-    test("main.nf succeeds -- fastp.") {
+
+    test("main.nf succeeds -- cutadapt.") {
         // instantiate helper objects
         def readsSELane1 = new ReadsSELane1()
         def readsSELane2 = new ReadsSELane2()
@@ -174,7 +248,9 @@ nextflow_pipeline {
 
         when {
             params {
-                load("${baseDir}/tests/params/fastp.yaml")
+                tools {
+                    trim = 'cutadapt'
+                }
                 publishDirReports = "${outputDir}/reports"
                 publishDirData    = "${outputDir}/data"
             }
@@ -183,51 +259,51 @@ nextflow_pipeline {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 53
+            assert workflow.trace.succeeded().size() == 56
 
             // test raw FastQC html reports and zip files published to reports dir
-            assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane2.getStemName()}_raw_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane2.getStemName()}_raw_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_raw_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_raw_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_raw_R2_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_raw_R2_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_raw_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_raw_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_raw_R2_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_raw_R2_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane2.getStemName()}_raw_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane2.getStemName()}_raw_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_raw_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_raw_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_raw_R2_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_raw_R2_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_raw_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_raw_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_raw_R2_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_raw_R2_fastqc.zip").exists()
             // test prealign FastQC html reports and zip files published to reports dir
-            assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_trimmed_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_trimmed_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane2.getStemName()}_trimmed_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane2.getStemName()}_trimmed_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_trimmed_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_trimmed_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_trimmed_R2_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_trimmed_R2_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane1.getStemName()}_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane1.getStemName()}_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane2.getStemName()}_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane2.getStemName()}_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_trimmed_R2_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_trimmed_R2_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.zip").exists()
             // test trimmed reads logs published to reports dir
-            assert path("${params.publishDirReports}/reads/trim/${readsSELane1.getStemName()}_fastp.json").exists()
-            assert path("${params.publishDirReports}/reads/trim/${readsSELane2.getStemName()}_fastp.json").exists()
-            assert path("${params.publishDirReports}/reads/trim/${readsPELane1.getStemName()}_fastp.json").exists()
-            assert path("${params.publishDirReports}/reads/trim/${readsPELane2.getStemName()}_fastp.json").exists()
+            assert path("${params.publishDirReports}/.reads/trim/${readsSELane1.getStemName()}_cutadapt-log.txt").exists()
+            assert path("${params.publishDirReports}/.reads/trim/${readsSELane2.getStemName()}_cutadapt-log.txt").exists()
+            assert path("${params.publishDirReports}/.reads/trim/${readsPELane1.getStemName()}_cutadapt-log.txt").exists()
+            assert path("${params.publishDirReports}/.reads/trim/${readsPELane2.getStemName()}_cutadapt-log.txt").exists()
             // test samtools stats and samtools idxstats files written to reports dir
-            assert path("${params.publishDirReports}/alignments/${readsSELane1.getStemName()}_idxstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsSELane2.getStemName()}_idxstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsPELane1.getStemName()}_idxstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsPELane2.getStemName()}_idxstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsSELane1.getStemName()}_samtools-flagstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsSELane2.getStemName()}_samtools-flagstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsPELane1.getStemName()}_samtools-flagstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsPELane2.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsSELane1.getStemName()}_idxstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsSELane2.getStemName()}_idxstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsPELane1.getStemName()}_idxstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsPELane2.getStemName()}_idxstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsSELane1.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsSELane2.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsPELane1.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsPELane2.getStemName()}_samtools-flagstat.txt").exists()
             // test samtools stats for merged alignments files written to reports dir
-            assert path("${params.publishDirReports}/alignments/${readsSELane1.getSampleName()}_samtools-stats.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsPELane1.getSampleName()}_samtools-stats.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsSELane1.getSampleName()}_samtools-stats.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsPELane1.getSampleName()}_samtools-stats.txt").exists()
             // test BAM and BAM.BAI alignment and index files published to data dir
             assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}.bam").exists()
             assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}.bam.bai").exists()
@@ -238,11 +314,12 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/multiqc/reads/reads_data/").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments.html").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments_data/").exists()
-            assert path("${params.publishDirReports}/multiqc/variant_calling/variant_calling.html").exists()
-            assert path("${params.publishDirReports}/multiqc/variant_calling/variant_calling_data/").exists()
+            assert path("${params.publishDirReports}/multiqc/variant_calling_nf-test/variant_calling_nf-test.html").exists()
+            assert path("${params.publishDirReports}/multiqc/variant_calling_nf-test/variant_calling_nf-test_data/").exists()
         }
 
     }
+
 
     test("main.nf succeeds -- STAR.") {
         // instantiate helper objects
@@ -264,51 +341,51 @@ nextflow_pipeline {
         then {
             // test workflow status
             assert workflow.success
-            assert workflow.trace.succeeded().size() == 53
+            assert workflow.trace.succeeded().size() == 56
 
             // test raw FastQC html reports and zip files published to reports dir
-            assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane2.getStemName()}_raw_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane2.getStemName()}_raw_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_raw_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_raw_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_raw_R2_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_raw_R2_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_raw_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_raw_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_raw_R2_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_raw_R2_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane1.getStemName()}_raw_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane2.getStemName()}_raw_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane2.getStemName()}_raw_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_raw_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_raw_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_raw_R2_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_raw_R2_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_raw_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_raw_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_raw_R2_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_raw_R2_fastqc.zip").exists()
             // test prealign FastQC html reports and zip files published to reports dir
-            assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_trimmed_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane1.getStemName()}_trimmed_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane2.getStemName()}_trimmed_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsSELane2.getStemName()}_trimmed_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_trimmed_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_trimmed_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_trimmed_R2_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane1.getStemName()}_trimmed_R2_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R1_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R1_fastqc.zip").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.html").exists()
-            assert path("${params.publishDirReports}/fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane1.getStemName()}_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane1.getStemName()}_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane2.getStemName()}_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsSELane2.getStemName()}_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_trimmed_R2_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane1.getStemName()}_trimmed_R2_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_trimmed_R1_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_trimmed_R1_fastqc.zip").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.html").exists()
+            assert path("${params.publishDirReports}/.fastqc/${readsPELane2.getStemName()}_trimmed_R2_fastqc.zip").exists()
             // test trimmed reads logs published to reports dir
-            assert path("${params.publishDirReports}/reads/trim/${readsSELane1.getStemName()}_cutadapt-log.txt").exists()
-            assert path("${params.publishDirReports}/reads/trim/${readsSELane2.getStemName()}_cutadapt-log.txt").exists()
-            assert path("${params.publishDirReports}/reads/trim/${readsPELane1.getStemName()}_cutadapt-log.txt").exists()
-            assert path("${params.publishDirReports}/reads/trim/${readsPELane2.getStemName()}_cutadapt-log.txt").exists()
+            assert path("${params.publishDirReports}/.reads/trim/${readsSELane1.getStemName()}_fastp.json").exists()
+            assert path("${params.publishDirReports}/.reads/trim/${readsSELane2.getStemName()}_fastp.json").exists()
+            assert path("${params.publishDirReports}/.reads/trim/${readsPELane1.getStemName()}_fastp.json").exists()
+            assert path("${params.publishDirReports}/.reads/trim/${readsPELane2.getStemName()}_fastp.json").exists()
             // test samtools stats and samtools idxstats files written to reports dir
-            assert path("${params.publishDirReports}/alignments/${readsSELane1.getStemName()}_idxstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsSELane2.getStemName()}_idxstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsPELane1.getStemName()}_idxstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsPELane2.getStemName()}_idxstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsSELane1.getStemName()}_samtools-flagstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsSELane2.getStemName()}_samtools-flagstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsPELane1.getStemName()}_samtools-flagstat.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsPELane2.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsSELane1.getStemName()}_idxstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsSELane2.getStemName()}_idxstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsPELane1.getStemName()}_idxstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsPELane2.getStemName()}_idxstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsSELane1.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsSELane2.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsPELane1.getStemName()}_samtools-flagstat.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsPELane2.getStemName()}_samtools-flagstat.txt").exists()
             // test samtools stats for merged alignments files written to reports dir
-            assert path("${params.publishDirReports}/alignments/${readsSELane1.getSampleName()}_samtools-stats.txt").exists()
-            assert path("${params.publishDirReports}/alignments/${readsPELane1.getSampleName()}_samtools-stats.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsSELane1.getSampleName()}_samtools-stats.txt").exists()
+            assert path("${params.publishDirReports}/.alignments/${readsPELane1.getSampleName()}_samtools-stats.txt").exists()
             // test BAM and BAM.BAI alignment and index files published to data dir
             assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}.bam").exists()
             assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}.bam.bai").exists()
@@ -319,8 +396,8 @@ nextflow_pipeline {
             assert path("${params.publishDirReports}/multiqc/reads/reads_data/").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments.html").exists()
             assert path("${params.publishDirReports}/multiqc/alignments/alignments_data/").exists()
-            assert path("${params.publishDirReports}/multiqc/variant_calling/variant_calling.html").exists()
-            assert path("${params.publishDirReports}/multiqc/variant_calling/variant_calling_data/").exists()
+            assert path("${params.publishDirReports}/multiqc/variant_calling_nf-test/variant_calling_nf-test.html").exists()
+            assert path("${params.publishDirReports}/multiqc/variant_calling_nf-test/variant_calling_nf-test_data/").exists()
         }
 
     }

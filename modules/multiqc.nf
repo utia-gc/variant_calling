@@ -3,7 +3,9 @@ process multiqc {
     
     label 'multiqc'
 
-    label 'med_mem'
+    label 'def_cpu'
+    label 'def_mem'
+    label 'lil_time'
 
     publishDir(
         path:    "${params.publishDirReports}/multiqc/${fileName}",
@@ -16,8 +18,8 @@ process multiqc {
         val fileName
 
     output:
-        path("*html"),              emit: report
-        path("${fileName}_data/*"), emit: data
+        path "${fileName}.html", hidden: true,   emit: report
+        path "${fileName}_data/*", hidden: true, emit: data
 
     script:
         String args = new Args(task.ext).buildArgsString()

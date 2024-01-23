@@ -19,11 +19,18 @@ include { MAP_READS      } from "./workflows/map_reads.nf"
 include { PREPARE_INPUTS } from "./workflows/prepare_inputs.nf"
 include { PROCESS_READS  } from "./workflows/process_reads.nf"
 
+/*
+---------------------------------------------------------------------
+    CHECK FOR REQUIRED PARAMETERS
+---------------------------------------------------------------------
+*/
+PipelineValidator.validateRequiredParams(params, log)
+
 workflow {
     PREPARE_INPUTS(
-        params.samplesheet,
-        params.genome,
-        params.annotations
+        file(params.samplesheet),
+        file(params.genome),
+        file(params.annotations)
     )
     ch_reads_raw    = PREPARE_INPUTS.out.samples
     ch_reads_raw.dump(tag: "ch_reads_raw")
@@ -42,8 +49,9 @@ workflow {
         ch_annotations,
         params.tools.map
     )
-    ch_alignmentsIndividual = MAP_READS.out.alignmentsIndividual
-    ch_alignmentsMerged     = MAP_READS.out.alignmentsMerged
+    ch_alignmentsIndividualSortedByCoord = MAP_READS.out.alignmentsIndividualSortedByCoord
+    ch_alignmentsMergedSortedByCoord     = MAP_READS.out.alignmentsMergedSortedByCoord
+    ch_alignmentsMergedSortedByName      = MAP_READS.out.alignmentsMergedSortedByName
 
     // create channel with genome, genome fasta index, and genome sequence dictionary
     ch_genome
@@ -51,7 +59,7 @@ workflow {
         .collect()
         .set { ch_genome_index_dict }
     GENOTYPE(
-        ch_alignmentsMerged,
+        ch_alignmentsMergedSortedByCoord,
         ch_genome_index_dict
     )
 
@@ -60,7 +68,7 @@ workflow {
         ch_reads_pre_align,
         ch_trim_log,
         ch_genome_index,
-        ch_alignmentsIndividual,
-        ch_alignmentsMerged
+        ch_alignmentsIndividualSortedByCoord,
+        ch_alignmentsMergedSortedByCoord
     )
 }

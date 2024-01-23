@@ -2,10 +2,13 @@ process cutadapt {
     tag "${metadata.sampleName}"
     
     label 'cutadapt'
-    label 'lil_mem'
+
+    label 'def_cpu'
+    label 'def_mem'
+    label 'def_time'
 
     publishDir(
-        path:    "${params.publishDirReports}/reads/trim",
+        path:    "${params.publishDirReports}/.reads/trim",
         mode:    "${params.publishMode}",
         pattern: '*_cutadapt-log.txt'
     )
