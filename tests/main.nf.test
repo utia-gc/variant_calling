@@ -227,6 +227,9 @@ nextflow_pipeline {
             assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}.bam.bai").exists()
             assert path("${params.publishDirData}/alignments/${readsPELane1.getSampleName()}.bam").exists()
             assert path("${params.publishDirData}/alignments/${readsPELane1.getSampleName()}.bam.bai").exists()
+            // test merged VCF and VCF index published to data dir
+            assert path("${params.publishDirData}/variants/merged.vcf.gz").exists()
+            assert path("${params.publishDirData}/variants/merged.vcf.gz.tbi").exists()
             // test MultiQC reports and data published to reports dir
             assert path("${params.publishDirReports}/multiqc/reads/reads.html").exists()
             assert path("${params.publishDirReports}/multiqc/reads/reads_data/").exists()
@@ -309,6 +312,9 @@ nextflow_pipeline {
             assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}.bam.bai").exists()
             assert path("${params.publishDirData}/alignments/${readsPELane1.getSampleName()}.bam").exists()
             assert path("${params.publishDirData}/alignments/${readsPELane1.getSampleName()}.bam.bai").exists()
+            // test merged VCF and VCF index published to data dir
+            assert path("${params.publishDirData}/variants/merged.vcf.gz").exists()
+            assert path("${params.publishDirData}/variants/merged.vcf.gz.tbi").exists()
             // test MultiQC reports and data published to reports dir
             assert path("${params.publishDirReports}/multiqc/reads/reads.html").exists()
             assert path("${params.publishDirReports}/multiqc/reads/reads_data/").exists()
@@ -391,6 +397,9 @@ nextflow_pipeline {
             assert path("${params.publishDirData}/alignments/${readsSELane1.getSampleName()}.bam.bai").exists()
             assert path("${params.publishDirData}/alignments/${readsPELane1.getSampleName()}.bam").exists()
             assert path("${params.publishDirData}/alignments/${readsPELane1.getSampleName()}.bam.bai").exists()
+            // test merged VCF and VCF index published to data dir
+            assert path("${params.publishDirData}/variants/merged.vcf.gz").exists()
+            assert path("${params.publishDirData}/variants/merged.vcf.gz.tbi").exists()
             // test MultiQC reports and data published to reports dir
             assert path("${params.publishDirReports}/multiqc/reads/reads.html").exists()
             assert path("${params.publishDirReports}/multiqc/reads/reads_data/").exists()
